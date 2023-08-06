@@ -1,6 +1,9 @@
 body {
     background-color: #000413;
 }
+a {
+    text-decoration: none;
+}
 .header {
     width: 100%;
     max-width: 70.0625rem;
