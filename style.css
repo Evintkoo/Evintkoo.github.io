@@ -10,6 +10,15 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 1.5rem;
+    position:fixed;
+    background: linear-gradient(136deg, rgba(215, 215, 215, 0.1) 0%, rgba(195, 200, 210, 0.1) 51.56%, rgba(215, 215, 215, 0.1) 100%);
+    border-radius: 10px;
+    height: 64px;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0 12px;
+    backdrop-filter: blur(16px);
 }
 .selection {
     width: 33% ;
@@ -18,6 +27,9 @@ body {
     color: #EEE;
     display: flex;
     justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(0%, 25%);
 }
 .name{
     color: #EEE;
@@ -25,6 +37,9 @@ body {
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
+    top: 50%;
+    left: 50%;
+    transform: translate(0%, 25%);
 }
 .active{
     color: #EEE;
@@ -147,6 +162,18 @@ body {
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
+}
+.card-img:hover ~ .card-explanation-text {
+    color: #F3F6FF;
+    transition: 300ms;
+}
+.card-img:hover ~ .card-title {
+    color: #F3F6FF;
+    transition: 300ms;
+}
+.card-img:hover ~ .card-category-text {
+    color: #F3F6FF;
+    transition: 300ms;
 }
 .project-section{
     margin-top: 5.93rem;
