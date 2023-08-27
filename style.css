@@ -37,19 +37,17 @@ a {
     top: 50%;
     left: 50%;
 }
-.active{
-    color: #EEE;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 2vw;
-    font-style: normal;
-    font-weight: 700;
-}
 .inactive {
     color: #D7D7D7;
     font-family: 'Public Sans', sans-serif;
     font-size: 2vw;
     font-style: normal;
     font-weight: 400;
+}
+.inactive:hover{
+    color: #EEE;
+    font-weight: 700;
+    transition-duration: 300ms ease-in-out;
 }
 .home {
     width:90% ;
@@ -86,11 +84,12 @@ a {
     color: #F3F6FF;
     text-align: center;
     font-size: 12vw;
+    margin: 5vh auto;
     font-style: normal;
     font-weight: 400;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+    animation: bounce 2s infinite alternate-reverse ease-in-out;
 }
+
 .home-caption{
     color: #C3C8D2;
     text-align: center;
@@ -346,6 +345,13 @@ a {
     }
 }
 @media screen and (max-width: 500px) {
+    .header{
+        margin-top: auto;
+        margin-bottom: 3vh;
+        transform: translate(-50%, 0);
+        bottom: 0%;
+        top: auto;
+    }
     .cards{
         width: 100%;
         height: auto;
@@ -407,5 +413,14 @@ a {
     }
     .footer-title{
         font-size: 1.5rem;
+    }
+}
+
+@keyframes bounce {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
     }
 }
