@@ -54,7 +54,8 @@ a {
     flex-shrink: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15%;
+    padding-top: 20%;
+    height: 70vh;
 }
 .first-line {
     width: 100%;
@@ -121,19 +122,26 @@ a {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    
 }
 .cards{
     flex: 1 0 3rem;
     height: 100%;
-    max-width: 33%;
+    max-width: 32%;
+    display: flex;
+    flex-direction: column;
 }
 .img-container{
     overflow: hidden;
-    height: 60%;
+    width: 100%;
+    height: auto;
 }
 .card-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #D9D9D9;
-    width: 40vw;
+    width: 100%;
     height: 30vh;
     object-fit: cover;
     opacity: 0.5;
@@ -160,13 +168,11 @@ a {
     font-weight: 400;
 }
 .card-img:hover{
-    -webkit-transform: scale(1.3);
-    -moz-transform: scale(1.3);
-    -o-transform: scale(1.3);
-    -ms-transform: scale(1.3);
-    transform: scale(1.3);
     transition: 400ms ease-in-out;
     opacity: 1;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5); 
 }
 .img-container:hover ~ .card-explanation-text {
     color: #F3F6FF;
@@ -207,7 +213,7 @@ a {
 .award-title{
     color: #F3F6FF;
     font-family: 'PT Sans Caption', sans-serif;
-    font-size: 2rem;
+    font-size: 5vw;
     font-style: normal;
     font-weight: 400;
 }
@@ -215,9 +221,9 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top: 7.56rem;
-    max-width: 70.0625rem;
-    width: 100%;
+    width: 95%;
     display: flex;
+    height: 80vh;
 }
 .profile-tilte{
     width: 33%;
@@ -234,40 +240,39 @@ a {
     color: #F3F6FF;
     text-align: center;
     font-family: 'PT Sans Caption', sans-serif;
-    font-size: 2rem;
+    font-size: 6vw;
     font-style: normal;
     font-weight: 700;
-    margin-top: 1.44rem;
+    margin-top: 4vh;
 }
 .desc-tilte-text{
     color: #F3F6FF;
     text-align: left;
     font-family: 'PT Sans Caption', sans-serif;
-    font-size: 2rem;
+    font-size: 3vw;
     font-style: normal;
     font-weight: 700;
-    margin-top: 1.44rem;
+    margin-top: 2vh;
 }
 .profile-desc{
     width: 66%;
 }
 .desc-text{
-    margin-top: 2.69rem;
+    margin-top: 2vh;
     color: #F3F6FF;
     font-family: 'PT Sans Caption', sans-serif;
-    font-size: 1.4375rem;
+    font-size: 2.5vw;
     font-style: normal;
     font-weight: 400;
 }
 .footer{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1.44rem;
-    margin-top: 0.81rem;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
     width: 100%;
-    max-width: 70rem;
-    height: 7.875rem;
-    border-radius: 0.625rem;
+    height: 15vh;
+    border-radius: 2vw;
     justify-content:center;
     align-items:center;
     vertical-align: middle;
@@ -278,12 +283,12 @@ a {
     align-self: center;
     vertical-align: middle;
     text-align: center;
-    transform: translate(0%, 50%);
+    transform: translate(0%, 25%);
 }
 .footer-logo{
-    width: 15.27544rem;
+    width: 60%;
     display: flex;
-    height: 1.5rem;
+    height: 5vh;
     justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
@@ -292,17 +297,17 @@ a {
     color: #EEE;
     text-align: center;
     font-family: 'Public Sans', sans-serif;
-    font-size: 1.5rem;
+    font-size: 3vw;
     font-style: normal;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1vh;
 }
 
 @media screen and (max-width: 1280px) {
     .cards{
         height: 60%;
         margin: auto;
-        max-width: 50%;
+        max-width: 80%;
         flex: none;
         margin-bottom: 1vh;
     }
@@ -315,8 +320,21 @@ a {
         width: 100%;
         height: 100%;
     }
+    .award-text-container{
+        margin-bottom: 0.33rem;
+    }
+    .desc-tilte-text{
+        display: none;
+    }
+    .footer-title{
+        font-size: 1.75rem;
+    }
     .about-me{
         display: block;
+        align-items: center;
+        align-self: center;
+        align-content: center;
+        justify-content: center;
     }
     .profile-tilte{
         width:90%;
@@ -328,21 +346,7 @@ a {
         width:90%;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 1rem;
-    }
-    .award-text-container{
-        margin-bottom: 0.33rem;
-    }
-    .desc-tilte-text{
-        display: none;
-    }
-    .desc-text{
-        text-align: center;
-        font-size: 1rem;
-    }
-    .footer-title{
-        font-size: 1.75rem;
-    }
+        margin-bot
 }
 @media screen and (max-width: 500px) {
     .header{
@@ -351,22 +355,33 @@ a {
         transform: translate(-50%, 0);
         bottom: 0%;
         top: auto;
+        padding: 2vw 5vh;
+        width: 80%;
+    }
+    .home{
+        height: 50vh;
     }
     .cards{
-        width: 100%;
+        width: 90%;
         height: auto;
         margin: 1rem 0;
         max-width: 95%;
         margin: auto;
         margin-bottom: 1vh;
+        margin-top: 1vh;
     }
     .card-container{
         display: block;
-        height: auto;
         width: 100%;
     }
+    .img-container{
+        max-width: 100%;
+        height: auto;
+    }
     .card-img{
-        width: 100%;
+        height: auto;
+        left: 0px;
+        right: 0px;
     }
     .about-me{
         display: block;
@@ -390,29 +405,8 @@ a {
     .awards{
         display: block;
     }
-    .award-title{
-        font-size: 1rem;
-    }
-    .award-text{
-        font-size: 1.33rem;
-    }
-    .award-text-container{
-        width: 100%;
-        margin-bottom: 0.33rem;
-    }
-    .project-division-title{
-        font-size:1.4rem;
-        margin-bottom: 0.75rem ;
-    }
     .desc-tilte-text{
         display: none;
-    }
-    .desc-text{
-        text-align: center;
-        font-size: 1rem;
-    }
-    .footer-title{
-        font-size: 1.5rem;
     }
 }
 
