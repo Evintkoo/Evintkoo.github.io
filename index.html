@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evint Leovonzko | Portfolio</title>
+    <title>Evint Leovonzko | Data Scientist Portfolio</title>
+    <meta name="description" content="Portfolio of Evint Leovonzko, Data Scientist and Machine Learning Specialist">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Consider using a reliable icon library like Font Awesome CDN -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
 </head>
 
 <body>
-    <!-- Header -->
+    <!-- Header with Navigation -->
     <header class="header">
         <div class="container header__container">
             <a href="#" class="logo">Evint Leovonzko</a>
@@ -27,101 +29,223 @@
             </nav>
         </div>
     </header>
-    
-    
 
-    <!-- Main Content -->
     <main>
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <h1>Hi, I'm Evint Leovonzko</h1>
-                <p>Data Scientist & Machine Learning Enthusiast</p>
-                <a href="#projects" class="btn">Explore My Work</a>
+                <p>Data Scientist building practical machine learning solutions</p>
+                <div class="hero__cta">
+                    <a href="#projects" class="btn btn-primary">Explore My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="about">
+        <section id="about" class="about section">
             <div class="container">
-                <h2>About Me</h2>
-                <p>I specialize in creating impactful solutions through data science and machine learning, with a focus on innovation and problem-solving.</p>
+                <h2 class="section__title">About Me</h2>
+                <div class="about__content">
+                    <div class="about__text">
+                        <p>I'm a data scientist focused on developing machine learning solutions that solve real-world problems. With a background in computational research and business analytics, I bridge the gap between technical implementation and practical application.</p>
+                        <p>My expertise includes deep learning algorithms, genetic algorithms, and building data analytics platforms that provide actionable insights.</p>
+                        
+                        <div class="skills">
+                            <h3>Technical Skills</h3>
+                            <ul class="skills__list">
+                                <li>Python</li>
+                                <li>TensorFlow</li>
+                                <li>PyTorch</li>
+                                <li>Pandas</li>
+                                <li>NumPy</li>
+                                <li>Seaborn</li>
+                                <li>Matplotlib</li>
+                                <li>TensorRT</li>
+                                <li>CUDA</li>
+                                <li>Machine Learning</li>
+                                <li>Deep Learning</li>
+                                <li>Genetic Algorithms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="projects">
+        <section id="projects" class="projects section">
             <div class="container">
-                <h2>Projects</h2>
+                <h2 class="section__title">Projects</h2>
 
                 <!-- Research Projects -->
-                <div class="projects__category">
-                    <h3>Research</h3>
-                    <div class="projects__grid">
-                        <!-- First Project -->
-                        <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" class="card">
-                            <h4>The Implementation of Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection</h4>
-                            <p>Investigated ML algorithms for predicting circRNA-disease associations with an accuracy of 75.11%.</p>
-                        </a>
+                <div class="project-category">
+                    <h3 class="category__title">Research</h3>
+                    <div class="project-grid">
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Deep Learning for Circular RNA Classification</h4>
+                                <p class="project-card__description">Implemented a custom convolutional neural network architecture with Gaussian Blur data preprocessing to predict circRNA-disease associations. Achieved 75.11% accuracy, improving upon previous methods.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>PyTorch</span>
+                                    <span>NumPy</span>
+                                    <span>Pandas</span>
+                                </div>
+                                <a href="research1.html" target="_blank" class="project-card__link" rel="noopener">View Research</a>
+                            </div>
+                        </article>
 
-                        <!-- Second Project -->
-                        <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" class="card">
-                            <h4>The Characteristic of Cancer Leading Mutation DNA of the P-53 Tumor Suppressor Gene Sequence, using Genetic Algorithms in a Closed Environment Model</h4>
-                            <p>Focused on identifying specific DNA strand characteristics within the P-53 tumor suppressor gene that may lead to cancerous mutations.</p>
-                        </a>
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Cancer Mutation Analysis in P-53 Gene</h4>
+                                <p class="project-card__description">Identified specific DNA strand characteristics within the P-53 tumor suppressor gene that may lead to cancerous mutations, using genetic algorithms in a controlled environment model.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>NumPy</span>
+                                    <span>Genetic Algorithms</span>
+                                    <span>Matplotlib</span>
+                                </div>
+                                <a href="research2.html" target="_blank" class="project-card__link" rel="noopener">View Research</a>
+                            </div>
+                        </article>
                     </div>
                 </div>
 
                 <!-- Business Projects -->
-                <div class="projects__category">
-                    <h3>Business</h3>
-                    <div class="projects__grid">
-                        <a href="https://www.dataktif.com/" target="_blank" class="card">
-                            <h4>Dataktif</h4>
-                            <p>AI-driven data analytics platform for real-time business transformation.</p>
-                        </a>
-                        <a href="https://genta.tech/" target="_blank" class="card">
-                            <h4>Genta Technology</h4>
-                            <p>Solutions for AI workflows, including the Genta Inference Engine and Kolosal Platform.</p>
-                        </a>
-                        <a href="https://kolosal.ai/" target="_blank" class="card">
-                            <h4>Kolosal AI</h4>
-                            <p>Open-source desktop app for training and running large language models (LLMs).</p>
-                        </a>
+                <div class="project-category">
+                    <h3 class="category__title">Business</h3>
+                    <div class="project-grid">
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Dataktif</h4>
+                                <p class="project-card__description">Built a data analytics engine that processes large-scale business data in real-time. Implemented machine learning models that convert complex data patterns into actionable business insights.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>TensorFlow</span>
+                                    <span>Pandas</span>
+                                    <span>Matplotlib</span>
+                                </div>
+                                <a href="https://www.dataktif.com/" target="_blank" class="project-card__link" rel="noopener">Visit Platform</a>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Genta Technology</h4>
+                                <p class="project-card__description">Developed solutions for AI workflows, including the Genta Inference Engine that optimizes model execution for production environments.</p>
+                                <div class="project-card__tech">
+                                    <span>PyTorch</span>
+                                    <span>TensorRT</span>
+                                    <span>CUDA</span>
+                                    <span>Python</span>
+                                </div>
+                                <a href="https://genta.tech/" target="_blank" class="project-card__link" rel="noopener">Learn More</a>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Kolosal AI</h4>
+                                <p class="project-card__description">Created an open-source desktop application for training and running large language models with optimized inference capabilities.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>PyTorch</span>
+                                    <span>CUDA</span>
+                                    <span>TensorRT</span>
+                                </div>
+                                <a href="https://kolosal.ai/" target="_blank" class="project-card__link" rel="noopener">View Project</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <!-- Educational Platform -->
+                <div class="project-category">
+                    <h3 class="category__title">Educational Platform</h3>
+                    <div class="project-grid">
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">rebirdth.id</h4>
+                                <p class="project-card__description">Created an educational platform that empowers individuals to become knowledgeable in research methodology and fosters a community of lifelong learners. Developed tools and resources that provide practical tips, critical analysis of literature, and thought-provoking discussions to stimulate intellectual curiosity.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>Machine Learning</span>
+                                    <span>Data Analysis</span>
+                                    <span>Web Development</span>
+                                </div>
+                                <a href="https://www.instagram.com/rebirdth.id/" target="_blank" class="project-card__link" rel="noopener">Visit Platform</a>
+                            </div>
+                        </article>
                     </div>
                 </div>
 
                 <!-- Personal Projects -->
-                <div class="projects__category">
-                    <h3>Personal</h3>
-                    <div class="projects__grid">
-                        <a href="#" class="card">
-                            <h4>Self-Organizing Map Algorithm</h4>
-                            <p>An advanced implementation for unsupervised learning and clustering inspired by novel SOM techniques.</p>
-                        </a>
-                        <a href="#" class="card">
-                            <h4>Particle Identification System</h4>
-                            <p>A system leveraging G4, genetic algorithms, and data-importance-based classification methods.</p>
-                        </a>
-                        <a href="#" class="card">
-                            <h4>Nuclear Accident Classification</h4>
-                            <p>Integration of ML and deep learning to detect and classify nuclear power plant accidents.</p>
-                        </a>
+                <div class="project-category">
+                    <h3 class="category__title">Personal</h3>
+                    <div class="project-grid">
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Self-Organizing Map Algorithm</h4>
+                                <p class="project-card__description">Implementation for unsupervised learning and clustering inspired by modern SOM techniques, with applications in data visualization and pattern recognition.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>NumPy</span>
+                                    <span>Matplotlib</span>
+                                    <span>Seaborn</span>
+                                </div>
+                                <a href="#" class="project-card__link">Project Details</a>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Particle Identification System</h4>
+                                <p class="project-card__description">System using G4, genetic algorithms, and classification methods based on data importance for identifying particles in physics simulations.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>TensorFlow</span>
+                                    <span>NumPy</span>
+                                    <span>Genetic Algorithms</span>
+                                </div>
+                                <a href="#" class="project-card__link">Project Details</a>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Nuclear Accident Classification</h4>
+                                <p class="project-card__description">Integration of machine learning and deep learning to detect and classify nuclear power plant incidents from operational data patterns.</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>PyTorch</span>
+                                    <span>Pandas</span>
+                                    <span>Seaborn</span>
+                                </div>
+                                <a href="#" class="project-card__link">Project Details</a>
+                            </div>
+                        </article>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact">
+        <section id="contact" class="contact section">
             <div class="container">
-                <h2>Contact Me</h2>
-                <p>Connect with me on:</p>
+                <h2 class="section__title">Contact Me</h2>
+                <p class="contact__intro">Interested in collaboration or have questions? Let's connect:</p>
+                
                 <div class="contact__links">
-                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" class="contact__link" aria-label="LinkedIn Profile" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://www.instagram.com/evint_leo/" target="_blank" class="contact__link" aria-label="Instagram Profile" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://github.com/Evintkoo" target="_blank" class="contact__link" aria-label="GitHub Profile" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" class="contact__link" rel="noopener">
+                        <span class="contact__link-text">LinkedIn</span>
+                    </a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" class="contact__link" rel="noopener">
+                        <span class="contact__link-text">Instagram</span>
+                    </a>
+                    <a href="https://github.com/Evintkoo" target="_blank" class="contact__link" rel="noopener">
+                        <span class="contact__link-text">GitHub</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -130,7 +254,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
+            <p class="copyright">&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
         </div>
     </footer>
 
