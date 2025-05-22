@@ -185,10 +185,12 @@ p {
   padding: var(--spacing-md) 0;
 }
 
+/* Updated header container to better handle space */
 .header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-md); /* Add gap between logo and nav */
 }
 
 .logo {
@@ -200,6 +202,7 @@ p {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  flex-shrink: 0; /* Prevent logo from shrinking */
 }
 
 .logo:hover {
@@ -207,8 +210,9 @@ p {
 }
 
 .logo__image {
-  height: 40px;
-  width: auto;
+  height: 35px; /* Reduced from 40px */
+  width: 35px;  /* Fixed width to maintain aspect ratio */
+  object-fit: contain; /* Keep aspect ratio */
   transition: transform var(--transition-fast);
 }
 
@@ -219,8 +223,10 @@ p {
 .logo__text {
   font-family: var(--font-primary);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Slightly smaller text */
+  white-space: nowrap; /* Prevent text wrapping */
 }
+
 .nav__list {
   display: flex;
   list-style: none;
