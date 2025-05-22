@@ -1,95 +1,85 @@
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Elements
-  const navToggle = document.querySelector('.nav__toggle');
-  const navList = document.querySelector('.nav__list');
-  const header = document.querySelector('.header');
-  const navLinks = document.querySelectorAll('.nav__link');
+// Global function for opening mobile nav
+function toggleMobileNav() {
+  const nav = document.querySelector(".nav");
+  const body = document.body;
+  const navToggle = document.getElementById("nav-toggle");
   
-  // Toggle mobile navigation menu
-  navToggle.addEventListener('click', () => {
-    navList.classList.toggle('nav__list--active');
-    navToggle.classList.toggle('nav__toggle--active');
-    document.body.classList.toggle('nav-open');
-  });
+  console.log("Toggle clicked!"); // Debug log
   
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', (e) => {
-    const isNavOpen = navList.classList.contains('nav__list--active');
-    const clickedInsideNav = navList.contains(e.target);
-    const clickedOnToggle = navToggle.contains(e.target);
-    
-    if (isNavOpen && !clickedInsideNav && !clickedOnToggle) {
-      navList.classList.remove('nav__list--active');
-      navToggle.classList.remove('nav__toggle--active');
-      document.body.classList.remove('nav-open');
-    }
-  });
+  // Toggle the active class
+  nav.classList.toggle("active");
   
-  // Smooth scrolling for navigation links
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      // Close mobile menu if open
-      navList.classList.remove('nav__list--active');
-      navToggle.classList.remove('nav__toggle--active');
-      document.body.classList.remove('nav-open');
-      
-      // Get the target section
-      const targetId = link.getAttribute('href');
-      const targetSection = document.querySelector(targetId);
-      
-      // Calculate scroll position (accounting for fixed header)
-      const headerHeight = header.offsetHeight;
-      const targetPosition = targetSection.offsetTop - headerHeight;
-      
-      // Smooth scroll to target
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
+  // Check if menu is now active
+  const isActive = nav.classList.contains("active");
+  console.log("Menu is active:", isActive); // Debug log
+
+  // Toggle body class to prevent scrolling
+  if (isActive) {
+    body.classList.add("nav-open");
+  } else {
+    body.classList.remove("nav-open");
+  }
+
+  // Update aria-expanded for accessibility
+  navToggle.setAttribute("aria-expanded", isActive.toString());
+}
+
+// Global function for closing mobile nav
+function closeMobileNav() {
+  const nav = document.querySelector(".nav");
+  const body = document.body;
+  const navToggle = document.getElementById("nav-toggle");
+  
+  console.log("Close button clicked!"); // Debug log
+  
+  // Remove active class
+  nav.classList.remove("active");
+  body.classList.remove("nav-open");
+  
+  // Update aria-expanded for accessibility
+  navToggle.setAttribute("aria-expanded", "false");
+}
+
+// DOM Content Loaded event for additional functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const nav = document.querySelector(".nav");
+  const navToggle = document.getElementById("nav-toggle");
+  const navList = document.getElementById("nav-list");
+  const navClose = document.getElementById("nav-close");
+  const body = document.body;
+
+  console.log("Nav elements found:", { nav, navToggle, navList, navClose }); // Debug log
+
+  if (navList) {
+    // Close menu when clicking nav links
+    const navLinks = navList.querySelectorAll(".nav__link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("active");
+        body.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
       });
     });
-  });
-  
-  // Add header shadow on scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('header--scrolled');
-    } else {
-      header.classList.remove('header--scrolled');
+  }
+
+  // Close menu when clicking outside (but not on close button)
+  document.addEventListener("click", (e) => {
+    if (nav && nav.classList.contains("active")) {
+      // Don't close if clicking on nav elements
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove("active");
+        body.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
     }
   });
-  
-  // Project card hover effects
-  const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.classList.add('project-card--active');
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('project-card--active');
-    });
+
+  // Handle escape key to close menu
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav && nav.classList.contains("active")) {
+      nav.classList.remove("active");
+      body.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
   });
-  
-  // Reveal sections on scroll
-  const revealSections = () => {
-    const sections = document.querySelectorAll('.section');
-    
-    sections.forEach(section => {
-      const sectionTop = section.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-      
-      if (sectionTop < windowHeight * 0.75) {
-        section.classList.add('section--visible');
-      }
-    });
-  };
-  
-  // Initial check for visible sections
-  revealSections();
-  
-  // Check for visible sections on scroll
-  window.addEventListener('scroll', revealSections);
 });

@@ -10,18 +10,27 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Consider using a reliable icon library like Font Awesome CDN -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+    <script src="main.js"></script>
 </head>
 
 <body>
     <!-- Header with Navigation -->
     <header class="header">
         <div class="container header__container">
-            <a href="#" class="logo">Evint Leovonzko</a>
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="Evint Leovonzko" class="logo__image">
+                <span class="logo__text">Evint Leovonzko</span>
+            </a>
             <nav class="nav">
-                <button class="nav__toggle" aria-label="Toggle navigation">
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()">
                     <span class="hamburger"></span>
                 </button>
-                <ul class="nav__list">
+                <ul class="nav__list" id="nav-list">
+                    <li class="nav__close-wrapper">
+                        <button class="nav__close" id="nav-close" aria-label="Close navigation" onclick="closeMobileNav()">
+                            <span class="close-icon">&times;</span>
+                        </button>
+                    </li>
                     <li><a href="#about" class="nav__link">About</a></li>
                     <li><a href="#projects" class="nav__link">Projects</a></li>
                     <li><a href="#contact" class="nav__link">Contact</a></li>
@@ -67,6 +76,7 @@
                                 <li>Machine Learning</li>
                                 <li>Deep Learning</li>
                                 <li>Genetic Algorithms</li>
+                                <li>AutoML</li>
                             </ul>
                         </div>
                     </div>
@@ -223,6 +233,21 @@
                                     <span>Seaborn</span>
                                 </div>
                                 <a href="#" class="project-card__link">Project Details</a>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__content">
+                                <h4 class="project-card__title">Kolosal AutoML</h4>
+                                <p class="project-card__description">Integrated Machine Learning and CPU optimized platform to train and inference ML Model</p>
+                                <div class="project-card__tech">
+                                    <span>Python</span>
+                                    <span>Scikit Learn</span>
+                                    <span>XGBoost</span>
+                                    <span>Intel Optimization</span>
+                                    <span>MLOps</span>
+                                </div>
+                                <a href="https://github.com/Genta-Technology/kolosal_automl" target="_blank" rel="noopener" class="project-card__link">Project Details</a>
                             </div>
                         </article>
                     </div>
