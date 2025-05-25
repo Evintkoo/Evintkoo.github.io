@@ -1,489 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Learning for Circular RNA Classification | Evint Leovonzko</title>
-    <style>
-        :root {
-            --primary-color: #3a6ea5;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ff6b6b;
-            --text-color: #333;
-            --light-text: #666;
-            --border-color: #e9ecef;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --container-width: 800px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #fff;
-            padding-bottom: 3rem;
-        }
-        
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: var(--container-width);
-            margin: 0 auto;
-        }
-        
-        .paper-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .authors {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .journal-info {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 1.5rem;
-        }
-        
-        .view-paper-btn {
-            display: inline-block;
-            background-color: white;
-            color: var(--primary-color);
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .view-paper-btn:hover {
-            background-color: rgba(255,255,255,0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        nav {
-            background-color: white;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        .nav-link.active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        section {
-            margin-bottom: 2.5rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        h3 {
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.5rem;
-        }
-        
-        p {
-            margin-bottom: 1rem;
-        }
-        
-        .abstract {
-            background-color: var(--secondary-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-        
-        .figure {
-            margin: 2rem 0;
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .figure img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-        
-        .figure-caption {
-            font-size: 0.9rem;
-            color: var(--light-text);
-            text-align: left;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        th {
-            background-color: var(--secondary-color);
-            font-weight: 600;
-        }
-        
-        .collapsible {
-            background-color: var(--secondary-color);
-            border: none;
-            padding: 1rem;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .collapsible:hover {
-            background-color: #e9ecef;
-        }
-        
-        .collapsible:after {
-            content: '+';
-            font-size: 1.2rem;
-        }
-        
-        .active:after {
-            content: '−';
-        }
-        
-        .content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: white;
-            border-radius: 0 0 4px 4px;
-        }
-        
-        .content-inner {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-top: none;
-        }
-        
-        .highlight-box {
-            background-color: rgba(58, 110, 165, 0.1);
-            border-left: 4px solid var(--primary-color);
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .method-step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        
-        .step-number {
-            background-color: var(--primary-color);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            flex-shrink: 0;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .paper-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <meta name="description" content="Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <h1 class="paper-title">The Implementation of Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection</h1>
-            <div class="authors">Evint Leovonzko, BSc Student; Callixta F. Cahyaningrum, BSc Student; Rachmania Ulwani, BSc Student</div>
-            <div class="journal-info">URNCST Journal (2024) | Volume 8, Issue 7</div>
-            <a href="https://urncst.com/index.php/urncst/article/view/601" class="view-paper-btn" target="_blank">View Full Paper</a>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="container header__container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Evint Leovonzko" class="logo__image">
+                <span class="logo__text">Evint Leovonzko</span>
+            </a>
+            <nav class="nav">
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav__list" id="nav-list">
+                    <li class="nav__close-wrapper">
+                        <button class="nav__close" id="nav-close" aria-label="Close navigation" onclick="closeMobileNav()">
+                            <span class="close-icon">&times;</span>
+                        </button>
+                    </li>
+                    <li><a href="index.html" class="nav__link">Home</a></li>
+                    <li><a href="index.html#about" class="nav__link">About</a></li>
+                    <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+                    <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-    
-    <nav>
-        <div class="container">
-            <div class="nav-container">
-                <a href="#abstract" class="nav-link active">Abstract</a>
-                <a href="#introduction" class="nav-link">Introduction</a>
-                <a href="#methods" class="nav-link">Methods</a>
-                <a href="#results" class="nav-link">Results</a>
-                <a href="#discussion" class="nav-link">Discussion</a>
-                <a href="#conclusion" class="nav-link">Conclusion</a>
-            </div>
-        </div>
-    </nav>
-    
-    <main class="container">
-        <section id="abstract" class="abstract">
-            <h2>Abstract</h2>
-            <p><strong>Introduction:</strong> Circular RNAs (circRNAs) are increasingly recognized as key regulators of gene expression due to their unique closed-loop structure and involvement in various cellular processes. This study investigates the utilization of machine learning algorithms in predicting circRNA-disease associations.</p>
-            
-            <p><strong>Methods:</strong> This study proposes a novel deep learning approach leveraging artificial neural networks (ANN) for circRNA classification. The methodology involves data collection from circRNA databases, k-mers counting for feature extraction, Gaussian blur implementation for data smoothing, and ANN-based model training.</p>
-            
-            <p><strong>Results:</strong> Evaluation of the trained models based on precision, recall, and f1-score metrics shows an overall accuracy of 0.7511, with an average precision score of 0.7982, recall of 0.7511, and f1-score of 0.7637.</p>
-            
-            <p><strong>Discussion:</strong> The results indicate that our ANN-based algorithm effectively detects and classifies circRNA datasets with considerable accuracy. Compared to the algorithm from past research, our algorithm is also shown to have less computational power.</p>
-            
-            <p><strong>Conclusion:</strong> Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.</p>
-        </section>
-        
-        <section id="introduction">
-            <h2>Introduction</h2>
-            <p>Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.</p>
-            
-            <div class="highlight-box">
-                <p>CircRNAs are emerging as valuable biomarkers due to their high stability and tissue-specific expression patterns, making them reliable indicators for various diseases.</p>
-            </div>
-            
-            <p>The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.</p>
-        </section>
-        
-        <section id="methods">
-            <h2>Methods</h2>
-            
-            <div class="figure">
-                <img src="images\Overall Method Flowchart.png" alt="Overall Methodology Flowchart">
-                <div class="figure-caption">Figure 1: Overall Methodology Flowchart showing the process from data collection to algorithm evaluation.</div>
-            </div>
-            
-            <button class="collapsible">Dataset Collection</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA).</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Feature Extraction with K-mers</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula:</p>
-                    <p style="text-align:center"><em>k = log<sub>k</sub>(average of l)</em></p>
-                    <p>Where l is the length of sequences. For k = 4, there are 4-mers obtained, e.g., {ACGT, GTAA, CGTT} which were then processed.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Gaussian Blur Implementation</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula:</p>
-                    <p style="text-align:center"><em>f(x) = 1/(σ√(2π))e<sup>-1/2((x-μ)/σ)<sup>2</sup></sup></em></p>
-                    <p>The value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Model Architecture</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons.</p>
+
+    <main>
+        <!-- Research Paper Header -->
+        <section class="paper-hero">
+            <div class="container">
+                <div class="paper-hero__content">
+                    <h1 class="paper-hero__title">Deep Learning for Circular RNA Classification</h1>
+                    <p class="paper-hero__subtitle">Implementation with Gaussian Blur Data Preprocessing in Detection and Classification</p>
                     
-                    <div class="figure">
-                        <img src="images\Overall Method Flowchart.png" alt="Model Architecture">
-                        <div class="figure-caption">Figure 2: (a) Detection Model Architecture and (b) Classification Model Architecture</div>
+                    <div class="paper-meta">
+                        <div class="authors">
+                            <span class="author-label">Authors:</span>
+                            <span class="author-names">Evint Leovonzko, Callixta F. Cahyaningrum, Rachmania Ulwani</span>
+                        </div>
+                        <div class="journal-info">
+                            <span class="journal-label">Published in:</span>
+                            <span class="journal-name">URNCST Journal (2024) | Volume 8, Issue 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-hero__cta">
+                        <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            View Full Paper
+                        </a>
+                        <a href="#abstract" class="btn btn-secondary">Read Research</a>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section id="results">
-            <h2>Results</h2>
-            
-            <p>Our neural network models for both detection and classification showed promising training progress:</p>
-            
-            <div class="figure">
-                <img src="https://via.placeholder.com/600x300?text=Training+and+Validation+Metrics" alt="Training and Validation Metrics">
-                <div class="figure-caption">Figure 3: Training and validation metrics for the detection and classification models.</div>
-            </div>
-            
-            <div class="table-container">
-                <h3>Model Performance Comparison</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Method</th>
-                            <th>Accuracy</th>
-                            <th>Precision</th>
-                            <th>F1-Score</th>
-                            <th>Time per Prediction</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Our algorithm</strong></td>
-                            <td>0.7511</td>
-                            <td>0.7982</td>
-                            <td>0.7637</td>
-                            <td>0.14 ms</td>
-                        </tr>
-                        <tr>
-                            <td>SVM</td>
-                            <td>0.7328</td>
-                            <td>0.7742</td>
-                            <td>0.7921</td>
-                            <td>0.84 ms</td>
-                        </tr>
-                        <tr>
-                            <td>Random Forest</td>
-                            <td>0.7186</td>
-                            <td>0.7393</td>
-                            <td>0.7918</td>
-                            <td>0.62 ms</td>
-                        </tr>
-                        <tr>
-                            <td>DeepCirCode</td>
-                            <td>0.8129</td>
-                            <td>0.9271</td>
-                            <td>0.8365</td>
-                            <td>6.74 ms</td>
-                        </tr>
-                        <tr>
-                            <td>Att-CNN</td>
-                            <td>0.7264</td>
-                            <td>0.7452</td>
-                            <td>0.7696</td>
-                            <td>23.67 ms</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="highlight-box">
-                <p>The proposed method's runtime was significantly faster than other existing algorithms, taking only 0.14 milliseconds to predict one RNA. It was at least ten times faster than similar models like DeepCirCode and circDeep.</p>
+
+        <!-- Navigation Menu -->
+        <section class="paper-nav">
+            <div class="container">
+                <nav class="paper-nav__menu">
+                    <a href="#abstract" class="paper-nav__link active">Abstract</a>
+                    <a href="#introduction" class="paper-nav__link">Introduction</a>
+                    <a href="#methods" class="paper-nav__link">Methods</a>
+                    <a href="#results" class="paper-nav__link">Results</a>
+                    <a href="#discussion" class="paper-nav__link">Discussion</a>
+                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
+                </nav>
             </div>
         </section>
-        
-        <section id="discussion">
-            <h2>Discussion</h2>
-            
-            <p>The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.</p>
-            
-            <p>The similarity between both training and validation evaluation scores shows that there was not an underfitting and overfitting issue on the detection model. However, the high difference between the training and validation loss in the classification model showed an indicator of overfitting that occurred in the training process.</p>
-            
-            <div class="highlight-box">
-                <p>The proposed algorithm would likely have less computing power requirements and simpler implementation compared to previous research, which would make its implementation less costly and more efficient.</p>
+
+        <!-- Abstract Section -->
+        <section id="abstract" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Abstract</h2>
+                    
+                    <div class="abstract-content">
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Introduction</h3>
+                            <p>Circular RNAs (circRNAs) are increasingly recognized as key regulators of gene expression due to their unique closed-loop structure and involvement in various cellular processes. This study investigates the utilization of machine learning algorithms in predicting circRNA-disease associations.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Methods</h3>
+                            <p>This study proposes a novel deep learning approach leveraging artificial neural networks (ANN) for circRNA classification. The methodology involves data collection from circRNA databases, k-mers counting for feature extraction, Gaussian blur implementation for data smoothing, and ANN-based model training.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Results</h3>
+                            <p>Evaluation of the trained models based on precision, recall, and f1-score metrics shows an overall accuracy of 0.7511, with an average precision score of 0.7982, recall of 0.7511, and f1-score of 0.7637.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Discussion</h3>
+                            <p>The results indicate that our ANN-based algorithm effectively detects and classifies circRNA datasets with considerable accuracy. Compared to the algorithm from past research, our algorithm is also shown to have less computational power.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Conclusion</h3>
+                            <p>Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <p>By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.</p>
         </section>
-        
-        <section id="conclusion">
-            <h2>Conclusion</h2>
-            
-            <p>This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.</p>
-            
-            <p>The results demonstrate that the proposed method was comparable to other similar algorithms. However, our algorithm was determined to have a better evaluation score compared to most other existing algorithms while requiring significantly less computational resources.</p>
-            
-            <p>In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.</p>
+
+        <!-- Introduction Section -->
+        <section id="introduction" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Introduction</h2>
+                    
+                    <div class="content-text">
+                        <p>Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>CircRNAs are emerging as valuable biomarkers due to their high stability and tissue-specific expression patterns, making them reliable indicators for various diseases.</p>
+                            </div>
+                        </div>
+                        
+                        <p>The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methods Section -->
+        <section id="methods" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Methods</h2>
+                    
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">1</div>
+                                <h3>Dataset Collection</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA).</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">2</div>
+                                <h3>Feature Extraction with K-mers</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula:</p>
+                                <div class="formula">
+                                    <code>k = log<sub>k</sub>(average of l)</code>
+                                </div>
+                                <p>Where l is the length of sequences. For k = 4, there are 4-mers obtained, e.g., {ACGT, GTAA, CGTT} which were then processed.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">3</div>
+                                <h3>Gaussian Blur Implementation</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula:</p>
+                                <div class="formula">
+                                    <code>f(x) = 1/(σ√(2π))e<sup>-1/2((x-μ)/σ)<sup>2</sup></sup></code>
+                                </div>
+                                <p>The value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">4</div>
+                                <h3>Model Architecture</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Results</h2>
+                    
+                    <div class="content-text">
+                        <p>Our neural network models for both detection and classification showed promising training progress with the following performance metrics:</p>
+                    </div>
+
+                    <div class="results-table">
+                        <h3>Model Performance Comparison</h3>
+                        <div class="table-container">
+                            <table class="performance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Accuracy</th>
+                                        <th>Precision</th>
+                                        <th>F1-Score</th>
+                                        <th>Time per Prediction</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="our-method">
+                                        <td><strong>Our Algorithm</strong></td>
+                                        <td>0.7511</td>
+                                        <td>0.7982</td>
+                                        <td>0.7637</td>
+                                        <td>0.14 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SVM</td>
+                                        <td>0.7328</td>
+                                        <td>0.7742</td>
+                                        <td>0.7921</td>
+                                        <td>0.84 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Random Forest</td>
+                                        <td>0.7186</td>
+                                        <td>0.7393</td>
+                                        <td>0.7918</td>
+                                        <td>0.62 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DeepCirCode</td>
+                                        <td>0.8129</td>
+                                        <td>0.9271</td>
+                                        <td>0.8365</td>
+                                        <td>6.74 ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Att-CNN</td>
+                                        <td>0.7264</td>
+                                        <td>0.7452</td>
+                                        <td>0.7696</td>
+                                        <td>23.67 ms</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="research-highlight">
+                        <div class="highlight-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                        </div>
+                        <div class="highlight-content">
+                            <p>The proposed method's runtime was significantly faster than other existing algorithms, taking only 0.14 milliseconds to predict one RNA. It was at least ten times faster than similar models like DeepCirCode and circDeep.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discussion Section -->
+        <section id="discussion" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Discussion</h2>
+                    
+                    <div class="content-text">
+                        <p>The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.</p>
+                        
+                        <p>The similarity between both training and validation evaluation scores shows that there was not an underfitting and overfitting issue on the detection model. However, the high difference between the training and validation loss in the classification model showed an indicator of overfitting that occurred in the training process.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>The proposed algorithm would likely have less computing power requirements and simpler implementation compared to previous research, which would make its implementation less costly and more efficient.</p>
+                            </div>
+                        </div>
+                        
+                        <p>By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusion" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Conclusion</h2>
+                    
+                    <div class="content-text">
+                        <p>This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.</p>
+                        
+                        <p>The results demonstrate that the proposed method was comparable to other similar algorithms. However, our algorithm was determined to have a better evaluation score compared to most other existing algorithms while requiring significantly less computational resources.</p>
+                        
+                        <p>In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Portfolio -->
+        <section class="section">
+            <div class="container">
+                <div class="back-to-portfolio">
+                    <a href="index.html#projects" class="btn btn-primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                        Back to Portfolio
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
-    
-    <script>
-        // Function to handle navigation highlighting
-        function updateActiveNav() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.scrollY >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', updateActiveNav);
-        
-        // Collapsible sections
-        const collapsibles = document.querySelectorAll('.collapsible');
-        
-        collapsibles.forEach(collapsible => {
-            collapsible.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
-            });
-        });
-    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright">&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
 </body>
+
 </html>

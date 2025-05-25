@@ -1,639 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cancer Leading Mutation DNA of P-53 Gene | Genetic Algorithms</title>
-    <style>
-        :root {
-            --primary-color: #3a6ea5;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ff6b6b;
-            --text-color: #333;
-            --light-text: #666;
-            --border-color: #e9ecef;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --container-width: 800px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #fff;
-            padding-bottom: 3rem;
-        }
-        
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: var(--container-width);
-            margin: 0 auto;
-        }
-        
-        .paper-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .authors {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .journal-info {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 1.5rem;
-        }
-        
-        .view-paper-btn {
-            display: inline-block;
-            background-color: white;
-            color: var(--primary-color);
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .view-paper-btn:hover {
-            background-color: rgba(255,255,255,0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        nav {
-            background-color: white;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        .nav-link.active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        section {
-            margin-bottom: 2.5rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        h3 {
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.5rem;
-        }
-        
-        p {
-            margin-bottom: 1rem;
-        }
-        
-        .abstract {
-            background-color: var(--secondary-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-        
-        .figure {
-            margin: 2rem 0;
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .figure img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-        
-        .figure-caption {
-            font-size: 0.9rem;
-            color: var(--light-text);
-            text-align: left;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        th {
-            background-color: var(--secondary-color);
-            font-weight: 600;
-        }
-        
-        .collapsible {
-            background-color: var(--secondary-color);
-            border: none;
-            padding: 1rem;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .collapsible:hover {
-            background-color: #e9ecef;
-        }
-        
-        .collapsible:after {
-            content: '+';
-            font-size: 1.2rem;
-        }
-        
-        .active:after {
-            content: '−';
-        }
-        
-        .content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: white;
-            border-radius: 0 0 4px 4px;
-        }
-        
-        .content-inner {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-top: none;
-        }
-        
-        .highlight-box {
-            background-color: rgba(58, 110, 165, 0.1);
-            border-left: 4px solid var(--primary-color);
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .method-step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        
-        .step-number {
-            background-color: var(--primary-color);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            flex-shrink: 0;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .reference-list {
-            padding-left: 2rem;
-        }
-        
-        .reference-list li {
-            margin-bottom: 0.75rem;
-            text-indent: -2rem;
-            padding-left: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .paper-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <title>Cancer Leading Mutation DNA of P-53 Gene | Evint Leovonzko</title>
+    <meta name="description" content="Genetic Algorithms Analysis of P-53 Tumor Suppressor Gene Mutations in Cancer Development - Research by Evint Leovonzko">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <h1 class="paper-title">The Characteristic of Cancer Leading Mutation DNA of the P-53 Tumor Suppressor Gene Sequence, using Genetics Algorithms in a Closed Environment Model</h1>
-            <div class="authors">Evint Leovonzko, BSc Student</div>
-            <div class="journal-info">Journal of Cancer Research (2024)</div>
-            <a href="https://github.com/Evintkoo/Vant-149-project" class="view-paper-btn" target="_blank">View Full Paper</a>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="container header__container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Evint Leovonzko" class="logo__image">
+                <span class="logo__text">Evint Leovonzko</span>
+            </a>
+            <nav class="nav">
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav__list" id="nav-list">
+                    <li class="nav__close-wrapper">
+                        <button class="nav__close" id="nav-close" aria-label="Close navigation" onclick="closeMobileNav()">
+                            <span class="close-icon">&times;</span>
+                        </button>
+                    </li>
+                    <li><a href="index.html" class="nav__link">Home</a></li>
+                    <li><a href="index.html#about" class="nav__link">About</a></li>
+                    <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+                    <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-    
-    <nav>
-        <div class="container">
-            <div class="nav-container">
-                <a href="#introduction" class="nav-link active">Introduction</a>
-                <a href="#methods" class="nav-link">Methods</a>
-                <a href="#results" class="nav-link">Results</a>
-                <a href="#discussion" class="nav-link">Discussion</a>
-                <a href="#conclusion" class="nav-link">Conclusion</a>
-                <a href="#references" class="nav-link">References</a>
-            </div>
-        </div>
-    </nav>
-    
-    <main class="container">
-        <section id="introduction">
-            <h2>Introduction</h2>
-            <p>The P-53 tumor suppressor gene is one of the most extensively studied genes in cancer research, with numerous studies implicating mutations in the gene as a key driver of cancer development and progression (Soussi, T., & Wiman, K. G. 2015). The P-53 gene is a critical component of the cell cycle mechanism, responsible for regulating cell growth and division, and acts as a checkpoint for DNA damage and other cellular stresses. When the gene is mutated, it loses its ability to regulate the cell cycle, allowing for uncontrollable growth and proliferation of cancer cells. Several types of mutation have been identified in the P-53 gene, including point mutations, deletions, and insertions.</p>
-            
-            <div class="highlight-box">
-                <p>As one of the most leading causes of cancer and an essential requisite for tumor development, P-53 suppresses mitosis and cell growth to allow cell repairs of its DNA (Di-Leo, 2007).</p>
-            </div>
-            
-            <p>P53 is contributed in cell regulators that usually abrogates its tumor suppression function, and fostering cancer cell growth (Zambetti, 2007). The process of genetic changes in its material alters the structure or number of genes or entire chromosomes called mutation (Johnstion, 2006). Mutation is a spontaneous mutation resulting from errors during DNA replication, recombinations, spontaneous lesions, and transposable elements (Vogelstein, 2000).</p>
-            
-            <p>While the significance of these mutations in cancer development has been well-established, much remains unknown about the underlying mechanisms and how these mutations affect the structure and the function of the P-53 protein. This paper aims to analyze different sequences of the P-53 tumor suppressor gene to find a common attribute using genetics algorithms in a closed environment model.</p>
-            
-            <p>By applying genetic algorithms in a closed environment model, we can gain insights into the characteristics of P-53 mutations and their potential implications in cancer development. Genetic algorithms provide a computational approach to simulate evolutionary processes, enabling us to analyze complex patterns and identify common attributes in mutated P-53 gene sequences (Eiben & Smith, 2015).</p>
-            
-            <p>Researchers used a closed environmental model to create a simulated environment that mimics the conditions within a cell. This environment includes the necessary components for DNA replication, transcription, translation, and other cellular processes relevant to the functioning of the P-53 gene. Within this controlled setting, we can observe how different P-53 gene sequences interact with cellular components and track the behavior of mutated sequences in response to various stimuli.</p>
-        </section>
-        
-        <section id="methods">
-            <h2>Methods</h2>
-            
-            <p>Self organizing matrix or Kohonen maps is a particular topographically organized vector quantization algorithm. By implementing this method, the specific characteristic of DNA strands in the cancer leading mutation path could be determined. All of the methods were implemented in the Python programming language with available open source libraries.</p>
-            
-            <button class="collapsible">Data Gathering</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Data was gathered from the NCBI database, which is composed of the DNA strands of P53 Tumor Suppressor Genes. The collected data has a total of 25 DNA strands with the length of 2509 characters each and converted into a txt file for each DNA strand. The data is then filtered to remove punctuation and spaces. On top of that, a sample of cancerous and parental pairs was collected to determine the value of Levenshtein Similarity for cancer children.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Generate Mutational Pathway</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Tree is a structure that is used to maintain ordered data. A tree either consists of nodes and leaves or it could be empty. One of the trees is called binary tree, which is a tree that has a characteristic of only having two children, left child and right child. A binary tree was implemented as a representation of mitosis self-multiplication of cells. As is well known, the number of n nodes is given by the nth Catalan number (E. Mäkinen, 1991).</p>
-                    <p>In this paper, each node in the binary tree contains an object that represents the ID (a unique string that represents the node), generation number (integer), DNA strand (string), and the cancer status of the node (boolean). To generate the tree, a generative recursion algorithm was built to generate the mutational pathway which added a new left and right child for each node until the 14th generation, with the root of 25 DNA strands.</p>
-                    <p>Before the recursion, a new ID, generation number, mutated DNA strand, and the status was updated to represent the node. Mutation of the DNA was chosen with a random function between deletion, duplication, inversion, insertion, translocation, point mutation, and frameshift. The recursion will be ended if it's already generated by the 14th generation or if the node cancer status is true. Which means that if the mutation is already cancerous, the node would not generate any childs. The cancerous DNA was distincted by using levenshtein similarity, which shows a similarity score between 2 DNA. For each root, there are 50 repetitions to gather more data.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Filters the Cancer Leading Mutation</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Depth First Search algorithm is a deep search algorithm that starts from the initial nodes and visits only the leftmost child nodes at the next level. Then take the first node on the topmost level, then check if the node is the solution. If the node satisfies a certain equation, then the search is ended. This paper used a depth first search algorithm to find the path, then saved the path in the form of a list of nodes.</p>
-                    <p>After the list was built, the DNA strands of the list were extracted, and by using levenshtein similarity, a list of similarity was built to find the most mutated node among the path except the cancerous node. By these steps, the cancer leading node was collected and saved into a table that consisted of the ID, generation number, DNA strands, and the cancer status.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">DNA Encoding</button>
-            <div class="content">
-                <div class="content-inner">
-                    <p>Counting k-mers (substrings of length k in DNA sequence data) is an essential component of many methods in bioinformatics, including for genome and transcriptome assembly, for metagenomic sequencing, and for error correction of sequence reads. After the nodes of cancer leading agents were gathered, the DNA strings were extracted and the duplicate DNA strands were removed.</p>
-                    <p>All of the DNA strands were gathered, and calculated the average of the DNA strand length, and used a log with base of 4 to find the k number. By using the result of the equation, the Counting k-mers was implemented for each DNA and resulted in a matrix that contains all of the DNA data with the length of the vector 1024. The data then saved in Comma Separated Value (CSV), which resulted in a matrix with 1024 columns and 73475 rows.</p>
-                </div>
-            </div>
-            
-            <button class="collapsible">Clustering</button>
-            <div class="content">
-                <div class="content-inner">
-                    <h3>Correlation analysis</h3>
-                    <p>Correlation analysis is a method that estimates the strength of the relationship between any pair of variables. Since there are 1024 features as the result of the encoding, it is necessary to find the most valuable features in the data. Understanding that there are positive and negative correlations, the absolute value of the correlation was calculated to find the absolute correlation between variable pairs. After that, 5 highest correlation was collected and used to define the variables that would be selected and continued in the clustering process.</p>
+
+    <main>
+        <!-- Research Paper Header -->
+        <section class="paper-hero">
+            <div class="container">
+                <div class="paper-hero__content">
+                    <h1 class="paper-hero__title">Cancer Leading Mutation DNA of P-53 Gene</h1>
+                    <p class="paper-hero__subtitle">Characteristic Analysis using Genetic Algorithms in a Closed Environment Model</p>
                     
-                    <h3>SOM Clustering</h3>
-                    <p>Self organizing matrix or Kohonen maps is a particular topographically organized vector quantization algorithm. This method computes a mapping from high dimensional space into two dimensional regular grid with specificity that close position in the regular grid is associated with close position in the original high dimensional space (Vellido, et al. 2020).</p>
-                    <p>Self organizing matrix was performed to classify the group of DNA strains that have been gathered and find the characteristic of the DNA strands in each group. Before implementing a self organizing matrix, several variables such as width of the matrix, length of the matrix should be defined. Hence this paper tries to find the best number for width and length of the matrix based on its silhouette score, davies bouldin score, and calinski harabasz score to determine the quality of the result of the clustering.</p>
+                    <div class="paper-meta">
+                        <div class="authors">
+                            <span class="author-label">Author:</span>
+                            <span class="author-names">Evint Leovonzko, BSc Student</span>
+                        </div>
+                        <div class="journal-info">
+                            <span class="journal-label">Published in:</span>
+                            <span class="journal-name">Journal of Cancer Research (2024)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-hero__cta">
+                        <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                            View Source Code
+                        </a>
+                        <a href="#introduction" class="btn btn-secondary">Read Research</a>
+                    </div>
                 </div>
             </div>
         </section>
-        
-        <section id="results">
-            <h2>Results</h2>
-            
-            <div class="table-container">
-                <h3>Cluster Center</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Cluster</th>
-                            <th>cagcc</th>
-                            <th>agcca</th>
-                            <th>cccag</th>
-                            <th>ccagc</th>
-                            <th>ccagg</th>
-                            <th>ttttt</th>
-                            <th>ctttt</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>15.22389</td>
-                            <td>12.09806</td>
-                            <td>13.99139</td>
-                            <td>11.97066</td>
-                            <td>12.25152</td>
-                            <td>29.22354</td>
-                            <td>10.94611</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>13.48352</td>
-                            <td>10.90663</td>
-                            <td>12.52781</td>
-                            <td>10.88192</td>
-                            <td>10.90285</td>
-                            <td>21.99507</td>
-                            <td>9.096031</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>11.72513</td>
-                            <td>9.39021</td>
-                            <td>10.94836</td>
-                            <td>9.488609</td>
-                            <td>9.453751</td>
-                            <td>20.30923</td>
-                            <td>8.312927</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>9.718946</td>
-                            <td>7.800927</td>
-                            <td>9.07718</td>
-                            <td>7.909327</td>
-                            <td>7.984004</td>
-                            <td>19.97388</td>
-                            <td>7.916305</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>6.554556</td>
-                            <td>5.575858</td>
-                            <td>6.706779</td>
-                            <td>5.629877</td>
-                            <td>5.999755</td>
-                            <td>14.50365</td>
-                            <td>5.980873</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>5.049533</td>
-                            <td>4.946125</td>
-                            <td>5.794455</td>
-                            <td>4.906471</td>
-                            <td>5.353537</td>
-                            <td>3.63425</td>
-                            <td>2.674657</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="figure">
-                <img src="https://via.placeholder.com/600x300?text=Histogram+of+K-mer+Encoded+DNA" alt="Histogram of K-mer encoded DNA strand">
-                <div class="figure-caption">Figure 1: The histogram of the K-mer encoded DNA strand of the center cluster. The figure shows the DNA strand of all 6 cluster centers after encoded using k-mer count with number k of 5, which was determined by the best clustering model.</div>
-            </div>
-            
-            <div class="table-container">
-                <h3>Matrix Parameters and Clustering Quality</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Matrix Width</th>
-                            <th>Matrix Height</th>
-                            <th>Total Cluster</th>
-                            <th>Silhouette Score</th>
-                            <th>Davies Bouldin Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>0.397634</td>
-                            <td>1.080491</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>0.279982</td>
-                            <td>1.067024</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>0.445013</td>
-                            <td>0.856827</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>0.415871</td>
-                            <td>0.870465</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>6</td>
-                            <td>6</td>
-                            <td>0.451032</td>
-                            <td>0.804099</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>7</td>
-                            <td>7</td>
-                            <td>0.329884</td>
-                            <td>1.094722</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>8</td>
-                            <td>0.338642</td>
-                            <td>1.020047</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>9</td>
-                            <td>9</td>
-                            <td>0.312648</td>
-                            <td>1.333904</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>5</td>
-                            <td>10</td>
-                            <td>0.331954</td>
-                            <td>1.130516</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>11</td>
-                            <td>11</td>
-                            <td>0.286358</td>
-                            <td>1.459598</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+        <!-- Navigation Menu -->
+        <section class="paper-nav">
+            <div class="container">
+                <nav class="paper-nav__menu">
+                    <a href="#introduction" class="paper-nav__link active">Introduction</a>
+                    <a href="#methods" class="paper-nav__link">Methods</a>
+                    <a href="#results" class="paper-nav__link">Results</a>
+                    <a href="#discussion" class="paper-nav__link">Discussion</a>
+                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
+                    <a href="#references" class="paper-nav__link">References</a>
+                </nav>
             </div>
         </section>
-        
-        <section id="discussion">
-            <h2>Discussion</h2>
-            
-            <p>The result shows that there are 6 strands that have the highest correlation among the cancer leading mutations, which are "cagcc", "agcca", "cccag", "ccagg", "ttttt", "ctttt". It is shown that each of the clusters has its own unique strand characteristic, which represents their own cluster. Based on the silhouette score, it is shown that the clustering has done a decent amount of cluster separation.</p>
-            
-            <div class="highlight-box">
-                <p>Based on the trial, the result of the data shows that the silhouette score has an increasing trend from 1 by 2 to 1 by 6 matrix, and suddenly drops after the 1 by 7 matrix and the decreasing trend continues along the increasing amount of total cluster.</p>
+
+        <!-- Introduction Section -->
+        <section id="introduction" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Introduction</h2>
+                    
+                    <div class="content-text">
+                        <p>The P-53 tumor suppressor gene is one of the most extensively studied genes in cancer research, with numerous studies implicating mutations in the gene as a key driver of cancer development and progression (Soussi, T., & Wiman, K. G. 2015). The P-53 gene is a critical component of the cell cycle mechanism, responsible for regulating cell growth and division, and acts as a checkpoint for DNA damage and other cellular stresses.</p>
+                        
+                        <p>When the gene is mutated, it loses its ability to regulate the cell cycle, allowing for uncontrollable growth and proliferation of cancer cells. Several types of mutation have been identified in the P-53 gene, including point mutations, deletions, and insertions.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>As one of the most leading causes of cancer and an essential requisite for tumor development, P-53 suppresses mitosis and cell growth to allow cell repairs of its DNA (Di-Leo, 2007).</p>
+                            </div>
+                        </div>
+                        
+                        <p>P53 is contributed in cell regulators that usually abrogates its tumor suppression function, and fostering cancer cell growth (Zambetti, 2007). The process of genetic changes in its material alters the structure or number of genes or entire chromosomes called mutation (Johnsston, 2006). Mutation is a spontaneous mutation resulting from errors during DNA replication, recombinations, spontaneous lesions, and transposable elements (Vogelstein, 2000).</p>
+                        
+                        <p>While the significance of these mutations in cancer development has been well-established, much remains unknown about the underlying mechanisms and how these mutations affect the structure and the function of the P-53 protein. This paper aims to analyze different sequences of the P-53 tumor suppressor gene to find a common attribute using genetics algorithms in a closed environment model.</p>
+                        
+                        <p>By applying genetic algorithms in a closed environment model, we can gain insights into the characteristics of P-53 mutations and their potential implications in cancer development. Genetic algorithms provide a computational approach to simulate evolutionary processes, enabling us to analyze complex patterns and identify common attributes in mutated P-53 gene sequences (Eiben & Smith, 2015).</p>
+                        
+                        <p>Researchers used a closed environmental model to create a simulated environment that mimics the conditions within a cell. This environment includes the necessary components for DNA replication, transcription, translation, and other cellular processes relevant to the functioning of the P-53 gene. Within this controlled setting, we can observe how different P-53 gene sequences interact with cellular components and track the behavior of mutated sequences in response to various stimuli.</p>
+                    </div>
+                </div>
             </div>
-            
-            <p>The best matrix size is represented on the silhouette score of 0.451032 on the 1 by 6 matrix that has a total cluster of 6. With the small size of the matrix, all of the agents in the matrix could be considered as a cluster center, which could be shown by a histogram plot.</p>
-            
-            <p>Since this paper is a mathematical model simulation, this research could be improved by expanding the scope of the study, which includes other types of cancer. This could provide a better understanding of the general cancer leading mutation to all cancer types. Additionally, future research could implement other methods of machine learning, which would help to separate the clustering more decently, and determine better cluster characteristics.</p>
-            
-            <p>The limitation of this study is the sample size that was limited and not nature based data. It would be better to understand and represent the nature of the mutation itself. Additionally, the use of specific algorithms or methods could also introduce limitations, as different algorithms may produce different results. It is important to acknowledge and discuss any limitations in a research paper to provide context for the results and to guide future research.</p>
         </section>
-        
-        <section id="conclusion">
-            <h2>Conclusion</h2>
-            
-            <p>Based on the result, this paper shows that there is a characteristic of cancer leading mutation that might cause the beginning mutation path to cancer. The implementation of genetic algorithms in a closed environment model has allowed us to identify specific DNA patterns associated with cancer-causing mutations in the P-53 gene.</p>
-            
-            <p>Through our clustering analysis, we identified six distinct DNA sequence patterns that appear to be strongly correlated with cancer progression. This finding suggests that certain mutation patterns in the P-53 gene may be more likely to lead to cancer development than others.</p>
-            
-            <p>Our approach demonstrates the potential of computational methods in understanding the genetic basis of cancer. By simulating the evolutionary processes of mutation within a controlled environment, we can gain insights into the complex mechanisms of cancer development that would be difficult to observe in traditional experimental settings.</p>
+
+        <!-- Methods Section -->
+        <section id="methods" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Methods</h2>
+                    
+                    <div class="content-text">
+                        <p>Self organizing matrix or Kohonen maps is a particular topographically organized vector quantization algorithm. By implementing this method, the specific characteristic of DNA strands in the cancer leading mutation path could be determined. All of the methods were implemented in the Python programming language with available open source libraries.</p>
+                    </div>
+                    
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">1</div>
+                                <h3>Data Gathering</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Data was gathered from the NCBI database, which is composed of the DNA strands of P53 Tumor Suppressor Genes. The collected data has a total of 25 DNA strands with the length of 2509 characters each and converted into a txt file for each DNA strand.</p>
+                                <p>The data is then filtered to remove punctuation and spaces. On top of that, a sample of cancerous and parental pairs was collected to determine the value of Levenshtein Similarity for cancer children.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">2</div>
+                                <h3>Generate Mutational Pathway</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Tree is a structure that is used to maintain ordered data. A tree either consists of nodes and leaves or it could be empty. One of the trees is called binary tree, which is a tree that has a characteristic of only having two children, left child and right child.</p>
+                                <p>A binary tree was implemented as a representation of mitosis self-multiplication of cells. In this paper, each node in the binary tree contains an object that represents the ID, generation number, DNA strand, and the cancer status of the node.</p>
+                                <p>To generate the tree, a generative recursion algorithm was built to generate the mutational pathway which added a new left and right child for each node until the 14th generation, with the root of 25 DNA strands.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">3</div>
+                                <h3>Filter Cancer Leading Mutations</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Depth First Search algorithm is a deep search algorithm that starts from the initial nodes and visits only the leftmost child nodes at the next level. This paper used a depth first search algorithm to find the path, then saved the path in the form of a list of nodes.</p>
+                                <p>After the list was built, the DNA strands of the list were extracted, and by using levenshtein similarity, a list of similarity was built to find the most mutated node among the path except the cancerous node.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">4</div>
+                                <h3>DNA Encoding</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Counting k-mers (substrings of length k in DNA sequence data) is an essential component of many methods in bioinformatics, including for genome and transcriptome assembly, for metagenomic sequencing, and for error correction of sequence reads.</p>
+                                <p>All of the DNA strands were gathered, and calculated the average of the DNA strand length, and used a log with base of 4 to find the k number. The data then saved in Comma Separated Value (CSV), which resulted in a matrix with 1024 columns and 73475 rows.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">5</div>
+                                <h3>Clustering Analysis</h3>
+                            </div>
+                            <div class="method-content">
+                                <h4>Correlation Analysis</h4>
+                                <p>Correlation analysis is a method that estimates the strength of the relationship between any pair of variables. Since there are 1024 features as the result of the encoding, it is necessary to find the most valuable features in the data.</p>
+                                
+                                <h4>SOM Clustering</h4>
+                                <p>Self organizing matrix or Kohonen maps is a particular topographically organized vector quantization algorithm. This method computes a mapping from high dimensional space into two dimensional regular grid with specificity that close position in the regular grid is associated with close position in the original high dimensional space.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        
-        <section id="references">
-            <h2>References</h2>
-            
-            <ul class="reference-list">
-                <li>Di Leo, A., Tanner, M., Desmedt, C., Paesmans, M., Cardoso, F., Durbecq, V., Chan, S., Perren, T., Aapro, M., Sotiriou, C., Piccart, M., Larsimont, D., Isola, J., & TAX 303 translational study team. (2007). p-53 gene mutations as a predictive marker in a population of advanced breast cancer patients randomly treated with doxorubicin or docetaxel in the context of a phase III clinical trial. Annals of Oncology, 18(6), 997-1003.</li>
-                <li>Vogelstein B, Lane D, Levine AJ. (2000). Surfing the p53 network. Nature 408: 307–310.</li>
-                <li>Zambetti, G. P. (2007). The p53 mutation "gradient effect" and its clinical implications. Journal of Cellular Physiology, 213(2), 370-373.</li>
-                <li>Johnstion, M.O. (2006). Mutation and New Variation: Overview. Encyclopedia of life science.</li>
-                <li>Soussi, T., & Wiman, K. G. (2015). Shaping genetic alterations in human cancer: the p53 mutation paradigm. Cancer Cell, 28(2), 150-161.</li>
-                <li>Bykov, V.J.N., Issaeva, N., Shilov, A., Hultcrantz, M., Pugacheva, E., Chumakov, P., Bergman, J., Wiman, K.G., Selivanova, G. (2018). Restoration of the tumor suppressor function to mutant p53 by a low-molecular-weight compound. Nature Medicine, 24(3), 348-357.</li>
-                <li>Levine, A.J., Oren, M. (2009). The first 30 years of p53: growing ever more complex. Nature Reviews Cancer, 9(10), 749-758.</li>
-                <li>Vousden, K.H., Lane, D.P. (2007). p53 in health and disease. Nature Reviews Molecular Cell Biology, 8(4), 275-283.</li>
-                <li>Kuipers, E.J., Ligtenberg, M.J. (2020). The many ways to mutation detection in the 21st century. American Journal of Gastroenterology, 115(3), 332-338.</li>
-                <li>Nachman, M.W., Crowell, S.L. (2000). Estimate of the mutation rate per nucleotide in humans. Genetics, 156(1), 297-304.</li>
-                <li>Richards, S., Aziz, N., Bale, S., Bick, D., Das, S., Gastier-Foster, J., Grody, W.W., Hegde, M., Lyon, E., Spector, E., Voelkerding, K., Rehm, H.L. (2015). Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. Genetics in Medicine, 17(5), 405-424.</li>
-                <li>Hanahan, D., Weinberg, R.A. (2011). Hallmarks of cancer: the next generation. Cell, 144(5), 646-674.</li>
-                <li>Eiben, A.E., Smith, J. (2015). From evolutionary computation to the evolution of things. Nature, 521(7553), 476-482.</li>
-                <li>Holland, J.H. (1975). Adaptation in natural and artificial systems: an introductory analysis with applications to biology, control, and artificial intelligence. University of Michigan Press.</li>
-                <li>Vellido, A., Gibert, K., Angulo, C., Martín Guerrero, J. D., SpringerLink (Online service), & SpringerLINK eBooks - Intelligent Technologies and Robotics. (2020;2019;). Advances in self-organizing maps, learning vector quantization, clustering and data visualization: Proceedings of the 13th international workshop, WSOM+ 2019, barcelona, spain, june 26-28, 2019 (1st 2020. ed.). Springer International Publishing.</li>
-                <li>E. Mäkinen, A Survey on Binary Tree Codings, The Computer Journal, Volume 34, Issue 5, 1991, Pages 438–443, https://doi.org/10.1093/comjnl/34.5.438</li>
-                <li>Melsted, P., & Pritchard, J. K. (2011). Efficient counting of k-mers in DNA sequences using a bloom filter. BMC Bioinformatics, 12(1), 333-333. https://doi.org/10.1186/1471-2105-12-333</li>
-                <li>Reimann, C., Filzmoser, P., Hron, K., Kynčlová, P., & Garrett, R. G. (2017). A new method for correlation analysis of compositional (environmental) data – a worked example. The Science of the Total Environment, 607-608, 965-971. https://doi.org/10.1016/j.scitotenv.2017.06.063</li>
-            </ul>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Results</h2>
+                    
+                    <div class="results-table">
+                        <h3>Cluster Center Analysis</h3>
+                        <div class="table-container">
+                            <table class="performance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cluster</th>
+                                        <th>cagcc</th>
+                                        <th>agcca</th>
+                                        <th>cccag</th>
+                                        <th>ccagc</th>
+                                        <th>ccagg</th>
+                                        <th>ttttt</th>
+                                        <th>ctttt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>0</strong></td>
+                                        <td>15.22389</td>
+                                        <td>12.09806</td>
+                                        <td>13.99139</td>
+                                        <td>11.97066</td>
+                                        <td>12.25152</td>
+                                        <td>29.22354</td>
+                                        <td>10.94611</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>1</strong></td>
+                                        <td>13.48352</td>
+                                        <td>10.90663</td>
+                                        <td>12.52781</td>
+                                        <td>10.88192</td>
+                                        <td>10.90285</td>
+                                        <td>21.99507</td>
+                                        <td>9.096031</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2</strong></td>
+                                        <td>11.72513</td>
+                                        <td>9.39021</td>
+                                        <td>10.94836</td>
+                                        <td>9.488609</td>
+                                        <td>9.453751</td>
+                                        <td>20.30923</td>
+                                        <td>8.312927</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3</strong></td>
+                                        <td>9.718946</td>
+                                        <td>7.800927</td>
+                                        <td>9.07718</td>
+                                        <td>7.909327</td>
+                                        <td>7.984004</td>
+                                        <td>19.97388</td>
+                                        <td>7.916305</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4</strong></td>
+                                        <td>6.554556</td>
+                                        <td>5.575858</td>
+                                        <td>6.706779</td>
+                                        <td>5.629877</td>
+                                        <td>5.999755</td>
+                                        <td>14.50365</td>
+                                        <td>5.980873</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5</strong></td>
+                                        <td>5.049533</td>
+                                        <td>4.946125</td>
+                                        <td>5.794455</td>
+                                        <td>4.906471</td>
+                                        <td>5.353537</td>
+                                        <td>3.63425</td>
+                                        <td>2.674657</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="results-table">
+                        <h3>Matrix Parameters and Clustering Quality</h3>
+                        <div class="table-container">
+                            <table class="performance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Matrix Width</th>
+                                        <th>Matrix Height</th>
+                                        <th>Total Cluster</th>
+                                        <th>Silhouette Score</th>
+                                        <th>Davies Bouldin Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>0.397634</td>
+                                        <td>1.080491</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>3</td>
+                                        <td>3</td>
+                                        <td>0.279982</td>
+                                        <td>1.067024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>4</td>
+                                        <td>4</td>
+                                        <td>0.445013</td>
+                                        <td>0.856827</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>5</td>
+                                        <td>5</td>
+                                        <td>0.415871</td>
+                                        <td>0.870465</td>
+                                    </tr>
+                                    <tr class="our-method">
+                                        <td>1</td>
+                                        <td>6</td>
+                                        <td>6</td>
+                                        <td><strong>0.451032</strong></td>
+                                        <td><strong>0.804099</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>7</td>
+                                        <td>7</td>
+                                        <td>0.329884</td>
+                                        <td>1.094722</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>4</td>
+                                        <td>8</td>
+                                        <td>0.338642</td>
+                                        <td>1.020047</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>9</td>
+                                        <td>9</td>
+                                        <td>0.312648</td>
+                                        <td>1.333904</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>5</td>
+                                        <td>10</td>
+                                        <td>0.331954</td>
+                                        <td>1.130516</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>11</td>
+                                        <td>11</td>
+                                        <td>0.286358</td>
+                                        <td>1.459598</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="research-highlight">
+                        <div class="highlight-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                        </div>
+                        <div class="highlight-content">
+                            <p>The analysis identified six distinct DNA sequence patterns ("cagcc", "agcca", "cccag", "ccagg", "ttttt", "ctttt") that show the highest correlation among cancer leading mutations, with the optimal clustering achieved using a 1×6 matrix configuration.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        
-        <section id="appendix">
-            <h2>Appendix</h2>
-            
-            <h3>Appendix 1: Source Code</h3>
-            <p>Github link of this project: <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank">https://github.com/Evintkoo/Vant-149-project</a></p>
+
+        <!-- Discussion Section -->
+        <section id="discussion" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Discussion</h2>
+                    
+                    <div class="content-text">
+                        <p>The result shows that there are 6 strands that have the highest correlation among the cancer leading mutations, which are "cagcc", "agcca", "cccag", "ccagg", "ttttt", "ctttt". It is shown that each of the clusters has its own unique strand characteristic, which represents their own cluster. Based on the silhouette score, it is shown that the clustering has done a decent amount of cluster separation.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>Based on the trial, the result of the data shows that the silhouette score has an increasing trend from 1 by 2 to 1 by 6 matrix, and suddenly drops after the 1 by 7 matrix and the decreasing trend continues along the increasing amount of total cluster.</p>
+                            </div>
+                        </div>
+                        
+                        <p>The best matrix size is represented on the silhouette score of 0.451032 on the 1 by 6 matrix that has a total cluster of 6. With the small size of the matrix, all of the agents in the matrix could be considered as a cluster center, which could be shown by a histogram plot.</p>
+                        
+                        <p>Since this paper is a mathematical model simulation, this research could be improved by expanding the scope of the study, which includes other types of cancer. This could provide a better understanding of the general cancer leading mutation to all cancer types. Additionally, future research could implement other methods of machine learning, which would help to separate the clustering more decently, and determine better cluster characteristics.</p>
+                        
+                        <p>The limitation of this study is the sample size that was limited and not nature based data. It would be better to understand and represent the nature of the mutation itself. Additionally, the use of specific algorithms or methods could also introduce limitations, as different algorithms may produce different results. It is important to acknowledge and discuss any limitations in a research paper to provide context for the results and to guide future research.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusion" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Conclusion</h2>
+                    
+                    <div class="content-text">
+                        <p>Based on the result, this paper shows that there is a characteristic of cancer leading mutation that might cause the beginning mutation path to cancer. The implementation of genetic algorithms in a closed environment model has allowed us to identify specific DNA patterns associated with cancer-causing mutations in the P-53 gene.</p>
+                        
+                        <p>Through our clustering analysis, we identified six distinct DNA sequence patterns that appear to be strongly correlated with cancer progression. This finding suggests that certain mutation patterns in the P-53 gene may be more likely to lead to cancer development than others.</p>
+                        
+                        <p>Our approach demonstrates the potential of computational methods in understanding the genetic basis of cancer. By simulating the evolutionary processes of mutation within a controlled environment, we can gain insights into the complex mechanisms of cancer development that would be difficult to observe in traditional experimental settings.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- References Section -->
+        <section id="references" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">References</h2>
+                    
+                    <div class="references-list">
+                        <div class="reference-item">
+                            <p>Di Leo, A., Tanner, M., Desmedt, C., Paesmans, M., Cardoso, F., Durbecq, V., Chan, S., Perren, T., Aapro, M., Sotiriou, C., Piccart, M., Larsimont, D., Isola, J., & TAX 303 translational study team. (2007). p-53 gene mutations as a predictive marker in a population of advanced breast cancer patients randomly treated with doxorubicin or docetaxel in the context of a phase III clinical trial. <em>Annals of Oncology</em>, 18(6), 997-1003.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Vogelstein B, Lane D, Levine AJ. (2000). Surfing the p53 network. <em>Nature</em> 408: 307–310.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Zambetti, G. P. (2007). The p53 mutation "gradient effect" and its clinical implications. <em>Journal of Cellular Physiology</em>, 213(2), 370-373.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Johnstion, M.O. (2006). Mutation and New Variation: Overview. <em>Encyclopedia of life science</em>.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Soussi, T., & Wiman, K. G. (2015). Shaping genetic alterations in human cancer: the p53 mutation paradigm. <em>Cancer Cell</em>, 28(2), 150-161.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Eiben, A.E., Smith, J. (2015). From evolutionary computation to the evolution of things. <em>Nature</em>, 521(7553), 476-482.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Holland, J.H. (1975). Adaptation in natural and artificial systems: an introductory analysis with applications to biology, control, and artificial intelligence. University of Michigan Press.</p>
+                        </div>
+                        
+                        <div class="reference-item">
+                            <p>Vellido, A., Gibert, K., Angulo, C., Martín Guerrero, J. D. (2020). Advances in self-organizing maps, learning vector quantization, clustering and data visualization: Proceedings of the 13th international workshop, WSOM+ 2019. Springer International Publishing.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="appendix-section">
+                        <h3>Source Code Repository</h3>
+                        <p>The complete source code and implementation details for this research are available at: <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" class="research-link">https://github.com/Evintkoo/Vant-149-project</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Portfolio -->
+        <section class="section">
+            <div class="container">
+                <div class="back-to-portfolio">
+                    <a href="index.html#projects" class="btn btn-primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                        Back to Portfolio
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
-    
-    <script>
-        // Function to handle navigation highlighting
-        function updateActiveNav() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.scrollY >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', updateActiveNav);
-        
-        // Collapsible sections
-        const collapsibles = document.querySelectorAll('.collapsible');
-        
-        collapsibles.forEach(collapsible => {
-            collapsible.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
-            });
-        });
-    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright">&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
 </body>
+
 </html>
