@@ -1,3 +1,6 @@
+// Portfolio Main JavaScript
+// Theme toggle functionality is handled in theme-toggle.js
+
 // Global function for opening mobile nav
 function toggleMobileNav() {
   const nav = document.querySelector(".nav");
@@ -101,6 +104,10 @@ function handleHeaderScroll() {
     
     if (currentScrollY > 100) {
       header.classList.add('scrolled');
+      // Force theme variable recalculation
+      if (window.themeToggle) {
+        window.themeToggle.forceStyleUpdate();
+      }
     } else {
       header.classList.remove('scrolled');
     }
@@ -166,8 +173,8 @@ function addAnimationStyles() {
     }
 
     .header.scrolled {
-      background-color: rgba(10, 10, 11, 0.98);
-      backdrop-filter: blur(20px);
+      background-color: rgba(var(--header-bg-rgb), 0.98);
+      backdrop-filter: blur(25px);
     }
 
     .project-card,
@@ -287,6 +294,102 @@ function initLoadingAnimation() {
     document.body.style.transition = 'opacity 0.5s ease';
     document.body.style.opacity = '1';
   });
+}
+
+// Paper Navigation Functions
+function initPaperNavigation() {
+  const paperNav = document.querySelector('.paper-nav');
+  if (!paperNav) return;
+
+  const navLinks = paperNav.querySelectorAll('.paper-nav__link');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      
+      // Handle smooth scrolling for anchor links
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        smoothScrollToTarget(href);
+        
+        // Update active state
+        updateActiveNavLink(link);
+      }
+    });
+  });
+}
+
+function initPaperScrollTracking() {
+  const paperNav = document.querySelector('.paper-nav');
+  if (!paperNav) return;
+
+  const navLinks = paperNav.querySelectorAll('.paper-nav__link');
+  const sections = [];
+  
+  // Get all sections that have navigation links
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const sectionId = href.substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        sections.push({
+          id: sectionId,
+          element: section,
+          navLink: link
+        });
+      }
+    }
+  });
+
+  if (sections.length === 0) return;
+
+  // Scroll spy function
+  function updateActiveSection() {
+    const scrollPosition = window.scrollY + window.innerHeight * 0.3; // Trigger when section is 30% visible
+    
+    let currentSection = sections[0]; // Default to first section
+    
+    sections.forEach(section => {
+      const sectionTop = section.element.offsetTop;
+      const sectionHeight = section.element.offsetHeight;
+      
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        currentSection = section;
+      }
+    });
+    
+    // Update active navigation link
+    updateActiveNavLink(currentSection.navLink);
+  }
+
+  // Throttled scroll event listener
+  let scrollTimeout = null;
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(updateActiveSection, 100);
+  });
+
+  // Initial check
+  updateActiveSection();
+}
+
+function updateActiveNavLink(activeLink) {
+  const paperNav = document.querySelector('.paper-nav');
+  if (!paperNav) return;
+
+  // Remove active class from all links
+  const allLinks = paperNav.querySelectorAll('.paper-nav__link');
+  allLinks.forEach(link => {
+    link.classList.remove('active');
+  });
+
+  // Add active class to current link
+  if (activeLink) {
+    activeLink.classList.add('active');
+  }
 }
 
 // DOM Content Loaded event for additional functionality
@@ -431,7 +534,8 @@ window.addEventListener('error', (e) => {
 // Preload critical resources
 function preloadResources() {
   const criticalResources = [
-    'images/logo.png'
+    'images/logo-light.png',
+    'images/logo-dark.png'
   ];
   
   criticalResources.forEach(resource => {
