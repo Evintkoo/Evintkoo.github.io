@@ -43,12 +43,24 @@ function smoothScrollToTarget(target) {
   const element = document.querySelector(target);
   if (element) {
     const headerHeight = document.querySelector('.header').offsetHeight;
-    const elementPosition = element.offsetTop - headerHeight - 20;
+    const paperNavHeight = document.querySelector('.paper-nav')?.offsetHeight || 0;
+    const elementPosition = element.offsetTop - headerHeight - paperNavHeight - 20;
     
     window.scrollTo({
       top: elementPosition,
       behavior: 'smooth'
     });
+    
+    // Add scroll highlight effect
+    setTimeout(() => {
+      element.style.transition = 'box-shadow 0.5s ease';
+      element.style.boxShadow = '0 0 20px rgba(var(--accent-rgb), 0.3)';
+      
+      setTimeout(() => {
+        element.style.boxShadow = '';
+        element.style.transition = '';
+      }, 1000);
+    }, 300);
   }
 }
 
@@ -344,36 +356,70 @@ function initPaperScrollTracking() {
 
   if (sections.length === 0) return;
 
-  // Scroll spy function
+  // Scroll spy function with improved detection
   function updateActiveSection() {
-    const scrollPosition = window.scrollY + window.innerHeight * 0.3; // Trigger when section is 30% visible
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+    const paperNavHeight = paperNav?.offsetHeight || 60;
+    const offset = headerHeight + paperNavHeight + 20;
     
-    let currentSection = sections[0]; // Default to first section
+    let currentSection = null;
+    let closestDistance = Infinity;
     
     sections.forEach(section => {
-      const sectionTop = section.element.offsetTop;
-      const sectionHeight = section.element.offsetHeight;
+      const sectionTop = section.element.offsetTop - offset;
+      const sectionBottom = sectionTop + section.element.offsetHeight;
+      const sectionCenter = sectionTop + (section.element.offsetHeight / 2);
       
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      // Check if section is in viewport or closest to current scroll position
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
         currentSection = section;
+      } else {
+        // Find the closest section when no section is fully in viewport
+        const distance = Math.abs(scrollPosition - sectionCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          if (!currentSection) {
+            currentSection = section;
+          }
+        }
       }
     });
     
+    // Fallback: if we're at the top, select first section
+    if (!currentSection && scrollPosition < sections[0].element.offsetTop - offset) {
+      currentSection = sections[0];
+    }
+    
+    // Fallback: if we're at the bottom, select last section
+    if (!currentSection && scrollPosition + windowHeight >= document.documentElement.scrollHeight - 10) {
+      currentSection = sections[sections.length - 1];
+    }
+    
     // Update active navigation link
-    updateActiveNavLink(currentSection.navLink);
+    if (currentSection) {
+      updateActiveNavLink(currentSection.navLink);
+    }
   }
 
-  // Throttled scroll event listener
-  let scrollTimeout = null;
+  // Throttled scroll event listener with better performance
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
     }
-    scrollTimeout = setTimeout(updateActiveSection, 100);
   });
 
-  // Initial check
-  updateActiveSection();
+  // Also check on resize
+  window.addEventListener('resize', updateActiveSection);
+
+  // Initial check with delay to ensure everything is rendered
+  setTimeout(updateActiveSection, 100);
 }
 
 function updateActiveNavLink(activeLink) {

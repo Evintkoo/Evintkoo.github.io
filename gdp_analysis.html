@@ -40,87 +40,159 @@
     </header>
 
     <main>
-        <!-- Research Header -->
-        <section class="research-hero">
+        <!-- Research Paper Header -->
+        <section class="paper-hero">
             <div class="container">
-                <div class="research-hero__content">
-                    <h1 class="research-hero__title">Clustering Global GDP Trajectories</h1>
-                    <p class="research-hero__subtitle">Patterns and Policy Insights (1980–2024)</p>
-                    <div class="research-hero__meta">
-                        <span class="meta-item">
-                            <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            190 Countries Analyzed
-                        </span>
-                        <span class="meta-item">
-                            <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H3.5C2.67 2 2 2.67 2 3.5v16c0 .83.67 1.5 1.5 1.5h17c.83 0 1.5-.67 1.5-1.5v-16C22 2.67 21.33 2 20.5 2z"/>
-                            </svg>
-                            45 Years of Data
-                        </span>
-                        <span class="meta-item">
-                            <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            4 Distinct Clusters
-                        </span>
+                <div class="paper-hero__content">
+                    <h1 class="paper-hero__title">Clustering Global GDP Trajectories</h1>
+                    <p class="paper-hero__subtitle">Patterns and Policy Insights (1980–2024)</p>
+                    
+                    <div class="paper-meta">
+                        <div class="authors">
+                            <span class="author-label">Author:</span>
+                            <span class="author-names">Evint Leovonzko</span>
+                        </div>
+                        <div class="journal-info">
+                            <span class="journal-label">Research Analysis:</span>
+                            <span class="journal-name">Economic Development Patterns (2024) | 190 Countries, 45 Years</span>
+                        </div>
                     </div>
-                    <div class="research-hero__cta">
+                    
+                    <div class="paper-hero__cta">
                         <a href="files/gdp_analysis.pdf" target="_blank" class="btn btn-primary">
                             <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                             </svg>
                             Download Full Research Paper
                         </a>
-                        <a href="#key-findings" class="btn btn-secondary">Explore Findings</a>
+                        <a href="#abstract" class="btn btn-secondary" data-number="04">Read Analysis</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Key Finding Highlight -->
-        <section id="key-findings" class="section">
+        <!-- Navigation Menu -->
+        <section class="paper-nav">
             <div class="container">
-                <div class="highlight-box">
-                    <div class="highlight-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                    </div>
-                    <div class="highlight-content">
-                        <h3>Key Finding</h3>
-                        <p>Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years, with dramatic differences in economic outcomes - some nations achieved 16-32x income growth while others stagnated.</p>
+                <nav class="paper-nav__menu">
+                    <a href="#abstract" class="paper-nav__link active">Abstract</a>
+                    <a href="#introduction" class="paper-nav__link">Introduction</a>
+                    <a href="#methodology" class="paper-nav__link">Methodology</a>
+                    <a href="#clusters" class="paper-nav__link">Clusters</a>
+                    <a href="#policy" class="paper-nav__link">Policy</a>
+                    <a href="#insights" class="paper-nav__link">Insights</a>
+                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Abstract Section -->
+        <section id="abstract" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Abstract</h2>
+                    
+                    <div class="abstract-content">
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Introduction</h3>
+                            <p>Countries have followed strikingly different economic paths since 1980. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies across four decades of economic development.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Methods</h3>
+                            <p>Using World Bank & IMF GDP data (1980-2024, constant 2015 US$), we applied UMAP dimensionality reduction combined with Self-Organizing Map clustering to identify distinct economic trajectory patterns among 190 countries.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Results</h3>
+                            <p>Analysis reveals four distinct clusters: Sustained High Growth (Asia-dominated), Boom-Bust Economies (commodity-dependent), Post-Transition Recovery (Eastern Europe), and Stagnant Economies (sub-Saharan Africa).</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Discussion</h3>
+                            <p>Sustained growth countries built strong policy foundations and integrated globally while managing risks. Boom-bust cycles resulted from narrow commodity dependence. Stagnant economies faced governance and human capital challenges.</p>
+                        </div>
+                        
+                        <div class="abstract-item">
+                            <h3 class="abstract-label">Conclusion</h3>
+                            <p>Clusters are not destiny - countries can progress through appropriate policies. Understanding these patterns helps tailor strategies for achieving stable and inclusive economic growth in the face of global challenges.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Introduction -->
-        <section class="section">
+        <section id="introduction" class="section">
             <div class="container">
-                <h2 class="section__title">Introduction</h2>
-                <div class="content-block">
-                    <p>Countries have followed strikingly different economic paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries stagnated. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies.</p>
+                <div class="paper-section">
+                    <h2 class="section__title">Introduction</h2>
+                    
+                    <div class="content-text">
+                        <p>Countries have followed strikingly different economic paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries stagnated. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years, with dramatic differences in economic outcomes - some nations achieved 16-32x income growth while others stagnated.</p>
+                            </div>
+                        </div>
+                        
+                        <p>Understanding these divergent economic trajectories is crucial for policymakers, international institutions, and investors. This study applies advanced machine learning techniques to identify and characterize distinct patterns of economic development, providing insights into the factors that drive sustained growth versus stagnation.</p>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="methodology-box">
-                    <h3>Methodology</h3>
-                    <div class="methodology-grid">
-                        <div class="method-item">
-                            <div class="method-icon">📊</div>
-                            <h4>Data Source</h4>
-                            <p>World Bank & IMF GDP data (1980-2024, constant 2015 US$)</p>
+        <!-- Methodology -->
+        <section id="methodology" class="section">
+            <div class="container">
+                <div class="paper-section">
+                    <h2 class="section__title">Methodology</h2>
+                    
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">1</div>
+                                <h3>Data Source</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>World Bank & IMF GDP data (1980-2024, constant 2015 US$) for 190 countries, providing a comprehensive view of global economic development over four and a half decades.</p>
+                            </div>
                         </div>
-                        <div class="method-item">
-                            <div class="method-icon">🔬</div>
-                            <h4>Technique</h4>
-                            <p>UMAP dimensionality reduction + Self-Organizing Map clustering</p>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">2</div>
+                                <h3>Dimensionality Reduction</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>UMAP (Uniform Manifold Approximation and Projection) was used to reduce the high-dimensional time series data while preserving the global structure of GDP trajectories.</p>
+                            </div>
                         </div>
-                        <div class="method-item">
-                            <div class="method-icon">🎯</div>
-                            <h4>Result</h4>
-                            <p>Four distinct clusters representing different growth archetypes</p>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">3</div>
+                                <h3>Clustering Algorithm</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Self-Organizing Map (SOM) clustering was applied to identify distinct patterns in the reduced dimensional space, resulting in four coherent economic trajectory clusters.</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="method-header">
+                                <div class="method-number">4</div>
+                                <h3>Validation</h3>
+                            </div>
+                            <div class="method-content">
+                                <p>Cluster stability was validated through bootstrap resampling and economic interpretation was verified against known historical patterns and policy frameworks.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,91 +200,93 @@
         </section>
 
         <!-- Clusters Analysis -->
-        <section class="section">
+        <section id="clusters" class="section">
             <div class="container">
-                <h2 class="section__title">The Four Clusters</h2>
-                
-                <div class="clusters-grid">
-                    <!-- Cluster 1 -->
-                    <div class="cluster-card cluster-1">
-                        <div class="cluster-header">
-                            <div class="cluster-number">1</div>
-                            <h3>Sustained High Growth Economies</h3>
-                        </div>
-                        <div class="cluster-content">
-                            <p class="cluster-description"><strong>Characteristics:</strong> Uninterrupted upward GDP trends, accelerating in 1990s-2000s</p>
-                            <p class="cluster-examples"><strong>Examples:</strong> China, South Korea, Taiwan, Singapore, Malaysia, India, Botswana, Ireland</p>
-                            <div class="cluster-features">
-                                <h4>Key Features:</h4>
-                                <ul>
-                                    <li>Long-term convergence toward higher income levels</li>
-                                    <li>Effective growth-oriented policies (education, trade openness, macroeconomic stability)</li>
-                                    <li>Resilience to shocks (quick recovery from 1997 Asian Crisis)</li>
-                                    <li>Asia dominates this cluster, contributing 60-70% of global growth</li>
-                                </ul>
+                <div class="paper-section">
+                    <h2 class="section__title">The Four Clusters</h2>
+                    
+                    <div class="clusters-grid">
+                        <!-- Cluster 1 -->
+                        <div class="cluster-card cluster-1">
+                            <div class="cluster-header">
+                                <div class="cluster-number">1</div>
+                                <h3>Sustained High Growth Economies</h3>
+                            </div>
+                            <div class="cluster-content">
+                                <p class="cluster-description"><strong>Characteristics:</strong> Uninterrupted upward GDP trends, accelerating in 1990s-2000s</p>
+                                <p class="cluster-examples"><strong>Examples:</strong> China, South Korea, Taiwan, Singapore, Malaysia, India, Botswana, Ireland</p>
+                                <div class="cluster-features">
+                                    <h4>Key Features:</h4>
+                                    <ul>
+                                        <li>Long-term convergence toward higher income levels</li>
+                                        <li>Effective growth-oriented policies (education, trade openness, macroeconomic stability)</li>
+                                        <li>Resilience to shocks (quick recovery from 1997 Asian Crisis)</li>
+                                        <li>Asia dominates this cluster, contributing 60-70% of global growth</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Cluster 0 -->
-                    <div class="cluster-card cluster-0">
-                        <div class="cluster-header">
-                            <div class="cluster-number">0</div>
-                            <h3>Boom-Bust and Volatile Economies</h3>
-                        </div>
-                        <div class="cluster-content">
-                            <p class="cluster-description"><strong>Characteristics:</strong> Highly volatile performance with rapid growth followed by severe contractions</p>
-                            <p class="cluster-examples"><strong>Examples:</strong> Russia, Argentina, Brazil, Nigeria, Iraq, Venezuela</p>
-                            <div class="cluster-features">
-                                <h4>Key Features:</h4>
-                                <ul>
-                                    <li>Driven by external shocks and procyclical policies</li>
-                                    <li>Vulnerable to commodity price swings and capital flows</li>
-                                    <li>Government policies amplify volatility</li>
-                                    <li>Lower cumulative growth than sustained-growth cluster</li>
-                                </ul>
+                        <!-- Cluster 0 -->
+                        <div class="cluster-card cluster-0">
+                            <div class="cluster-header">
+                                <div class="cluster-number">0</div>
+                                <h3>Boom-Bust and Volatile Economies</h3>
+                            </div>
+                            <div class="cluster-content">
+                                <p class="cluster-description"><strong>Characteristics:</strong> Highly volatile performance with rapid growth followed by severe contractions</p>
+                                <p class="cluster-examples"><strong>Examples:</strong> Russia, Argentina, Brazil, Nigeria, Iraq, Venezuela</p>
+                                <div class="cluster-features">
+                                    <h4>Key Features:</h4>
+                                    <ul>
+                                        <li>Driven by external shocks and procyclical policies</li>
+                                        <li>Vulnerable to commodity price swings and capital flows</li>
+                                        <li>Government policies amplify volatility</li>
+                                        <li>Lower cumulative growth than sustained-growth cluster</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Cluster 3 -->
-                    <div class="cluster-card cluster-3">
-                        <div class="cluster-header">
-                            <div class="cluster-number">3</div>
-                            <h3>Post-Transition and Recovery Economies</h3>
-                        </div>
-                        <div class="cluster-content">
-                            <p class="cluster-description"><strong>Characteristics:</strong> Initial decline followed by lengthy recovery and growth</p>
-                            <p class="cluster-examples"><strong>Examples:</strong> Poland, Romania, Hungary, Baltic states, Vietnam, Chile, Peru</p>
-                            <div class="cluster-features">
-                                <h4>Key Features:</h4>
-                                <ul>
-                                    <li>Major economic disruption in late 20th century</li>
-                                    <li>Structural turnaround through reforms and global integration</li>
-                                    <li>Eastern European EU members converged to ~55% of US GDP per capita</li>
-                                    <li>Success through market-oriented reforms and institutional development</li>
-                                </ul>
+                        <!-- Cluster 3 -->
+                        <div class="cluster-card cluster-3">
+                            <div class="cluster-header">
+                                <div class="cluster-number">3</div>
+                                <h3>Post-Transition and Recovery Economies</h3>
+                            </div>
+                            <div class="cluster-content">
+                                <p class="cluster-description"><strong>Characteristics:</strong> Initial decline followed by lengthy recovery and growth</p>
+                                <p class="cluster-examples"><strong>Examples:</strong> Poland, Romania, Hungary, Baltic states, Vietnam, Chile, Peru</p>
+                                <div class="cluster-features">
+                                    <h4>Key Features:</h4>
+                                    <ul>
+                                        <li>Major economic disruption in late 20th century</li>
+                                        <li>Structural turnaround through reforms and global integration</li>
+                                        <li>Eastern European EU members converged to ~55% of US GDP per capita</li>
+                                        <li>Success through market-oriented reforms and institutional development</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Cluster 2 -->
-                    <div class="cluster-card cluster-2">
-                        <div class="cluster-header">
-                            <div class="cluster-number">2</div>
-                            <h3>Stagnant or Slow-Growth Economies</h3>
-                        </div>
-                        <div class="cluster-content">
-                            <p class="cluster-description"><strong>Characteristics:</strong> Weak, sluggish growth or near stagnation over four decades</p>
-                            <p class="cluster-examples"><strong>Examples:</strong> Liberia, Burundi, Central African Republic, Democratic Republic of Congo, Haiti, Zimbabwe</p>
-                            <div class="cluster-features">
-                                <h4>Key Features:</h4>
-                                <ul>
-                                    <li>Absence of sustained economic development</li>
-                                    <li>Structural traps: poverty, weak institutions, lack of infrastructure</li>
-                                    <li>High vulnerability to external shocks</li>
-                                    <li>Missed out on growth that lifted billions elsewhere</li>
-                                </ul>
+                        <!-- Cluster 2 -->
+                        <div class="cluster-card cluster-2">
+                            <div class="cluster-header">
+                                <div class="cluster-number">2</div>
+                                <h3>Stagnant or Slow-Growth Economies</h3>
+                            </div>
+                            <div class="cluster-content">
+                                <p class="cluster-description"><strong>Characteristics:</strong> Weak, sluggish growth or near stagnation over four decades</p>
+                                <p class="cluster-examples"><strong>Examples:</strong> Liberia, Burundi, Central African Republic, Democratic Republic of Congo, Haiti, Zimbabwe</p>
+                                <div class="cluster-features">
+                                    <h4>Key Features:</h4>
+                                    <ul>
+                                        <li>Absence of sustained economic development</li>
+                                        <li>Structural traps: poverty, weak institutions, lack of infrastructure</li>
+                                        <li>High vulnerability to external shocks</li>
+                                        <li>Missed out on growth that lifted billions elsewhere</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,27 +295,70 @@
         </section>
 
         <!-- Policy Implications -->
-        <section class="section">
+        <section id="policy" class="section">
             <div class="container">
-                <h2 class="section__title">Policy Implications by Cluster</h2>
-                <div class="policy-box">
-                    <h3>Cluster-Specific Recommendations</h3>
+                <div class="paper-section">
+                    <h2 class="section__title">Policy Implications by Cluster</h2>
+                    
+                    <div class="content-text">
+                        <p>Each cluster requires distinct policy approaches based on their unique economic characteristics and challenges. The following recommendations are tailored to help countries within each cluster optimize their growth strategies and avoid common pitfalls.</p>
+                    </div>
+                    
                     <div class="policy-grid">
                         <div class="policy-item">
                             <div class="policy-cluster cluster-1-accent">Sustained Growers</div>
-                            <p>Focus on innovation, education, managing aging populations</p>
+                            <div class="policy-content">
+                                <h4>Strategic Focus</h4>
+                                <p>Focus on innovation, education, managing aging populations, and transitioning to knowledge-based economies while maintaining competitive advantages.</p>
+                                <ul>
+                                    <li>Invest in R&D and higher education</li>
+                                    <li>Develop innovation ecosystems</li>
+                                    <li>Address demographic transitions</li>
+                                    <li>Maintain trade competitiveness</li>
+                                </ul>
+                            </div>
                         </div>
+                        
                         <div class="policy-item">
                             <div class="policy-cluster cluster-0-accent">Boom-Bust Economies</div>
-                            <p>Implement stabilization policies, diversification, countercyclical fiscal frameworks</p>
+                            <div class="policy-content">
+                                <h4>Stabilization Priority</h4>
+                                <p>Implement stabilization policies, economic diversification, and countercyclical fiscal frameworks to reduce volatility and build resilience.</p>
+                                <ul>
+                                    <li>Build sovereign wealth funds</li>
+                                    <li>Diversify economic base</li>
+                                    <li>Implement countercyclical policies</li>
+                                    <li>Strengthen institutions</li>
+                                </ul>
+                            </div>
                         </div>
+                        
                         <div class="policy-item">
                             <div class="policy-cluster cluster-3-accent">Transitional Economies</div>
-                            <p>Consolidate institutional reforms, move up value chain, avoid middle-income trap</p>
+                            <div class="policy-content">
+                                <h4>Consolidation Focus</h4>
+                                <p>Consolidate institutional reforms, move up the value chain, and avoid the middle-income trap through continued structural improvements.</p>
+                                <ul>
+                                    <li>Strengthen rule of law</li>
+                                    <li>Upgrade industrial capacity</li>
+                                    <li>Improve education quality</li>
+                                    <li>Enhance competitiveness</li>
+                                </ul>
+                            </div>
                         </div>
+                        
                         <div class="policy-item">
                             <div class="policy-cluster cluster-2-accent">Stagnant Economies</div>
-                            <p>Establish peace/stability, invest in human development, basic governance improvements</p>
+                            <div class="policy-content">
+                                <h4>Foundation Building</h4>
+                                <p>Establish peace and stability, invest in human development, and implement basic governance improvements to create conditions for growth.</p>
+                                <ul>
+                                    <li>Ensure political stability</li>
+                                    <li>Invest in basic infrastructure</li>
+                                    <li>Improve health and education</li>
+                                    <li>Build effective institutions</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -249,66 +366,92 @@
         </section>
 
         <!-- Macroeconomic Insights -->
-        <section class="section">
+        <section id="insights" class="section">
             <div class="container">
-                <h2 class="section__title">Key Macroeconomic Insights</h2>
-                
-                <div class="insights-grid">
-                    <div class="insight-card">
-                        <div class="insight-icon">🌐</div>
-                        <h3>External Vulnerability</h3>
-                        <ul>
-                            <li>Boom-bust countries highly vulnerable to commodity price swings and capital flows</li>
-                            <li>Sustained growth economies more diversified and resilient</li>
-                            <li>Stagnant economies most vulnerable with fewest defenses against shocks</li>
-                        </ul>
-                    </div>
+                <div class="paper-section">
+                    <h2 class="section__title">Key Macroeconomic Insights</h2>
+                    
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon">🌐</div>
+                            <h3>External Vulnerability</h3>
+                            <div class="insight-content">
+                                <ul>
+                                    <li>Boom-bust countries highly vulnerable to commodity price swings and capital flows</li>
+                                    <li>Sustained growth economies more diversified and resilient</li>
+                                    <li>Stagnant economies most vulnerable with fewest defenses against shocks</li>
+                                    <li>Trade diversification correlates with economic stability</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="insight-card">
-                        <div class="insight-icon">💰</div>
-                        <h3>Debt Dynamics</h3>
-                        <ul>
-                            <li>Sustained growers managed debt prudently relative to growing GDP</li>
-                            <li>Boom-bust economies experienced multiple debt crises</li>
-                            <li>Stagnant countries often fell into debt traps</li>
-                        </ul>
-                    </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">💰</div>
+                            <h3>Debt Dynamics</h3>
+                            <div class="insight-content">
+                                <ul>
+                                    <li>Sustained growers managed debt prudently relative to growing GDP</li>
+                                    <li>Boom-bust economies experienced multiple debt crises</li>
+                                    <li>Stagnant countries often fell into debt traps</li>
+                                    <li>Fiscal discipline essential for sustained development</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="insight-card">
-                        <div class="insight-icon">📈</div>
-                        <h3>Trade Integration</h3>
-                        <ul>
-                            <li>Sustained growers leveraged globalization effectively</li>
-                            <li>Stagnant economies relatively isolated or dependent on single exports</li>
-                            <li>Diversified trade tends to be stabilizing</li>
-                        </ul>
+                        <div class="insight-card">
+                            <div class="insight-icon">📈</div>
+                            <h3>Trade Integration</h3>
+                            <div class="insight-content">
+                                <ul>
+                                    <li>Sustained growers leveraged globalization effectively</li>
+                                    <li>Stagnant economies relatively isolated or dependent on single exports</li>
+                                    <li>Diversified trade tends to be stabilizing</li>
+                                    <li>Export sophistication drives long-term growth</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-icon">🏛️</div>
+                            <h3>Institutional Quality</h3>
+                            <div class="insight-content">
+                                <ul>
+                                    <li>Strong institutions correlate with sustained growth</li>
+                                    <li>Weak governance perpetuates stagnation</li>
+                                    <li>Rule of law essential for investment and development</li>
+                                    <li>Democratic institutions support long-term stability</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Conclusion -->
-        <section class="section">
+        <section id="conclusion" class="section">
             <div class="container">
-                <h2 class="section__title">Conclusion</h2>
-                <div class="content-block">
-                    <p>This clustering reveals that countries achieving sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Those experiencing boom-bust cycles relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, poor governance, or human capital deficits.</p>
-                </div>
-
-                <div class="conclusion-highlight">
-                    <div class="conclusion-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
+                <div class="paper-section">
+                    <h2 class="section__title">Conclusion</h2>
+                    
+                    <div class="content-text">
+                        <p>This clustering reveals that countries achieving sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Those experiencing boom-bust cycles relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, poor governance, or human capital deficits.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p><strong>Key Lesson:</strong> Clusters are not destiny - countries can move between them with appropriate policies. The goal is progression: Cluster 2 → Cluster 3 → Cluster 1, while avoiding regression.</p>
+                            </div>
+                        </div>
+                        
+                        <p>Understanding these patterns helps international institutions tailor strategies, investors assess sovereign risks, and policymakers learn from peer experiences. As the world faces new challenges like climate change and digital disruption, these historical patterns provide valuable guidance for achieving stable and inclusive economic growth.</p>
+                        
+                        <p>The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.</p>
                     </div>
-                    <div class="conclusion-content">
-                        <h3>Key Lesson</h3>
-                        <p>Clusters are not destiny - countries can move between them with appropriate policies. The goal is progression: Cluster 2 → Cluster 3 → Cluster 1, while avoiding regression.</p>
-                    </div>
-                </div>
-
-                <div class="content-block">
-                    <p>Understanding these patterns helps international institutions tailor strategies, investors assess sovereign risks, and policymakers learn from peer experiences. As the world faces new challenges like climate change and digital disruption, these historical patterns provide valuable guidance for achieving stable and inclusive economic growth.</p>
                 </div>
             </div>
         </section>

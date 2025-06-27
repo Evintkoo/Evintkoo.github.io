@@ -83,17 +83,18 @@ class ThemeToggle {
     }
 
     toggleTheme() {
+        // Add transition class before changing theme
+        document.documentElement.classList.add('theme-transitioning');
+        
         this.theme = this.theme === 'dark' ? 'light' : 'dark';
         this.applyTheme(this.theme);
         localStorage.setItem('theme', this.theme);
         
-        // Add a nice animation effect
-        this.animateToggle();
-        
-        // Force immediate style update for sticky elements
+        // Remove transition class after transition completes
         setTimeout(() => {
+            document.documentElement.classList.remove('theme-transitioning');
             this.forceStyleUpdate();
-        }, 50);
+        }, 350);
     }
 
     applyTheme(theme) {
@@ -180,16 +181,6 @@ class ThemeToggle {
             nav.offsetHeight;
             nav.style.backgroundColor = '';
         });
-    }
-
-    animateToggle() {
-        if (this.toggleButton) {
-            // Add a pulse effect
-            this.toggleButton.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                this.toggleButton.style.transform = 'scale(1)';
-            }, 150);
-        }
     }
 
     // Get current theme
