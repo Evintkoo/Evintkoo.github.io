@@ -2349,18 +2349,169 @@ p {
   margin-left: var(--spacing-lg);
 }
 
-/* Mobile theme toggle */
+/* Mobile theme toggle wrapper - hide on mobile, use in-menu instead */
 @media (max-width: 768px) {
   .theme-toggle-wrapper {
-    position: absolute;
-    top: var(--spacing-lg);
-    left: var(--spacing-lg);
-    z-index: 1001;
+    display: none;
+  }
+}
+
+/* Mobile theme toggle in navigation menu */
+.theme-toggle-mobile {
+  display: none;
+  margin-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .theme-toggle-mobile {
+    display: block;
+  }
+}
+
+.theme-toggle--mobile {
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  width: auto;
+  height: auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  min-width: 200px;
+}
+
+.theme-toggle--mobile:hover {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: white;
+  transform: scale(1.02);
+}
+
+.theme-toggle--mobile .theme-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle__text {
+  font-family: var(--font-primary);
+  margin-left: var(--spacing-xs);
+}
+
+/* Light mode mobile theme toggle */
+:root.light .theme-toggle--mobile {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+:root.light .theme-toggle--mobile:hover {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: white;
+}
+
+/* Ensure mobile nav list has proper spacing */
+@media (max-width: 768px) {
+  .nav__list {
+    padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-2xl);
   }
   
-  .nav.active .theme-toggle-wrapper {
-    position: fixed;
-    top: var(--spacing-lg);
-    left: var(--spacing-lg);
+  /* Prevent theme toggle from being cut off */
+  .nav.active .nav__list {
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  
+  /* Ensure proper z-index layering */
+  .header {
+    position: relative;
+    z-index: 10;
+  }
+  
+  .nav__toggle {
+    position: relative;
+    z-index: 1002;
+  }
+  
+  .nav__list {
+    z-index: 1000;
+  }
+  
+  .nav.active .nav__close-wrapper {
+    z-index: 1001;
+  }
+}
+
+/* Smooth transitions for theme changes on mobile */
+@media (max-width: 768px) {
+  .theme-toggle--mobile .theme-icon {
+    transition: all 0.3s ease;
+  }
+  
+  .theme-toggle--mobile:not(.light) .sun {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .theme-toggle--mobile.light .moon {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .theme-toggle--mobile:not(.light) .moon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .theme-toggle--mobile.light .sun {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Fix mobile header container spacing */
+@media (max-width: 768px) {
+  .header__container {
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  .header__nav-section {
+    gap: var(--spacing-md);
+  }
+}
+
+/* Ensure mobile navigation works smoothly */
+@media (max-width: 768px) {
+  .nav {
+    position: relative;
+  }
+  
+  .nav__toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    z-index: 1002;
+  }
+  
+  .nav__toggle:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .nav__toggle:focus {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
   }
 }
