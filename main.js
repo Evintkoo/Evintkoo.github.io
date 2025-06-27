@@ -422,20 +422,163 @@ function initPaperScrollTracking() {
   setTimeout(updateActiveSection, 100);
 }
 
-function updateActiveNavLink(activeLink) {
-  const paperNav = document.querySelector('.paper-nav');
-  if (!paperNav) return;
+// Paper Navigation Mobile Bottom Bar Functions
+function initPaperMobileBottomNav() {
+  const paperNavMobile = document.getElementById('paper-nav-mobile');
+  
+  if (!paperNavMobile) return;
 
-  // Remove active class from all links
-  const allLinks = paperNav.querySelectorAll('.paper-nav__link');
-  allLinks.forEach(link => {
+  // Handle mobile navigation link clicks
+  const mobileLinks = paperNavMobile.querySelectorAll('.paper-nav__mobile-item');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        // Smooth scroll to section
+        smoothScrollToTarget(href);
+        
+        // Update active states for both mobile and desktop
+        updatePaperNavActiveStates(link);
+      }
+    });
+  });
+}
+
+function updatePaperNavActiveStates(activeLink) {
+  const paperNav = document.querySelector('.paper-nav');
+  const paperNavMobile = document.querySelector('.paper-nav__mobile');
+  
+  if (!paperNav && !paperNavMobile) return;
+
+  // Remove active class from all links (both desktop and mobile)
+  const allDesktopLinks = paperNav?.querySelectorAll('.paper-nav__link') || [];
+  const allMobileLinks = paperNavMobile?.querySelectorAll('.paper-nav__mobile-item') || [];
+  
+  [...allDesktopLinks, ...allMobileLinks].forEach(link => {
     link.classList.remove('active');
   });
 
-  // Add active class to current link
-  if (activeLink) {
-    activeLink.classList.add('active');
+  // Add active class to corresponding links in both menus
+  const href = activeLink.getAttribute('href');
+  if (href) {
+    // Update desktop navigation
+    const correspondingDesktopLink = paperNav?.querySelector(`a[href="${href}"]`);
+    if (correspondingDesktopLink) {
+      correspondingDesktopLink.classList.add('active');
+    }
+    
+    // Update mobile navigation
+    const correspondingMobileLink = paperNavMobile?.querySelector(`a[href="${href}"]`);
+    if (correspondingMobileLink) {
+      correspondingMobileLink.classList.add('active');
+    }
   }
+}
+
+// Enhanced paper scroll tracking for mobile bottom navigation
+function initEnhancedPaperScrollTracking() {
+  const paperNav = document.querySelector('.paper-nav');
+  const paperNavMobile = document.querySelector('.paper-nav__mobile');
+  
+  if (!paperNav && !paperNavMobile) return;
+
+  // Get sections from either desktop or mobile navigation
+  const navLinks = [
+    ...(paperNav?.querySelectorAll('.paper-nav__link') || []),
+    ...(paperNavMobile?.querySelectorAll('.paper-nav__mobile-item') || [])
+  ];
+  
+  const sections = [];
+  const seenHrefs = new Set();
+  
+  // Get unique sections
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#') && !seenHrefs.has(href)) {
+      seenHrefs.add(href);
+      const sectionId = href.substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        sections.push({
+          id: sectionId,
+          element: section,
+          href: href
+        });
+      }
+    }
+  });
+
+  if (sections.length === 0) return;
+
+  // Enhanced scroll spy function
+  function updateActiveSection() {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+    const paperNavHeight = paperNav?.offsetHeight || 60;
+    const offset = headerHeight + paperNavHeight + 20;
+    
+    let currentSection = null;
+    let closestDistance = Infinity;
+    
+    sections.forEach(section => {
+      const sectionTop = section.element.offsetTop - offset;
+      const sectionBottom = sectionTop + section.element.offsetHeight;
+      const sectionCenter = sectionTop + (section.element.offsetHeight / 2);
+      
+      // Check if section is in viewport or closest to current scroll position
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        currentSection = section;
+      } else {
+        // Find the closest section when no section is fully in viewport
+        const distance = Math.abs(scrollPosition - sectionCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          if (!currentSection) {
+            currentSection = section;
+          }
+        }
+      }
+    });
+    
+    // Fallback: if we're at the top, select first section
+    if (!currentSection && scrollPosition < sections[0].element.offsetTop - offset) {
+      currentSection = sections[0];
+    }
+    
+    // Fallback: if we're at the bottom, select last section
+    if (!currentSection && scrollPosition + windowHeight >= document.documentElement.scrollHeight - 10) {
+      currentSection = sections[sections.length - 1];
+    }
+    
+    // Update active navigation link
+    if (currentSection) {
+      const activeLink = document.querySelector(`a[href="${currentSection.href}"]`);
+      if (activeLink) {
+        updatePaperNavActiveStates(activeLink);
+      }
+    }
+  }
+
+  // Throttled scroll event listener
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Also check on resize
+  window.addEventListener('resize', updateActiveSection);
+
+  // Initial check
+  setTimeout(updateActiveSection, 100);
 }
 
 // DOM Content Loaded event for additional functionality
@@ -453,7 +596,8 @@ document.addEventListener("DOMContentLoaded", function () {
   enhanceProjectCards();
   initLoadingAnimation();
   initPaperNavigation();
-  initPaperScrollTracking(); // Separate paper navigation tracking
+  initPaperMobileBottomNav(); // Initialize mobile bottom navigation
+  initEnhancedPaperScrollTracking(); // Enhanced tracking for mobile bottom navigation
   
   // Delay typing animation to let page load
   setTimeout(initTypingAnimation, 500);
@@ -696,5 +840,6 @@ window.PortfolioJS = {
   preloadResources,
   enhanceAccessibility,
   initPaperNavigation,
-  initPaperScrollTracking
+  initPaperMobileBottomNav,
+  initEnhancedPaperScrollTracking
 };

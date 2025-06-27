@@ -106,8 +106,17 @@ class ThemeToggle {
 
     closeMobileNav() {
         const nav = document.querySelector('.nav');
+        const body = document.body;
+        const navToggle = document.getElementById('nav-toggle');
+        
         if (nav) {
             nav.classList.remove('active');
+        }
+        if (body) {
+            body.classList.remove('nav-open');
+        }
+        if (navToggle) {
+            navToggle.setAttribute('aria-expanded', 'false');
         }
     }
 
@@ -174,6 +183,12 @@ class ThemeToggle {
         
         // Update logo based on theme
         this.updateLogo(theme);
+        
+        // Ensure body scrolling is enabled (safeguard against stuck scroll prevention)
+        const nav = document.querySelector('.nav');
+        if (nav && !nav.classList.contains('active')) {
+            document.body.classList.remove('nav-open');
+        }
         
         // Force update of header and navigation elements
         this.forceStyleUpdate();
