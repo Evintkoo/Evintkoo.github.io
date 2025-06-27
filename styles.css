@@ -178,7 +178,8 @@ a {
   overflow-x: auto;
   gap: var(--spacing-md);
   padding: var(--spacing-md) 0;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
   -ms-overflow-style: none;
 }
 
@@ -791,6 +792,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
