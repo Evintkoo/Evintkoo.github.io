@@ -39,88 +39,112 @@
         </div>
     </header>
 
-    <main>
-        <!-- Research Paper Header -->
-        <section class="paper-hero">
-            <div class="container">
-                <div class="paper-hero__content">
-                    <h1 class="paper-hero__title">Cancer Leading Mutation DNA of P-53 Gene</h1>
-                    <p class="paper-hero__subtitle">Characteristic Analysis using Genetic Algorithms in a Closed Environment Model</p>
-                    
-                    <div class="paper-meta">
-                        <div class="authors">
-                            <span class="author-label">Author:</span>
-                            <span class="author-names">Evint Leovonzko, BSc Student</span>
-                        </div>
-                        <div class="journal-info">
-                            <span class="journal-label">Published in:</span>
-                            <span class="journal-name">Journal of Cancer Research (2024)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="paper-hero__cta">
-                        <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" class="btn btn-primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
-                            </svg>
-                            View Source Code
+    <main class="research-layout">
+        <!-- Mobile Sidebar Toggle -->
+        <button class="research-sidebar-toggle" id="research-sidebar-toggle" aria-label="Toggle research navigation">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <!-- Research Sidebar -->
+        <aside class="research-sidebar" id="research-sidebar">
+            <nav class="research-sidebar__nav">
+                <h2 class="research-sidebar__title">Research Sections</h2>
+                <ul class="research-sidebar__list" data-progress="0">
+                    <li class="research-sidebar__item">
+                        <a href="#introduction" class="research-sidebar__link active">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">📖</span>
+                                Introduction
+                            </span>
                         </a>
-                        <a href="#introduction" class="btn btn-secondary" data-number="03">Read Research</a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#methods" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">🔬</span>
+                                Methods
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#results" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">📊</span>
+                                Results
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#discussion" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">💭</span>
+                                Discussion
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#conclusion" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">✅</span>
+                                Conclusion
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#references" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">📚</span>
+                                References
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Research Paper Header -->
+                <section class="paper-hero">
+                    <div class="paper-hero__content">
+                        <h1 class="paper-hero__title">Cancer Leading Mutation DNA of P-53 Gene</h1>
+                        <p class="paper-hero__subtitle">Characteristic Analysis using Genetic Algorithms in a Closed Environment Model</p>
+                        
+                        <div class="paper-meta-box">
+                            <div class="paper-meta-content">
+                                <div class="authors">
+                                    <span class="author-label">Author:</span>
+                                    <span class="author-names">Evint Leovonzko, BSc Student</span>
+                                </div>
+                                <div class="journal-info">
+                                    <span class="journal-label">Published in:</span>
+                                    <span class="journal-name">Journal of Cancer Research (2024)</span>
+                                </div>
+                            </div>
+                            <div class="paper-meta-actions">
+                                <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" rel="noopener" class="btn btn-primary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                    <span class="btn-text">View Source Code</span>
+                                </a>
+                                <a href="#introduction" class="btn btn-secondary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Read Research</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Navigation Menu -->
-        <section class="paper-nav">
-            <div class="container">
-                <!-- Desktop Horizontal Menu -->
-                <nav class="paper-nav__menu">
-                    <a href="#introduction" class="paper-nav__link active">Introduction</a>
-                    <a href="#methods" class="paper-nav__link">Methods</a>
-                    <a href="#results" class="paper-nav__link">Results</a>
-                    <a href="#discussion" class="paper-nav__link">Discussion</a>
-                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
-                    <a href="#references" class="paper-nav__link">References</a>
-                </nav>
-            </div>
-        </section>
-
-        <!-- Mobile Bottom Navigation -->
-        <nav class="paper-nav__mobile" id="paper-nav-mobile">
-            <div class="paper-nav__mobile-grid">
-                <a href="#introduction" class="paper-nav__mobile-item active">
-                    <div class="paper-nav__mobile-icon">📖</div>
-                    <div class="paper-nav__mobile-text">Intro</div>
-                </a>
-                <a href="#methods" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">🔬</div>
-                    <div class="paper-nav__mobile-text">Methods</div>
-                </a>
-                <a href="#results" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📊</div>
-                    <div class="paper-nav__mobile-text">Results</div>
-                </a>
-                <a href="#discussion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">💭</div>
-                    <div class="paper-nav__mobile-text">Discussion</div>
-                </a>
-                <a href="#conclusion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">✅</div>
-                    <div class="paper-nav__mobile-text">Conclusion</div>
-                </a>
-                <a href="#references" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📚</div>
-                    <div class="paper-nav__mobile-text">References</div>
-                </a>
-            </div>
-        </nav>
-
-        <!-- Introduction Section -->
-        <section id="introduction" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Introduction</h2>
+                <!-- Introduction Section -->
+                <section id="introduction" class="research-section">
+                    <h2 class="research-section__title">Introduction</h2>
                     
                     <div class="content-text">
                         <p>The P-53 tumor suppressor gene is one of the most extensively studied genes in cancer research, with numerous studies implicating mutations in the gene as a key driver of cancer development and progression (Soussi, T., & Wiman, K. G. 2015). The P-53 gene is a critical component of the cell cycle mechanism, responsible for regulating cell growth and division, and acts as a checkpoint for DNA damage and other cellular stresses.</p>
@@ -146,15 +170,11 @@
                         
                         <p>Researchers used a closed environmental model to create a simulated environment that mimics the conditions within a cell. This environment includes the necessary components for DNA replication, transcription, translation, and other cellular processes relevant to the functioning of the P-53 gene. Within this controlled setting, we can observe how different P-53 gene sequences interact with cellular components and track the behavior of mutated sequences in response to various stimuli.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Methods Section -->
-        <section id="methods" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Methods</h2>
+                <!-- Methods Section -->
+                <section id="methods" class="research-section">
+                    <h2 class="research-section__title">Methods</h2>
                     
                     <div class="content-text">
                         <p>Self organizing matrix or Kohonen maps is a particular topographically organized vector quantization algorithm. By implementing this method, the specific characteristic of DNA strands in the cancer leading mutation path could be determined. All of the methods were implemented in the Python programming language with available open source libraries.</p>
@@ -220,15 +240,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Results Section -->
-        <section id="results" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Results</h2>
+                <!-- Results Section -->
+                <section id="results" class="research-section">
+                    <h2 class="research-section__title">Results</h2>
                     
                     <div class="results-table">
                         <h3>Cluster Center Analysis</h3>
@@ -411,15 +427,11 @@
                             <p>The analysis identified six distinct DNA sequence patterns ("cagcc", "agcca", "cccag", "ccagg", "ttttt", "ctttt") that show the highest correlation among cancer leading mutations, with the optimal clustering achieved using a 1×6 matrix configuration.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Discussion Section -->
-        <section id="discussion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Discussion</h2>
+                <!-- Discussion Section -->
+                <section id="discussion" class="research-section">
+                    <h2 class="research-section__title">Discussion</h2>
                     
                     <div class="content-text">
                         <p>The result shows that there are 6 strands that have the highest correlation among the cancer leading mutations, which are "cagcc", "agcca", "cccag", "ccagg", "ttttt", "ctttt". It is shown that each of the clusters has its own unique strand characteristic, which represents their own cluster. Based on the silhouette score, it is shown that the clustering has done a decent amount of cluster separation.</p>
@@ -441,15 +453,11 @@
                         
                         <p>The limitation of this study is the sample size that was limited and not nature based data. It would be better to understand and represent the nature of the mutation itself. Additionally, the use of specific algorithms or methods could also introduce limitations, as different algorithms may produce different results. It is important to acknowledge and discuss any limitations in a research paper to provide context for the results and to guide future research.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Conclusion Section -->
-        <section id="conclusion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Conclusion</h2>
+                <!-- Conclusion Section -->
+                <section id="conclusion" class="research-section">
+                    <h2 class="research-section__title">Conclusion</h2>
                     
                     <div class="content-text">
                         <p>Based on the result, this paper shows that there is a characteristic of cancer leading mutation that might cause the beginning mutation path to cancer. The implementation of genetic algorithms in a closed environment model has allowed us to identify specific DNA patterns associated with cancer-causing mutations in the P-53 gene.</p>
@@ -458,15 +466,11 @@
                         
                         <p>Our approach demonstrates the potential of computational methods in understanding the genetic basis of cancer. By simulating the evolutionary processes of mutation within a controlled environment, we can gain insights into the complex mechanisms of cancer development that would be difficult to observe in traditional experimental settings.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- References Section -->
-        <section id="references" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">References</h2>
+                <!-- References Section -->
+                <section id="references" class="research-section">
+                    <h2 class="research-section__title">References</h2>
                     
                     <div class="references-list">
                         <div class="reference-item">
@@ -506,15 +510,11 @@
                         <h3>Source Code Repository</h3>
                         <p>The complete source code and implementation details for this research are available at: <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" rel="noopener" class="research-link">https://github.com/Evintkoo/Vant-149-project</a></p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Related Research -->
-        <section class="section">
-            <div class="container">
-                <div class="related-research">
-                    <h2 class="section__title">Related Research</h2>
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
                     <div class="project-grid">
                         <article class="project-card">
                             <div class="project-card__content">
@@ -555,23 +555,21 @@
                             </div>
                         </article>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Back to Portfolio -->
-        <section class="section">
-            <div class="container">
-                <div class="back-to-portfolio">
-                    <a href="index.html#projects" class="btn btn-primary">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                        </svg>
-                        Back to Portfolio
-                    </a>
-                </div>
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="index.html#projects" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                            </svg>
+                            Back to Portfolio
+                        </a>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </main>
 
     <!-- Footer -->

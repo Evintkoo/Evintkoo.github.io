@@ -39,88 +39,139 @@
         </div>
     </header>
 
-    <main>
-        <!-- Research Paper Header -->
-        <section class="paper-hero">
-            <div class="container">
-                <div class="paper-hero__content">
-                    <h1 class="paper-hero__title">Deep Learning for Circular RNA Classification</h1>
-                    <p class="paper-hero__subtitle">Implementation with Gaussian Blur Data Preprocessing in Detection and Classification</p>
-                    
-                    <div class="paper-meta">
-                        <div class="authors">
-                            <span class="author-label">Authors:</span>
-                            <span class="author-names">Evint Leovonzko, Callixta F. Cahyaningrum, Rachmania Ulwani</span>
-                        </div>
-                        <div class="journal-info">
-                            <span class="journal-label">Published in:</span>
-                            <span class="journal-name">URNCST Journal (2024) | Volume 8, Issue 7</span>
-                        </div>
-                    </div>
-                    
-                    <div class="paper-hero__cta">
-                        <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" class="btn btn-primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                            </svg>
-                            View Full Paper
+    <main class="research-layout">
+        <!-- Floating Research Sidebar -->
+        <aside class="research-sidebar" id="floating-sidebar">
+            <nav class="research-sidebar__nav">
+                <h2 class="research-sidebar__title">Research Sections</h2>
+                
+                <ul class="research-sidebar__list" data-progress="0">
+                    <li class="research-sidebar__item">
+                        <a href="#abstract" class="research-sidebar__link active">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                </span>
+                                Abstract
+                            </span>
                         </a>
-                        <a href="#abstract" class="btn btn-secondary" data-number="02">Read Research</a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#introduction" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
+                                    </svg>
+                                </span>
+                                Introduction
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#methods" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
+                                    </svg>
+                                </span>
+                                Methods
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#results" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M22,21H2V3H4V19H6V17H10V19H12V16H16V19H18V17H22V21M18,14H22V16H18V14M12,6H16V9H12V6M16,15H12V10H16V15M6,10H10V12H6V10M10,16H6V13H10V16M4,15H2V17H4V15M4,10H2V12H4V10M9,4H7V8H9V4M13,4H11V5H13V4Z"/>
+                                    </svg>
+                                </span>
+                                Results
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#discussion" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                                    </svg>
+                                </span>
+                                Discussion
+                            </span>
+                        </a>
+                    </li>
+                    <li class="research-sidebar__item">
+                        <a href="#conclusion" class="research-sidebar__link">
+                            <span class="research-sidebar__text">
+                                <span class="research-sidebar__icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                                    </svg>
+                                </span>
+                                Conclusion
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Mobile Sidebar Toggle -->
+        <button class="research-sidebar-toggle" id="research-sidebar-toggle" aria-label="Toggle research navigation">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Research Paper Header -->
+                <section class="paper-hero">
+                    <div class="paper-hero__content">
+                        <h1 class="paper-hero__title">Deep Learning for Circular RNA Classification</h1>
+                        <p class="paper-hero__subtitle">Implementation with Gaussian Blur Data Preprocessing in Detection and Classification</p>
+                        
+                        <div class="paper-meta-box">
+                            <div class="paper-meta-content">
+                                <div class="authors">
+                                    <span class="author-label">Authors:</span>
+                                    <span class="author-names">Evint Leovonzko, Callixta F. Cahyaningrum, Rachmania Ulwani</span>
+                                </div>
+                                <div class="journal-info">
+                                    <span class="journal-label">Published in:</span>
+                                    <span class="journal-name">URNCST Journal (2024) | Volume 8, Issue 7</span>
+                                </div>
+                            </div>
+                            <div class="paper-meta-actions">
+                                <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" rel="noopener" class="btn btn-primary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <span class="btn-text">View Paper</span>
+                                </a>
+                                <a href="#abstract" class="btn btn-secondary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Read Research</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Navigation Menu -->
-        <section class="paper-nav">
-            <div class="container">
-                <!-- Desktop Horizontal Menu -->
-                <nav class="paper-nav__menu">
-                    <a href="#abstract" class="paper-nav__link active">Abstract</a>
-                    <a href="#introduction" class="paper-nav__link">Introduction</a>
-                    <a href="#methods" class="paper-nav__link">Methods</a>
-                    <a href="#results" class="paper-nav__link">Results</a>
-                    <a href="#discussion" class="paper-nav__link">Discussion</a>
-                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
-                </nav>
-            </div>
-        </section>
-
-        <!-- Mobile Bottom Navigation -->
-        <nav class="paper-nav__mobile" id="paper-nav-mobile">
-            <div class="paper-nav__mobile-grid">
-                <a href="#abstract" class="paper-nav__mobile-item active">
-                    <div class="paper-nav__mobile-icon">📄</div>
-                    <div class="paper-nav__mobile-text">Abstract</div>
-                </a>
-                <a href="#introduction" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📖</div>
-                    <div class="paper-nav__mobile-text">Intro</div>
-                </a>
-                <a href="#methods" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">🔬</div>
-                    <div class="paper-nav__mobile-text">Methods</div>
-                </a>
-                <a href="#results" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📊</div>
-                    <div class="paper-nav__mobile-text">Results</div>
-                </a>
-                <a href="#discussion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">💭</div>
-                    <div class="paper-nav__mobile-text">Discussion</div>
-                </a>
-                <a href="#conclusion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">✅</div>
-                    <div class="paper-nav__mobile-text">Conclusion</div>
-                </a>
-            </div>
-        </nav>
-
-        <!-- Abstract Section -->
-        <section id="abstract" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Abstract</h2>
+                <!-- Abstract Section -->
+                <section id="abstract" class="research-section">
+                    <h2 class="research-section__title">
+                        Abstract
+                    </h2>
                     
                     <div class="abstract-content">
                         <div class="abstract-item">
@@ -148,15 +199,11 @@
                             <p>Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Introduction Section -->
-        <section id="introduction" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Introduction</h2>
+                <!-- Introduction Section -->
+                <section id="introduction" class="research-section">
+                    <h2 class="research-section__title">Introduction</h2>
                     
                     <div class="content-text">
                         <p>Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.</p>
@@ -174,15 +221,11 @@
                         
                         <p>The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Methods Section -->
-        <section id="methods" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Methods</h2>
+                <!-- Methods Section -->
+                <section id="methods" class="research-section">
+                    <h2 class="research-section__title">Methods</h2>
                     
                     <div class="methods-grid">
                         <div class="method-card">
@@ -233,15 +276,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Results Section -->
-        <section id="results" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Results</h2>
+                <!-- Results Section -->
+                <section id="results" class="research-section">
+                    <h2 class="research-section__title">Results</h2>
                     
                     <div class="content-text">
                         <p>Our neural network models for both detection and classification showed promising training progress with the following performance metrics:</p>
@@ -311,15 +350,11 @@
                             <p>The proposed method's runtime was significantly faster than other existing algorithms, taking only 0.14 milliseconds to predict one RNA. It was at least ten times faster than similar models like DeepCirCode and circDeep.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Discussion Section -->
-        <section id="discussion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Discussion</h2>
+                <!-- Discussion Section -->
+                <section id="discussion" class="research-section">
+                    <h2 class="research-section__title">Discussion</h2>
                     
                     <div class="content-text">
                         <p>The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.</p>
@@ -339,15 +374,11 @@
                         
                         <p>By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Conclusion Section -->
-        <section id="conclusion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Conclusion</h2>
+                <!-- Conclusion Section -->
+                <section id="conclusion" class="research-section">
+                    <h2 class="research-section__title">Conclusion</h2>
                     
                     <div class="content-text">
                         <p>This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.</p>
@@ -356,15 +387,11 @@
                         
                         <p>In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Related Research -->
-        <section class="section">
-            <div class="container">
-                <div class="related-research">
-                    <h2 class="section__title">Related Research</h2>
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
                     <div class="project-grid">
                         <article class="project-card">
                             <div class="project-card__content">
@@ -405,23 +432,21 @@
                             </div>
                         </article>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Back to Portfolio -->
-        <section class="section">
-            <div class="container">
-                <div class="back-to-portfolio">
-                    <a href="index.html#projects" class="btn btn-primary">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                        </svg>
-                        Back to Portfolio
-                    </a>
-                </div>
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="index.html#projects" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                            </svg>
+                            Back to Portfolio
+                        </a>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </main>
 
     <!-- Footer -->
