@@ -18,17 +18,54 @@ class Portfolio {
   setupNavigation() {
     const navToggle = document.getElementById('nav-toggle');
     const navList = document.querySelector('.nav__list');
+    const navOverlay = document.getElementById('nav-overlay');
     const navLinks = document.querySelectorAll('.nav__link');
     const body = document.body;
+
+    // Initialize ARIA attributes
+    if (navToggle && navList) {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-controls', 'nav-list');
+      navList.setAttribute('aria-hidden', 'true');
+    }
 
     // Mobile menu toggle
     if (navToggle) {
       navToggle.addEventListener('click', () => {
         const isActive = navList.classList.contains('active');
         
+        // Toggle classes
         navList.classList.toggle('active');
+        navOverlay?.classList.toggle('active');
         navToggle.classList.toggle('active');
         body.classList.toggle('no-scroll', !isActive);
+
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        navList.setAttribute('aria-hidden', !isActive ? 'false' : 'true');
+
+        // Focus management
+        if (!isActive) {
+          // When opening, focus the first nav link
+          const firstLink = navList.querySelector('.nav__link');
+          if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
+          }
+        }
+      });
+    }
+
+    // Close mobile menu when clicking overlay
+    if (navOverlay) {
+      navOverlay.addEventListener('click', () => {
+        navList.classList.remove('active');
+        navOverlay.classList.remove('active');
+        navToggle.classList.remove('active');
+        body.classList.remove('no-scroll');
+        
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', 'false');
+        navList.setAttribute('aria-hidden', 'true');
       });
     }
 
@@ -36,17 +73,47 @@ class Portfolio {
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navList.classList.remove('active');
+        navOverlay?.classList.remove('active');
         navToggle.classList.remove('active');
         body.classList.remove('no-scroll');
+        
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', 'false');
+        navList.setAttribute('aria-hidden', 'true');
       });
     });
 
-    // Close mobile menu when clicking outside
+    // Keyboard navigation for mobile menu
+    navList.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        const focusableElements = navList.querySelectorAll('.nav__link');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    });
+
+    // Close mobile menu when clicking outside (keeping existing functionality)
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.nav') && navList.classList.contains('active')) {
         navList.classList.remove('active');
+        navOverlay?.classList.remove('active');
         navToggle.classList.remove('active');
         body.classList.remove('no-scroll');
+        
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', 'false');
+        navList.setAttribute('aria-hidden', 'true');
+        
+        // Return focus to toggle button
+        navToggle.focus();
       }
     });
 
@@ -54,8 +121,16 @@ class Portfolio {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && navList.classList.contains('active')) {
         navList.classList.remove('active');
+        navOverlay?.classList.remove('active');
         navToggle.classList.remove('active');
         body.classList.remove('no-scroll');
+        
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', 'false');
+        navList.setAttribute('aria-hidden', 'true');
+        
+        // Return focus to toggle button
+        navToggle.focus();
       }
     });
   }
@@ -220,49 +295,42 @@ class Portfolio {
     // Active section highlighting - synchronized with progress bar
     const observerOptions = {
       threshold: [0, 0.1, 0.25, 0.3, 0.5, 0.75, 1],
-      rootMargin: '-60px 0px -40% 0px'
+      rootMargin: '-80px 0px -30% 0px'
     };
 
     let activeSection = null;
 
     const sectionObserver = new IntersectionObserver((entries) => {
-      const visibleSections = [];
+      let mostVisible = null;
+      let maxVisibility = 0;
       
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
-          visibleSections.push({
-            element: entry.target,
-            ratio: entry.intersectionRatio,
-            id: entry.target.id
-          });
+        if (entry.isIntersecting) {
+          const visibility = entry.intersectionRatio;
+          if (visibility > maxVisibility) {
+            maxVisibility = visibility;
+            mostVisible = entry.target;
+          }
         }
       });
-
-      // Sort by intersection ratio and find the most visible section
-      visibleSections.sort((a, b) => b.ratio - a.ratio);
       
-      if (visibleSections.length > 0) {
-        const mostVisible = visibleSections[0];
-        const activeId = mostVisible.id;
+      // If we found a visible section and it's different from current active
+      if (mostVisible && activeSection !== mostVisible.id) {
+        activeSection = mostVisible.id;
         
-        // Only update if it's a different section
-        if (activeSection !== activeId) {
-          activeSection = activeId;
-          
-          console.log('Active section changed to:', activeId); // Debug log
-          
-          // Update sidebar links
-          sidebarLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${activeId}`) {
-              link.classList.add('active');
-              console.log('Added active class to:', link.textContent.trim()); // Debug log
-            }
-          });
+        console.log('Active section changed to:', activeSection); // Debug log
+        
+        // Update sidebar links
+        sidebarLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${activeSection}`) {
+            link.classList.add('active');
+            console.log('Added active class to:', link.textContent.trim()); // Debug log
+          }
+        });
 
-          // Update progress dots (if they exist)
-          this.updateProgressDots(activeId);
-        }
+        // Update progress dots (if they exist)
+        this.updateProgressDots(activeSection);
       }
     }, observerOptions);
 
@@ -330,75 +398,107 @@ class Portfolio {
     // Define the range for progress bar: from methodology (index 2) to insights (index 5)
     const progressStartIndex = 2; // methodology
     const progressEndIndex = 5;   // insights
-    const progressSections = sectionOrder.slice(progressStartIndex, progressEndIndex + 1);
     
     const updateProgressBar = () => {
       const scrollTop = window.pageYOffset;
       const headerHeight = document.querySelector('.header')?.offsetHeight || 70;
       const viewportHeight = window.innerHeight;
       
-      let currentSectionIndex = 0;
-      let maxProgress = 0;
+      let activeSection = null;
+      let maxVisibility = 0;
       
-      // Calculate progress based on which sections are visible and how much
-      for (let i = 0; i < researchSections.length; i++) {
-        const section = researchSections[i];
+      // Find the section that's most visible in the viewport
+      researchSections.forEach((section, index) => {
         const sectionTop = section.offsetTop - headerHeight;
         const sectionBottom = sectionTop + section.offsetHeight;
         const sectionHeight = section.offsetHeight;
         
-        // Check if section is in viewport
-        if (scrollTop + viewportHeight > sectionTop && scrollTop < sectionBottom) {
-          // Calculate how much of the section is visible
-          const visibleTop = Math.max(scrollTop, sectionTop);
-          const visibleBottom = Math.min(scrollTop + viewportHeight, sectionBottom);
-          const visibleHeight = visibleBottom - visibleTop;
-          const visibilityRatio = visibleHeight / Math.min(sectionHeight, viewportHeight);
+        // Calculate visibility ratio
+        const viewportTop = scrollTop;
+        const viewportBottom = scrollTop + viewportHeight;
+        
+        // Check for intersection
+        if (sectionBottom > viewportTop && sectionTop < viewportBottom) {
+          const intersectionTop = Math.max(sectionTop, viewportTop);
+          const intersectionBottom = Math.min(sectionBottom, viewportBottom);
+          const intersectionHeight = intersectionBottom - intersectionTop;
           
-          // If section is significantly visible (more than 30%), consider it active
-          if (visibilityRatio > 0.3 || (scrollTop + viewportHeight * 0.3 >= sectionTop && scrollTop <= sectionTop + sectionHeight * 0.5)) {
-            currentSectionIndex = i;
-            
-            // Calculate fine-grained progress within the section
-            const sectionProgress = Math.max(0, Math.min(1, (scrollTop + viewportHeight * 0.3 - sectionTop) / (sectionHeight * 0.7)));
-            maxProgress = i + sectionProgress;
+          // Calculate visibility as percentage of section visible in viewport
+          const visibilityRatio = intersectionHeight / Math.min(sectionHeight, viewportHeight);
+          
+          // If this section is more visible than previous ones, or if we're in its upper portion
+          const isInUpperPortion = scrollTop + viewportHeight * 0.4 >= sectionTop && scrollTop + viewportHeight * 0.4 <= sectionBottom;
+          
+          if (visibilityRatio > maxVisibility || (isInUpperPortion && visibilityRatio > 0.2)) {
+            activeSection = section;
+            maxVisibility = visibilityRatio;
           }
         }
+      });
+      
+      // If no section is prominently visible, use scroll position to determine active section
+      if (!activeSection || maxVisibility < 0.1) {
+        const currentScrollPosition = scrollTop + viewportHeight * 0.3;
         
-        // If we've scrolled past the section completely
-        if (scrollTop > sectionBottom - viewportHeight * 0.3) {
-          currentSectionIndex = Math.min(i + 1, researchSections.length - 1);
-          maxProgress = Math.min(i + 1, researchSections.length - 1);
+        for (let i = 0; i < researchSections.length; i++) {
+          const section = researchSections[i];
+          const sectionTop = section.offsetTop - headerHeight;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          
+          if (currentScrollPosition >= sectionTop && currentScrollPosition <= sectionBottom) {
+            activeSection = section;
+            break;
+          }
+          
+          // If we've passed this section, it might be the last active one
+          if (currentScrollPosition < sectionTop && i > 0) {
+            activeSection = researchSections[i - 1];
+            break;
+          }
         }
       }
       
-      // Ensure we don't exceed the number of sections
-      currentSectionIndex = Math.min(currentSectionIndex, researchSections.length - 1);
-      maxProgress = Math.min(maxProgress, researchSections.length - 1);
-      
-      // Use the higher of currentSectionIndex or maxProgress for smoother progression
-      const finalProgress = Math.max(currentSectionIndex, Math.floor(maxProgress));
-      
-      // Convert to progress bar range (methodology to insights only)
-      let progressBarValue = 0;
-      if (finalProgress >= progressStartIndex && finalProgress <= progressEndIndex) {
-        // We're in the tracked range
-        progressBarValue = finalProgress - progressStartIndex;
-      } else if (finalProgress < progressStartIndex) {
-        // Before methodology - no progress
-        progressBarValue = 0;
-      } else {
-        // After insights - full progress (3 since we count from 0)
-        progressBarValue = 3;
+      if (!activeSection) {
+        // Fallback: use the closest section
+        let closestSection = researchSections[0];
+        let minDistance = Math.abs(scrollTop + viewportHeight * 0.3 - (researchSections[0].offsetTop - headerHeight));
+        
+        researchSections.forEach(section => {
+          const distance = Math.abs(scrollTop + viewportHeight * 0.3 - (section.offsetTop - headerHeight));
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestSection = section;
+          }
+        });
+        
+        activeSection = closestSection;
       }
       
+      // Get the section index
+      const activeSectionId = activeSection.id;
+      const sectionIndex = sectionOrder.indexOf(activeSectionId);
+      
       console.log('Progress Update:', {
-        currentSectionIndex,
-        maxProgress,
-        finalProgress,
-        progressBarValue,
-        currentSection: researchSections[currentSectionIndex]?.id || 'none'
+        activeSectionId,
+        sectionIndex,
+        maxVisibility,
+        scrollPosition: scrollTop + viewportHeight * 0.3
       }); // Debug log
+      
+      // Convert to progress bar value (methodology=0, clusters=1, policy=2, insights=3)
+      let progressBarValue = 0;
+      if (sectionIndex >= progressStartIndex && sectionIndex <= progressEndIndex) {
+        progressBarValue = sectionIndex - progressStartIndex;
+      } else if (sectionIndex < progressStartIndex) {
+        progressBarValue = 0;
+      } else {
+        progressBarValue = 3; // Max value for insights
+      }
+      
+      // Special case: if we're at the conclusion or past insights, show full completion
+      if (sectionIndex >= 6) { // conclusion index
+        progressBarValue = 4; // Full completion
+      }
       
       // Update progress bar with smooth transition
       const currentProgress = parseInt(sidebarList.getAttribute('data-progress') || '0');

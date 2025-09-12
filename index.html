@@ -40,6 +40,7 @@
                     <span class="nav__line"></span>
                     <span class="nav__line"></span>
                 </button>
+                <div class="nav__overlay" id="nav-overlay"></div>
                 <ul class="nav__list" id="nav-list">
                     <li><a href="#about" class="nav__link">About</a></li>
                     <li><a href="#projects" class="nav__link">Projects</a></li>
@@ -73,110 +74,170 @@
             <div class="container">
                 <h2 class="section__title">About Me</h2>
                 <div class="about__content">
-                    <p class="about__text">
-                        I'm a data scientist focused on developing machine learning solutions that solve real-world problems. 
-                        With a background in computational research and business analytics, I bridge the gap between 
-                        technical implementation and practical application.
-                    </p>
-                    <p class="about__text">
-                        My expertise includes deep learning algorithms, genetic algorithms, and building data analytics 
-                        platforms that provide actionable insights.
-                    </p>
+                    <div class="about__intro">
+                        <p class="about__text">
+                            I'm a passionate data scientist with a strong foundation in machine learning, deep learning, and computational research. 
+                            My journey began with a fascination for understanding complex patterns in data and has evolved into developing 
+                            practical AI solutions that bridge the gap between cutting-edge research and real-world applications.
+                        </p>
+                        <p class="about__text">
+                            With extensive experience in bioinformatics, financial analytics, and business intelligence, I specialize in 
+                            transforming raw data into actionable insights. My work spans from developing custom neural network architectures 
+                            for medical research to building enterprise-grade machine learning platforms that democratize AI accessibility.
+                        </p>
+                    </div>
                     
-                    <div class="skills">
-                        <div class="skills__category">
-                            <h3>Machine Learning & AI</h3>
-                            <div class="skills__list">
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Deep Learning
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Neural Networks
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Genetic Algorithms
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    AutoML
-                                </span>
+                    <div class="tech-stack">
+                        <h3 class="about__section-title">Technology Stack</h3>
+                        <div class="tech-stack__diagram">
+                            <!-- Brick Stack Layout -->
+                            <div class="brick-wall">
+                                <!-- Stack 1 -->
+                                <div class="brick-stack stack-1">
+                                    <div class="brick" data-tech="python">
+                                        <span class="brick__name">Python</span>
+                                    </div>
+                                    <div class="brick" data-tech="pytorch">
+                                        <span class="brick__name">PyTorch</span>
+                                    </div>
+                                    <div class="brick" data-tech="tensorflow">
+                                        <span class="brick__name">TensorFlow</span>
+                                    </div>
+                                    <div class="brick" data-tech="opencv">
+                                        <span class="brick__name">OpenCV</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 2 -->
+                                <div class="brick-stack stack-2">
+                                    <div class="brick" data-tech="fastapi">
+                                        <span class="brick__name">FastAPI</span>
+                                    </div>
+                                    <div class="brick" data-tech="docker">
+                                        <span class="brick__name">Docker</span>
+                                    </div>
+                                    <div class="brick" data-tech="mongodb">
+                                        <span class="brick__name">MongoDB</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 3 -->
+                                <div class="brick-stack stack-3">
+                                    <div class="brick" data-tech="pandas">
+                                        <span class="brick__name">Pandas</span>
+                                    </div>
+                                    <div class="brick" data-tech="numpy">
+                                        <span class="brick__name">NumPy</span>
+                                    </div>
+                                    <div class="brick" data-tech="matplotlib">
+                                        <span class="brick__name">Matplotlib</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 4 -->
+                                <div class="brick-stack stack-4">
+                                    <div class="brick" data-tech="cuda">
+                                        <span class="brick__name">CUDA</span>
+                                    </div>
+                                    <div class="brick" data-tech="tensorrt">
+                                        <span class="brick__name">TensorRT</span>
+                                    </div>
+                                    <div class="brick" data-tech="onnx">
+                                        <span class="brick__name">ONNX</span>
+                                    </div>
+                                    <div class="brick" data-tech="mlflow">
+                                        <span class="brick__name">MLflow</span>
+                                    </div>
+                                    <div class="brick" data-tech="optuna">
+                                        <span class="brick__name">Optuna</span>
+                                    </div>
+                                    <div class="brick" data-tech="gradio">
+                                        <span class="brick__name">Gradio</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 5 -->
+                                <div class="brick-stack stack-5">
+                                    <div class="brick" data-tech="streamlit">
+                                        <span class="brick__name">Streamlit</span>
+                                    </div>
+                                    <div class="brick" data-tech="mediapipe">
+                                        <span class="brick__name">MediaPipe</span>
+                                    </div>
+                                    <div class="brick" data-tech="plotly">
+                                        <span class="brick__name">Plotly</span>
+                                    </div>
+                                    <div class="brick" data-tech="seaborn">
+                                        <span class="brick__name">Seaborn</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 6 -->
+                                <div class="brick-stack stack-6">
+                                    <div class="brick" data-tech="figma">
+                                        <span class="brick__name">Figma</span>
+                                    </div>
+                                    <div class="brick" data-tech="cpp">
+                                        <span class="brick__name">C++</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 7 -->
+                                <div class="brick-stack stack-7">
+                                    <div class="brick" data-tech="cnn">
+                                        <span class="brick__name">CNN</span>
+                                    </div>
+                                    <div class="brick" data-tech="genetic-algorithms">
+                                        <span class="brick__name">Genetic Algorithms</span>
+                                    </div>
+                                    <div class="brick" data-tech="biopython">
+                                        <span class="brick__name">Biopython</span>
+                                    </div>
+                                    <div class="brick" data-tech="som">
+                                        <span class="brick__name">SOM</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 8 -->
+                                <div class="brick-stack stack-8">
+                                    <div class="brick" data-tech="statsmodels">
+                                        <span class="brick__name">Statsmodels</span>
+                                    </div>
+                                    <div class="brick" data-tech="garch">
+                                        <span class="brick__name">GARCH</span>
+                                    </div>
+                                    <div class="brick" data-tech="quandl">
+                                        <span class="brick__name">Quandl</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stack 9 -->
+                                <div class="brick-stack stack-9">
+                                    <div class="brick" data-tech="canva">
+                                        <span class="brick__name">Canva</span>
+                                    </div>
+                                    <div class="brick" data-tech="analytics">
+                                        <span class="brick__name">Analytics</span>
+                                    </div>
+                                    <div class="brick" data-tech="content-strategy">
+                                        <span class="brick__name">Content Strategy</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="skills__category">
-                            <h3>Programming & Tools</h3>
-                            <div class="skills__list">
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    TensorFlow
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    PyTorch
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Pandas
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    NumPy
-                                </span>
+                        <div class="tech-stats">
+                            <div class="tech-stat">
+                                <div class="tech-stat__number">5+</div>
+                                <div class="tech-stat__label">Years Experience</div>
                             </div>
-                        </div>
-                        
-                        <div class="skills__category">
-                            <h3>Research Domains</h3>
-                            <div class="skills__list">
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Bioinformatics
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Financial Markets
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Economic Analysis
-                                </span>
-                                <span class="skill">
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Business Intelligence
-                                </span>
+                            <div class="tech-stat">
+                                <div class="tech-stat__number">15+</div>
+                                <div class="tech-stat__label">Technologies</div>
+                            </div>
+                            <div class="tech-stat">
+                                <div class="tech-stat__number">10+</div>
+                                <div class="tech-stat__label">Projects</div>
                             </div>
                         </div>
                     </div>
@@ -206,36 +267,49 @@
                                 <h3 class="project__title">Deep Learning for Circular RNA Classification</h3>
                                 <span class="project__type">Research</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Machine Learning</span>
-                                <span class="project__tag">Bioinformatics</span>
-                                <span class="project__tag">Neural Networks</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Bioinformatics</span>
+                                <span class="project__sub-field-item">Machine Learning</span>
                             </div>
-                            <p class="project__description">
-                                Implemented a custom convolutional neural network architecture with Gaussian Blur data 
-                                preprocessing to predict circRNA-disease associations. Achieved 75.11% accuracy.
+                            
+                            <p class="project__short-desc">
+                                Custom CNN architecture for predicting circRNA-disease associations with Gaussian Blur preprocessing
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    PyTorch
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Deep Learning
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        PyTorch
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        CNN
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        NumPy
+                                    </span>
+                                </div>
                             </div>
-                            <a href="research1.html" class="project__link">View Research →</a>
+                            
+                            <div class="project__action">
+                                <a href="research1.html" class="project__link">View Research →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -245,36 +319,43 @@
                                 <h3 class="project__title">Cancer Mutation Analysis in P-53 Gene</h3>
                                 <span class="project__type">Research</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Genetics</span>
-                                <span class="project__tag">Algorithm Development</span>
-                                <span class="project__tag">Cancer Research</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Genetics</span>
+                                <span class="project__sub-field-item">Computational Biology</span>
                             </div>
-                            <p class="project__description">
-                                Identified specific DNA strand characteristics within the P-53 tumor suppressor gene 
-                                that may lead to cancerous mutations using genetic algorithms.
+                            
+                            <p class="project__short-desc">
+                                Genetic algorithm approach to identify DNA characteristics leading to P-53 cancerous mutations
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Genetic Algorithms
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Bioinformatics
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Genetic Algorithms
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Biopython
+                                    </span>
+                                </div>
                             </div>
-                            <a href="research2.html" class="project__link">View Research →</a>
+                            
+                            <div class="project__action">
+                                <a href="research2.html" class="project__link">View Research →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -286,39 +367,34 @@
                                 <span class="project__type">Business</span>
                             </div>
                             
-                            <p class="project__description">
-                                Open-source desktop app for training and running large language models with optimized inference.
+                            <div class="project__sub-field">Enterprise AI Solutions</div>
+                            
+                            <p class="project__short-desc">
+                                Open-source desktop application for training and running large language models
                             </p>
                             
-                            <div class="project__capabilities">
-                                <div class="project__capability-tags">
-                                    <span class="project__capability-tag">LLM</span>
-                                    <span class="project__capability-tag">Desktop App</span>
-                                    <span class="project__capability-tag">Open Source</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__tech-stack">
-                                <div class="project__tech-tags">
-                                    <span class="project__tech-tag">
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
                                         <svg width="100%" height="100%">
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                         </svg>
                                         Python
                                     </span>
-                                    <span class="project__tech-tag">
+                                    <span class="project__stack-tag">
                                         <svg width="100%" height="100%">
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                         </svg>
                                         PyTorch
                                     </span>
-                                    <span class="project__tech-tag">
+                                    <span class="project__stack-tag">
                                         <svg width="100%" height="100%">
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                         </svg>
                                         CUDA
                                     </span>
-                                    <span class="project__tech-tag">
+                                    <span class="project__stack-tag">
                                         <svg width="100%" height="100%">
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                         </svg>
@@ -340,42 +416,55 @@
                                 <h3 class="project__title">PyTorch Inference Framework</h3>
                                 <span class="project__type">Open Source</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Performance Optimization</span>
-                                <span class="project__tag">Autoscaling</span>
-                                <span class="project__tag">Production-Ready</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Performance Optimization</span>
+                                <span class="project__sub-field-item">MLOps</span>
                             </div>
-                            <p class="project__description">
-                                Comprehensive PyTorch inference framework delivering 2-10x performance improvements through 
-                                TensorRT, ONNX Runtime, quantization, and advanced optimization techniques with enterprise autoscaling.
+                            
+                            <p class="project__short-desc">
+                                High-performance PyTorch inference framework with enterprise autoscaling capabilities
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    PyTorch
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    TensorRT
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    FastAPI
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Docker
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        PyTorch
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        TensorRT
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        FastAPI
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Docker
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        ONNX
+                                    </span>
+                                </div>
                             </div>
-                            <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            
+                            <div class="project__action">
+                                <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -385,42 +474,110 @@
                                 <h3 class="project__title">Kolosal AutoML Platform</h3>
                                 <span class="project__type">Open Source</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Automated ML</span>
-                                <span class="project__tag">Web Interface</span>
-                                <span class="project__tag">Enterprise-Grade</span>
-                            </div>
-                            <p class="project__description">
-                                Production-ready automated machine learning platform with ASHT optimization, web interface, 
-                                comprehensive APIs, and enterprise deployment features for end-to-end ML workflows.
+                            
+                            <div class="project__sub-field">Automated Machine Learning</div>
+                            
+                            <p class="project__short-desc">
+                                Production-ready automated ML platform with ASHT optimization and web interface
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Gradio
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    FastAPI
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    MLflow
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Gradio
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        FastAPI
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        MLflow
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Optuna
+                                    </span>
+                                </div>
                             </div>
-                            <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            
+                            <div class="project__action">
+                                <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project" data-category="open-source">
+                        <div class="project__content">
+                            <div class="project__header">
+                                <h3 class="project__title">SOM Plus Clustering</h3>
+                                <span class="project__type">Open Source</span>
+                            </div>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Machine Learning</span>
+                                <span class="project__sub-field-item">Data Visualization</span>
+                            </div>
+                            
+                            <p class="project__short-desc">
+                                Advanced Self-Organizing Map implementation with multiple initialization methods and clustering evaluation metrics
+                            </p>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        SOM
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        NumPy
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        SciPy
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Matplotlib
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="project__action">
+                                <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -430,42 +587,55 @@
                                 <h3 class="project__title">APT Fitness Assistant</h3>
                                 <span class="project__type">Open Source</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Computer Vision</span>
-                                <span class="project__tag">Pose Detection</span>
-                                <span class="project__tag">AI Health Analytics</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Computer Vision</span>
+                                <span class="project__sub-field-item">Health Analytics</span>
                             </div>
-                            <p class="project__description">
-                                AI-powered fitness companion using MediaPipe pose detection, body composition analysis, 
-                                and personalized workout recommendations with real-time form correction capabilities.
+                            
+                            <p class="project__short-desc">
+                                AI-powered fitness companion with pose detection and personalized recommendations
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    MediaPipe
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Streamlit
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    OpenCV
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        MediaPipe
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Streamlit
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        OpenCV
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        TensorFlow
+                                    </span>
+                                </div>
                             </div>
-                            <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            
+                            <div class="project__action">
+                                <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -476,42 +646,31 @@
                                 <h3 class="project__title">Rebirth Educational Platform</h3>
                                 <span class="project__type">Community</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Educational Platform</span>
-                                <span class="project__tag">Research Community</span>
-                                <span class="project__tag">Lifelong Learning</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Educational Technology</span>
+                                <span class="project__sub-field-item">Community Building</span>
                             </div>
-                            <p class="project__description">
-                                Educational platform fostering a community of lifelong learners passionate about research and education. 
-                                Created by UBC students to empower individuals with knowledge and skills for research and scientific engagement.
+                            
+                            <p class="project__short-desc">
+                                Educational platform fostering lifelong learning and research community engagement
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Web Platform
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Content Management
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Community Building
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Education
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        MongoDB
+                                    </span>
+                                </div>
                             </div>
-                            <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="project__link">Visit Platform →</a>
+                            
+                            <div class="project__action">
+                                <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="project__link">Visit Platform →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -521,42 +680,43 @@
                                 <h3 class="project__title">PsychIDN Community</h3>
                                 <span class="project__type">Community</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Mental Health Awareness</span>
-                                <span class="project__tag">Psychology Education</span>
-                                <span class="project__tag">Indonesian Community</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Mental Health</span>
+                                <span class="project__sub-field-item">Psychology Education</span>
                             </div>
-                            <p class="project__description">
-                                Psychology-focused community platform dedicated to mental health awareness and education in Indonesia. 
-                                Building a supportive community that promotes psychological literacy and mental wellness through educational content and discussions.
+                            
+                            <p class="project__short-desc">
+                                Psychology-focused community platform for mental health awareness in Indonesia
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Social Media
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Content Creation
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Mental Health
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Community Outreach
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Content Strategy
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Canva
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Analytics
+                                    </span>
+                                </div>
                             </div>
-                            <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="project__link">Follow Community →</a>
+                            
+                            <div class="project__action">
+                                <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="project__link">Follow Community →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -567,36 +727,55 @@
                                 <h3 class="project__title">GDP Growth Analysis</h3>
                                 <span class="project__type">Analysis</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Economic Analysis</span>
-                                <span class="project__tag">Clustering</span>
-                                <span class="project__tag">Pattern Recognition</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Economic Data Science</span>
+                                <span class="project__sub-field-item">Pattern Recognition</span>
                             </div>
-                            <p class="project__description">
-                                Analyzed various patterns of GDP growth for multiple countries and groups using 
-                                Self-Organizing Map (SOM) clustering techniques.
+                            
+                            <p class="project__short-desc">
+                                Multi-country GDP pattern analysis using Self-Organizing Map clustering techniques
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    SOM Clustering
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Data Visualization
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        SOM
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Matplotlib
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Pandas
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Seaborn
+                                    </span>
+                                </div>
                             </div>
-                            <a href="gdp_analysis.html" class="project__link">View Analysis →</a>
+                            
+                            <div class="project__action">
+                                <a href="gdp_analysis.html" class="project__link">View Analysis →</a>
+                            </div>
                         </div>
                     </article>
 
@@ -606,36 +785,55 @@
                                 <h3 class="project__title">Equity vs Crypto Market Timing</h3>
                                 <span class="project__type">Analysis</span>
                             </div>
-                            <div class="project__tags">
-                                <span class="project__tag">Financial Markets</span>
-                                <span class="project__tag">Time Series</span>
-                                <span class="project__tag">Market Analysis</span>
+                            
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">Financial Markets</span>
+                                <span class="project__sub-field-item">Time Series Analysis</span>
                             </div>
-                            <p class="project__description">
-                                Comprehensive study examining lead-lag relationships between equity and cryptocurrency 
-                                markets around business cycle turning points.
+                            
+                            <p class="project__short-desc">
+                                Lead-lag relationship analysis between equity and cryptocurrency markets during business cycles
                             </p>
-                            <div class="project__tech">
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Python
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Time Series Analysis
-                                </span>
-                                <span>
-                                    <svg width="100%" height="100%">
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                    </svg>
-                                    Statistical Modeling
-                                </span>
+                            
+                            <div class="project__technical-stack">
+                                <div class="project__stack-label">Technical Stack</div>
+                                <div class="project__stack-tags">
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Python
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Statsmodels
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        GARCH
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Plotly
+                                    </span>
+                                    <span class="project__stack-tag">
+                                        <svg width="100%" height="100%">
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Quandl
+                                    </span>
+                                </div>
                             </div>
-                            <a href="cryptovsstock.html" class="project__link">View Research →</a>
+                            
+                            <div class="project__action">
+                                <a href="cryptovsstock.html" class="project__link">View Research →</a>
+                            </div>
                         </div>
                     </article>
                 </div>
