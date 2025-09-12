@@ -15,21 +15,18 @@
 <body>
     <!-- Header with Navigation -->
     <header class="header">
-        <div class="container header__container">
+        <div class="container">
             <a href="index.html" class="logo">
                 <img src="images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
                 <span class="logo__text">Evint Leovonzko</span>
             </a>
             <nav class="nav">
-                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()">
-                    <span class="hamburger"></span>
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span class="nav__line"></span>
+                    <span class="nav__line"></span>
+                    <span class="nav__line"></span>
                 </button>
                 <ul class="nav__list" id="nav-list">
-                    <li class="nav__close-wrapper">
-                        <button class="nav__close" id="nav-close" aria-label="Close navigation" onclick="closeMobileNav()">
-                            <span class="close-icon">&times;</span>
-                        </button>
-                    </li>
                     <li><a href="index.html" class="nav__link">Home</a></li>
                     <li><a href="index.html#about" class="nav__link">About</a></li>
                     <li><a href="index.html#projects" class="nav__link">Projects</a></li>
@@ -39,7 +36,115 @@
         </div>
     </header>
 
-    <main>
+    <main class="research-layout">
+        <!-- Sidebar Container -->
+        <div class="research-sidebar-container">
+            <!-- Floating Research Sidebar -->
+            <aside class="research-sidebar" id="floating-sidebar">
+                <nav class="research-sidebar__nav">
+                    <h2 class="research-sidebar__title">Research Sections</h2>
+                    
+                    <ul class="research-sidebar__list" data-progress="0" data-max-progress="3">
+                        <li class="research-sidebar__item">
+                            <a href="#abstract" class="research-sidebar__link active">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                    </span>
+                                    Abstract
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#introduction" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
+                                        </svg>
+                                    </span>
+                                    Introduction
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#methodology" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
+                                        </svg>
+                                    </span>
+                                    Methods
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#clusters" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+                                        </svg>
+                                    </span>
+                                    Clusters
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#policy" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                    </span>
+                                    Policy
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#insights" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                                        </svg>
+                                    </span>
+                                    Insights
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#conclusion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                                        </svg>
+                                    </span>
+                                    Conclusion
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <!-- Mobile Toggle Button -->
+                <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+                    </svg>
+                </button>
+            </aside>
+        </div>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+
         <!-- Research Paper Header -->
         <section class="paper-hero">
             <div class="container">
@@ -77,61 +182,10 @@
             </div>
         </section>
 
-        <!-- Navigation Menu -->
-        <section class="paper-nav">
-            <div class="container">
-                <!-- Desktop Horizontal Menu -->
-                <nav class="paper-nav__menu">
-                    <a href="#abstract" class="paper-nav__link active">Abstract</a>
-                    <a href="#introduction" class="paper-nav__link">Introduction</a>
-                    <a href="#methodology" class="paper-nav__link">Methodology</a>
-                    <a href="#clusters" class="paper-nav__link">Clusters</a>
-                    <a href="#policy" class="paper-nav__link">Policy</a>
-                    <a href="#insights" class="paper-nav__link">Insights</a>
-                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
-                </nav>
-            </div>
-        </section>
-
-        <!-- Mobile Bottom Navigation -->
-        <nav class="paper-nav__mobile" id="paper-nav-mobile">
-            <div class="paper-nav__mobile-grid">
-                <a href="#abstract" class="paper-nav__mobile-item active">
-                    <div class="paper-nav__mobile-icon">📄</div>
-                    <div class="paper-nav__mobile-text">Abstract</div>
-                </a>
-                <a href="#introduction" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📖</div>
-                    <div class="paper-nav__mobile-text">Intro</div>
-                </a>
-                <a href="#methodology" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">🔧</div>
-                    <div class="paper-nav__mobile-text">Method</div>
-                </a>
-                <a href="#clusters" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">🌐</div>
-                    <div class="paper-nav__mobile-text">Clusters</div>
-                </a>
-                <a href="#policy" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📋</div>
-                    <div class="paper-nav__mobile-text">Policy</div>
-                </a>
-                <a href="#insights" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">💡</div>
-                    <div class="paper-nav__mobile-text">Insights</div>
-                </a>
-                <a href="#conclusion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">✅</div>
-                    <div class="paper-nav__mobile-text">Conclusion</div>
-                </a>
-            </div>
-        </nav>
-
         <!-- Abstract Section -->
-        <section id="abstract" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Abstract</h2>
+        <section id="abstract" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Abstract</h2>
                     
                     <div class="abstract-content">
                         <div class="abstract-item">
@@ -159,15 +213,13 @@
                             <p>Clusters are not destiny - countries can progress through appropriate policies. Understanding these patterns helps tailor strategies for achieving stable and inclusive economic growth in the face of global challenges.</p>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Introduction -->
-        <section id="introduction" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Introduction</h2>
+        <section id="introduction" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Introduction</h2>
                     
                     <div class="content-text">
                         <p>Countries have followed strikingly different economic paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries stagnated. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies.</p>
@@ -185,15 +237,13 @@
                         
                         <p>Understanding these divergent economic trajectories is crucial for policymakers, international institutions, and investors. This study applies advanced machine learning techniques to identify and characterize distinct patterns of economic development, providing insights into the factors that drive sustained growth versus stagnation.</p>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Methodology -->
-        <section id="methodology" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Methodology</h2>
+        <section id="methodology" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Methodology</h2>
                     
                     <div class="methods-grid">
                         <div class="method-card">
@@ -236,15 +286,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Clusters Analysis -->
-        <section id="clusters" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">The Four Clusters</h2>
+        <section id="clusters" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">The Four Clusters</h2>
                     
                     <div class="clusters-grid">
                         <!-- Cluster 1 -->
@@ -331,15 +379,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Policy Implications -->
-        <section id="policy" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Policy Implications by Cluster</h2>
+        <section id="policy" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Policy Implications by Cluster</h2>
                     
                     <div class="content-text">
                         <p>Each cluster requires distinct policy approaches based on their unique economic characteristics and challenges. The following recommendations are tailored to help countries within each cluster optimize their growth strategies and avoid common pitfalls.</p>
@@ -402,15 +448,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Macroeconomic Insights -->
-        <section id="insights" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Key Macroeconomic Insights</h2>
+        <section id="insights" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Key Macroeconomic Insights</h2>
                     
                     <div class="insights-grid">
                         <div class="insight-card">
@@ -465,15 +509,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Conclusion -->
-        <section id="conclusion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Conclusion</h2>
+        <section id="conclusion" class="research-section">
+            <div class="paper-section">
+                <h2 class="research-section__title">Conclusion</h2>
                     
                     <div class="content-text">
                         <p>This clustering reveals that countries achieving sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Those experiencing boom-bust cycles relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, poor governance, or human capital deficits.</p>
@@ -493,15 +535,14 @@
                         
                         <p>The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.</p>
                     </div>
-                </div>
             </div>
         </section>
 
         <!-- Related Research -->
-        <section class="section">
-            <div class="container">
+        <section class="research-section">
+            <div class="paper-section">
                 <div class="related-research">
-                    <h2 class="section__title">Related Research</h2>
+                    <h2 class="research-section__title">Related Research</h2>
                     <div class="project-grid">
                         <article class="project-card">
                             <div class="project-card__content">
@@ -547,18 +588,19 @@
         </section>
 
         <!-- Back to Portfolio -->
-        <section class="section">
-            <div class="container">
-                <div class="back-to-portfolio">
-                    <a href="index.html#projects" class="btn btn-primary">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                        </svg>
-                        Back to Portfolio
-                    </a>
-                </div>
+        <section class="research-section">
+            <div class="back-to-portfolio">
+                <a href="index.html#projects" class="btn btn-primary">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    Back to Portfolio
+                </a>
             </div>
         </section>
+
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->

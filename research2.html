@@ -15,21 +15,18 @@
 <body>
     <!-- Header with Navigation -->
     <header class="header">
-        <div class="container header__container">
+        <div class="container">
             <a href="index.html" class="logo">
                 <img src="images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
                 <span class="logo__text">Evint Leovonzko</span>
             </a>
             <nav class="nav">
-                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()">
-                    <span class="hamburger"></span>
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span class="nav__line"></span>
+                    <span class="nav__line"></span>
+                    <span class="nav__line"></span>
                 </button>
                 <ul class="nav__list" id="nav-list">
-                    <li class="nav__close-wrapper">
-                        <button class="nav__close" id="nav-close" aria-label="Close navigation" onclick="closeMobileNav()">
-                            <span class="close-icon">&times;</span>
-                        </button>
-                    </li>
                     <li><a href="index.html" class="nav__link">Home</a></li>
                     <li><a href="index.html#about" class="nav__link">About</a></li>
                     <li><a href="index.html#projects" class="nav__link">Projects</a></li>
@@ -40,69 +37,95 @@
     </header>
 
     <main class="research-layout">
-        <!-- Mobile Sidebar Toggle -->
+        <!-- Sidebar Container -->
+        <div class="research-sidebar-container">
+            <!-- Floating Research Sidebar -->
+            <aside class="research-sidebar" id="floating-sidebar">
+                <nav class="research-sidebar__nav">
+                    <h2 class="research-sidebar__title">Research Sections</h2>
+                    
+                    <ul class="research-sidebar__list" data-progress="0">
+                        <li class="research-sidebar__item">
+                            <a href="#introduction" class="research-sidebar__link active">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
+                                        </svg>
+                                    </span>
+                                    Introduction
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#methods" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
+                                        </svg>
+                                    </span>
+                                    Methods
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#results" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M22,21H2V3H4V19H6V17H10V19H12V16H16V19H18V17H22V21M18,14H22V16H18V14M12,6H16V9H12V6M16,15H12V10H16V15M6,10H10V12H6V10M10,16H6V13H10V16M4,15H2V17H4V15M4,10H2V12H4V10M9,4H7V8H9V4M13,4H11V5H13V4Z"/>
+                                        </svg>
+                                    </span>
+                                    Results
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#discussion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                                        </svg>
+                                    </span>
+                                    Discussion
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#conclusion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                                        </svg>
+                                    </span>
+                                    Conclusion
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#references" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                    </span>
+                                    References
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>        <!-- Mobile Sidebar Toggle -->
         <button class="research-sidebar-toggle" id="research-sidebar-toggle" aria-label="Toggle research navigation">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
             </svg>
         </button>
-
-        <!-- Research Sidebar -->
-        <aside class="research-sidebar" id="research-sidebar">
-            <nav class="research-sidebar__nav">
-                <h2 class="research-sidebar__title">Research Sections</h2>
-                <ul class="research-sidebar__list" data-progress="0">
-                    <li class="research-sidebar__item">
-                        <a href="#introduction" class="research-sidebar__link active">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">📖</span>
-                                Introduction
-                            </span>
-                        </a>
-                    </li>
-                    <li class="research-sidebar__item">
-                        <a href="#methods" class="research-sidebar__link">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">🔬</span>
-                                Methods
-                            </span>
-                        </a>
-                    </li>
-                    <li class="research-sidebar__item">
-                        <a href="#results" class="research-sidebar__link">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">📊</span>
-                                Results
-                            </span>
-                        </a>
-                    </li>
-                    <li class="research-sidebar__item">
-                        <a href="#discussion" class="research-sidebar__link">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">💭</span>
-                                Discussion
-                            </span>
-                        </a>
-                    </li>
-                    <li class="research-sidebar__item">
-                        <a href="#conclusion" class="research-sidebar__link">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">✅</span>
-                                Conclusion
-                            </span>
-                        </a>
-                    </li>
-                    <li class="research-sidebar__item">
-                        <a href="#references" class="research-sidebar__link">
-                            <span class="research-sidebar__text">
-                                <span class="research-sidebar__icon">📚</span>
-                                References
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
 
         <!-- Research Content -->
         <div class="research-content">
@@ -145,6 +168,8 @@
                 <!-- Introduction Section -->
                 <section id="introduction" class="research-section">
                     <h2 class="research-section__title">Introduction</h2>
+                    
+                    <div class="section-spacer"></div>
                     
                     <div class="content-text">
                         <p>The P-53 tumor suppressor gene is one of the most extensively studied genes in cancer research, with numerous studies implicating mutations in the gene as a key driver of cancer development and progression (Soussi, T., & Wiman, K. G. 2015). The P-53 gene is a critical component of the cell cycle mechanism, responsible for regulating cell growth and division, and acts as a checkpoint for DNA damage and other cellular stresses.</p>
@@ -560,11 +585,16 @@
                 <!-- Back to Portfolio -->
                 <section class="research-section">
                     <div class="back-to-portfolio">
-                        <a href="index.html#projects" class="btn btn-primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                            </svg>
-                            Back to Portfolio
+                        <a href="index.html#projects" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
                         </a>
                     </div>
                 </section>
