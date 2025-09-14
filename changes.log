@@ -1,0 +1,1740 @@
+diff --git a/cryptovsstock.html b/cryptovsstock.html
+index 1377e7a..fd54c1d 100644
+--- a/cryptovsstock.html
++++ b/cryptovsstock.html
+@@ -36,96 +36,134 @@
+         </div>
+     </header>
+ 
+-    <main>
+-        <!-- Research Paper Header -->
+-        <section class="paper-hero">
+-            <div class="container">
+-                <div class="paper-hero__content">
+-                    <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
+-                    <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
++    <main class="research-layout">
++        <!-- Sidebar Container -->
++        <div class="research-sidebar-container">
++            <!-- Floating Research Sidebar -->
++            <aside class="research-sidebar" id="floating-sidebar">
++                <nav class="research-sidebar__nav">
++                    <h2 class="research-sidebar__title">Research Sections</h2>
+                     
+-                    <div class="paper-meta-box">
+-                        <div class="paper-meta-content">
+-                            <div class="authors">
+-                                <span class="author-label">Author:</span>
+-                                <span class="author-names">Evint Leovonzko</span>
+-                            </div>
+-                            <div class="journal-info">
+-                                <span class="journal-label">Published:</span>
+-                                <span class="journal-name">July 2025</span>
+-                            </div>
+-                        </div>
+-                        <div class="paper-meta-actions">
+-                            <a href="files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
+-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+-                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+-                                </svg>
+-                                <span class="btn-text">Download PDF</span>
++                    <ul class="research-sidebar__list" data-progress="0">
++                        <li class="research-sidebar__item">
++                            <a href="#introduction" class="research-sidebar__link active">
++                                <span class="research-sidebar__text">
++                                    <span class="research-sidebar__icon">
++                                        <svg viewBox="0 0 24 24" fill="currentColor">
++                                            <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
++                                        </svg>
++                                    </span>
++                                    Introduction
++                                </span>
+                             </a>
+-                            <a href="#introduction" class="btn btn-secondary">
+-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+-                                    <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+-                                </svg>
+-                                <span class="btn-text">Read Research</span>
++                        </li>
++                        <li class="research-sidebar__item">
++                            <a href="#methodology" class="research-sidebar__link">
++                                <span class="research-sidebar__text">
++                                    <span class="research-sidebar__icon">
++                                        <svg viewBox="0 0 24 24" fill="currentColor">
++                                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
++                                        </svg>
++                                    </span>
++                                    Methodology
++                                </span>
++                            </a>
++                        </li>
++                        <li class="research-sidebar__item">
++                            <a href="#results" class="research-sidebar__link">
++                                <span class="research-sidebar__text">
++                                    <span class="research-sidebar__icon">
++                                        <svg viewBox="0 0 24 24" fill="currentColor">
++                                            <path d="M22,21H2V3H4V19H6V17H10V19H12V16H16V19H18V17H22V21M18,14H22V16H18V14M12,6H16V9H12V6M16,15H12V10H16V15M6,10H10V12H6V10M10,16H6V13H10V16M4,15H2V17H4V15M4,10H2V12H4V10M9,4H7V8H9V4M13,4H11V5H13V4Z"/>
++                                        </svg>
++                                    </span>
++                                    Results
++                                </span>
++                            </a>
++                        </li>
++                        <li class="research-sidebar__item">
++                            <a href="#discussion" class="research-sidebar__link">
++                                <span class="research-sidebar__text">
++                                    <span class="research-sidebar__icon">
++                                        <svg viewBox="0 0 24 24" fill="currentColor">
++                                            <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
++                                        </svg>
++                                    </span>
++                                    Discussion
++                                </span>
+                             </a>
++                        </li>
++                        <li class="research-sidebar__item">
++                            <a href="#conclusion" class="research-sidebar__link">
++                                <span class="research-sidebar__text">
++                                    <span class="research-sidebar__icon">
++                                        <svg viewBox="0 0 24 24" fill="currentColor">
++                                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
++                                        </svg>
++                                    </span>
++                                    Conclusion
++                                </span>
++                            </a>
++                        </li>
++                    </ul>
++                </nav>
++            </aside>
++        </div>
++
++        <!-- Mobile Toggle Button -->
++        <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
++            <svg viewBox="0 0 24 24" fill="currentColor">
++                <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
++            </svg>
++        </button>
++
++        <!-- Research Content -->
++        <div class="research-content">
++            <div class="research-content__inner">
++        <!-- Research Paper Header -->
++        <section class="paper-hero">
++            <div class="paper-hero__content">
++                <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
++                <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
++                
++                <div class="paper-meta-box">
++                    <div class="paper-meta-content">
++                        <div class="authors">
++                            <span class="author-label">Author:</span>
++                            <span class="author-names">Evint Leovonzko</span>
++                        </div>
++                        <div class="journal-info">
++                            <span class="journal-label">Published:</span>
++                            <span class="journal-name">July 2025</span>
+                         </div>
+                     </div>
++                    <div class="paper-meta-actions">
++                        <a href="files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
++                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
++                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
++                            </svg>
++                            <span class="btn-text">Download PDF</span>
++                        </a>
++                        <a href="#introduction" class="btn btn-secondary">
++                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
++                                <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
++                            </svg>
++                            <span class="btn-text">Read Research</span>
++                        </a>
++                    </div>
+                 </div>
+             </div>
+         </section>
+ 
+-        <!-- Navigation Menu -->
+-        <section class="paper-nav">
+-            <div class="container">
+-                <!-- Desktop Horizontal Menu -->
+-                <nav class="paper-nav__menu">
+-                    <a href="#introduction" class="paper-nav__link active">Introduction</a>
+-                    <a href="#methodology" class="paper-nav__link">Methodology</a>
+-                    <a href="#results" class="paper-nav__link">Results</a>
+-                    <a href="#discussion" class="paper-nav__link">Discussion</a>
+-                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
+-                    <a href="#references" class="paper-nav__link">References</a>
+-                </nav>
+-            </div>
+-        </section>
+-
+-        <!-- Mobile Bottom Navigation -->
+-        <nav class="paper-nav__mobile" id="paper-nav-mobile">
+-            <div class="paper-nav__mobile-grid">
+-                <a href="#introduction" class="paper-nav__mobile-item active">
+-                    <div class="paper-nav__mobile-icon">📖</div>
+-                    <div class="paper-nav__mobile-text">Intro</div>
+-                </a>
+-                <a href="#methodology" class="paper-nav__mobile-item">
+-                    <div class="paper-nav__mobile-icon">🔬</div>
+-                    <div class="paper-nav__mobile-text">Methods</div>
+-                </a>
+-                <a href="#results" class="paper-nav__mobile-item">
+-                    <div class="paper-nav__mobile-icon">📊</div>
+-                    <div class="paper-nav__mobile-text">Results</div>
+-                </a>
+-                <a href="#discussion" class="paper-nav__mobile-item">
+-                    <div class="paper-nav__mobile-icon">💭</div>
+-                    <div class="paper-nav__mobile-text">Discussion</div>
+-                </a>
+-                <a href="#conclusion" class="paper-nav__mobile-item">
+-                    <div class="paper-nav__mobile-icon">✅</div>
+-                    <div class="paper-nav__mobile-text">Conclusion</div>
+-                </a>
+-                <a href="#references" class="paper-nav__mobile-item">
+-                    <div class="paper-nav__mobile-icon">📚</div>
+-                    <div class="paper-nav__mobile-text">References</div>
+-                </a>
+-            </div>
+-        </nav>
++        <!-- Research Content -->
++        <div class="research-content">
++            <div class="research-content__inner">
+ 
+         <!-- Introduction Section -->
+-        <section id="introduction" class="section">
+-            <div class="container">
+-                <div class="paper-section">
+-                    <h2 class="section__title">Introduction</h2>
+-                    
+-                    <div class="content-text">
++        <section id="introduction" class="research-section">
++            <h2 class="research-section__title">Introduction</h2>
++            
++            <div class="content-text">
+                         <p>The timely and accurate identification of business cycle turning points remains a foundational challenge in macroeconomic analysis, given the substantial economic and social costs associated with recessions (Burns & Mitchell, 1946). Early-warning indicators provide invaluable insights that enable policymakers to deploy counter-cyclical measures more effectively and allow investors to adjust asset allocations to mitigate risk (Romer & Romer, 2004).</p>
+                         
+                         <p>Historically, equity markets have been regarded as a premier leading indicator of economic activity, with the underlying logic that stock prices, representing the discounted present value of future corporate earnings, should rapidly incorporate aggregate economic expectations (Fama, 1981; Estrella & Mishkin, 1998). Consequently, declines in broad market indices are often observed to precede the onset of recessions as determined by official dating committees such as the National Bureau of Economic Research (NBER).</p>
+@@ -170,12 +208,10 @@
+         </section>
+ 
+         <!-- Methodology Section -->
+-        <section id="methodology" class="section">
+-            <div class="container">
+-                <div class="paper-section">
+-                    <h2 class="section__title">Methodology</h2>
+-                    
+-                    <div class="content-text">
++        <section id="methodology" class="research-section">
++            <h2 class="research-section__title">Methodology</h2>
++            
++            <div class="content-text">
+                         <p>This study employs a multi-method, multi-scale methodological framework to provide a robust answer to the research question. The approach is designed to move from simple correlational timing to causal inference and predictive classification, thereby triangulating evidence for the lead-lag relationship between equity and crypto-asset markets around U.S. business cycles.</p>
+                     </div>
+                     
+@@ -243,10 +279,41 @@
+                     </div>
+                 </div>
+             </div>
++                </section>
++
++                <!-- Methodology Section -->
++                <section id="methodology" class="research-section">
++                    <h2 class="research-section__title">Methodology</h2>
++                    
++                    <div class="content-text">
++                        <p>This study employs a comprehensive empirical framework to analyze the lead-lag relationships between equity and cryptocurrency markets around business cycle turning points. Our methodology integrates multiple data sources and analytical techniques to provide robust insights into cross-asset market dynamics.</p>
++                        
++                        <div class="research-highlight">
++                            <div class="highlight-icon">
++                                <svg viewBox="0 0 24 24" fill="currentColor">
++                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
++                                </svg>
++                            </div>
++                            <div class="highlight-content">
++                                <p>Our analysis utilizes advanced econometric techniques including Granger causality tests, vector autoregression models, and event study methodologies to examine timing relationships.</p>
++                            </div>
++                        </div>
++                        
++                                            <p>The study period spans from 2010 to 2024, encompassing multiple business cycle phases and allowing for comprehensive analysis of market behavior across different economic environments. We examine both traditional equity indices and major cryptocurrency benchmarks to ensure robust comparative analysis.</p>
++                </div>
+         </section>
+ 
+         <!-- Results Section -->
+-        <section id="results" class="section">
++        <section id="results" class="research-section">
++            <h2 class="research-section__title">Results</h2>
++            
++            <h3>Descriptive Statistics</h3>
++            <div class="content-text">
++                    </div>
++                </section>
++
++                <!-- Results Section -->
++                <section id="results" class="research-section">
+             <div class="container">
+                 <div class="paper-section">
+                     <h2 class="section__title">Results</h2>
+@@ -441,12 +508,10 @@
+         </section>
+ 
+         <!-- Discussion Section -->
+-        <section id="discussion" class="section">
+-            <div class="container">
+-                <div class="paper-section">
+-                    <h2 class="section__title">Discussion</h2>
+-                    
+-                    <div class="content-text">
++        <section id="discussion" class="research-section">
++            <h2 class="research-section__title">Discussion</h2>
++            
++            <div class="content-text">
+                         <h3>Theoretical Implications</h3>
+                         <p>The academic literature provides robust theoretical explanations for why equity markets systematically lead cryptocurrency markets by approximately 27 days. Information processing theory and market efficiency gaps form the primary theoretical foundation, with recent research demonstrating that cryptocurrency uncertainty indices lead crypto returns across multiple time horizons using wavelet coherence analysis.</p>
+                         
+@@ -491,12 +556,10 @@
+         </section>
+ 
+         <!-- Conclusion Section -->
+-        <section id="conclusion" class="section">
+-            <div class="container">
+-                <div class="paper-section">
+-                    <h2 class="section__title">Conclusion</h2>
+-                    
+-                    <div class="content-text">
++        <section id="conclusion" class="research-section">
++            <h2 class="research-section__title">Conclusion</h2>
++            
++            <div class="content-text">
+                         <h3>Primary Research Findings</h3>
+                         <p>This study provides the first comprehensive empirical analysis addressing the fundamental question: "Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?" Through a multi-methodological framework, we present robust evidence that fundamentally answers this research question.</p>
+                         
+@@ -542,12 +605,10 @@
+         </section>
+ 
+         <!-- References Section -->
+-        <section id="references" class="section">
+-            <div class="container">
+-                <div class="paper-section">
+-                    <h2 class="section__title">References</h2>
+-                    
+-                    <div class="references-list">
++        <section id="references" class="research-section">
++            <h2 class="research-section__title">References</h2>
++            
++            <div class="references-list">
+                         <div class="reference-item">
+                             <p>Ah Mand, A. A. (2024). Cryptocurrency returns and cryptocurrency uncertainty: A time–frequency analysis. <em>Financial Innovation</em>, 10, Article 734.</p>
+                         </div>
+@@ -682,18 +743,24 @@
+         </section>
+ 
+         <!-- Back to Portfolio -->
+-        <section class="section">
+-            <div class="container">
+-                <div class="back-to-portfolio">
+-                    <a href="index.html#projects" class="btn btn-primary">
+-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
++        <section class="research-section">
++            <div class="back-to-portfolio">
++                <a href="index.html#projects" class="animated-button">
++                    <span>Back to Portfolio</span>
++                    <div class="icon">
++                        <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                         </svg>
+-                        Back to Portfolio
+-                    </a>
+-                </div>
++                        <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
++                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
++                        </svg>
++                    </div>
++                </a>
+             </div>
+         </section>
++
++            </div>
++        </div>
+     </main>
+ 
+     <!-- Footer -->
+diff --git a/gdp_analysis.html b/gdp_analysis.html
+index f6bf791..390ec9a 100644
+--- a/gdp_analysis.html
++++ b/gdp_analysis.html
+@@ -4,7 +4,71 @@
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko</title>
++    <title>Clustering Global GDP Trajectories (1980–2024) |                         <p>Cluster                    <p>Understanding these divergent eco                        </div>
++                    </div>
++                </div>
++        </section>                        </div>
++                    </div>
++                                        </div>
++                    </div>
++                                 </div>
++                               <p>The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.</p>
++                </div>
++        </section>
++
++        <!-- Related Research -->
++        <section class="research-section">
++            <div class="related-research">
++                <h2 class="research-section__title">Related Research</h2>   <p>The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.</p>
++                </div>
++        </section>
++
++        <!-- Related Research -->
++        <section class="research-section">
++            <div class="related-research">
++                <h2 class="research-section__title">Related Research</h2>      </div>
++                </div>
++        </section>
++
++        <!-- Conclusion -->
++        <section id="conclusion" class="research-section">
++            <h2 class="research-section__title">Conclusion</h2>
++                
++                <div class="content-text">>
++        </section>
++
++        <!-- Macroeconomic Insights -->
++        <section id="insights" class="research-section">
++            <h2 class="research-section__title">Key Macroeconomic Insights</h2>
++                
++                <div class="insights-grid">    </section>
++
++        <!-- Policy Implications -->
++        <section id="policy" class="research-section">
++            <h2 class="research-section__title">Policy Implications by Cluster</h2>
++                
++                <div class="content-text"><!-- Clusters Analysis -->
++        <section id="clusters" class="research-section">
++            <h2 class="research-section__title">The Four Clusters</h2>
++                
++                <div class="clusters-grid">tories is crucial for policymakers, international institutions, and investors. This study applies advanced machine learning techniques to identify and characterize distinct patterns of economic development, providing insights into the factors that drive sustained growth versus stagnation.</p>
++                </div>
++        </section>
++
++        <!-- Methodology -->
++        <section id="methodology" class="research-section">
++            <h2 class="research-section__title">Methodology</h2>
++                
++                <div class="methods-grid">estiny - countries can progress through appropriate policies. Understanding these patterns helps tailor strategies for achieving stable and inclusive economic growth in the face of global challenges.</p>
++                    </div>
++                </div>
++        </section>
++
++        <!-- Introduction -->
++        <section id="introduction" class="research-section">
++            <h2 class="research-section__title">Introduction</h2>
++                
++                <div class="content-text">zko</title>
+     <meta name="description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+     <link rel="icon" type="image/png" href="images/logo-light.png">
+     <link rel="apple-touch-icon" href="images/logo-light.png">
+@@ -131,67 +195,64 @@
+                         </li>
+                     </ul>
+                 </nav>
+-                
+-                <!-- Mobile Toggle Button -->
+-                <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
+-                    <svg viewBox="0 0 24 24" fill="currentColor">
+-                        <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+-                    </svg>
+-                </button>
+             </aside>
+         </div>
+ 
++        <!-- Mobile Toggle Button -->
++        <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
++            <svg viewBox="0 0 24 24" fill="currentColor">
++                <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
++            </svg>
++        </button>
++
+         <!-- Research Content -->
+         <div class="research-content">
+             <div class="research-content__inner">
+ 
+         <!-- Research Paper Header -->
+         <section class="paper-hero">
+-            <div class="container">
+-                <div class="paper-hero__content">
+-                    <h1 class="paper-hero__title">Clustering Global GDP Trajectories</h1>
+-                    <p class="paper-hero__subtitle">Patterns and Policy Insights (1980–2024)</p>
+-                    
+-                    <div class="paper-meta-box">
+-                        <div class="paper-meta-content">
+-                            <div class="authors">
+-                                <span class="author-label">Author:</span>
+-                                <span class="author-names">Evint Leovonzko</span>
+-                            </div>
+-                            <div class="journal-info">
+-                                <span class="journal-label">Research Analysis:</span>
+-                                <span class="journal-name">Economic Development Patterns (2024) | 190 Countries, 45 Years</span>
+-                            </div>
++            <div class="paper-hero__content">
++                <h1 class="paper-hero__title">Clustering Global GDP Trajectories</h1>
++                <p class="paper-hero__subtitle">Patterns and Policy Insights (1980–2024)</p>
++                
++                <div class="paper-meta-box">
++                    <div class="paper-meta-content">
++                        <div class="authors">
++                            <span class="author-label">Author:</span>
++                            <span class="author-names">Evint Leovonzko</span>
+                         </div>
+-                        <div class="paper-meta-actions">
+-                            <a href="files/gdp_analysis.pdf" target="_blank" class="btn btn-primary">
+-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+-                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+-                                </svg>
+-                                <span class="btn-text">Download Paper</span>
+-                            </a>
+-                            <a href="#abstract" class="btn btn-secondary">
+-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+-                                    <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+-                                </svg>
+-                                <span class="btn-text">Read Analysis</span>
+-                            </a>
++                        <div class="journal-info">
++                            <span class="journal-label">Research Analysis:</span>
++                            <span class="journal-name">Economic Development Patterns (2024) | 190 Countries, 45 Years</span>
+                         </div>
+                     </div>
++                    <div class="paper-meta-actions">
++                        <a href="files/gdp_analysis.pdf" target="_blank" class="btn btn-primary">
++                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
++                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
++                            </svg>
++                            <span class="btn-text">Download Paper</span>
++                        </a>
++                        <a href="#abstract" class="btn btn-secondary">
++                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
++                                <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
++                            </svg>
++                            <span class="btn-text">Read Analysis</span>
++                        </a>
++                    </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <!-- Abstract Section -->
+         <section id="abstract" class="research-section">
+-            <div class="paper-section">
+-                <h2 class="research-section__title">Abstract</h2>
+-                    
+-                    <div class="abstract-content">
+-                        <div class="abstract-item">
+-                            <h3 class="abstract-label">Introduction</h3>
+-                            <p>Countries have followed strikingly different economic paths since 1980. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies across four decades of economic development.</p>
+-                        </div>
++            <h2 class="research-section__title">Abstract</h2>
++                
++                <div class="abstract-content">
++                    <div class="abstract-item">
++                        <h3 class="abstract-label">Introduction</h3>
++                        <p>Countries have followed strikingly different economic paths since 1980. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies across four decades of economic development.</p>
++                    </div>
+                         
+                         <div class="abstract-item">
+                             <h3 class="abstract-label">Methods</h3>
+@@ -579,22 +640,24 @@
+                                     <span>Machine Learning</span>
+                                     <span>Financial Markets</span>
+                                 </div>
+-                                <a href="cryptovsstock.html" class="project-card__link">View Research →</a>
+-                            </div>
+-                        </article>
+-                    </div>
++                            <a href="cryptovsstock.html" class="project-card__link">View Research →</a>
++                        </div>
++                    </article>
+                 </div>
+             </div>
+-        </section>
+-
+-        <!-- Back to Portfolio -->
++        </section>        <!-- Back to Portfolio -->
+         <section class="research-section">
+             <div class="back-to-portfolio">
+-                <a href="index.html#projects" class="btn btn-primary">
+-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+-                    </svg>
+-                    Back to Portfolio
++                <a href="index.html#projects" class="animated-button">
++                    <span>Back to Portfolio</span>
++                    <div class="icon">
++                        <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
++                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
++                        </svg>
++                        <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
++                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
++                        </svg>
++                    </div>
+                 </a>
+             </div>
+         </section>
+diff --git a/index.html b/index.html
+index 247117f..afd3e41 100644
+--- a/index.html
++++ b/index.html
+@@ -90,137 +90,97 @@
+                     <div class="tech-stack">
+                         <h3 class="about__section-title">Technology Stack</h3>
+                         <div class="tech-stack__diagram">
+-                            <!-- Brick Stack Layout -->
++                            <!-- MLP-like Network Layout -->
+                             <div class="brick-wall">
+-                                <!-- Stack 1 -->
+-                                <div class="brick-stack stack-1">
+-                                    <div class="brick" data-tech="python">
+-                                        <span class="brick__name">Python</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="pytorch">
+-                                        <span class="brick__name">PyTorch</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="tensorflow">
+-                                        <span class="brick__name">TensorFlow</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="opencv">
+-                                        <span class="brick__name">OpenCV</span>
+-                                    </div>
+-                                </div>
+-
+-                                <!-- Stack 2 -->
+-                                <div class="brick-stack stack-2">
+-                                    <div class="brick" data-tech="fastapi">
+-                                        <span class="brick__name">FastAPI</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="docker">
+-                                        <span class="brick__name">Docker</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="mongodb">
+-                                        <span class="brick__name">MongoDB</span>
+-                                    </div>
+-                                </div>
+-
+-                                <!-- Stack 3 -->
+-                                <div class="brick-stack stack-3">
+-                                    <div class="brick" data-tech="pandas">
+-                                        <span class="brick__name">Pandas</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="numpy">
+-                                        <span class="brick__name">NumPy</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="matplotlib">
+-                                        <span class="brick__name">Matplotlib</span>
+-                                    </div>
+-                                </div>
+-
+-                                <!-- Stack 4 -->
+-                                <div class="brick-stack stack-4">
+-                                    <div class="brick" data-tech="cuda">
+-                                        <span class="brick__name">CUDA</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="tensorrt">
+-                                        <span class="brick__name">TensorRT</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="onnx">
+-                                        <span class="brick__name">ONNX</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="mlflow">
+-                                        <span class="brick__name">MLflow</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="optuna">
+-                                        <span class="brick__name">Optuna</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="gradio">
+-                                        <span class="brick__name">Gradio</span>
+-                                    </div>
+-                                </div>
+-
+-                                <!-- Stack 5 -->
+-                                <div class="brick-stack stack-5">
+-                                    <div class="brick" data-tech="streamlit">
+-                                        <span class="brick__name">Streamlit</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="mediapipe">
+-                                        <span class="brick__name">MediaPipe</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="plotly">
+-                                        <span class="brick__name">Plotly</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="seaborn">
+-                                        <span class="brick__name">Seaborn</span>
++                                <!-- SVG for connection lines -->
++                                <svg class="connections-svg" width="100%" height="100%">
++                                    <!-- Connection lines will be drawn by JavaScript -->
++                                </svg>
++                                
++                                <!-- Input Layer: Core Languages & Frameworks -->
++                                <div class="tech-layer layer-input">
++                                    <div class="brick-stack">
++                                        <div class="brick" data-tech="python" data-layer="input">
++                                            <span class="brick__name">Python</span>
++                                        </div>
++                                        <div class="brick" data-tech="cpp" data-layer="input">
++                                            <span class="brick__name">C++</span>
++                                        </div>
++                                        <div class="brick" data-tech="pytorch" data-layer="input">
++                                            <span class="brick__name">PyTorch</span>
++                                        </div>
++                                        <div class="brick" data-tech="tensorflow" data-layer="input">
++                                            <span class="brick__name">TensorFlow</span>
++                                        </div>
+                                     </div>
+                                 </div>
+ 
+-                                <!-- Stack 6 -->
+-                                <div class="brick-stack stack-6">
+-                                    <div class="brick" data-tech="figma">
+-                                        <span class="brick__name">Figma</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="cpp">
+-                                        <span class="brick__name">C++</span>
+-                                    </div>
+-                                </div>
+-
+-                                <!-- Stack 7 -->
+-                                <div class="brick-stack stack-7">
+-                                    <div class="brick" data-tech="cnn">
+-                                        <span class="brick__name">CNN</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="genetic-algorithms">
+-                                        <span class="brick__name">Genetic Algorithms</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="biopython">
+-                                        <span class="brick__name">Biopython</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="som">
+-                                        <span class="brick__name">SOM</span>
++                                <!-- Hidden Layer 1: Data Processing & ML Libraries -->
++                                <div class="tech-layer layer-hidden1">
++                                    <div class="brick-stack">
++                                        <div class="brick" data-tech="pandas" data-layer="hidden1">
++                                            <span class="brick__name">Pandas</span>
++                                        </div>
++                                        <div class="brick" data-tech="numpy" data-layer="hidden1">
++                                            <span class="brick__name">NumPy</span>
++                                        </div>
++                                        <div class="brick" data-tech="opencv" data-layer="hidden1">
++                                            <span class="brick__name">OpenCV</span>
++                                        </div>
++                                        <div class="brick" data-tech="cnn" data-layer="hidden1">
++                                            <span class="brick__name">CNN</span>
++                                        </div>
++                                        <div class="brick" data-tech="som" data-layer="hidden1">
++                                            <span class="brick__name">SOM</span>
++                                        </div>
++                                        <div class="brick" data-tech="genetic-algorithms" data-layer="hidden1">
++                                            <span class="brick__name">Genetic Algorithms</span>
++                                        </div>
+                                     </div>
+                                 </div>
+ 
+-                                <!-- Stack 8 -->
+-                                <div class="brick-stack stack-8">
+-                                    <div class="brick" data-tech="statsmodels">
+-                                        <span class="brick__name">Statsmodels</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="garch">
+-                                        <span class="brick__name">GARCH</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="quandl">
+-                                        <span class="brick__name">Quandl</span>
++                                <!-- Hidden Layer 2: Optimization & Infrastructure -->
++                                <div class="tech-layer layer-hidden2">
++                                    <div class="brick-stack">
++                                        <div class="brick" data-tech="cuda" data-layer="hidden2">
++                                            <span class="brick__name">CUDA</span>
++                                        </div>
++                                        <div class="brick" data-tech="tensorrt" data-layer="hidden2">
++                                            <span class="brick__name">TensorRT</span>
++                                        </div>
++                                        <div class="brick" data-tech="onnx" data-layer="hidden2">
++                                            <span class="brick__name">ONNX</span>
++                                        </div>
++                                        <div class="brick" data-tech="docker" data-layer="hidden2">
++                                            <span class="brick__name">Docker</span>
++                                        </div>
++                                        <div class="brick" data-tech="mlflow" data-layer="hidden2">
++                                            <span class="brick__name">MLflow</span>
++                                        </div>
++                                        <div class="brick" data-tech="optuna" data-layer="hidden2">
++                                            <span class="brick__name">Optuna</span>
++                                        </div>
+                                     </div>
+                                 </div>
+ 
+-                                <!-- Stack 9 -->
+-                                <div class="brick-stack stack-9">
+-                                    <div class="brick" data-tech="canva">
+-                                        <span class="brick__name">Canva</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="analytics">
+-                                        <span class="brick__name">Analytics</span>
+-                                    </div>
+-                                    <div class="brick" data-tech="content-strategy">
+-                                        <span class="brick__name">Content Strategy</span>
++                                <!-- Output Layer: Applications & Services -->
++                                <div class="tech-layer layer-output">
++                                    <div class="brick-stack">
++                                        <div class="brick" data-tech="fastapi" data-layer="output">
++                                            <span class="brick__name">FastAPI</span>
++                                        </div>
++                                        <div class="brick" data-tech="streamlit" data-layer="output">
++                                            <span class="brick__name">Streamlit</span>
++                                        </div>
++                                        <div class="brick" data-tech="gradio" data-layer="output">
++                                            <span class="brick__name">Gradio</span>
++                                        </div>
++                                        <div class="brick" data-tech="mongodb" data-layer="output">
++                                            <span class="brick__name">MongoDB</span>
++                                        </div>
++                                        <div class="brick" data-tech="plotly" data-layer="output">
++                                            <span class="brick__name">Plotly</span>
++                                        </div>
+                                     </div>
+                                 </div>
+                             </div>
+@@ -367,7 +327,11 @@
+                                 <span class="project__type">Business</span>
+                             </div>
+                             
+-                            <div class="project__sub-field">Enterprise AI Solutions</div>
++                            <div class="project__sub-field">
++                                <span class="project__sub-field-item">LLM Ops</span>
++                                <span class="project__sub-field-item">MLOps</span>
++                                <span class="project__sub-field-item">AutoML</span>
++                            </div>
+                             
+                             <p class="project__short-desc">
+                                 Open-source desktop application for training and running large language models
+@@ -475,7 +439,10 @@
+                                 <span class="project__type">Open Source</span>
+                             </div>
+                             
+-                            <div class="project__sub-field">Automated Machine Learning</div>
++                            <div class="project__sub-field">
++                                <span class="project__sub-field-item">AutoML</span>
++                                <span class="project__sub-field-item">MLOps</span>
++                            </div>
+                             
+                             <p class="project__short-desc">
+                                 Production-ready automated ML platform with ASHT optimization and web interface
+@@ -883,6 +850,7 @@
+     <script src="theme-toggle.js"></script>
+     <script src="main.js"></script>
+     <script src="tech-tag-animation.js"></script>
++    <script src="mlp-connections.js"></script>
+     
+     <!-- Test Script for Filter Buttons -->
+     <script>
+diff --git a/main.js b/main.js
+index 91be905..5f23629 100644
+--- a/main.js
++++ b/main.js
+@@ -262,7 +262,7 @@ class Portfolio {
+     const sidebarLinks = document.querySelectorAll('.research-sidebar__link');
+     const sections = document.querySelectorAll('.research-section');
+     const sidebarList = document.querySelector('.research-sidebar__list');
+-    const researchSections = document.querySelectorAll('#abstract, #introduction, #methodology, #clusters, #policy, #insights, #conclusion');
++    const researchSections = document.querySelectorAll('#abstract, #introduction, #methodology, #methods, #results, #discussion, #conclusion, #references, #clusters, #policy, #insights');
+ 
+     // If not on research page, return early
+     if (!sidebar && !floatingSidebar) return;
+@@ -270,21 +270,14 @@ class Portfolio {
+     // Setup floating sidebar behavior
+     this.setupFloatingSidebar(floatingSidebar);
+ 
+-    // Mobile sidebar toggle
+-    if (sidebarToggle) {
+-      sidebarToggle.addEventListener('click', () => {
+-        sidebar?.classList.toggle('active');
+-        document.body.classList.toggle('no-scroll', sidebar?.classList.contains('active'));
+-      });
+-    }
+-
+     // Close sidebar when clicking outside (mobile)
+     document.addEventListener('click', (e) => {
++      const sidebarContainer = document.querySelector('.research-sidebar-container');
+       if (window.innerWidth <= 1024 && 
+-          sidebar?.classList.contains('active') && 
+-          !sidebar.contains(e.target) && 
++          sidebarContainer?.classList.contains('show') && 
++          !sidebarContainer.contains(e.target) && 
+           !sidebarToggle?.contains(e.target)) {
+-        sidebar.classList.remove('active');
++        sidebarContainer.classList.remove('show');
+         document.body.classList.remove('no-scroll');
+       }
+     });
+@@ -359,7 +352,8 @@ class Portfolio {
+ 
+           // Close mobile sidebar after click
+           if (window.innerWidth <= 1024) {
+-            sidebar?.classList.remove('active');
++            const sidebarContainer = document.querySelector('.research-sidebar-container');
++            sidebarContainer?.classList.remove('show');
+             document.body.classList.remove('no-scroll');
+           }
+         }
+@@ -368,8 +362,9 @@ class Portfolio {
+ 
+     // Handle window resize
+     window.addEventListener('resize', debounce(() => {
++      const sidebarContainer = document.querySelector('.research-sidebar-container');
+       if (window.innerWidth > 1024) {
+-        sidebar?.classList.remove('active');
++        sidebarContainer?.classList.remove('show');
+         document.body.classList.remove('no-scroll');
+       }
+     }, 250));
+@@ -385,19 +380,22 @@ class Portfolio {
+   setupProgressBar(sidebarList, sections) {
+     if (!sidebarList || !sections.length) return;
+ 
+-    // Filter sections to only include research sections with IDs
++    // Filter sections to only include research sections with IDs that actually exist
+     const researchSections = Array.from(sections).filter(section => {
+       const id = section.id;
+-      return id && ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'].includes(id);
++      return id && ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'].includes(id);
+     });
+ 
+     if (!researchSections.length) return;
+ 
+-    const sectionOrder = ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'];
++    // Dynamically determine section order based on what exists on the page
++    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
++    const sectionOrder = allPossibleSections.filter(id => document.getElementById(id));
+     
+-    // Define the range for progress bar: from methodology (index 2) to insights (index 5)
+-    const progressStartIndex = 2; // methodology
+-    const progressEndIndex = 5;   // insights
++    // Define the range for progress bar dynamically based on available sections
++    // Skip the first section (usually introduction or abstract) and the last section (usually conclusion or references)
++    const progressStartIndex = Math.min(1, sectionOrder.length - 2); // Start from second section
++    const progressEndIndex = Math.max(progressStartIndex, sectionOrder.length - 2);   // End before last section
+     
+     const updateProgressBar = () => {
+       const scrollTop = window.pageYOffset;
+@@ -485,19 +483,20 @@ class Portfolio {
+         scrollPosition: scrollTop + viewportHeight * 0.3
+       }); // Debug log
+       
+-      // Convert to progress bar value (methodology=0, clusters=1, policy=2, insights=3)
++      // Convert to progress bar value dynamically
+       let progressBarValue = 0;
++      const progressRange = progressEndIndex - progressStartIndex;
+       if (sectionIndex >= progressStartIndex && sectionIndex <= progressEndIndex) {
+         progressBarValue = sectionIndex - progressStartIndex;
+       } else if (sectionIndex < progressStartIndex) {
+         progressBarValue = 0;
+       } else {
+-        progressBarValue = 3; // Max value for insights
++        progressBarValue = progressRange; // Max value for last progress section
+       }
+       
+-      // Special case: if we're at the conclusion or past insights, show full completion
+-      if (sectionIndex >= 6) { // conclusion index
+-        progressBarValue = 4; // Full completion
++      // Special case: if we're at the last section, show full completion
++      if (sectionIndex >= sectionOrder.length - 1) {
++        progressBarValue = progressRange + 1; // Full completion
+       }
+       
+       // Update progress bar with smooth transition
+@@ -534,23 +533,29 @@ class Portfolio {
+   // Setup clickable progress dots
+   setupProgressDotNavigation() {
+     const progressDots = document.querySelectorAll('.sidebar-progress .progress-dot');
+-    const progressSections = ['methodology', 'clusters', 'policy', 'insights'];
++    
++    // Dynamically determine available progress sections (exclude first and last)
++    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
++    const availableSections = allPossibleSections.filter(id => document.getElementById(id));
++    const progressSections = availableSections.slice(1, -1); // Exclude first and last
+ 
+     progressDots.forEach((dot, index) => {
+-      dot.addEventListener('click', () => {
+-        const targetId = progressSections[index];
+-        const targetSection = document.getElementById(targetId);
+-        
+-        if (targetSection) {
+-          const headerHeight = document.querySelector('.header').offsetHeight;
+-          const targetPosition = targetSection.offsetTop - headerHeight - 20;
+-
+-          window.scrollTo({
+-            top: targetPosition,
+-            behavior: 'smooth'
+-          });
+-        }
+-      });
++      if (index < progressSections.length) {
++        dot.addEventListener('click', () => {
++          const targetId = progressSections[index];
++          const targetSection = document.getElementById(targetId);
++          
++          if (targetSection) {
++            const headerHeight = document.querySelector('.header').offsetHeight;
++            const targetPosition = targetSection.offsetTop - headerHeight - 20;
++
++            window.scrollTo({
++              top: targetPosition,
++              behavior: 'smooth'
++            });
++          }
++        });
++      }
+ 
+       // Add hover effect
+       dot.addEventListener('mouseenter', () => {
+@@ -570,8 +575,10 @@ class Portfolio {
+     const progressDots = document.querySelectorAll('.sidebar-progress .progress-dot');
+     if (!progressDots.length) return;
+ 
+-    // Define section order for progress bar (methodology to insights)
+-    const progressSections = ['methodology', 'clusters', 'policy', 'insights'];
++    // Dynamically determine available progress sections (exclude first and last)
++    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
++    const availableSections = allPossibleSections.filter(id => document.getElementById(id));
++    const progressSections = availableSections.slice(1, -1); // Exclude first and last
+     const activeIndex = progressSections.indexOf(activeId);
+ 
+     if (activeIndex !== -1) {
+@@ -591,16 +598,15 @@ class Portfolio {
+       }
+     } else {
+       // If not in progress range, show appropriate state
+-      const fullSectionOrder = ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'];
+-      const fullActiveIndex = fullSectionOrder.indexOf(activeId);
++      const fullActiveIndex = availableSections.indexOf(activeId);
+       
+-      if (fullActiveIndex < 2) {
+-        // Before methodology - no progress
++      if (fullActiveIndex < 1) {
++        // Before progress sections - no progress
+         progressDots.forEach(dot => dot.classList.remove('active'));
+         const progressFill = document.querySelector('.sidebar-progress .progress-fill');
+         if (progressFill) progressFill.style.width = '0%';
+-      } else if (fullActiveIndex > 5) {
+-        // After insights - full progress
++      } else if (fullActiveIndex >= availableSections.length - 1) {
++        // After progress sections - full progress
+         progressDots.forEach(dot => dot.classList.add('active'));
+         const progressFill = document.querySelector('.sidebar-progress .progress-fill');
+         if (progressFill) progressFill.style.width = '100%';
+@@ -616,14 +622,18 @@ class Portfolio {
+     const sidebarToggle = document.querySelector('.research-sidebar-toggle');
+     
+     if (sidebarToggle) {
+-      sidebarToggle.addEventListener('click', () => {
++      sidebarToggle.addEventListener('click', (e) => {
++        e.preventDefault();
++        e.stopPropagation();
++        
+         // On mobile, slide the sidebar container in/out
+         if (window.innerWidth <= 1024) {
+           const isVisible = sidebarContainer?.classList.contains('show');
+-          sidebarContainer?.classList.toggle('show', !isVisible);
+           
+-          // Add body class to prevent scrolling when sidebar is open on mobile
+-          document.body.classList.toggle('no-scroll', !isVisible);
++          if (sidebarContainer) {
++            sidebarContainer.classList.toggle('show', !isVisible);
++            document.body.classList.toggle('no-scroll', !isVisible);
++          }
+         }
+       });
+     }
+diff --git a/styles.css b/styles.css
+index 7ced2e6..cd4fbe6 100644
+--- a/styles.css
++++ b/styles.css
+@@ -619,7 +619,7 @@ p {
+ }
+ 
+ /* ================================
+-   Tech Stack Diagram Section - Brick Layout
++   Tech Stack Diagram Section - Graph Layout
+ ================================ */
+ .tech-stack {
+   margin-top: var(--space-3xl);
+@@ -636,100 +636,165 @@ p {
+ 
+ .brick-wall {
+   display: flex;
+-  justify-content: center;
+-  align-items: flex-end;
+-  gap: var(--space-md);
+-  flex-wrap: wrap;
+-  min-height: 400px;
+-  perspective: 1000px;
++  flex-direction: column;
++  gap: var(--space-3xl);
++  justify-items: center;
++  align-items: center;
++  min-height: 600px;
++  position: relative;
+ }
+ 
+-.brick-stack {
++/* MLP Layer Structure */
++.tech-layer {
+   display: flex;
+-  flex-direction: column-reverse;
++  justify-content: center;
+   align-items: center;
+-  gap: 3px;
+-  animation: stackAppear 0.8s ease-out both;
++  gap: var(--space-xl);
++  flex-wrap: wrap;
++  position: relative;
++  width: 100%;
+ }
+ 
+-/* Random stack heights and positions */
+-.stack-1 {
+-  animation-delay: 0.1s;
+-  transform: translateY(10px);
++.tech-layer:nth-child(1) { /* Input Layer */
++  justify-content: space-evenly;
+ }
+ 
+-.stack-2 {
+-  animation-delay: 0.2s;
+-  transform: translateY(-5px);
++.tech-layer:nth-child(2) { /* Hidden Layer 1 */
++  justify-content: center;
+ }
+ 
+-.stack-3 {
+-  animation-delay: 0.3s;
+-  transform: translateY(15px);
++.tech-layer:nth-child(3) { /* Hidden Layer 2 */
++  justify-content: center;
+ }
+ 
+-.stack-4 {
+-  animation-delay: 0.4s;
+-  transform: translateY(-10px);
++.tech-layer:nth-child(4) { /* Output Layer */
++  justify-content: space-around;
+ }
+ 
+-.stack-5 {
+-  animation-delay: 0.5s;
+-  transform: translateY(8px);
++/* Connection lines between layers */
++.brick-wall::before {
++  content: '';
++  position: absolute;
++  top: 0;
++  left: 0;
++  right: 0;
++  bottom: 0;
++  background: none;
++  z-index: 0;
++  pointer-events: none;
+ }
+ 
+-.stack-6 {
+-  animation-delay: 0.6s;
+-  transform: translateY(-3px);
++/* SVG connections container */
++.connections-svg {
++  position: absolute;
++  top: 0;
++  left: 0;
++  width: 100%;
++  height: 100%;
++  z-index: 1;
++  pointer-events: none;
++  overflow: visible;
+ }
+ 
+-.stack-7 {
+-  animation-delay: 0.7s;
+-  transform: translateY(12px);
++.connection-line {
++  stroke: var(--color-border);
++  stroke-width: 1;
++  opacity: 0.6;
++  transition: all 0.3s ease;
+ }
+ 
+-.stack-8 {
+-  animation-delay: 0.8s;
+-  transform: translateY(-7px);
++.connection-line.active {
++  stroke: var(--color-accent);
++  stroke-width: 2;
++  opacity: 1;
+ }
+ 
+-.stack-9 {
+-  animation-delay: 0.9s;
+-  transform: translateY(5px);
++.brick-stack {
++  display: flex;
++  flex-direction: row;
++  align-items: center;
++  gap: var(--space-sm);
++  animation: nodeAppear 0.8s ease-out both;
++  position: relative;
++  z-index: 3;
+ }
+ 
++/* Layer-based positioning */
++.layer-input .brick-stack { animation-delay: 0.1s; }
++.layer-hidden1 .brick-stack { animation-delay: 0.3s; }
++.layer-hidden2 .brick-stack { animation-delay: 0.5s; }
++.layer-output .brick-stack { animation-delay: 0.7s; }
++
++/* Individual node delays within layers */
++.brick-stack .brick:nth-child(1) { animation-delay: inherit; }
++.brick-stack .brick:nth-child(2) { animation-delay: calc(var(--base-delay, 0.1s) + 0.1s); }
++.brick-stack .brick:nth-child(3) { animation-delay: calc(var(--base-delay, 0.1s) + 0.2s); }
++.brick-stack .brick:nth-child(4) { animation-delay: calc(var(--base-delay, 0.1s) + 0.3s); }
++.brick-stack .brick:nth-child(5) { animation-delay: calc(var(--base-delay, 0.1s) + 0.4s); }
++.brick-stack .brick:nth-child(6) { animation-delay: calc(var(--base-delay, 0.1s) + 0.5s); }
++
+ .brick {
+-  background: linear-gradient(145deg, 
+-    rgba(var(--color-accent-rgb), 0.15) 0%,
+-    rgba(var(--color-card-rgb), 0.8) 50%,
+-    rgba(var(--color-bg-rgb), 0.9) 100%);
+-  border: 2px solid var(--color-dark-gray);
+-  border-left-color: var(--color-medium-gray);
+-  border-top-color: var(--color-light-gray);
+-  border-radius: 4px;
+-  padding: var(--space-sm) var(--space-md);
+-  min-width: 120px;
+-  max-width: 180px;
+-  height: 45px;
++  background: var(--color-card);
++  border: 2px solid var(--color-border);
++  border-radius: 50%;
++  padding: var(--space-md);
++  width: 100px;
++  height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+-  transition: all 0.3s ease, border-radius 0.3s ease;
++  transition: all 0.4s ease;
+   position: relative;
+   box-shadow: 
+-    0 4px 8px rgba(0, 0, 0, 0.2),
+-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
++    0 4px 12px rgba(0, 0, 0, 0.15),
++    0 2px 4px rgba(0, 0, 0, 0.1);
++  z-index: 3;
+   
+-  /* Brick texture effect */
+-  background-image: 
+-    repeating-linear-gradient(
+-      0deg,
+-      transparent,
+-      transparent 2px,
+-      rgba(var(--color-border-rgb, 0, 0, 0), 0.1) 2px,
+-      rgba(var(--color-border-rgb, 0, 0, 0), 0.1) 4px
+-    );
++  /* Connection points */
++  &::after {
++    content: '';
++    position: absolute;
++    width: 6px;
++    height: 6px;
++    background: var(--color-accent);
++    border-radius: 50%;
++    top: 50%;
++    right: -3px;
++    transform: translateY(-50%);
++    opacity: 0;
++    transition: opacity 0.3s ease;
++  }
++  
++  /* Input connection point */
++  &::before {
++    content: '';
++    position: absolute;
++    width: 6px;
++    height: 6px;
++    background: var(--color-accent);
++    border-radius: 50%;
++    top: 50%;
++    left: -3px;
++    transform: translateY(-50%);
++    opacity: 0;
++    transition: opacity 0.3s ease;
++  }
++}
++
++/* Show connection points on hover */
++.brick:hover::after,
++.brick:hover::before {
++  opacity: 1;
++}
++
++/* Hide connection points for first and last layers where not needed */
++.tech-layer:first-child .brick::before {
++  display: none;
++}
++
++.tech-layer:last-child .brick::after {
++  display: none;
+ }
+ 
+ .brick::before {
+@@ -739,13 +804,11 @@ p {
+   left: 0;
+   right: 0;
+   bottom: 0;
+-  background: linear-gradient(45deg, 
+-    transparent 30%, 
+-    rgba(var(--color-accent-rgb), 0.1) 50%, 
+-    transparent 70%);
++  background: rgba(var(--color-accent-rgb), 0.05);
+   opacity: 0;
+   transition: opacity 0.3s ease;
+-  border-radius: 2px;
++  border-radius: 50%;
++  transform: scale(1.3);
+ }
+ 
+ .brick:hover::before {
+@@ -753,15 +816,30 @@ p {
+ }
+ 
+ .brick:hover {
+-  transform: translateY(-8px) rotateX(10deg) rotateY(5deg);
++  transform: scale(1.15);
+   box-shadow: 
+-    0 12px 25px rgba(var(--color-accent-rgb), 0.3),
+-    0 8px 16px rgba(0, 0, 0, 0.2),
+-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+-  border-color: var(--color-accent-hover);
+-  border-radius: 8px;
++    0 8px 25px rgba(var(--color-accent-rgb), 0.2),
++    0 4px 12px rgba(0, 0, 0, 0.15);
++  border-color: var(--color-accent);
+   z-index: 10;
+-  transition: all 0.3s ease, border-radius 0.3s ease;
++}
++
++/* MLP Connection highlighting */
++.brick.connection-active {
++  border-color: var(--color-accent);
++  box-shadow: 
++    0 0 20px rgba(var(--color-accent-rgb), 0.4),
++    0 4px 12px rgba(0, 0, 0, 0.15);
++}
++
++.brick.connection-source {
++  background: rgba(var(--color-accent-rgb), 0.1);
++  border-color: var(--color-accent-hover);
++}
++
++.brick.connection-target {
++  background: rgba(var(--color-accent-rgb), 0.05);
++  border-color: var(--color-accent);
+ }
+ 
+ .brick:hover .brick__name {
+@@ -775,47 +853,71 @@ p {
+   color: var(--color-text);
+   font-size: var(--font-size-sm);
+   text-align: center;
+-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+   position: relative;
+   z-index: 2;
+   transition: all 0.3s ease;
++  line-height: 1.2;
++  max-width: 80px;
++  word-wrap: break-word;
++  -webkit-hyphens: auto;
++  hyphens: auto;
+ }
+ 
+-/* Different brick colors based on technology type */
++/* Different node colors based on technology type */
+ .brick[data-tech*="python"], 
+ .brick[data-tech*="pytorch"], 
+ .brick[data-tech*="tensorflow"] {
+-  background: linear-gradient(145deg, 
+-    rgba(76, 175, 80, 0.2) 0%,
+-    rgba(var(--color-card-rgb), 0.8) 50%,
+-    rgba(var(--color-bg-rgb), 0.9) 100%);
++  background: rgba(76, 175, 80, 0.1);
++  border-color: rgba(76, 175, 80, 0.4);
++}
++
++.brick[data-tech*="python"]:hover, 
++.brick[data-tech*="pytorch"]:hover, 
++.brick[data-tech*="tensorflow"]:hover {
++  border-color: rgb(76, 175, 80);
++  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+ }
+ 
+ .brick[data-tech*="react"], 
+ .brick[data-tech*="nodejs"], 
+ .brick[data-tech*="fastapi"] {
+-  background: linear-gradient(145deg, 
+-    rgba(33, 150, 243, 0.2) 0%,
+-    rgba(var(--color-card-rgb), 0.8) 50%,
+-    rgba(var(--color-bg-rgb), 0.9) 100%);
++  background: rgba(33, 150, 243, 0.1);
++  border-color: rgba(33, 150, 243, 0.4);
++}
++
++.brick[data-tech*="react"]:hover, 
++.brick[data-tech*="nodejs"]:hover, 
++.brick[data-tech*="fastapi"]:hover {
++  border-color: rgb(33, 150, 243);
++  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+ }
+ 
+ .brick[data-tech*="cuda"], 
+ .brick[data-tech*="tensorrt"], 
+ .brick[data-tech*="onnx"] {
+-  background: linear-gradient(145deg, 
+-    rgba(255, 193, 7, 0.2) 0%,
+-    rgba(var(--color-card-rgb), 0.8) 50%,
+-    rgba(var(--color-bg-rgb), 0.9) 100%);
++  background: rgba(255, 193, 7, 0.1);
++  border-color: rgba(255, 193, 7, 0.4);
++}
++
++.brick[data-tech*="cuda"]:hover, 
++.brick[data-tech*="tensorrt"]:hover, 
++.brick[data-tech*="onnx"]:hover {
++  border-color: rgb(255, 193, 7);
++  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+ }
+ 
+ .brick[data-tech*="docker"], 
+ .brick[data-tech*="mongodb"], 
+ .brick[data-tech*="firebase"] {
+-  background: linear-gradient(145deg, 
+-    rgba(156, 39, 176, 0.2) 0%,
+-    rgba(var(--color-card-rgb), 0.8) 50%,
+-    rgba(var(--color-bg-rgb), 0.9) 100%);
++  background: rgba(156, 39, 176, 0.1);
++  border-color: rgba(156, 39, 176, 0.4);
++}
++
++.brick[data-tech*="docker"]:hover, 
++.brick[data-tech*="mongodb"]:hover, 
++.brick[data-tech*="firebase"]:hover {
++  border-color: rgb(156, 39, 176);
++  box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+ }
+ 
+ /* Stagger animation for bricks within each stack */
+@@ -864,30 +966,30 @@ p {
+ }
+ 
+ /* ================================
+-   Brick Stack Animations
++   Graph Node Animations
+ ================================ */
+-@keyframes stackAppear {
++@keyframes nodeAppear {
+   0% {
+     opacity: 0;
+-    transform: translateY(50px) rotateX(-90deg);
++    transform: scale(0.3) rotate(180deg);
++  }
++  70% {
++    transform: scale(1.1) rotate(-10deg);
+   }
+   100% {
+     opacity: 1;
+-    transform: translateY(0) rotateX(0deg);
++    transform: scale(1) rotate(0deg);
+   }
+ }
+ 
+-@keyframes brickFall {
+-  0% {
+-    opacity: 0;
+-    transform: translateY(-100px) rotateZ(45deg);
++@keyframes pulseConnection {
++  0%, 100% {
++    opacity: 0.3;
++    transform: scaleY(1);
+   }
+-  70% {
+-    transform: translateY(5px) rotateZ(0deg);
+-  }
+-  100% {
+-    opacity: 1;
+-    transform: translateY(0) rotateZ(0deg);
++  50% {
++    opacity: 0.8;
++    transform: scaleY(1.2);
+   }
+ }
+ 
+@@ -902,27 +1004,34 @@ p {
+   }
+ }
+ 
+-/* Responsive Design for Brick Stack */
++/* Responsive Design for MLP Graph Layout */
+ @media (max-width: 768px) {
+   .brick-wall {
+-    flex-direction: column;
+-    align-items: center;
+-    gap: var(--space-lg);
+-    min-height: 300px;
++    gap: var(--space-xl);
++    min-height: 500px;
++  }
++  
++  .tech-layer {
++    gap: var(--space-md);
++    flex-wrap: wrap;
++    justify-content: center;
+   }
+   
+   .brick-stack {
+-    flex-direction: row;
++    gap: var(--space-xs);
+     flex-wrap: wrap;
+     justify-content: center;
+-    max-width: 100%;
+   }
+   
+   .brick {
+-    min-width: 100px;
+-    max-width: 140px;
+-    height: 40px;
+-    font-size: 0.8rem;
++    width: 80px;
++    height: 80px;
++    padding: var(--space-sm);
++  }
++  
++  .brick__name {
++    font-size: 0.7rem;
++    max-width: 60px;
+   }
+   
+   .tech-stats {
+@@ -935,21 +1044,37 @@ p {
+ }
+ 
+ @media (max-width: 480px) {
++  .brick-wall {
++    gap: var(--space-lg);
++    min-height: 400px;
++  }
++  
++  .tech-layer {
++    gap: var(--space-sm);
++  }
++  
+   .brick {
+-    min-width: 90px;
+-    max-width: 120px;
+-    height: 35px;
+-    padding: var(--space-xs) var(--space-sm);
++    width: 70px;
++    height: 70px;
++    padding: var(--space-xs);
+   }
+   
+   .brick__name {
+-    font-size: 0.75rem;
++    font-size: 0.65rem;
++    max-width: 50px;
++    line-height: 1.1;
+   }
+   
+   .tech-stats {
+     flex-direction: column;
+     align-items: center;
+   }
++  
++  /* Hide connection points on mobile for cleaner look */
++  .brick::after,
++  .brick::before {
++    display: none;
++  }
+ }
+ 
+ /* ================================
+@@ -2230,36 +2355,14 @@ p {
+   z-index: 1; /* Ensure list items appear above progress lines */
+ }
+ 
+-/* Background track for progress bar - centered with dots */
++/* Background track for progress bar - DISABLED */
+ .research-sidebar__list::before {
+-  content: '';
+-  position: absolute;
+-  left: calc(var(--space-lg) + 7px); /* Center with the dot */
+-  top: calc(var(--space-md) + 6px);
+-  bottom: calc(var(--space-md) + 6px);
+-  width: 3px;
+-  background: rgba(var(--color-accent-rgb), 0.15);
+-  border-radius: 2px;
+-  z-index: 1; /* Move above background but below interactive elements */
++  display: none;
+ }
+ 
+-/* Animated progress bar - centered with dots */
++/* Animated progress bar - DISABLED */
+ .research-sidebar__list::after {
+-  content: '';
+-  position: absolute;
+-  left: calc(var(--space-lg) + 7px); /* Center with the dot */
+-  top: calc(var(--space-md) + 6px);
+-  width: 3px;
+-  height: 0%;
+-  background: linear-gradient(180deg, 
+-    var(--color-accent) 0%, 
+-    rgba(var(--color-accent-rgb), 0.9) 50%,
+-    rgba(var(--color-accent-rgb), 0.7) 100%
+-  );
+-  border-radius: 2px;
+-  z-index: 2; /* Move above background track but below interactive elements */
+-  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+-  box-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.3);
++  display: none;
+ }
+ 
+ /* Progress states with enhanced smooth animation - Updated for methodology to insights (4 sections) */
+@@ -2664,26 +2767,19 @@ p {
+     width: 100%;
+   }
+   
++  .research-content__inner {
++    padding: var(--space-lg);
++  }
++  
+   .research-sidebar-toggle {
+-    display: flex;
++    display: flex !important; /* Force display on mobile */
+     align-items: center;
+     justify-content: center;
+   }
+-}
+-
+-@media (max-width: 768px) {
+-  .research-layout {
+-    padding-left: var(--space-sm);
+-    padding-right: var(--space-sm);
+-  }
+   
+-  .research-sidebar-container {
+-    width: 100%;
+-    max-width: 320px;
+-  }
+-  
+-  .research-content__inner {
+-    padding: var(--space-lg);
++  /* Hide the old static sidebar on mobile, keep new structure */
++  .research-layout > .research-sidebar:not(#floating-sidebar) {
++    display: none;
+   }
+ }
+ 
+@@ -2927,24 +3023,32 @@ p {
+ 
+ /* Mobile Sidebar Toggle */
+ .research-sidebar-toggle {
+-  display: none;
+   position: fixed;
+-  bottom: var(--space-lg);
+-  left: var(--space-md);
+-  z-index: 1001;
++  bottom: 20px;
++  left: 20px;
++  z-index: 1000;
+   background: var(--color-accent);
+   color: var(--color-bg);
+   border: none;
+   border-radius: 50%;
+   width: 48px;
+   height: 48px;
++  display: none;
++  align-items: center;
++  justify-content: center;
+   cursor: pointer;
+-  box-shadow: 0 4px 12px rgba(var(--color-black-rgb), 0.3);
+-  transition: all var(--transition);
++  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
++  transition: all 0.3s ease;
++  pointer-events: auto;
+ }
+ 
+ .research-sidebar-toggle:hover {
+   transform: scale(1.1);
++  box-shadow: 0 8px 25px rgba(var(--color-black-rgb), 0.5);
++}
++
++.research-sidebar-toggle:active {
++  transform: scale(0.95);
+ }
+ 
+ .research-sidebar-toggle svg {
+@@ -2952,27 +3056,30 @@ p {
+   height: 24px;
+ }
+ 
+-/* Mobile Responsive - Updated for sticky sidebar */
+-@media (max-width: 1024px) {
+-  .research-content__inner {
+-    padding: var(--space-lg);
++@media (max-width: 768px) {
++  .research-layout {
++    padding-left: var(--space-sm);
++    padding-right: var(--space-sm);
+   }
+   
+-  .research-sidebar-toggle {
+-    display: flex;
+-    align-items: center;
+-    justify-content: center;
++  .research-layout > .research-sidebar {
++    width: 100%;
+   }
+   
+-  /* Hide the old static sidebar on mobile, keep new structure */
+-  .research-layout > .research-sidebar:not(#floating-sidebar) {
+-    display: none;
+-  }
+-}
+-
+-@media (max-width: 768px) {
+-  .research-layout > .research-sidebar {
++  .research-sidebar-container {
+     width: 100%;
++    max-width: 320px;
++  }
++  
++  .research-content__inner {
++    padding: var(--space-lg);
++  }
++  
++  /* Ensure toggle button is always visible on mobile */
++  .research-sidebar-toggle {
++    display: flex !important;
++    bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0)); /* Account for iOS safe area */
++    left: var(--space-md);
+   }
+   
+   .paper-hero__title {

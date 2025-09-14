@@ -262,7 +262,7 @@ class Portfolio {
     const sidebarLinks = document.querySelectorAll('.research-sidebar__link');
     const sections = document.querySelectorAll('.research-section');
     const sidebarList = document.querySelector('.research-sidebar__list');
-    const researchSections = document.querySelectorAll('#abstract, #introduction, #methodology, #clusters, #policy, #insights, #conclusion');
+    const researchSections = document.querySelectorAll('#abstract, #introduction, #methodology, #methods, #results, #discussion, #conclusion, #references, #clusters, #policy, #insights');
 
     // If not on research page, return early
     if (!sidebar && !floatingSidebar) return;
@@ -270,21 +270,14 @@ class Portfolio {
     // Setup floating sidebar behavior
     this.setupFloatingSidebar(floatingSidebar);
 
-    // Mobile sidebar toggle
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener('click', () => {
-        sidebar?.classList.toggle('active');
-        document.body.classList.toggle('no-scroll', sidebar?.classList.contains('active'));
-      });
-    }
-
     // Close sidebar when clicking outside (mobile)
     document.addEventListener('click', (e) => {
+      const sidebarContainer = document.querySelector('.research-sidebar-container');
       if (window.innerWidth <= 1024 && 
-          sidebar?.classList.contains('active') && 
-          !sidebar.contains(e.target) && 
+          sidebarContainer?.classList.contains('show') && 
+          !sidebarContainer.contains(e.target) && 
           !sidebarToggle?.contains(e.target)) {
-        sidebar.classList.remove('active');
+        sidebarContainer.classList.remove('show');
         document.body.classList.remove('no-scroll');
       }
     });
@@ -359,7 +352,8 @@ class Portfolio {
 
           // Close mobile sidebar after click
           if (window.innerWidth <= 1024) {
-            sidebar?.classList.remove('active');
+            const sidebarContainer = document.querySelector('.research-sidebar-container');
+            sidebarContainer?.classList.remove('show');
             document.body.classList.remove('no-scroll');
           }
         }
@@ -368,8 +362,9 @@ class Portfolio {
 
     // Handle window resize
     window.addEventListener('resize', debounce(() => {
+      const sidebarContainer = document.querySelector('.research-sidebar-container');
       if (window.innerWidth > 1024) {
-        sidebar?.classList.remove('active');
+        sidebarContainer?.classList.remove('show');
         document.body.classList.remove('no-scroll');
       }
     }, 250));
@@ -385,19 +380,22 @@ class Portfolio {
   setupProgressBar(sidebarList, sections) {
     if (!sidebarList || !sections.length) return;
 
-    // Filter sections to only include research sections with IDs
+    // Filter sections to only include research sections with IDs that actually exist
     const researchSections = Array.from(sections).filter(section => {
       const id = section.id;
-      return id && ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'].includes(id);
+      return id && ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'].includes(id);
     });
 
     if (!researchSections.length) return;
 
-    const sectionOrder = ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'];
+    // Dynamically determine section order based on what exists on the page
+    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
+    const sectionOrder = allPossibleSections.filter(id => document.getElementById(id));
     
-    // Define the range for progress bar: from methodology (index 2) to insights (index 5)
-    const progressStartIndex = 2; // methodology
-    const progressEndIndex = 5;   // insights
+    // Define the range for progress bar dynamically based on available sections
+    // Skip the first section (usually introduction or abstract) and the last section (usually conclusion or references)
+    const progressStartIndex = Math.min(1, sectionOrder.length - 2); // Start from second section
+    const progressEndIndex = Math.max(progressStartIndex, sectionOrder.length - 2);   // End before last section
     
     const updateProgressBar = () => {
       const scrollTop = window.pageYOffset;
@@ -485,19 +483,20 @@ class Portfolio {
         scrollPosition: scrollTop + viewportHeight * 0.3
       }); // Debug log
       
-      // Convert to progress bar value (methodology=0, clusters=1, policy=2, insights=3)
+      // Convert to progress bar value dynamically
       let progressBarValue = 0;
+      const progressRange = progressEndIndex - progressStartIndex;
       if (sectionIndex >= progressStartIndex && sectionIndex <= progressEndIndex) {
         progressBarValue = sectionIndex - progressStartIndex;
       } else if (sectionIndex < progressStartIndex) {
         progressBarValue = 0;
       } else {
-        progressBarValue = 3; // Max value for insights
+        progressBarValue = progressRange; // Max value for last progress section
       }
       
-      // Special case: if we're at the conclusion or past insights, show full completion
-      if (sectionIndex >= 6) { // conclusion index
-        progressBarValue = 4; // Full completion
+      // Special case: if we're at the last section, show full completion
+      if (sectionIndex >= sectionOrder.length - 1) {
+        progressBarValue = progressRange + 1; // Full completion
       }
       
       // Update progress bar with smooth transition
@@ -534,23 +533,29 @@ class Portfolio {
   // Setup clickable progress dots
   setupProgressDotNavigation() {
     const progressDots = document.querySelectorAll('.sidebar-progress .progress-dot');
-    const progressSections = ['methodology', 'clusters', 'policy', 'insights'];
+    
+    // Dynamically determine available progress sections (exclude first and last)
+    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
+    const availableSections = allPossibleSections.filter(id => document.getElementById(id));
+    const progressSections = availableSections.slice(1, -1); // Exclude first and last
 
     progressDots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        const targetId = progressSections[index];
-        const targetSection = document.getElementById(targetId);
-        
-        if (targetSection) {
-          const headerHeight = document.querySelector('.header').offsetHeight;
-          const targetPosition = targetSection.offsetTop - headerHeight - 20;
+      if (index < progressSections.length) {
+        dot.addEventListener('click', () => {
+          const targetId = progressSections[index];
+          const targetSection = document.getElementById(targetId);
+          
+          if (targetSection) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const targetPosition = targetSection.offsetTop - headerHeight - 20;
 
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      }
 
       // Add hover effect
       dot.addEventListener('mouseenter', () => {
@@ -570,8 +575,10 @@ class Portfolio {
     const progressDots = document.querySelectorAll('.sidebar-progress .progress-dot');
     if (!progressDots.length) return;
 
-    // Define section order for progress bar (methodology to insights)
-    const progressSections = ['methodology', 'clusters', 'policy', 'insights'];
+    // Dynamically determine available progress sections (exclude first and last)
+    const allPossibleSections = ['abstract', 'introduction', 'methodology', 'methods', 'results', 'discussion', 'conclusion', 'references', 'clusters', 'policy', 'insights'];
+    const availableSections = allPossibleSections.filter(id => document.getElementById(id));
+    const progressSections = availableSections.slice(1, -1); // Exclude first and last
     const activeIndex = progressSections.indexOf(activeId);
 
     if (activeIndex !== -1) {
@@ -591,16 +598,15 @@ class Portfolio {
       }
     } else {
       // If not in progress range, show appropriate state
-      const fullSectionOrder = ['abstract', 'introduction', 'methodology', 'clusters', 'policy', 'insights', 'conclusion'];
-      const fullActiveIndex = fullSectionOrder.indexOf(activeId);
+      const fullActiveIndex = availableSections.indexOf(activeId);
       
-      if (fullActiveIndex < 2) {
-        // Before methodology - no progress
+      if (fullActiveIndex < 1) {
+        // Before progress sections - no progress
         progressDots.forEach(dot => dot.classList.remove('active'));
         const progressFill = document.querySelector('.sidebar-progress .progress-fill');
         if (progressFill) progressFill.style.width = '0%';
-      } else if (fullActiveIndex > 5) {
-        // After insights - full progress
+      } else if (fullActiveIndex >= availableSections.length - 1) {
+        // After progress sections - full progress
         progressDots.forEach(dot => dot.classList.add('active'));
         const progressFill = document.querySelector('.sidebar-progress .progress-fill');
         if (progressFill) progressFill.style.width = '100%';
@@ -616,14 +622,18 @@ class Portfolio {
     const sidebarToggle = document.querySelector('.research-sidebar-toggle');
     
     if (sidebarToggle) {
-      sidebarToggle.addEventListener('click', () => {
+      sidebarToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         // On mobile, slide the sidebar container in/out
         if (window.innerWidth <= 1024) {
           const isVisible = sidebarContainer?.classList.contains('show');
-          sidebarContainer?.classList.toggle('show', !isVisible);
           
-          // Add body class to prevent scrolling when sidebar is open on mobile
-          document.body.classList.toggle('no-scroll', !isVisible);
+          if (sidebarContainer) {
+            sidebarContainer.classList.toggle('show', !isVisible);
+            document.body.classList.toggle('no-scroll', !isVisible);
+          }
         }
       });
     }

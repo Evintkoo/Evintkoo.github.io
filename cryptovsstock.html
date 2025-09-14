@@ -36,96 +36,134 @@
         </div>
     </header>
 
-    <main>
+    <main class="research-layout">
+        <!-- Sidebar Container -->
+        <div class="research-sidebar-container">
+            <!-- Floating Research Sidebar -->
+            <aside class="research-sidebar" id="floating-sidebar">
+                <nav class="research-sidebar__nav">
+                    <h2 class="research-sidebar__title">Research Sections</h2>
+                    
+                    <ul class="research-sidebar__list" data-progress="0">
+                        <li class="research-sidebar__item">
+                            <a href="#introduction" class="research-sidebar__link active">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
+                                        </svg>
+                                    </span>
+                                    Introduction
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#methodology" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
+                                        </svg>
+                                    </span>
+                                    Methodology
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#results" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M22,21H2V3H4V19H6V17H10V19H12V16H16V19H18V17H22V21M18,14H22V16H18V14M12,6H16V9H12V6M16,15H12V10H16V15M6,10H10V12H6V10M10,16H6V13H10V16M4,15H2V17H4V15M4,10H2V12H4V10M9,4H7V8H9V4M13,4H11V5H13V4Z"/>
+                                        </svg>
+                                    </span>
+                                    Results
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#discussion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                                        </svg>
+                                    </span>
+                                    Discussion
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#conclusion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                                        </svg>
+                                    </span>
+                                    Conclusion
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Mobile Toggle Button -->
+        <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+            </svg>
+        </button>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
         <!-- Research Paper Header -->
         <section class="paper-hero">
-            <div class="container">
-                <div class="paper-hero__content">
-                    <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
-                    <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
-                    
-                    <div class="paper-meta-box">
-                        <div class="paper-meta-content">
-                            <div class="authors">
-                                <span class="author-label">Author:</span>
-                                <span class="author-names">Evint Leovonzko</span>
-                            </div>
-                            <div class="journal-info">
-                                <span class="journal-label">Published:</span>
-                                <span class="journal-name">July 2025</span>
-                            </div>
+            <div class="paper-hero__content">
+                <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
+                <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
+                
+                <div class="paper-meta-box">
+                    <div class="paper-meta-content">
+                        <div class="authors">
+                            <span class="author-label">Author:</span>
+                            <span class="author-names">Evint Leovonzko</span>
                         </div>
-                        <div class="paper-meta-actions">
-                            <a href="files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                                </svg>
-                                <span class="btn-text">Download PDF</span>
-                            </a>
-                            <a href="#introduction" class="btn btn-secondary">
-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                                </svg>
-                                <span class="btn-text">Read Research</span>
-                            </a>
+                        <div class="journal-info">
+                            <span class="journal-label">Published:</span>
+                            <span class="journal-name">July 2025</span>
                         </div>
+                    </div>
+                    <div class="paper-meta-actions">
+                        <a href="files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            <span class="btn-text">Download PDF</span>
+                        </a>
+                        <a href="#introduction" class="btn btn-secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                            </svg>
+                            <span class="btn-text">Read Research</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Navigation Menu -->
-        <section class="paper-nav">
-            <div class="container">
-                <!-- Desktop Horizontal Menu -->
-                <nav class="paper-nav__menu">
-                    <a href="#introduction" class="paper-nav__link active">Introduction</a>
-                    <a href="#methodology" class="paper-nav__link">Methodology</a>
-                    <a href="#results" class="paper-nav__link">Results</a>
-                    <a href="#discussion" class="paper-nav__link">Discussion</a>
-                    <a href="#conclusion" class="paper-nav__link">Conclusion</a>
-                    <a href="#references" class="paper-nav__link">References</a>
-                </nav>
-            </div>
-        </section>
-
-        <!-- Mobile Bottom Navigation -->
-        <nav class="paper-nav__mobile" id="paper-nav-mobile">
-            <div class="paper-nav__mobile-grid">
-                <a href="#introduction" class="paper-nav__mobile-item active">
-                    <div class="paper-nav__mobile-icon">📖</div>
-                    <div class="paper-nav__mobile-text">Intro</div>
-                </a>
-                <a href="#methodology" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">🔬</div>
-                    <div class="paper-nav__mobile-text">Methods</div>
-                </a>
-                <a href="#results" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📊</div>
-                    <div class="paper-nav__mobile-text">Results</div>
-                </a>
-                <a href="#discussion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">💭</div>
-                    <div class="paper-nav__mobile-text">Discussion</div>
-                </a>
-                <a href="#conclusion" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">✅</div>
-                    <div class="paper-nav__mobile-text">Conclusion</div>
-                </a>
-                <a href="#references" class="paper-nav__mobile-item">
-                    <div class="paper-nav__mobile-icon">📚</div>
-                    <div class="paper-nav__mobile-text">References</div>
-                </a>
-            </div>
-        </nav>
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
 
         <!-- Introduction Section -->
-        <section id="introduction" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Introduction</h2>
-                    
-                    <div class="content-text">
+        <section id="introduction" class="research-section">
+            <h2 class="research-section__title">Introduction</h2>
+            
+            <div class="content-text">
                         <p>The timely and accurate identification of business cycle turning points remains a foundational challenge in macroeconomic analysis, given the substantial economic and social costs associated with recessions (Burns & Mitchell, 1946). Early-warning indicators provide invaluable insights that enable policymakers to deploy counter-cyclical measures more effectively and allow investors to adjust asset allocations to mitigate risk (Romer & Romer, 2004).</p>
                         
                         <p>Historically, equity markets have been regarded as a premier leading indicator of economic activity, with the underlying logic that stock prices, representing the discounted present value of future corporate earnings, should rapidly incorporate aggregate economic expectations (Fama, 1981; Estrella & Mishkin, 1998). Consequently, declines in broad market indices are often observed to precede the onset of recessions as determined by official dating committees such as the National Bureau of Economic Research (NBER).</p>
@@ -170,12 +208,10 @@
         </section>
 
         <!-- Methodology Section -->
-        <section id="methodology" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Methodology</h2>
-                    
-                    <div class="content-text">
+        <section id="methodology" class="research-section">
+            <h2 class="research-section__title">Methodology</h2>
+            
+            <div class="content-text">
                         <p>This study employs a multi-method, multi-scale methodological framework to provide a robust answer to the research question. The approach is designed to move from simple correlational timing to causal inference and predictive classification, thereby triangulating evidence for the lead-lag relationship between equity and crypto-asset markets around U.S. business cycles.</p>
                     </div>
                     
@@ -243,10 +279,41 @@
                     </div>
                 </div>
             </div>
+                </section>
+
+                <!-- Methodology Section -->
+                <section id="methodology" class="research-section">
+                    <h2 class="research-section__title">Methodology</h2>
+                    
+                    <div class="content-text">
+                        <p>This study employs a comprehensive empirical framework to analyze the lead-lag relationships between equity and cryptocurrency markets around business cycle turning points. Our methodology integrates multiple data sources and analytical techniques to provide robust insights into cross-asset market dynamics.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>Our analysis utilizes advanced econometric techniques including Granger causality tests, vector autoregression models, and event study methodologies to examine timing relationships.</p>
+                            </div>
+                        </div>
+                        
+                                            <p>The study period spans from 2010 to 2024, encompassing multiple business cycle phases and allowing for comprehensive analysis of market behavior across different economic environments. We examine both traditional equity indices and major cryptocurrency benchmarks to ensure robust comparative analysis.</p>
+                </div>
         </section>
 
         <!-- Results Section -->
-        <section id="results" class="section">
+        <section id="results" class="research-section">
+            <h2 class="research-section__title">Results</h2>
+            
+            <h3>Descriptive Statistics</h3>
+            <div class="content-text">
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section id="results" class="research-section">
             <div class="container">
                 <div class="paper-section">
                     <h2 class="section__title">Results</h2>
@@ -441,12 +508,10 @@
         </section>
 
         <!-- Discussion Section -->
-        <section id="discussion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Discussion</h2>
-                    
-                    <div class="content-text">
+        <section id="discussion" class="research-section">
+            <h2 class="research-section__title">Discussion</h2>
+            
+            <div class="content-text">
                         <h3>Theoretical Implications</h3>
                         <p>The academic literature provides robust theoretical explanations for why equity markets systematically lead cryptocurrency markets by approximately 27 days. Information processing theory and market efficiency gaps form the primary theoretical foundation, with recent research demonstrating that cryptocurrency uncertainty indices lead crypto returns across multiple time horizons using wavelet coherence analysis.</p>
                         
@@ -491,12 +556,10 @@
         </section>
 
         <!-- Conclusion Section -->
-        <section id="conclusion" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Conclusion</h2>
-                    
-                    <div class="content-text">
+        <section id="conclusion" class="research-section">
+            <h2 class="research-section__title">Conclusion</h2>
+            
+            <div class="content-text">
                         <h3>Primary Research Findings</h3>
                         <p>This study provides the first comprehensive empirical analysis addressing the fundamental question: "Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?" Through a multi-methodological framework, we present robust evidence that fundamentally answers this research question.</p>
                         
@@ -542,12 +605,10 @@
         </section>
 
         <!-- References Section -->
-        <section id="references" class="section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">References</h2>
-                    
-                    <div class="references-list">
+        <section id="references" class="research-section">
+            <h2 class="research-section__title">References</h2>
+            
+            <div class="references-list">
                         <div class="reference-item">
                             <p>Ah Mand, A. A. (2024). Cryptocurrency returns and cryptocurrency uncertainty: A time–frequency analysis. <em>Financial Innovation</em>, 10, Article 734.</p>
                         </div>
@@ -682,18 +743,24 @@
         </section>
 
         <!-- Back to Portfolio -->
-        <section class="section">
-            <div class="container">
-                <div class="back-to-portfolio">
-                    <a href="index.html#projects" class="btn btn-primary">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+        <section class="research-section">
+            <div class="back-to-portfolio">
+                <a href="index.html#projects" class="animated-button">
+                    <span>Back to Portfolio</span>
+                    <div class="icon">
+                        <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                         </svg>
-                        Back to Portfolio
-                    </a>
-                </div>
+                        <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </a>
             </div>
         </section>
+
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->

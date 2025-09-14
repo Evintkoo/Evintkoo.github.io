@@ -90,137 +90,97 @@
                     <div class="tech-stack">
                         <h3 class="about__section-title">Technology Stack</h3>
                         <div class="tech-stack__diagram">
-                            <!-- Brick Stack Layout -->
+                            <!-- MLP-like Network Layout -->
                             <div class="brick-wall">
-                                <!-- Stack 1 -->
-                                <div class="brick-stack stack-1">
-                                    <div class="brick" data-tech="python">
-                                        <span class="brick__name">Python</span>
-                                    </div>
-                                    <div class="brick" data-tech="pytorch">
-                                        <span class="brick__name">PyTorch</span>
-                                    </div>
-                                    <div class="brick" data-tech="tensorflow">
-                                        <span class="brick__name">TensorFlow</span>
-                                    </div>
-                                    <div class="brick" data-tech="opencv">
-                                        <span class="brick__name">OpenCV</span>
-                                    </div>
-                                </div>
-
-                                <!-- Stack 2 -->
-                                <div class="brick-stack stack-2">
-                                    <div class="brick" data-tech="fastapi">
-                                        <span class="brick__name">FastAPI</span>
-                                    </div>
-                                    <div class="brick" data-tech="docker">
-                                        <span class="brick__name">Docker</span>
-                                    </div>
-                                    <div class="brick" data-tech="mongodb">
-                                        <span class="brick__name">MongoDB</span>
+                                <!-- SVG for connection lines -->
+                                <svg class="connections-svg" width="100%" height="100%">
+                                    <!-- Connection lines will be drawn by JavaScript -->
+                                </svg>
+                                
+                                <!-- Input Layer: Core Languages & Frameworks -->
+                                <div class="tech-layer layer-input">
+                                    <div class="brick-stack">
+                                        <div class="brick" data-tech="python" data-layer="input">
+                                            <span class="brick__name">Python</span>
+                                        </div>
+                                        <div class="brick" data-tech="cpp" data-layer="input">
+                                            <span class="brick__name">C++</span>
+                                        </div>
+                                        <div class="brick" data-tech="pytorch" data-layer="input">
+                                            <span class="brick__name">PyTorch</span>
+                                        </div>
+                                        <div class="brick" data-tech="tensorflow" data-layer="input">
+                                            <span class="brick__name">TensorFlow</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Stack 3 -->
-                                <div class="brick-stack stack-3">
-                                    <div class="brick" data-tech="pandas">
-                                        <span class="brick__name">Pandas</span>
-                                    </div>
-                                    <div class="brick" data-tech="numpy">
-                                        <span class="brick__name">NumPy</span>
-                                    </div>
-                                    <div class="brick" data-tech="matplotlib">
-                                        <span class="brick__name">Matplotlib</span>
-                                    </div>
-                                </div>
-
-                                <!-- Stack 4 -->
-                                <div class="brick-stack stack-4">
-                                    <div class="brick" data-tech="cuda">
-                                        <span class="brick__name">CUDA</span>
-                                    </div>
-                                    <div class="brick" data-tech="tensorrt">
-                                        <span class="brick__name">TensorRT</span>
-                                    </div>
-                                    <div class="brick" data-tech="onnx">
-                                        <span class="brick__name">ONNX</span>
-                                    </div>
-                                    <div class="brick" data-tech="mlflow">
-                                        <span class="brick__name">MLflow</span>
-                                    </div>
-                                    <div class="brick" data-tech="optuna">
-                                        <span class="brick__name">Optuna</span>
-                                    </div>
-                                    <div class="brick" data-tech="gradio">
-                                        <span class="brick__name">Gradio</span>
+                                <!-- Hidden Layer 1: Data Processing & ML Libraries -->
+                                <div class="tech-layer layer-hidden1">
+                                    <div class="brick-stack">
+                                        <div class="brick" data-tech="pandas" data-layer="hidden1">
+                                            <span class="brick__name">Pandas</span>
+                                        </div>
+                                        <div class="brick" data-tech="numpy" data-layer="hidden1">
+                                            <span class="brick__name">NumPy</span>
+                                        </div>
+                                        <div class="brick" data-tech="opencv" data-layer="hidden1">
+                                            <span class="brick__name">OpenCV</span>
+                                        </div>
+                                        <div class="brick" data-tech="cnn" data-layer="hidden1">
+                                            <span class="brick__name">CNN</span>
+                                        </div>
+                                        <div class="brick" data-tech="som" data-layer="hidden1">
+                                            <span class="brick__name">SOM</span>
+                                        </div>
+                                        <div class="brick" data-tech="genetic-algorithms" data-layer="hidden1">
+                                            <span class="brick__name">Genetic Algorithms</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Stack 5 -->
-                                <div class="brick-stack stack-5">
-                                    <div class="brick" data-tech="streamlit">
-                                        <span class="brick__name">Streamlit</span>
-                                    </div>
-                                    <div class="brick" data-tech="mediapipe">
-                                        <span class="brick__name">MediaPipe</span>
-                                    </div>
-                                    <div class="brick" data-tech="plotly">
-                                        <span class="brick__name">Plotly</span>
-                                    </div>
-                                    <div class="brick" data-tech="seaborn">
-                                        <span class="brick__name">Seaborn</span>
-                                    </div>
-                                </div>
-
-                                <!-- Stack 6 -->
-                                <div class="brick-stack stack-6">
-                                    <div class="brick" data-tech="figma">
-                                        <span class="brick__name">Figma</span>
-                                    </div>
-                                    <div class="brick" data-tech="cpp">
-                                        <span class="brick__name">C++</span>
+                                <!-- Hidden Layer 2: Optimization & Infrastructure -->
+                                <div class="tech-layer layer-hidden2">
+                                    <div class="brick-stack">
+                                        <div class="brick" data-tech="cuda" data-layer="hidden2">
+                                            <span class="brick__name">CUDA</span>
+                                        </div>
+                                        <div class="brick" data-tech="tensorrt" data-layer="hidden2">
+                                            <span class="brick__name">TensorRT</span>
+                                        </div>
+                                        <div class="brick" data-tech="onnx" data-layer="hidden2">
+                                            <span class="brick__name">ONNX</span>
+                                        </div>
+                                        <div class="brick" data-tech="docker" data-layer="hidden2">
+                                            <span class="brick__name">Docker</span>
+                                        </div>
+                                        <div class="brick" data-tech="mlflow" data-layer="hidden2">
+                                            <span class="brick__name">MLflow</span>
+                                        </div>
+                                        <div class="brick" data-tech="optuna" data-layer="hidden2">
+                                            <span class="brick__name">Optuna</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Stack 7 -->
-                                <div class="brick-stack stack-7">
-                                    <div class="brick" data-tech="cnn">
-                                        <span class="brick__name">CNN</span>
-                                    </div>
-                                    <div class="brick" data-tech="genetic-algorithms">
-                                        <span class="brick__name">Genetic Algorithms</span>
-                                    </div>
-                                    <div class="brick" data-tech="biopython">
-                                        <span class="brick__name">Biopython</span>
-                                    </div>
-                                    <div class="brick" data-tech="som">
-                                        <span class="brick__name">SOM</span>
-                                    </div>
-                                </div>
-
-                                <!-- Stack 8 -->
-                                <div class="brick-stack stack-8">
-                                    <div class="brick" data-tech="statsmodels">
-                                        <span class="brick__name">Statsmodels</span>
-                                    </div>
-                                    <div class="brick" data-tech="garch">
-                                        <span class="brick__name">GARCH</span>
-                                    </div>
-                                    <div class="brick" data-tech="quandl">
-                                        <span class="brick__name">Quandl</span>
-                                    </div>
-                                </div>
-
-                                <!-- Stack 9 -->
-                                <div class="brick-stack stack-9">
-                                    <div class="brick" data-tech="canva">
-                                        <span class="brick__name">Canva</span>
-                                    </div>
-                                    <div class="brick" data-tech="analytics">
-                                        <span class="brick__name">Analytics</span>
-                                    </div>
-                                    <div class="brick" data-tech="content-strategy">
-                                        <span class="brick__name">Content Strategy</span>
+                                <!-- Output Layer: Applications & Services -->
+                                <div class="tech-layer layer-output">
+                                    <div class="brick-stack">
+                                        <div class="brick" data-tech="fastapi" data-layer="output">
+                                            <span class="brick__name">FastAPI</span>
+                                        </div>
+                                        <div class="brick" data-tech="streamlit" data-layer="output">
+                                            <span class="brick__name">Streamlit</span>
+                                        </div>
+                                        <div class="brick" data-tech="gradio" data-layer="output">
+                                            <span class="brick__name">Gradio</span>
+                                        </div>
+                                        <div class="brick" data-tech="mongodb" data-layer="output">
+                                            <span class="brick__name">MongoDB</span>
+                                        </div>
+                                        <div class="brick" data-tech="plotly" data-layer="output">
+                                            <span class="brick__name">Plotly</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -367,7 +327,11 @@
                                 <span class="project__type">Business</span>
                             </div>
                             
-                            <div class="project__sub-field">Enterprise AI Solutions</div>
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">LLM Ops</span>
+                                <span class="project__sub-field-item">MLOps</span>
+                                <span class="project__sub-field-item">AutoML</span>
+                            </div>
                             
                             <p class="project__short-desc">
                                 Open-source desktop application for training and running large language models
@@ -475,7 +439,10 @@
                                 <span class="project__type">Open Source</span>
                             </div>
                             
-                            <div class="project__sub-field">Automated Machine Learning</div>
+                            <div class="project__sub-field">
+                                <span class="project__sub-field-item">AutoML</span>
+                                <span class="project__sub-field-item">MLOps</span>
+                            </div>
                             
                             <p class="project__short-desc">
                                 Production-ready automated ML platform with ASHT optimization and web interface
@@ -883,6 +850,7 @@
     <script src="theme-toggle.js"></script>
     <script src="main.js"></script>
     <script src="tech-tag-animation.js"></script>
+    <script src="mlp-connections.js"></script>
     
     <!-- Test Script for Filter Buttons -->
     <script>
