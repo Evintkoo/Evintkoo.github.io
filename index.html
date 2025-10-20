@@ -11,19 +11,21 @@
     <meta property="og:url" content="https://evint_portofolio.github.io/">
     <meta property="og:title" content="Evint Leovonzko | Data Scientist Portfolio">
     <meta property="og:description" content="Portfolio of Evint Leovonzko, Data Scientist and Machine Learning Specialist">
-    <meta property="og:image" content="https://evint_portofolio.github.io/images/logo-light.png">
+    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logo-light.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://evint_portofolio.github.io/">
     <meta property="twitter:title" content="Evint Leovonzko | Data Scientist Portfolio">
     <meta property="twitter:description" content="Portfolio of Evint Leovonzko, Data Scientist and Machine Learning Specialist">
-    <meta property="twitter:image" content="https://evint_portofolio.github.io/images/logo-light.png">
+    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logo-light.png">
     
-    <link rel="icon" type="image/png" href="images/logo-light.png">
-    <link rel="apple-touch-icon" href="images/logo-light.png">
+    <link rel="icon" type="image/png" href="assets/images/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logo-light.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 
 <body>
@@ -31,7 +33,7 @@
     <header class="header">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
+                <img src="assets/images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
                 <span class="logo__text">Evint Leovonzko</span>
             </a>
             <nav class="nav">
@@ -43,6 +45,7 @@
                 <div class="nav__overlay" id="nav-overlay"></div>
                 <ul class="nav__list" id="nav-list">
                     <li><a href="#about" class="nav__link">About</a></li>
+                    <li><a href="#experience" class="nav__link">Experience</a></li>
                     <li><a href="#projects" class="nav__link">Projects</a></li>
                     <li><a href="#contact" class="nav__link">Contact</a></li>
                 </ul>
@@ -89,99 +92,106 @@
                     
                     <div class="tech-stack">
                         <h3 class="about__section-title">Technology Stack</h3>
-                        <div class="tech-stack__diagram">
-                            <!-- MLP-like Network Layout -->
-                            <div class="brick-wall">
-                                <!-- SVG for connection lines -->
-                                <svg class="connections-svg" width="100%" height="100%">
-                                    <!-- Connection lines will be drawn by JavaScript -->
-                                </svg>
-                                
-                                <!-- Input Layer: Core Languages & Frameworks -->
-                                <div class="tech-layer layer-input">
-                                    <div class="brick-stack">
-                                        <div class="brick" data-tech="python" data-layer="input">
-                                            <span class="brick__name">Python</span>
-                                        </div>
-                                        <div class="brick" data-tech="cpp" data-layer="input">
-                                            <span class="brick__name">C++</span>
-                                        </div>
-                                        <div class="brick" data-tech="pytorch" data-layer="input">
-                                            <span class="brick__name">PyTorch</span>
-                                        </div>
-                                        <div class="brick" data-tech="tensorflow" data-layer="input">
-                                            <span class="brick__name">TensorFlow</span>
-                                        </div>
-                                    </div>
+                        
+                        <!-- Hexagonal Grid Layout -->
+                        <div class="hex-grid">
+                            <!-- Languages -->
+                            <div class="tech-hex" data-category="language" data-tech="python">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+                                    <div class="tech-hex__name">Python</div>
                                 </div>
-
-                                <!-- Hidden Layer 1: Data Processing & ML Libraries -->
-                                <div class="tech-layer layer-hidden1">
-                                    <div class="brick-stack">
-                                        <div class="brick" data-tech="pandas" data-layer="hidden1">
-                                            <span class="brick__name">Pandas</span>
-                                        </div>
-                                        <div class="brick" data-tech="numpy" data-layer="hidden1">
-                                            <span class="brick__name">NumPy</span>
-                                        </div>
-                                        <div class="brick" data-tech="opencv" data-layer="hidden1">
-                                            <span class="brick__name">OpenCV</span>
-                                        </div>
-                                        <div class="brick" data-tech="cnn" data-layer="hidden1">
-                                            <span class="brick__name">CNN</span>
-                                        </div>
-                                        <div class="brick" data-tech="som" data-layer="hidden1">
-                                            <span class="brick__name">SOM</span>
-                                        </div>
-                                        <div class="brick" data-tech="genetic-algorithms" data-layer="hidden1">
-                                            <span class="brick__name">Genetic Algorithms</span>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="tech-hex" data-category="language" data-tech="cpp">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
+                                    <div class="tech-hex__name">C++</div>
                                 </div>
-
-                                <!-- Hidden Layer 2: Optimization & Infrastructure -->
-                                <div class="tech-layer layer-hidden2">
-                                    <div class="brick-stack">
-                                        <div class="brick" data-tech="cuda" data-layer="hidden2">
-                                            <span class="brick__name">CUDA</span>
-                                        </div>
-                                        <div class="brick" data-tech="tensorrt" data-layer="hidden2">
-                                            <span class="brick__name">TensorRT</span>
-                                        </div>
-                                        <div class="brick" data-tech="onnx" data-layer="hidden2">
-                                            <span class="brick__name">ONNX</span>
-                                        </div>
-                                        <div class="brick" data-tech="docker" data-layer="hidden2">
-                                            <span class="brick__name">Docker</span>
-                                        </div>
-                                        <div class="brick" data-tech="mlflow" data-layer="hidden2">
-                                            <span class="brick__name">MLflow</span>
-                                        </div>
-                                        <div class="brick" data-tech="optuna" data-layer="hidden2">
-                                            <span class="brick__name">Optuna</span>
-                                        </div>
-                                    </div>
+                            </div>
+                            
+                            <!-- Frameworks -->
+                            <div class="tech-hex" data-category="framework" data-tech="pytorch">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+                                    <div class="tech-hex__name">PyTorch</div>
                                 </div>
-
-                                <!-- Output Layer: Applications & Services -->
-                                <div class="tech-layer layer-output">
-                                    <div class="brick-stack">
-                                        <div class="brick" data-tech="fastapi" data-layer="output">
-                                            <span class="brick__name">FastAPI</span>
-                                        </div>
-                                        <div class="brick" data-tech="streamlit" data-layer="output">
-                                            <span class="brick__name">Streamlit</span>
-                                        </div>
-                                        <div class="brick" data-tech="gradio" data-layer="output">
-                                            <span class="brick__name">Gradio</span>
-                                        </div>
-                                        <div class="brick" data-tech="mongodb" data-layer="output">
-                                            <span class="brick__name">MongoDB</span>
-                                        </div>
-                                        <div class="brick" data-tech="plotly" data-layer="output">
-                                            <span class="brick__name">Plotly</span>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="tech-hex" data-category="framework" data-tech="tensorflow">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
+                                    <div class="tech-hex__name">TensorFlow</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="framework" data-tech="fastapi">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
+                                    <div class="tech-hex__name">FastAPI</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Libraries -->
+                            <div class="tech-hex" data-category="library" data-tech="pandas">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"></div>
+                                    <div class="tech-hex__name">Pandas</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="library" data-tech="numpy">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"></div>
+                                    <div class="tech-hex__name">NumPy</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="library" data-tech="opencv">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV"></div>
+                                    <div class="tech-hex__name">OpenCV</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tools -->
+                            <div class="tech-hex" data-category="tool" data-tech="docker">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+                                    <div class="tech-hex__name">Docker</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="tool" data-tech="cuda">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nvidia/nvidia-original.svg" alt="CUDA"></div>
+                                    <div class="tech-hex__name">CUDA</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="tool" data-tech="mlflow">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://www.vectorlogo.zone/logos/mlflow/mlflow-icon.svg" alt="MLflow"></div>
+                                    <div class="tech-hex__name">MLflow</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="tool" data-tech="tensorrt">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nvidia/nvidia-original.svg" alt="TensorRT"></div>
+                                    <div class="tech-hex__name">TensorRT</div>
+                                </div>
+                            </div>
+                            
+                            <!-- More Libraries -->
+                            <div class="tech-hex" data-category="library" data-tech="streamlit">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" alt="Streamlit"></div>
+                                    <div class="tech-hex__name">Streamlit</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="library" data-tech="gradio">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://www.gradio.app/_app/immutable/assets/gradio.CHB5adID.svg" alt="Gradio"></div>
+                                    <div class="tech-hex__name">Gradio</div>
+                                </div>
+                            </div>
+                            <div class="tech-hex" data-category="library" data-tech="plotly">
+                                <div class="tech-hex__content">
+                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/plotly/plotly-original.svg" alt="Plotly"></div>
+                                    <div class="tech-hex__name">Plotly</div>
                                 </div>
                             </div>
                         </div>
@@ -205,6 +215,151 @@
             </div>
         </section>
 
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2 class="section__title">Experience & Achievements</h2>
+                
+                <div class="experience__timeline">
+                    <!-- Education -->
+                    <div class="timeline__category">
+                        <h3 class="timeline__category-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                            Education
+                        </h3>
+                    </div>
+                    
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__header">
+                                <h4 class="timeline__title">University of British Columbia (UBC)</h4>
+                                <span class="timeline__period">Current</span>
+                            </div>
+                            <p class="timeline__role">Undergraduate Student & Research Assistant</p>
+                            <p class="timeline__description">
+                                Conducting research in chemistry and bioinformatics, focusing on applying deep learning algorithms 
+                                to biological data analysis. Affiliated with UBC's Department of Chemistry.
+                            </p>
+                            <div class="timeline__tags">
+                                <span class="timeline__tag">Bioinformatics</span>
+                                <span class="timeline__tag">Deep Learning</span>
+                                <span class="timeline__tag">Research</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Professional Experience -->
+                    <div class="timeline__category">
+                        <h3 class="timeline__category-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            Professional Experience
+                        </h3>
+                    </div>
+                    
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__header">
+                                <h4 class="timeline__title">Kolosal AI</h4>
+                                <span class="timeline__period">2023 - Present</span>
+                            </div>
+                            <p class="timeline__role">Co-Founder</p>
+                            <p class="timeline__description">
+                                Co-founded Kolosal AI to democratize access to large language models and enable local, private AI deployment. 
+                                Led development of open-source desktop applications for training and running LLMs, MLOps platforms, 
+                                and high-performance inference frameworks with enterprise autoscaling capabilities.
+                            </p>
+                            <div class="timeline__tags">
+                                <span class="timeline__tag">LLM Ops</span>
+                                <span class="timeline__tag">MLOps</span>
+                                <span class="timeline__tag">AutoML</span>
+                                <span class="timeline__tag">Entrepreneurship</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Achievements & Recognition -->
+                    <div class="timeline__category">
+                        <h3 class="timeline__category-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                            Achievements & Recognition
+                        </h3>
+                    </div>
+                    
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__header">
+                                <h4 class="timeline__title">Best Research Project Award</h4>
+                                <span class="timeline__period">2023</span>
+                            </div>
+                            <p class="timeline__role">UBC Vantage College Capstone Conference</p>
+                            <p class="timeline__description">
+                                Awarded Best Research Project for "Cancer Mutation Analysis in the P-53 Gene" — a study utilizing 
+                                genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
+                            </p>
+                            <div class="timeline__tags">
+                                <span class="timeline__tag">Genetics</span>
+                                <span class="timeline__tag">Computational Biology</span>
+                                <span class="timeline__tag">Award</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__header">
+                                <h4 class="timeline__title">First Author Publication</h4>
+                                <span class="timeline__period">2024</span>
+                            </div>
+                            <p class="timeline__role">Research Paper - Circular RNA Classification</p>
+                            <p class="timeline__description">
+                                Published "The Implementation of Deep Learning Algorithm with Gaussian Blur Data Pre-processing 
+                                in Circular RNA Classification and Detection" as first author, presenting novel approaches to 
+                                bioinformatics challenges using custom CNN architectures.
+                            </p>
+                            <div class="timeline__tags">
+                                <span class="timeline__tag">Publication</span>
+                                <span class="timeline__tag">Deep Learning</span>
+                                <span class="timeline__tag">Bioinformatics</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__header">
+                                <h4 class="timeline__title">National Science Competition Finalist</h4>
+                                <span class="timeline__period">2021</span>
+                            </div>
+                            <p class="timeline__role">Kompetisi Sains Nasional (Indonesia)</p>
+                            <p class="timeline__description">
+                                Selected as a finalist in the Informatics category at Indonesia's National Science Competition, 
+                                competing against top students nationwide in computational thinking and programming challenges.
+                            </p>
+                            <div class="timeline__tags">
+                                <span class="timeline__tag">Informatics</span>
+                                <span class="timeline__tag">Competition</span>
+                                <span class="timeline__tag">National Level</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Projects Section -->
         <section id="projects" class="projects">
             <div class="container">
@@ -224,8 +379,19 @@
                     <article class="project" data-category="research">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Deep Learning for Circular RNA Classification</h3>
-                                <span class="project__type">Research</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                        <line x1="10" y1="10" x2="10" y2="10"></line>
+                                        <line x1="14" y1="10" x2="14" y2="10"></line>
+                                        <line x1="12" y1="7" x2="12" y2="13"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Deep Learning for Circular RNA Classification</h3>
+                                    <span class="project__type">Research</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -240,35 +406,17 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
-                                    </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        PyTorch
-                                    </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        CNN
-                                    </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        NumPy
-                                    </span>
+                                    <span class="project__stack-tag">Python</span>
+                                    <span class="project__stack-tag">PyTorch</span>
+                                    <span class="project__stack-tag">CNN</span>
+                                    <span class="project__stack-tag">NumPy</span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="research1.html" class="project__link">View Research →</a>
+                                <a href="research/circular-rna.html" class="project__link">
+                                    <span>View Research</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -276,8 +424,19 @@
                     <article class="project" data-category="research">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Cancer Mutation Analysis in P-53 Gene</h3>
-                                <span class="project__type">Research</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                        <line x1="10" y1="10" x2="10" y2="10"></line>
+                                        <line x1="14" y1="10" x2="14" y2="10"></line>
+                                        <line x1="12" y1="7" x2="12" y2="13"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Cancer Mutation Analysis in P-53 Gene</h3>
+                                    <span class="project__type">Research</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -292,29 +451,16 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
-                                    </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Genetic Algorithms
-                                    </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Biopython
-                                    </span>
+                                    <span class="project__stack-tag">Python</span>
+                                    <span class="project__stack-tag">Genetic Algorithms</span>
+                                    <span class="project__stack-tag">Biopython</span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="research2.html" class="project__link">View Research →</a>
+                                <a href="research/p53-mutation.html" class="project__link">
+                                    <span>View Research</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -323,8 +469,20 @@
                     <article class="project" data-category="business">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Kolosal AI</h3>
-                                <span class="project__type">Business</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                                        <line x1="7" y1="7" x2="7" y2="11"></line>
+                                        <line x1="12" y1="7" x2="12" y2="11"></line>
+                                        <line x1="17" y1="7" x2="17" y2="11"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Kolosal AI</h3>
+                                    <span class="project__type">Business</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -340,35 +498,21 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        PyTorch
+                                    <span class="project__stack-tag">PyTorch
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        CUDA
+                                    <span class="project__stack-tag">CUDA
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        TensorRT
+                                    <span class="project__stack-tag">TensorRT
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://kolosal.ai/" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                                <a href="https://kolosal.ai/" target="_blank" rel="noopener" class="project__link">
+                                    <span>View Project</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -377,8 +521,17 @@
                     <article class="project" data-category="open-source">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">PyTorch Inference Framework</h3>
-                                <span class="project__type">Open Source</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                        <line x1="14" y1="2" x2="10" y2="22"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">PyTorch Inference Framework</h3>
+                                    <span class="project__type">Open Source</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -393,41 +546,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        PyTorch
+                                    <span class="project__stack-tag">PyTorch
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        TensorRT
+                                    <span class="project__stack-tag">TensorRT
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        FastAPI
+                                    <span class="project__stack-tag">FastAPI
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Docker
+                                    <span class="project__stack-tag">Docker
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        ONNX
+                                    <span class="project__stack-tag">ONNX
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                                <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="project__link">
+                                    <span>View Project</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -435,8 +570,17 @@
                     <article class="project" data-category="open-source">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Kolosal AutoML Platform</h3>
-                                <span class="project__type">Open Source</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                        <line x1="14" y1="2" x2="10" y2="22"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Kolosal AutoML Platform</h3>
+                                    <span class="project__type">Open Source</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -451,41 +595,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Gradio
+                                    <span class="project__stack-tag">Gradio
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        FastAPI
+                                    <span class="project__stack-tag">FastAPI
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        MLflow
+                                    <span class="project__stack-tag">MLflow
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Optuna
+                                    <span class="project__stack-tag">Optuna
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                                <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="project__link">
+                                    <span>View Project</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -493,8 +619,17 @@
                     <article class="project" data-category="open-source">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">SOM Plus Clustering</h3>
-                                <span class="project__type">Open Source</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                        <line x1="14" y1="2" x2="10" y2="22"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">SOM Plus Clustering</h3>
+                                    <span class="project__type">Open Source</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -509,41 +644,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        SOM
+                                    <span class="project__stack-tag">SOM
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        NumPy
+                                    <span class="project__stack-tag">NumPy
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        SciPy
+                                    <span class="project__stack-tag">SciPy
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Matplotlib
+                                    <span class="project__stack-tag">Matplotlib
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                                <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener" class="project__link">
+                                    <span>View Project</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -551,8 +668,17 @@
                     <article class="project" data-category="open-source">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">APT Fitness Assistant</h3>
-                                <span class="project__type">Open Source</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                        <line x1="14" y1="2" x2="10" y2="22"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">APT Fitness Assistant</h3>
+                                    <span class="project__type">Open Source</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -567,41 +693,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        MediaPipe
+                                    <span class="project__stack-tag">MediaPipe
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Streamlit
+                                    <span class="project__stack-tag">Streamlit
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        OpenCV
+                                    <span class="project__stack-tag">OpenCV
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        TensorFlow
+                                    <span class="project__stack-tag">TensorFlow
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="project__link">View Project →</a>
+                                <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="project__link">
+                                    <span>View Project</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -610,8 +718,18 @@
                     <article class="project" data-category="community">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Rebirth Educational Platform</h3>
-                                <span class="project__type">Community</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Rebirth Educational Platform</h3>
+                                    <span class="project__type">Community</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -626,17 +744,15 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        MongoDB
+                                    <span class="project__stack-tag">MongoDB
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="project__link">Visit Platform →</a>
+                                <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="project__link">
+                                    <span>Visit Platform</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -644,8 +760,18 @@
                     <article class="project" data-category="community">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">PsychIDN Community</h3>
-                                <span class="project__type">Community</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">PsychIDN Community</h3>
+                                    <span class="project__type">Community</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -660,29 +786,19 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Content Strategy
+                                    <span class="project__stack-tag">Content Strategy
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Canva
+                                    <span class="project__stack-tag">Canva
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Analytics
+                                    <span class="project__stack-tag">Analytics
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="project__link">Follow Community →</a>
+                                <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="project__link">
+                                    <span>Follow Community</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -691,8 +807,17 @@
                     <article class="project" data-category="analysis">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">GDP Growth Analysis</h3>
-                                <span class="project__type">Analysis</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">GDP Growth Analysis</h3>
+                                    <span class="project__type">Analysis</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -707,41 +832,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        SOM
+                                    <span class="project__stack-tag">SOM
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Matplotlib
+                                    <span class="project__stack-tag">Matplotlib
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Pandas
+                                    <span class="project__stack-tag">Pandas
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Seaborn
+                                    <span class="project__stack-tag">Seaborn
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="gdp_analysis.html" class="project__link">View Analysis →</a>
+                                <a href="gdp_analysis.html" class="project__link">
+                                    <span>View Analysis</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -749,8 +856,17 @@
                     <article class="project" data-category="analysis">
                         <div class="project__content">
                             <div class="project__header">
-                                <h3 class="project__title">Equity vs Crypto Market Timing</h3>
-                                <span class="project__type">Analysis</span>
+                                <div class="project__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <div class="project__header-text">
+                                    <h3 class="project__title">Equity vs Crypto Market Timing</h3>
+                                    <span class="project__type">Analysis</span>
+                                </div>
                             </div>
                             
                             <div class="project__sub-field">
@@ -765,41 +881,23 @@
                             <div class="project__technical-stack">
                                 <div class="project__stack-label">Technical Stack</div>
                                 <div class="project__stack-tags">
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Python
+                                    <span class="project__stack-tag">Python
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Statsmodels
+                                    <span class="project__stack-tag">Statsmodels
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        GARCH
+                                    <span class="project__stack-tag">GARCH
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Plotly
+                                    <span class="project__stack-tag">Plotly
                                     </span>
-                                    <span class="project__stack-tag">
-                                        <svg width="100%" height="100%">
-                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Quandl
+                                    <span class="project__stack-tag">Quandl
                                     </span>
                                 </div>
                             </div>
                             
                             <div class="project__action">
-                                <a href="cryptovsstock.html" class="project__link">View Research →</a>
+                                <a href="cryptovsstock.html" class="project__link">
+                                    <span>View Research</span>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -847,10 +945,8 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="theme-toggle.js"></script>
-    <script src="main.js"></script>
-    <script src="tech-tag-animation.js"></script>
-    <script src="mlp-connections.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/animations.js"></script>
     
     <!-- Test Script for Filter Buttons -->
     <script>

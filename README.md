@@ -1,6 +1,7 @@
 # Evint Leovonzko - Data Scientist Portfolio
 
-A modern, responsive portfolio website showcasing data science research and machine learning projects with a sleek dark mode design.
+> **Version 2.0.0** - Restructured & Optimized  
+> A modern, responsive portfolio website showcasing data science research and machine learning projects.
 
 ## 🎯 Features
 
@@ -9,18 +10,30 @@ A modern, responsive portfolio website showcasing data science research and mach
 - **Interactive Animations** - Smooth scroll effects and element animations
 - **Research Publications** - Detailed academic papers with proper citations
 - **Project Showcase** - Comprehensive display of data science and ML projects
+- **Organized Architecture** - Clean, maintainable file structure (v2.0 restructure)
 
 ## 🏗️ Structure
 
 ```
-├── index.html              # Main portfolio page
-├── styles.css              # Global styling and dark theme
-├── main.js                 # Interactive functionality
-├── gdp_analysis.html       # GDP clustering research
-├── research1.html          # Circular RNA classification
-├── research2.html          # P-53 gene mutation analysis
-└── images/                 # Assets and logos
+evint_portofolio.github.io/
+├── index.html                   # Main portfolio page
+├── assets/
+│   ├── css/                    # Organized stylesheets
+│   ├── js/                     # Consolidated scripts
+│   └── images/                 # Assets (logos, diagrams)
+├── research/                   # Research papers
+│   ├── circular-rna.html
+│   ├── p53-mutation.html
+│   ├── crypto-stock-timing.html
+│   └── gdp-clustering.html
+├── files/                      # Downloadable PDFs
+└── docs/                       # Documentation
+    ├── CHANGELOG.md
+    ├── STRUCTURE.md
+    └── archive/
 ```
+
+📖 See [docs/STRUCTURE.md](docs/STRUCTURE.md) for detailed documentation.
 
 ## 🔬 Research Papers
 

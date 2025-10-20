@@ -1,0 +1,196 @@
+/* ================================
+   THEME VARIATIONS
+   Multiple theme options for different sections
+================================ */
+
+/* ================================
+   RESEARCH THEMES
+================================ */
+
+/* Circular RNA Theme */
+.circrna-theme {
+  --theme-primary: #3B82F6;
+  --theme-secondary: #10B981;
+  --theme-tertiary: #8B5CF6;
+  --theme-accent: #EC4899;
+  --helix-gradient: linear-gradient(135deg, #3B82F6, #10B981);
+  --neural-gradient: linear-gradient(135deg, #8B5CF6, #EC4899);
+}
+
+/* P-53 Theme */
+.p53-theme {
+  --theme-primary: #6366f1;
+  --theme-secondary: #0ea5e9;
+  --theme-tertiary: #14b8a6;
+  --theme-accent: #f97316;
+  --p53-glow: rgba(99, 102, 241, 0.45);
+}
+
+/* ================================
+   LIGHT THEME OVERRIDES
+================================ */
+:root.light {
+  /* Background colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FAFAFA;
+  --bg-tertiary: #F4F4F5;
+  
+  /* Text colors */
+  --text-primary: #09090B;
+  --text-secondary: #52525B;
+  --text-tertiary: #71717A;
+  
+  /* Accent colors - adjusted for light mode */
+  --accent-primary: #2563EB;
+  --accent-secondary: #1D4ED8;
+  --accent-tertiary: #1E40AF;
+  
+  /* Border colors */
+  --border-primary: #E4E4E7;
+  --border-secondary: #D4D4D8;
+  
+  /* Shadows - lighter in light mode */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Light mode header adjustments */
+.light .header {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom-color: var(--border-primary);
+}
+
+/* Light mode project cards */
+.light .project {
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+}
+
+.light .project:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   THEME TRANSITIONS
+================================ */
+* {
+  transition: background-color var(--transition-smooth), 
+              color var(--transition-smooth),
+              border-color var(--transition-smooth);
+}
+
+/* Disable transitions during theme change for instant switching */
+.theme-changing * {
+  transition: none !important;
+}
+
+/* ================================
+   RESEARCH PAGE THEME ADAPTATIONS
+================================ */
+
+/* Hero sections for different research themes */
+.circrna-hero {
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+}
+
+.p53-hero {
+  background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15), transparent 55%),
+              radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.12), transparent 60%),
+              var(--bg-primary);
+}
+
+/* Theme-specific card styling */
+.circrna-theme .project {
+  border-color: var(--theme-primary);
+}
+
+.circrna-theme .project:hover {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+}
+
+.p53-theme .project {
+  border-color: var(--theme-primary);
+}
+
+.p53-theme .project:hover {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+/* ================================
+   PRINT THEME
+================================ */
+@media print {
+  :root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F8F9FA;
+    
+    --text-primary: #000000;
+    --text-secondary: #374151;
+    --text-tertiary: #6B7280;
+    
+    --accent-primary: #1F2937;
+    --border-primary: #E5E7EB;
+  }
+  
+  /* Hide interactive elements in print */
+  .theme-toggle,
+  .nav__toggle,
+  .scroll-to-top,
+  .research-sidebar-toggle {
+    display: none !important;
+  }
+  
+  /* Ensure good contrast for print */
+  .project {
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ================================
+   HIGH CONTRAST THEME (Accessibility)
+================================ */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #FFFFFF;
+    --text-secondary: #E5E7EB;
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+    --accent-primary: #60A5FA;
+    --border-primary: #4B5563;
+  }
+  
+  .light {
+    --text-primary: #000000;
+    --text-secondary: #374151;
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F9FAFB;
+    --accent-primary: #1E40AF;
+    --border-primary: #9CA3AF;
+  }
+}
+
+/* ================================
+   REDUCED MOTION THEME
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  .circrna-hero,
+  .p53-hero,
+  .project,
+  .tech-hex {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .project:hover {
+    transform: none !important;
+  }
+  
+  .tech-hex:hover {
+    transform: none !important;
+  }
+}
