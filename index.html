@@ -11,982 +11,583 @@
     <meta property="og:url" content="https://evint_portofolio.github.io/">
     <meta property="og:title" content="Evint Leovonzko | Data Scientist Portfolio">
     <meta property="og:description" content="Portfolio of Evint Leovonzko, Data Scientist and Machine Learning Specialist">
-    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logo-light.png">
+    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://evint_portofolio.github.io/">
     <meta property="twitter:title" content="Evint Leovonzko | Data Scientist Portfolio">
     <meta property="twitter:description" content="Portfolio of Evint Leovonzko, Data Scientist and Machine Learning Specialist">
-    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logo-light.png">
+    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
     
-    <link rel="icon" type="image/png" href="assets/images/logo-light.png">
-    <link rel="apple-touch-icon" href="assets/images/logo-light.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/components.css">
-    <link rel="stylesheet" href="assets/css/themes.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=ABC+Monument+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css">
 </head>
 
 <body>
-    <!-- Header with Navigation -->
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="assets/images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
-                <span class="logo__text">Evint Leovonzko</span>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img">
+                <span class="nav__logo-text">Evint Leovonzko</span>
             </a>
-            <nav class="nav">
-                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="#projects" class="nav__link">Projects</a>
+                <a href="#research" class="nav__link">Research</a>
+                <a href="#about" class="nav__link">About</a>
+                <a href="#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
                 </button>
-                <div class="nav__overlay" id="nav-overlay"></div>
-                <ul class="nav__list" id="nav-list">
-                    <li><a href="#about" class="nav__link">About</a></li>
-                    <li><a href="#experience" class="nav__link">Experience</a></li>
-                    <li><a href="#projects" class="nav__link">Projects</a></li>
-                    <li><a href="#contact" class="nav__link">Contact</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
+    
+    <!-- Navigation overlay for mobile -->
+    <div class="nav-overlay" id="nav-overlay"></div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero__content">
-                    <h1 class="hero__title">
-                        Hi, I'm <span class="highlight">Evint Leovonzko</span>
-                    </h1>
-                    <p class="hero__subtitle">
-                        Data Scientist building practical machine learning solutions that solve real-world problems
-                    </p>
-                    <div class="hero__actions">
-                        <a href="#projects" class="btn btn--primary">View My Work</a>
-                        <a href="#contact" class="btn btn--secondary">Get in Touch</a>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <h1 class="hero__title">
+                    Hi, I'm Evint Leovonzko 👋
+                    <span class="hero__title--accent">Data Scientist building practical machine learning solutions</span>
+                </h1>
+                <p class="hero__description">
+                    Building practical machine learning solutions that solve real-world problems. 
+                    From bioinformatics research to enterprise AI platforms.
+                </p>
+                <div class="hero__actions">
+                    <a href="#projects" class="btn btn--primary">View Projects</a>
+                    <a href="#about" class="btn btn--secondary">About Me</a>
+                    <a href="https://github.com/Evintkoo" class="btn btn--secondary" target="_blank" rel="noopener">GitHub</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section__title">About Me</h2>
+    <!-- About Section -->
+    <section class="section section--alt" id="about">
+        <div class="container">
+            <div class="about">
                 <div class="about__content">
-                    <div class="about__intro">
-                        <p class="about__text">
+                    <h2 class="section__title">About me</h2>
+                    <div class="about__text">
+                        <p>
                             I'm a passionate data scientist with a strong foundation in machine learning, deep learning, and computational research. 
                             My journey began with a fascination for understanding complex patterns in data and has evolved into developing 
                             practical AI solutions that bridge the gap between cutting-edge research and real-world applications.
                         </p>
-                        <p class="about__text">
+                        <p>
                             With extensive experience in bioinformatics, financial analytics, and business intelligence, I specialize in 
                             transforming raw data into actionable insights. My work spans from developing custom neural network architectures 
                             for medical research to building enterprise-grade machine learning platforms that democratize AI accessibility.
                         </p>
                     </div>
                     
-                    <div class="tech-stack">
-                        <h3 class="about__section-title">Technology Stack</h3>
-                        
-                        <!-- Hexagonal Grid Layout -->
-                        <div class="hex-grid">
-                            <!-- Languages -->
-                            <div class="tech-hex" data-category="language" data-tech="python">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
-                                    <div class="tech-hex__name">Python</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="language" data-tech="cpp">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
-                                    <div class="tech-hex__name">C++</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Frameworks -->
-                            <div class="tech-hex" data-category="framework" data-tech="pytorch">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
-                                    <div class="tech-hex__name">PyTorch</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="framework" data-tech="tensorflow">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
-                                    <div class="tech-hex__name">TensorFlow</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="framework" data-tech="fastapi">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
-                                    <div class="tech-hex__name">FastAPI</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Libraries -->
-                            <div class="tech-hex" data-category="library" data-tech="pandas">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"></div>
-                                    <div class="tech-hex__name">Pandas</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="library" data-tech="numpy">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"></div>
-                                    <div class="tech-hex__name">NumPy</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="library" data-tech="opencv">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV"></div>
-                                    <div class="tech-hex__name">OpenCV</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Tools -->
-                            <div class="tech-hex" data-category="tool" data-tech="docker">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
-                                    <div class="tech-hex__name">Docker</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="tool" data-tech="cuda">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nvidia/nvidia-original.svg" alt="CUDA"></div>
-                                    <div class="tech-hex__name">CUDA</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="tool" data-tech="mlflow">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://www.vectorlogo.zone/logos/mlflow/mlflow-icon.svg" alt="MLflow"></div>
-                                    <div class="tech-hex__name">MLflow</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="tool" data-tech="tensorrt">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nvidia/nvidia-original.svg" alt="TensorRT"></div>
-                                    <div class="tech-hex__name">TensorRT</div>
-                                </div>
-                            </div>
-                            
-                            <!-- More Libraries -->
-                            <div class="tech-hex" data-category="library" data-tech="streamlit">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" alt="Streamlit"></div>
-                                    <div class="tech-hex__name">Streamlit</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="library" data-tech="gradio">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://www.gradio.app/_app/immutable/assets/gradio.CHB5adID.svg" alt="Gradio"></div>
-                                    <div class="tech-hex__name">Gradio</div>
-                                </div>
-                            </div>
-                            <div class="tech-hex" data-category="library" data-tech="plotly">
-                                <div class="tech-hex__content">
-                                    <div class="tech-hex__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/plotly/plotly-original.svg" alt="Plotly"></div>
-                                    <div class="tech-hex__name">Plotly</div>
+                    <!-- Technology Stack -->
+                    <div class="cards" style="margin-top: var(--space-12);">
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">Languages & Core</div>
+                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">C++</span>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="tech-stats">
-                            <div class="tech-stat">
-                                <div class="tech-stat__number">5+</div>
-                                <div class="tech-stat__label">Years Experience</div>
+
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">ML Frameworks</div>
+                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                    <span class="tag">PyTorch</span>
+                                    <span class="tag">TensorFlow</span>
+                                    <span class="tag">FastAPI</span>
+                                </div>
                             </div>
-                            <div class="tech-stat">
-                                <div class="tech-stat__number">15+</div>
-                                <div class="tech-stat__label">Technologies</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">Data Science</div>
+                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                    <span class="tag">Pandas</span>
+                                    <span class="tag">NumPy</span>
+                                    <span class="tag">OpenCV</span>
+                                    <span class="tag">Plotly</span>
+                                </div>
                             </div>
-                            <div class="tech-stat">
-                                <div class="tech-stat__number">10+</div>
-                                <div class="tech-stat__label">Projects</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">MLOps & Tools</div>
+                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">CUDA</span>
+                                    <span class="tag">MLflow</span>
+                                    <span class="tag">TensorRT</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">UI Frameworks</div>
+                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                    <span class="tag">Streamlit</span>
+                                    <span class="tag">Gradio</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__label">Experience</div>
+                                <p style="margin-top: var(--space-4); color: var(--text-secondary);">
+                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">5+</strong> Years Experience<br>
+                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">15+</strong> Technologies<br>
+                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">10+</strong> Projects
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Experience Section -->
-        <section id="experience" class="experience">
-            <div class="container">
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <div class="container">
+            <div class="section__header">
                 <h2 class="section__title">Experience & Achievements</h2>
-                
-                <div class="experience__timeline">
-                    <!-- Education -->
-                    <div class="timeline__category">
-                        <h3 class="timeline__category-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                            </svg>
-                            Education
-                        </h3>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline__item">
+                    <div class="timeline__year">Current</div>
+                    <div class="timeline__content">
+                        <h4 class="timeline__title">University of British Columbia (UBC)</h4>
+                        <p class="timeline__description">
+                            Undergraduate Student & Research Assistant in Chemistry and Bioinformatics, 
+                            conducting research focusing on applying deep learning algorithms 
+                            to biological data analysis.
+                        </p>
                     </div>
-                    
-                    <article class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="timeline__header">
-                                <h4 class="timeline__title">University of British Columbia (UBC)</h4>
-                                <span class="timeline__period">Current</span>
-                            </div>
-                            <p class="timeline__role">Undergraduate Student & Research Assistant</p>
-                            <p class="timeline__description">
-                                Conducting research in chemistry and bioinformatics, focusing on applying deep learning algorithms 
-                                to biological data analysis. Affiliated with UBC's Department of Chemistry.
-                            </p>
-                            <div class="timeline__tags">
-                                <span class="timeline__tag">Bioinformatics</span>
-                                <span class="timeline__tag">Deep Learning</span>
-                                <span class="timeline__tag">Research</span>
-                            </div>
-                        </div>
-                    </article>
+                </div>
 
-                    <!-- Professional Experience -->
-                    <div class="timeline__category">
-                        <h3 class="timeline__category-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                            </svg>
-                            Professional Experience
-                        </h3>
+                <div class="timeline__item">
+                    <div class="timeline__year">2023 - Present</div>
+                    <div class="timeline__content">
+                        <h4 class="timeline__title">Co-Founder, Kolosal AI</h4>
+                        <p class="timeline__description">
+                            Co-founded Kolosal AI to democratize access to large language models and enable local, private AI deployment. 
+                            Led development of open-source desktop applications for training and running LLMs, MLOps platforms, 
+                            and high-performance inference frameworks with enterprise autoscaling capabilities.
+                        </p>
                     </div>
-                    
-                    <article class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="timeline__header">
-                                <h4 class="timeline__title">Kolosal AI</h4>
-                                <span class="timeline__period">2023 - Present</span>
-                            </div>
-                            <p class="timeline__role">Co-Founder</p>
-                            <p class="timeline__description">
-                                Co-founded Kolosal AI to democratize access to large language models and enable local, private AI deployment. 
-                                Led development of open-source desktop applications for training and running LLMs, MLOps platforms, 
-                                and high-performance inference frameworks with enterprise autoscaling capabilities.
-                            </p>
-                            <div class="timeline__tags">
-                                <span class="timeline__tag">LLM Ops</span>
-                                <span class="timeline__tag">MLOps</span>
-                                <span class="timeline__tag">AutoML</span>
-                                <span class="timeline__tag">Entrepreneurship</span>
-                            </div>
-                        </div>
-                    </article>
+                </div>
 
-                    <!-- Achievements & Recognition -->
-                    <div class="timeline__category">
-                        <h3 class="timeline__category-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="8" r="7"></circle>
-                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                            </svg>
-                            Achievements & Recognition
-                        </h3>
+                <div class="timeline__item">
+                    <div class="timeline__year">2024</div>
+                    <div class="timeline__content">
+                        <h4 class="timeline__title">First Author Publication</h4>
+                        <p class="timeline__description">
+                            Published "The Implementation of Deep Learning Algorithm with Gaussian Blur Data Pre-processing 
+                            in Circular RNA Classification and Detection" as first author, presenting novel approaches to 
+                            bioinformatics challenges using custom CNN architectures.
+                        </p>
                     </div>
-                    
-                    <article class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="timeline__header">
-                                <h4 class="timeline__title">Best Research Project Award</h4>
-                                <span class="timeline__period">2023</span>
-                            </div>
-                            <p class="timeline__role">UBC Vantage College Capstone Conference</p>
-                            <p class="timeline__description">
-                                Awarded Best Research Project for "Cancer Mutation Analysis in the P-53 Gene" — a study utilizing 
-                                genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
-                            </p>
-                            <div class="timeline__tags">
-                                <span class="timeline__tag">Genetics</span>
-                                <span class="timeline__tag">Computational Biology</span>
-                                <span class="timeline__tag">Award</span>
-                            </div>
-                        </div>
-                    </article>
+                </div>
 
-                    <article class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="timeline__header">
-                                <h4 class="timeline__title">First Author Publication</h4>
-                                <span class="timeline__period">2024</span>
-                            </div>
-                            <p class="timeline__role">Research Paper - Circular RNA Classification</p>
-                            <p class="timeline__description">
-                                Published "The Implementation of Deep Learning Algorithm with Gaussian Blur Data Pre-processing 
-                                in Circular RNA Classification and Detection" as first author, presenting novel approaches to 
-                                bioinformatics challenges using custom CNN architectures.
-                            </p>
-                            <div class="timeline__tags">
-                                <span class="timeline__tag">Publication</span>
-                                <span class="timeline__tag">Deep Learning</span>
-                                <span class="timeline__tag">Bioinformatics</span>
-                            </div>
-                        </div>
-                    </article>
+                <div class="timeline__item">
+                    <div class="timeline__year">2023</div>
+                    <div class="timeline__content">
+                        <h4 class="timeline__title">Best Research Project Award</h4>
+                        <p class="timeline__description">
+                            Awarded Best Research Project at UBC Vantage College Capstone Conference for 
+                            "Cancer Mutation Analysis in the P-53 Gene" — a study utilizing 
+                            genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
+                        </p>
+                    </div>
+                </div>
 
-                    <article class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="timeline__header">
-                                <h4 class="timeline__title">National Science Competition Finalist</h4>
-                                <span class="timeline__period">2021</span>
-                            </div>
-                            <p class="timeline__role">Kompetisi Sains Nasional (Indonesia)</p>
-                            <p class="timeline__description">
-                                Selected as a finalist in the Informatics category at Indonesia's National Science Competition, 
-                                competing against top students nationwide in computational thinking and programming challenges.
-                            </p>
-                            <div class="timeline__tags">
-                                <span class="timeline__tag">Informatics</span>
-                                <span class="timeline__tag">Competition</span>
-                                <span class="timeline__tag">National Level</span>
-                            </div>
-                        </div>
-                    </article>
+                <div class="timeline__item">
+                    <div class="timeline__year">2021</div>
+                    <div class="timeline__content">
+                        <h4 class="timeline__title">National Science Competition Finalist</h4>
+                        <p class="timeline__description">
+                            Selected as a finalist in the Informatics category at Indonesia's National Science Competition, 
+                            competing against top students nationwide in computational thinking and programming challenges.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2 class="section__title">Featured Projects</h2>
-                
-                <div class="projects__filter">
-                    <button type="button" class="filter__btn filter__btn--active" data-filter="all">All</button>
-                    <button type="button" class="filter__btn" data-filter="research">Research</button>
-                    <button type="button" class="filter__btn" data-filter="business">Business</button>
-                    <button type="button" class="filter__btn" data-filter="open-source">Open Source</button>
-                    <button type="button" class="filter__btn" data-filter="community">Community</button>
-                    <button type="button" class="filter__btn" data-filter="analysis">Analysis</button>
-                </div>
-
-                <div class="projects__grid">
-                    <!-- Research Projects -->
-                    <article class="project" data-category="research">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                                        <line x1="10" y1="10" x2="10" y2="10"></line>
-                                        <line x1="14" y1="10" x2="14" y2="10"></line>
-                                        <line x1="12" y1="7" x2="12" y2="13"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Deep Learning for Circular RNA Classification</h3>
-                                    <span class="project__type">Research</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Bioinformatics</span>
-                                <span class="project__sub-field-item">Machine Learning</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Custom CNN architecture for predicting circRNA-disease associations with Gaussian Blur preprocessing
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python</span>
-                                    <span class="project__stack-tag">PyTorch</span>
-                                    <span class="project__stack-tag">CNN</span>
-                                    <span class="project__stack-tag">NumPy</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="research/circular-rna.html" class="project__link">
-                                    <span>View Research</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="research">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                                        <line x1="10" y1="10" x2="10" y2="10"></line>
-                                        <line x1="14" y1="10" x2="14" y2="10"></line>
-                                        <line x1="12" y1="7" x2="12" y2="13"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Cancer Mutation Analysis in P-53 Gene</h3>
-                                    <span class="project__type">Research</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Genetics</span>
-                                <span class="project__sub-field-item">Computational Biology</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Genetic algorithm approach to identify DNA characteristics leading to P-53 cancerous mutations
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python</span>
-                                    <span class="project__stack-tag">Genetic Algorithms</span>
-                                    <span class="project__stack-tag">Biopython</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="research/p53-mutation.html" class="project__link">
-                                    <span>View Research</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Business Projects -->
-                    <article class="project" data-category="business">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                                        <line x1="7" y1="7" x2="7" y2="11"></line>
-                                        <line x1="12" y1="7" x2="12" y2="11"></line>
-                                        <line x1="17" y1="7" x2="17" y2="11"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Kolosal AI</h3>
-                                    <span class="project__type">Business</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">LLM Ops</span>
-                                <span class="project__sub-field-item">MLOps</span>
-                                <span class="project__sub-field-item">AutoML</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Open-source desktop application for training and running large language models
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">PyTorch
-                                    </span>
-                                    <span class="project__stack-tag">CUDA
-                                    </span>
-                                    <span class="project__stack-tag">TensorRT
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://kolosal.ai/" target="_blank" rel="noopener" class="project__link">
-                                    <span>View Project</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Open Source Projects -->
-                    <article class="project" data-category="open-source">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 18 22 12 16 6"></polyline>
-                                        <polyline points="8 6 2 12 8 18"></polyline>
-                                        <line x1="14" y1="2" x2="10" y2="22"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">PyTorch Inference Framework</h3>
-                                    <span class="project__type">Open Source</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Performance Optimization</span>
-                                <span class="project__sub-field-item">MLOps</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                High-performance PyTorch inference framework with enterprise autoscaling capabilities
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">PyTorch
-                                    </span>
-                                    <span class="project__stack-tag">TensorRT
-                                    </span>
-                                    <span class="project__stack-tag">FastAPI
-                                    </span>
-                                    <span class="project__stack-tag">Docker
-                                    </span>
-                                    <span class="project__stack-tag">ONNX
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="project__link">
-                                    <span>View Project</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="open-source">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 18 22 12 16 6"></polyline>
-                                        <polyline points="8 6 2 12 8 18"></polyline>
-                                        <line x1="14" y1="2" x2="10" y2="22"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Kolosal AutoML Platform</h3>
-                                    <span class="project__type">Open Source</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">AutoML</span>
-                                <span class="project__sub-field-item">MLOps</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Production-ready automated ML platform with ASHT optimization and web interface
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">Gradio
-                                    </span>
-                                    <span class="project__stack-tag">FastAPI
-                                    </span>
-                                    <span class="project__stack-tag">MLflow
-                                    </span>
-                                    <span class="project__stack-tag">Optuna
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="project__link">
-                                    <span>View Project</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="open-source">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 18 22 12 16 6"></polyline>
-                                        <polyline points="8 6 2 12 8 18"></polyline>
-                                        <line x1="14" y1="2" x2="10" y2="22"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">SOM Plus Clustering</h3>
-                                    <span class="project__type">Open Source</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Machine Learning</span>
-                                <span class="project__sub-field-item">Data Visualization</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Advanced Self-Organizing Map implementation with multiple initialization methods and clustering evaluation metrics
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">SOM
-                                    </span>
-                                    <span class="project__stack-tag">NumPy
-                                    </span>
-                                    <span class="project__stack-tag">SciPy
-                                    </span>
-                                    <span class="project__stack-tag">Matplotlib
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener" class="project__link">
-                                    <span>View Project</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="open-source">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 18 22 12 16 6"></polyline>
-                                        <polyline points="8 6 2 12 8 18"></polyline>
-                                        <line x1="14" y1="2" x2="10" y2="22"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">APT Fitness Assistant</h3>
-                                    <span class="project__type">Open Source</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Computer Vision</span>
-                                <span class="project__sub-field-item">Health Analytics</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                AI-powered fitness companion with pose detection and personalized recommendations
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">MediaPipe
-                                    </span>
-                                    <span class="project__stack-tag">Streamlit
-                                    </span>
-                                    <span class="project__stack-tag">OpenCV
-                                    </span>
-                                    <span class="project__stack-tag">TensorFlow
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="project__link">
-                                    <span>View Project</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Community Projects -->
-                    <article class="project" data-category="community">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Rebirth Educational Platform</h3>
-                                    <span class="project__type">Community</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Educational Technology</span>
-                                <span class="project__sub-field-item">Community Building</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Educational platform fostering lifelong learning and research community engagement
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">MongoDB
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="project__link">
-                                    <span>Visit Platform</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="community">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">PsychIDN Community</h3>
-                                    <span class="project__type">Community</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Mental Health</span>
-                                <span class="project__sub-field-item">Psychology Education</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Psychology-focused community platform for mental health awareness in Indonesia
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Content Strategy
-                                    </span>
-                                    <span class="project__stack-tag">Canva
-                                    </span>
-                                    <span class="project__stack-tag">Analytics
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="project__link">
-                                    <span>Follow Community</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Analysis Projects -->
-                    <article class="project" data-category="analysis">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">GDP Growth Analysis</h3>
-                                    <span class="project__type">Analysis</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Economic Data Science</span>
-                                <span class="project__sub-field-item">Pattern Recognition</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Multi-country GDP pattern analysis using Self-Organizing Map clustering techniques
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">SOM
-                                    </span>
-                                    <span class="project__stack-tag">Matplotlib
-                                    </span>
-                                    <span class="project__stack-tag">Pandas
-                                    </span>
-                                    <span class="project__stack-tag">Seaborn
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="gdp_analysis.html" class="project__link">
-                                    <span>View Analysis</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project" data-category="analysis">
-                        <div class="project__content">
-                            <div class="project__header">
-                                <div class="project__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                                    </svg>
-                                </div>
-                                <div class="project__header-text">
-                                    <h3 class="project__title">Equity vs Crypto Market Timing</h3>
-                                    <span class="project__type">Analysis</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__sub-field">
-                                <span class="project__sub-field-item">Financial Markets</span>
-                                <span class="project__sub-field-item">Time Series Analysis</span>
-                            </div>
-                            
-                            <p class="project__short-desc">
-                                Lead-lag relationship analysis between equity and cryptocurrency markets during business cycles
-                            </p>
-                            
-                            <div class="project__technical-stack">
-                                <div class="project__stack-label">Technical Stack</div>
-                                <div class="project__stack-tags">
-                                    <span class="project__stack-tag">Python
-                                    </span>
-                                    <span class="project__stack-tag">Statsmodels
-                                    </span>
-                                    <span class="project__stack-tag">GARCH
-                                    </span>
-                                    <span class="project__stack-tag">Plotly
-                                    </span>
-                                    <span class="project__stack-tag">Quandl
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="project__action">
-                                <a href="cryptovsstock.html" class="project__link">
-                                    <span>View Research</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section__title">Let's Connect</h2>
-                <p class="contact__text">
-                    Interested in collaboration or have questions? I'd love to hear from you.
+    <!-- Research Section -->
+    <section class="section" id="research">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Research & Publications</h2>
+                <p class="section__subtitle">
+                    Scientific contributions in bioinformatics and computational biology
                 </p>
-                
-                <div class="contact__links">
-                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="contact__link">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        LinkedIn
+            </div>
+
+            <div class="cards">
+                <article class="card card--featured">
+                    <div class="card__content">
+                        <div class="card__label">Published Research · First Author</div>
+                        <h3 class="card__title">Deep Learning for Circular RNA Classification</h3>
+                        <p class="card__description">
+                            "The Implementation of Deep Learning Algorithm with Gaussian Blur Data Pre-processing 
+                            in Circular RNA Classification and Detection" - Novel CNN architecture for predicting 
+                            circRNA-disease associations with advanced preprocessing techniques.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">First Author</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Bioinformatics</span>
+                            <span class="tag">CNN</span>
+                        </div>
+                        <a href="research/circular-rna.html" class="card__link">
+                            Read Publication
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Award-Winning Research</div>
+                        <h3 class="card__title">Cancer Mutation Analysis in P-53 Gene</h3>
+                        <p class="card__description">
+                            Best Research Project Award at UBC Vantage College Capstone Conference. 
+                            Genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Award Winner</span>
+                            <span class="tag">Genetic Algorithms</span>
+                            <span class="tag">Cancer Research</span>
+                        </div>
+                        <a href="research/p53-mutation.html" class="card__link">
+                            View Research
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Research Institution</div>
+                        <h3 class="card__title">University of British Columbia</h3>
+                        <p class="card__description">
+                            Research Assistant in Chemistry and Bioinformatics, applying deep learning algorithms 
+                            to biological data analysis under faculty supervision.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Research Assistant</span>
+                            <span class="tag">UBC</span>
+                            <span class="tag">Bioinformatics</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section section--alt" id="projects">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Featured Projects</h2>
+                <p class="section__subtitle">
+                    Explore my latest projects spanning research, open source, and business applications
+                </p>
+            </div>
+
+            <div class="cards">
+                <!-- Business Projects -->
+                <article class="card card--featured">
+                    <div class="card__content">
+                        <div class="card__label">Business · Open Source</div>
+                        <h3 class="card__title">Kolosal AI</h3>
+                        <p class="card__description">
+                            Co-founded a platform to democratize access to large language models. 
+                            Built open-source tools enabling local, private AI deployment with custom 
+                            training and inference capabilities.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">LLM Ops</span>
+                            <span class="tag">MLOps</span>
+                            <span class="tag">AutoML</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">CUDA</span>
+                        </div>
+                        <a href="https://kolosal.ai/" target="_blank" rel="noopener" class="card__link">
+                            Visit project
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Open Source Projects -->
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Open Source · Infrastructure</div>
+                        <h3 class="card__title">PyTorch Inference Framework</h3>
+                        <p class="card__description">
+                            High-performance inference framework optimized for production ML deployments. 
+                            TensorRT integration for efficient model serving.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">TensorRT</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Docker</span>
+                        </div>
+                        <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener" class="card__link">
+                            View on GitHub
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Open Source · AutoML</div>
+                        <h3 class="card__title">Kolosal AutoML Platform</h3>
+                        <p class="card__description">
+                            Production-ready automated machine learning platform with Gradio UI. 
+                            Streamlined ML experimentation and deployment.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Gradio</span>
+                            <span class="tag">MLflow</span>
+                            <span class="tag">Optuna</span>
+                            <span class="tag">FastAPI</span>
+                        </div>
+                        <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener" class="card__link">
+                            View on GitHub
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Open Source · Machine Learning</div>
+                        <h3 class="card__title">SOM Plus Clustering</h3>
+                        <p class="card__description">
+                            Advanced Self-Organizing Map implementation with multiple initialization methods and clustering evaluation metrics
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">SOM</span>
+                            <span class="tag">NumPy</span>
+                            <span class="tag">SciPy</span>
+                        </div>
+                        <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener" class="card__link">
+                            View on GitHub
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Open Source · Computer Vision</div>
+                        <h3 class="card__title">APT Fitness Assistant</h3>
+                        <p class="card__description">
+                            AI-powered fitness companion with pose detection and personalized recommendations
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">MediaPipe</span>
+                            <span class="tag">Streamlit</span>
+                            <span class="tag">OpenCV</span>
+                        </div>
+                        <a href="https://github.com/alphareum/apt-proof-of-concept" target="_blank" rel="noopener" class="card__link">
+                            View on GitHub
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Community Projects -->
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Community · Education</div>
+                        <h3 class="card__title">Rebirth Educational Platform</h3>
+                        <p class="card__description">
+                            Educational platform fostering lifelong learning and research community engagement
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Education</span>
+                            <span class="tag">Community</span>
+                        </div>
+                        <a href="https://rebirdth.nicepage.io/" target="_blank" rel="noopener" class="card__link">
+                            Visit Platform
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Community · Mental Health</div>
+                        <h3 class="card__title">PsychIDN Community</h3>
+                        <p class="card__description">
+                            Psychology-focused community platform for mental health awareness in Indonesia
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Psychology</span>
+                            <span class="tag">Mental Health</span>
+                            <span class="tag">Community</span>
+                        </div>
+                        <a href="https://www.instagram.com/psych.idn/" target="_blank" rel="noopener" class="card__link">
+                            Follow Community
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Analysis Projects -->
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Analysis · Economics</div>
+                        <h3 class="card__title">GDP Growth Analysis</h3>
+                        <p class="card__description">
+                            Multi-country GDP pattern analysis using Self-Organizing Map clustering techniques
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">SOM</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Matplotlib</span>
+                        </div>
+                        <a href="global-gdp-patterns.html" class="card__link">
+                            View Analysis
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Analysis · Finance</div>
+                        <h3 class="card__title">Crypto vs Stock Market Timing Analysis</h3>
+                        <p class="card__description">
+                            Comparative analysis of equity and cryptocurrency markets using advanced 
+                            time series models and volatility forecasting.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Time Series</span>
+                            <span class="tag">GARCH</span>
+                            <span class="tag">Plotly</span>
+                            <span class="tag">Statsmodels</span>
+                        </div>
+                        <a href="research/crypto-stock-timing.html" class="card__link">
+                            Read analysis
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section section--cta" id="contact">
+        <div class="container">
+            <div class="cta">
+                <h2 class="cta__title">Let's work together</h2>
+                <p class="cta__description">
+                    Interested in collaboration or have questions about my work? 
+                    I'd love to hear from you.
+                </p>
+                <div class="cta__actions">
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="btn btn--primary btn--large">
+                        Connect on LinkedIn
                     </a>
-                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="contact__link">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        GitHub
-                    </a>
-                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener" class="contact__link">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                        Instagram
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="btn btn--secondary btn--large">
+                        View GitHub
                     </a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Evint Leovonzko. All rights reserved.</p>
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">© 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/animations.js"></script>
-    
-    <!-- Test Script for Filter Buttons -->
-    <script>
-        // Emergency fallback for filter buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Emergency filter setup starting...');
-            
-            setTimeout(() => {
-                const buttons = document.querySelectorAll('.filter__btn');
-                console.log('Found buttons:', buttons.length);
-                
-                buttons.forEach((btn, index) => {
-                    console.log(`Button ${index}:`, btn.textContent, btn.dataset.filter);
-                    
-                    btn.addEventListener('click', function(e) {
-                        console.log('Emergency handler - Button clicked:', this.dataset.filter);
-                        
-                        // Remove active class from all buttons
-                        buttons.forEach(b => b.classList.remove('filter__btn--active'));
-                        
-                        // Add active class to clicked button
-                        this.classList.add('filter__btn--active');
-                        
-                        // Filter projects
-                        const projects = document.querySelectorAll('.project');
-                        const filter = this.dataset.filter;
-                        
-                        projects.forEach(project => {
-                            const category = project.dataset.category;
-                            if (filter === 'all' || category === filter) {
-                                project.style.display = 'block';
-                            } else {
-                                project.style.display = 'none';
-                            }
-                        });
-                    });
-                });
-            }, 500);
-        });
-    </script>
+    <script src="assets/js/main-theme.js"></script>
 </body>
-
 </html>

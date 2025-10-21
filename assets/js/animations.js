@@ -65,22 +65,23 @@ const PortfolioAnimations = (function() {
       // Add ripple effect on click
       project.addEventListener('click', addRippleEffect);
       
-      // Stagger animation on scroll
+      // Stagger animation on scroll - only once
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            const projectsArray = Array.from(projects);
+            const index = projectsArray.indexOf(entry.target);
+            
+            // Add staggered animation with delay
             setTimeout(() => {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
+              entry.target.classList.add('animated');
             }, index * 100);
+            
             observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0.1 });
       
-      project.style.opacity = '0';
-      project.style.transform = 'translateY(20px)';
-      project.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(project);
     });
   }

@@ -6,35 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko</title>
     <meta name="description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
-    <link rel="icon" type="image/png" href="images/logo-light.png">
-    <link rel="apple-touch-icon" href="images/logo-light.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint_portofolio.github.io/gdp_analysis.html">
+    <meta property="og:title" content="Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko">
+    <meta property="og:description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint_portofolio.github.io/gdp_analysis.html">
+    <meta property="twitter:title" content="Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko">
+    <meta property="twitter:description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=ABC+Monument+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css">
 </head>
 
 <body>
-    <!-- Header with Navigation -->
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
-                <span class="logo__text">Evint Leovonzko</span>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img">
+                <span class="nav__logo-text">Evint Leovonzko</span>
             </a>
-            <nav class="nav">
-                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="index.html#projects" class="nav__link">Projects</a>
+                <a href="index.html#research" class="nav__link">Research</a>
+                <a href="index.html#about" class="nav__link">About</a>
+                <a href="index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
                 </button>
-                <ul class="nav__list" id="nav-list">
-                    <li><a href="index.html" class="nav__link">Home</a></li>
-                    <li><a href="index.html#about" class="nav__link">About</a></li>
-                    <li><a href="index.html#projects" class="nav__link">Projects</a></li>
-                    <li><a href="index.html#contact" class="nav__link">Contact</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="research-layout">
         <!-- Sidebar Container -->
@@ -556,7 +591,7 @@
                                     <span>Neural Networks</span>
                                     <span>Bioinformatics</span>
                                 </div>
-                                <a href="research1.html" class="project-card__link">View Research →</a>
+                                <a href="research/circular-rna.html" class="project-card__link">View Research →</a>
                             </div>
                         </article>
                         
@@ -569,7 +604,7 @@
                                     <span>SOM Clustering</span>
                                     <span>Bioinformatics</span>
                                 </div>
-                                <a href="research2.html" class="project-card__link">View Research →</a>
+                                <a href="research/p53-mutation.html" class="project-card__link">View Research →</a>
                             </div>
                         </article>
                         
@@ -582,7 +617,7 @@
                                     <span>Machine Learning</span>
                                     <span>Financial Markets</span>
                                 </div>
-                                <a href="cryptovsstock.html" class="project-card__link">View Research →</a>
+                                <a href="research/crypto-stock-timing.html" class="project-card__link">View Research →</a>
                             </div>
                         </article>
                     </div>
@@ -612,12 +647,20 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p class="copyright">&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">© 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="app.js"></script>
+    <script src="assets/js/main-theme.js"></script>
 </body>
 
 </html>
