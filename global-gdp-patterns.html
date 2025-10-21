@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko</title>
+    <meta name="description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint_portofolio.github.io/global-gdp-patterns.html">
+    <meta property="og:title" content="Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko">
+    <meta property="og:description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint_portofolio.github.io/global-gdp-patterns.html">
+    <meta property="twitter:title" content="Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko">
+    <meta property="twitter:description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=ABC+Monument+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="index.html#projects" class="nav__link">Projects</a>
+                <a href="index.html#research" class="nav__link">Research</a>
+                <a href="index.html#about" class="nav__link">About</a>
+                <a href="index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section for Research Paper -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <h1 class="hero__title">
+                    Clustering Global GDP Trajectories
+                    <span class="hero__title--accent">Patterns and Policy Insights (1980–2024)</span>
+                </h1>
+                <p class="hero__description">
+                    Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years. 
+                    Using advanced machine learning to understand economic development paths and inform policy strategies.
+                </p>
+                <div class="hero__actions">
+                    <a href="files/gdp_analysis.pdf" target="_blank" class="btn btn--primary">Download Paper</a>
+                    <a href="#abstract" class="btn btn--secondary">Read Analysis</a>
+                    <a href="index.html#projects" class="btn btn--secondary">Back to Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract Section -->
+    <section class="section" id="abstract">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Abstract</h2>
+                <p class="section__subtitle">
+                    Executive summary of the global GDP trajectory clustering analysis
+                </p>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Introduction</div>
+                        <p class="card__description">
+                            Countries have followed strikingly different economic paths since 1980. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies across four decades of economic development.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Methods</div>
+                        <p class="card__description">
+                            Using World Bank & IMF GDP data (1980-2024, constant 2015 US$), we applied UMAP dimensionality reduction combined with Self-Organizing Map clustering to identify distinct economic trajectory patterns among 190 countries.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Results</div>
+                        <p class="card__description">
+                            Analysis reveals four distinct clusters: Sustained High Growth (Asia-dominated), Boom-Bust Economies (commodity-dependent), Post-Transition Recovery (Eastern Europe), and Stagnant Economies (sub-Saharan Africa).
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Discussion</div>
+                        <p class="card__description">
+                            Sustained growth countries built strong policy foundations and integrated globally while managing risks. Boom-bust cycles resulted from narrow commodity dependence. Stagnant economies faced governance and human capital challenges.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Conclusion</div>
+                        <p class="card__description">
+                            Clusters are not destiny - countries can progress through appropriate policies. Understanding these patterns helps tailor strategies for achieving stable and inclusive economic growth in the face of global challenges.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section section--alt" id="introduction">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Introduction</h2>
+                <p class="section__subtitle">
+                    Understanding divergent economic development paths across nations
+                </p>
+            </div>
+            
+            <div class="about__text">
+                <p>
+                    Countries have followed strikingly different economic paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries stagnated. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies.
+                </p>
+                
+                <div class="card card--featured research-highlight">
+                    <div class="card__content">
+                        <div class="card__label">Key Finding</div>
+                        <h3 class="card__title">Four Distinct Economic Trajectories</h3>
+                        <p class="card__description">
+                            Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years, with dramatic differences in economic outcomes - some nations achieved 16-32x income growth while others stagnated.
+                        </p>
+                    </div>
+                </div>
+                
+                <p>
+                    Understanding these divergent economic trajectories is crucial for policymakers, international institutions, and investors. This study applies advanced machine learning techniques to identify and characterize distinct patterns of economic development, providing insights into the factors that drive sustained growth versus stagnation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="section" id="methodology">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Methodology</h2>
+                <p class="section__subtitle">
+                    Advanced machine learning approach to economic pattern analysis
+                </p>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Step 1</div>
+                        <h3 class="card__title">Data Source</h3>
+                        <p class="card__description">
+                            World Bank & IMF GDP data (1980-2024, constant 2015 US$) for 190 countries, providing a comprehensive view of global economic development over four and a half decades.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">World Bank</span>
+                            <span class="tag">IMF</span>
+                            <span class="tag">190 Countries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Step 2</div>
+                        <h3 class="card__title">Dimensionality Reduction</h3>
+                        <p class="card__description">
+                            UMAP (Uniform Manifold Approximation and Projection) was used to reduce the high-dimensional time series data while preserving the global structure of GDP trajectories.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">UMAP</span>
+                            <span class="tag">Time Series</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Step 3</div>
+                        <h3 class="card__title">Clustering Algorithm</h3>
+                        <p class="card__description">
+                            Self-Organizing Map (SOM) clustering was applied to identify distinct patterns in the reduced dimensional space, resulting in four coherent economic trajectory clusters.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">SOM</span>
+                            <span class="tag">Clustering</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Step 4</div>
+                        <h3 class="card__title">Validation</h3>
+                        <p class="card__description">
+                            Cluster stability was validated through bootstrap resampling and economic interpretation was verified against known historical patterns and policy frameworks.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Validation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clusters Analysis Section -->
+    <section class="section section--alt" id="clusters">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">The Four Clusters</h2>
+                <p class="section__subtitle">
+                    Distinct economic development patterns identified through machine learning
+                </p>
+            </div>
+            
+            <div class="cards">
+                <!-- Cluster 1 -->
+                <div class="card card--featured">
+                    <div class="card__content">
+                        <div class="card__label">Cluster 1</div>
+                        <h3 class="card__title">Sustained High Growth Economies</h3>
+                        <p class="card__description">
+                            <strong>Characteristics:</strong> Uninterrupted upward GDP trends, accelerating in 1990s-2000s<br>
+                            <strong>Examples:</strong> China, South Korea, Taiwan, Singapore, Malaysia, India, Botswana, Ireland
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Long-term convergence</span>
+                            <span class="tag">Growth-oriented policies</span>
+                            <span class="tag">Shock resilience</span>
+                            <span class="tag">Asia-dominated</span>
+                        </div>
+                        <div class="cluster-features">
+                            <strong>Key Features:</strong>
+                            <ul>
+                                <li>Long-term convergence toward higher income levels</li>
+                                <li>Effective growth-oriented policies (education, trade openness, macroeconomic stability)</li>
+                                <li>Resilience to shocks (quick recovery from 1997 Asian Crisis)</li>
+                                <li>Asia dominates this cluster, contributing 60-70% of global growth</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cluster 0 -->
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Cluster 0</div>
+                        <h3 class="card__title">Boom-Bust and Volatile Economies</h3>
+                        <p class="card__description">
+                            <strong>Characteristics:</strong> Highly volatile performance with rapid growth followed by severe contractions<br>
+                            <strong>Examples:</strong> Russia, Argentina, Brazil, Nigeria, Iraq, Venezuela
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">External shocks</span>
+                            <span class="tag">Commodity dependence</span>
+                            <span class="tag">Policy volatility</span>
+                        </div>
+                        <div class="cluster-features">
+                            <strong>Key Features:</strong>
+                            <ul>
+                                <li>Driven by external shocks and procyclical policies</li>
+                                <li>Vulnerable to commodity price swings and capital flows</li>
+                                <li>Government policies amplify volatility</li>
+                                <li>Lower cumulative growth than sustained-growth cluster</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cluster 3 -->
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Cluster 3</div>
+                        <h3 class="card__title">Post-Transition and Recovery Economies</h3>
+                        <p class="card__description">
+                            <strong>Characteristics:</strong> Initial decline followed by lengthy recovery and growth<br>
+                            <strong>Examples:</strong> Poland, Romania, Hungary, Baltic states, Vietnam, Chile, Peru
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Economic transition</span>
+                            <span class="tag">Market reforms</span>
+                            <span class="tag">EU integration</span>
+                        </div>
+                        <div class="cluster-features">
+                            <strong>Key Features:</strong>
+                            <ul>
+                                <li>Major economic disruption in late 20th century</li>
+                                <li>Structural turnaround through reforms and global integration</li>
+                                <li>Eastern European EU members converged to ~55% of US GDP per capita</li>
+                                <li>Success through market-oriented reforms and institutional development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cluster 2 -->
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Cluster 2</div>
+                        <h3 class="card__title">Stagnant or Slow-Growth Economies</h3>
+                        <p class="card__description">
+                            <strong>Characteristics:</strong> Weak, sluggish growth or near stagnation over four decades<br>
+                            <strong>Examples:</strong> Liberia, Burundi, Central African Republic, Democratic Republic of Congo, Haiti, Zimbabwe
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Structural traps</span>
+                            <span class="tag">Weak institutions</span>
+                            <span class="tag">External vulnerability</span>
+                        </div>
+                        <div class="cluster-features">
+                            <strong>Key Features:</strong>
+                            <ul>
+                                <li>Absence of sustained economic development</li>
+                                <li>Structural traps: poverty, weak institutions, lack of infrastructure</li>
+                                <li>High vulnerability to external shocks</li>
+                                <li>Missed out on growth that lifted billions elsewhere</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Implications Section -->
+    <section class="section" id="policy">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Policy Implications by Cluster</h2>
+                <p class="section__subtitle">
+                    Tailored policy recommendations for different economic development stages
+                </p>
+            </div>
+            
+            <div class="about__text">
+                <p>
+                    Each cluster requires distinct policy approaches based on their unique economic characteristics and challenges. The following recommendations are tailored to help countries within each cluster optimize their growth strategies and avoid common pitfalls.
+                </p>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Sustained Growers</div>
+                        <h3 class="card__title">Strategic Focus</h3>
+                        <p class="card__description">
+                            Focus on innovation, education, managing aging populations, and transitioning to knowledge-based economies while maintaining competitive advantages.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">R&D Investment</span>
+                            <span class="tag">Higher Education</span>
+                            <span class="tag">Innovation Ecosystems</span>
+                            <span class="tag">Trade Competitiveness</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Boom-Bust Economies</div>
+                        <h3 class="card__title">Stabilization Priority</h3>
+                        <p class="card__description">
+                            Implement stabilization policies, economic diversification, and countercyclical fiscal frameworks to reduce volatility and build resilience.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Sovereign Wealth Funds</span>
+                            <span class="tag">Economic Diversification</span>
+                            <span class="tag">Countercyclical Policies</span>
+                            <span class="tag">Strong Institutions</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Transitional Economies</div>
+                        <h3 class="card__title">Consolidation Focus</h3>
+                        <p class="card__description">
+                            Consolidate institutional reforms, move up the value chain, and avoid the middle-income trap through continued structural improvements.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Rule of Law</span>
+                            <span class="tag">Industrial Upgrading</span>
+                            <span class="tag">Education Quality</span>
+                            <span class="tag">Competitiveness</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Stagnant Economies</div>
+                        <h3 class="card__title">Foundation Building</h3>
+                        <p class="card__description">
+                            Establish peace and stability, invest in human development, and implement basic governance improvements to create conditions for growth.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Political Stability</span>
+                            <span class="tag">Basic Infrastructure</span>
+                            <span class="tag">Health & Education</span>
+                            <span class="tag">Effective Institutions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Macroeconomic Insights Section -->
+    <section class="section section--alt" id="insights">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Key Macroeconomic Insights</h2>
+                <p class="section__subtitle">
+                    Critical factors determining economic development trajectories
+                </p>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">External Vulnerability</div>
+                        <h3 class="card__title">Trade & Commodity Dependence</h3>
+                        <div class="card__description">
+                            <ul>
+                                <li>Boom-bust countries highly vulnerable to commodity price swings and capital flows</li>
+                                <li>Sustained growth economies more diversified and resilient</li>
+                                <li>Stagnant economies most vulnerable with fewest defenses against shocks</li>
+                                <li>Trade diversification correlates with economic stability</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Debt Dynamics</div>
+                        <h3 class="card__title">Fiscal Management Patterns</h3>
+                        <div class="card__description">
+                            <ul>
+                                <li>Sustained growers managed debt prudently relative to growing GDP</li>
+                                <li>Boom-bust economies experienced multiple debt crises</li>
+                                <li>Stagnant countries often fell into debt traps</li>
+                                <li>Fiscal discipline essential for sustained development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Trade Integration</div>
+                        <h3 class="card__title">Globalization & Export Sophistication</h3>
+                        <div class="card__description">
+                            <ul>
+                                <li>Sustained growers leveraged globalization effectively</li>
+                                <li>Stagnant economies relatively isolated or dependent on single exports</li>
+                                <li>Diversified trade tends to be stabilizing</li>
+                                <li>Export sophistication drives long-term growth</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__content">
+                        <div class="card__label">Institutional Quality</div>
+                        <h3 class="card__title">Governance & Development</h3>
+                        <div class="card__description">
+                            <ul>
+                                <li>Strong institutions correlate with sustained growth</li>
+                                <li>Weak governance perpetuates stagnation</li>
+                                <li>Rule of law essential for investment and development</li>
+                                <li>Democratic institutions support long-term stability</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="section" id="conclusion">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Conclusion</h2>
+                <p class="section__subtitle">
+                    Key lessons for policymakers and development practitioners
+                </p>
+            </div>
+            
+            <div class="about__text">
+                <p>
+                    This clustering reveals that countries achieving sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Those experiencing boom-bust cycles relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, poor governance, or human capital deficits.
+                </p>
+                
+                <div class="card card--featured research-highlight">
+                    <div class="card__content">
+                        <div class="card__label">Key Lesson</div>
+                        <h3 class="card__title">Clusters Are Not Destiny</h3>
+                        <p class="card__description">
+                            Countries can move between clusters with appropriate policies. The goal is progression: Cluster 2 → Cluster 3 → Cluster 1, while avoiding regression. Policy choices and institutional development can overcome historical disadvantages.
+                        </p>
+                    </div>
+                </div>
+                
+                <p>
+                    Understanding these patterns helps international institutions tailor strategies, investors assess sovereign risks, and policymakers learn from peer experiences. As the world faces new challenges like climate change and digital disruption, these historical patterns provide valuable guidance for achieving stable and inclusive economic growth.
+                </p>
+                
+                <p>
+                    The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Research Section -->
+    <section class="section section--alt" id="related">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Related Research</h2>
+                <p class="section__subtitle">
+                    Explore other research projects and analyses
+                </p>
+            </div>
+
+            <div class="cards">
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Published Research · First Author</div>
+                        <h3 class="card__title">Deep Learning for Circular RNA Classification</h3>
+                        <p class="card__description">
+                            Implementation of ANN with Gaussian Blur preprocessing achieving 75.11% accuracy in circRNA-disease association prediction.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Neural Networks</span>
+                            <span class="tag">Bioinformatics</span>
+                        </div>
+                        <a href="research/circular-rna.html" class="card__link">
+                            View Research
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Award-Winning Research</div>
+                        <h3 class="card__title">Cancer Mutation Analysis in P-53 Gene</h3>
+                        <p class="card__description">
+                            Genetic algorithms analysis of P-53 tumor suppressor gene mutations using self-organizing maps in a closed environment model.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Genetic Algorithms</span>
+                            <span class="tag">SOM Clustering</span>
+                            <span class="tag">Bioinformatics</span>
+                        </div>
+                        <a href="research/p53-mutation.html" class="card__link">
+                            View Research
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card__content">
+                        <div class="card__label">Analysis · Finance</div>
+                        <h3 class="card__title">Equity vs Crypto Market Timing Analysis</h3>
+                        <p class="card__description">
+                            Comprehensive study examining lead-lag relationships between equity and cryptocurrency markets around business cycle turning points.
+                        </p>
+                        <div class="card__tags">
+                            <span class="tag">Time Series Analysis</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Financial Markets</span>
+                        </div>
+                        <a href="research/crypto-stock-timing.html" class="card__link">
+                            View Research
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section section--cta" id="contact">
+        <div class="container">
+            <div class="cta">
+                <h2 class="cta__title">Interested in Economic Research?</h2>
+                <p class="cta__description">
+                    Have questions about this analysis or want to discuss economic development patterns? 
+                    I'd love to hear from you.
+                </p>
+                <div class="cta__actions">
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="btn btn--primary btn--large">
+                        Connect on LinkedIn
+                    </a>
+                    <a href="index.html#projects" class="btn btn--secondary btn--large">
+                        View More Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">© 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main-theme.js"></script>
+</body>
+</html>

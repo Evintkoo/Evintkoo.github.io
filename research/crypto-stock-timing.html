@@ -6,40 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leading or Lagging? Equity and Crypto Timing Analysis | Evint Leovonzko</title>
     <meta name="description" content="A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries - Research by Evint Leovonzko">
-    <link rel="icon" type="image/png" href="images/logo-light.png">
-    <link rel="apple-touch-icon" href="images/logo-light.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint_portofolio.github.io/research/crypto-stock-timing.html">
+    <meta property="og:title" content="Leading or Lagging? Equity and Crypto Timing Analysis | Evint Leovonzko">
+    <meta property="og:description" content="A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint_portofolio.github.io/research/crypto-stock-timing.html">
+    <meta property="twitter:title" content="Leading or Lagging? Equity and Crypto Timing Analysis | Evint Leovonzko">
+    <meta property="twitter:description" content="A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=ABC+Monument+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css">
+    <link rel="stylesheet" href="../assets/css/research.css">
 </head>
 
 <body>
-    <!-- Header with Navigation -->
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="images/logo-light.png" alt="Evint Leovonzko" class="logo__image">
-                <span class="logo__text">Evint Leovonzko</span>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img">
+                <span class="nav__logo-text">Evint Leovonzko</span>
             </a>
-            <nav class="nav">
-                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
-                    <span class="nav__line"></span>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
                 </button>
-                <ul class="nav__list" id="nav-list">
-                    <li><a href="index.html" class="nav__link">Home</a></li>
-                    <li><a href="index.html#about" class="nav__link">About</a></li>
-                    <li><a href="index.html#projects" class="nav__link">Projects</a></li>
-                    <li><a href="index.html#contact" class="nav__link">Contact</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="research-layout">
-        <!-- Sidebar Container -->
         <div class="research-sidebar-container">
-            <!-- Floating Research Sidebar -->
             <aside class="research-sidebar" id="floating-sidebar">
                 <nav class="research-sidebar__nav">
                     <h2 class="research-sidebar__title">Research Sections</h2>
@@ -105,68 +139,74 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="research-sidebar__item">
+                            <a href="#references" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 11 4.16-.26 8-5.45 8-11V5l-8-3z"/>
+                                        </svg>
+                                    </span>
+                                    References
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </aside>
         </div>
 
-        <!-- Mobile Toggle Button -->
-        <button class="research-sidebar-toggle" aria-label="Toggle Navigation">
+        <button class="research-sidebar-toggle" id="research-sidebar-toggle" aria-label="Toggle Navigation">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
             </svg>
         </button>
 
-        <!-- Research Content -->
         <div class="research-content">
             <div class="research-content__inner">
-        <!-- Research Paper Header -->
-        <section class="paper-hero">
-            <div class="paper-hero__content">
-                <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
-                <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
-                
-                <div class="paper-meta-box">
-                    <div class="paper-meta-content">
-                        <div class="authors">
-                            <span class="author-label">Author:</span>
-                            <span class="author-names">Evint Leovonzko</span>
-                        </div>
-                        <div class="journal-info">
-                            <span class="journal-label">Published:</span>
-                            <span class="journal-name">July 2025</span>
-                        </div>
-                    </div>
-                    <div class="paper-meta-actions">
-                        <a href="files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                            </svg>
-                            <span class="btn-text">Download PDF</span>
-                        </a>
-                        <a href="#introduction" class="btn btn-secondary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                            </svg>
-                            <span class="btn-text">Read Research</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Content -->
-        <div class="research-content">
-            <div class="research-content__inner">
-
-        <!-- Introduction Section -->
-        <section id="introduction" class="research-section">
-            <h2 class="research-section__title">Introduction</h2>
-            
-            <div class="content-text">
-                        <p>The timely and accurate identification of business cycle turning points remains a foundational challenge in macroeconomic analysis, given the substantial economic and social costs associated with recessions (Burns & Mitchell, 1946). Early-warning indicators provide invaluable insights that enable policymakers to deploy counter-cyclical measures more effectively and allow investors to adjust asset allocations to mitigate risk (Romer & Romer, 2004).</p>
+                <!-- Research Paper Header -->
+                <section class="paper-hero">
+                    <div class="paper-hero__content">
+                        <h1 class="paper-hero__title">Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries</h1>
+                        <p class="paper-hero__subtitle">Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction</p>
                         
-                        <p>Historically, equity markets have been regarded as a premier leading indicator of economic activity, with the underlying logic that stock prices, representing the discounted present value of future corporate earnings, should rapidly incorporate aggregate economic expectations (Fama, 1981; Estrella & Mishkin, 1998). Consequently, declines in broad market indices are often observed to precede the onset of recessions as determined by official dating committees such as the National Bureau of Economic Research (NBER).</p>
+                        <div class="paper-meta-box">
+                            <div class="paper-meta-content">
+                                <div class="authors">
+                                    <span class="author-label">Author:</span>
+                                    <span class="author-names">Evint Leovonzko</span>
+                                </div>
+                                <div class="journal-info">
+                                    <span class="journal-label">Published:</span>
+                                    <span class="journal-name">July 2025</span>
+                                </div>
+                            </div>
+                            <div class="paper-meta-actions">
+                                <a href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <span class="btn-text">Download PDF</span>
+                                </a>
+                                <a href="#introduction" class="btn btn-secondary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Read Research</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction Section -->
+                <section id="introduction" class="research-section">
+                    <h2 class="research-section__title">Introduction</h2>
+                    
+                    <div class="content-text">
+                        <p>The timely and accurate identification of business cycle turning points remains a foundational challenge in macroeconomic analysis, given the substantial economic and social costs associated with recessions (Burns &amp; Mitchell, 1946). Early-warning indicators provide invaluable insights that enable policymakers to deploy counter-cyclical measures more effectively and allow investors to adjust asset allocations to mitigate risk (Romer &amp; Romer, 2004).</p>
+                        
+                        <p>Historically, equity markets have been regarded as a premier leading indicator of economic activity, with the underlying logic that stock prices, representing the discounted present value of future corporate earnings, should rapidly incorporate aggregate economic expectations (Fama, 1981; Estrella &amp; Mishkin, 1998). Consequently, declines in broad market indices are often observed to precede the onset of recessions as determined by official dating committees such as the National Bureau of Economic Research (NBER).</p>
                         
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -181,7 +221,7 @@
                         
                         <p>However, the 21st-century financial landscape has been fundamentally transformed by the emergence and rapid institutionalization of crypto-assets. Since the inception of Bitcoin in 2009, the digital asset class has evolved from a niche technological experiment to a multi-trillion-dollar market capitalization phenomenon, attracting significant interest from both retail and institutional participants (Harvey et al., 2020).</p>
                         
-                        <p>This remarkable growth has ignited a vigorous academic debate regarding the economic role and informational content of cryptocurrencies. One perspective posits that crypto-assets are predominantly speculative instruments, driven by sentiment and largely detached from macroeconomic fundamentals (Shiller, 2019; Baur et al., 2018). An alternative and increasingly influential view suggests that, as these markets mature and achieve greater integration with the broader financial system, they may contain unique forward-looking information about economic activity, liquidity conditions, and global risk appetite (Corbet et al., 2020; Yousaf & Ali, 2020).</p>
+                        <p>This remarkable growth has ignited a vigorous academic debate regarding the economic role and informational content of cryptocurrencies. One perspective posits that crypto-assets are predominantly speculative instruments, driven by sentiment and largely detached from macroeconomic fundamentals (Shiller, 2019; Baur et al., 2018). An alternative and increasingly influential view suggests that, as these markets mature and achieve greater integration with the broader financial system, they may contain unique forward-looking information about economic activity, liquidity conditions, and global risk appetite (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
                         
                         <h3>Research Question and Hypotheses</h3>
                         <p>This study directly addresses a critical research gap by investigating a precise empirical question: <strong>"Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?"</strong></p>
@@ -203,15 +243,13 @@
                             <p>The lead-lag relationship between equity and crypto markets is not static but exhibits regime-dependent behavior, varying systematically across different market states such as bull versus bear markets, periods of high versus low volatility, or different phases of the business cycle.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Methodology Section -->
-        <section id="methodology" class="research-section">
-            <h2 class="research-section__title">Methodology</h2>
-            
-            <div class="content-text">
+                <!-- Methodology Section -->
+                <section id="methodology" class="research-section">
+                    <h2 class="research-section__title">Methodology</h2>
+                    
+                    <div class="content-text">
                         <p>This study employs a multi-method, multi-scale methodological framework to provide a robust answer to the research question. The approach is designed to move from simple correlational timing to causal inference and predictive classification, thereby triangulating evidence for the lead-lag relationship between equity and crypto-asset markets around U.S. business cycles.</p>
                     </div>
                     
@@ -277,51 +315,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
                 </section>
 
-                <!-- Methodology Section -->
-                <section id="methodology" class="research-section">
-                    <h2 class="research-section__title">Methodology</h2>
-                    
-                    <div class="content-text">
-                        <p>This study employs a comprehensive empirical framework to analyze the lead-lag relationships between equity and cryptocurrency markets around business cycle turning points. Our methodology integrates multiple data sources and analytical techniques to provide robust insights into cross-asset market dynamics.</p>
-                        
-                        <div class="research-highlight">
-                            <div class="highlight-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                </svg>
-                            </div>
-                            <div class="highlight-content">
-                                <p>Our analysis utilizes advanced econometric techniques including Granger causality tests, vector autoregression models, and event study methodologies to examine timing relationships.</p>
-                            </div>
-                        </div>
-                        
-                                            <p>The study period spans from 2010 to 2024, encompassing multiple business cycle phases and allowing for comprehensive analysis of market behavior across different economic environments. We examine both traditional equity indices and major cryptocurrency benchmarks to ensure robust comparative analysis.</p>
-                </div>
-        </section>
-
-        <!-- Results Section -->
-        <section id="results" class="research-section">
-            <h2 class="research-section__title">Results</h2>
-            
-            <h3>Descriptive Statistics</h3>
-            <div class="content-text">
-                    </div>
-                </section>
-
-                <!-- Results Section -->
                 <section id="results" class="research-section">
-            <div class="container">
-                <div class="paper-section">
-                    <h2 class="section__title">Results</h2>
-                    
-                    <h3>Descriptive Statistics</h3>
-                    <div class="content-text">
-                        <p>Over the 7-year study period from January 1, 2018, to December 31, 2024, we observe substantial differences in the return and risk characteristics between the equity and cryptocurrency markets.</p>
-                    </div>
+                    <h2 class="research-section__title">Results</h2>
+                    <p>Over the 7-year study period from January 1, 2018, to December 31, 2024, we observe substantial differences in the return and risk characteristics between the equity and cryptocurrency markets.</p>
                     
                     <div class="results-table">
                         <h4>Market Performance Comparison</h4>
@@ -503,15 +501,13 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Discussion Section -->
-        <section id="discussion" class="research-section">
-            <h2 class="research-section__title">Discussion</h2>
-            
-            <div class="content-text">
+                <!-- Discussion Section -->
+                <section id="discussion" class="research-section">
+                    <h2 class="research-section__title">Discussion</h2>
+                    
+                    <div class="content-text">
                         <h3>Theoretical Implications</h3>
                         <p>The academic literature provides robust theoretical explanations for why equity markets systematically lead cryptocurrency markets by approximately 27 days. Information processing theory and market efficiency gaps form the primary theoretical foundation, with recent research demonstrating that cryptocurrency uncertainty indices lead crypto returns across multiple time horizons using wavelet coherence analysis.</p>
                         
@@ -525,7 +521,7 @@
                                 <p>The 27-day period represents the average time from the generation of an equity market signal to the full adjustment of the cryptocurrency market price, encompassing weekly information processing cycles, monthly institutional rebalancing periods, and regulatory compliance delays.</p>
                             </div>
                         </div>
-                        
+                
                         <h3>Behavioral Finance Framework</h3>
                         <p>Behavioral finance theories offer compelling explanations for the specific timing pattern. Limited attention theory suggests that retail investors, who dominate cryptocurrency markets, have finite cognitive resources and process information more slowly than institutional investors who control equity markets.</p>
                         
@@ -537,29 +533,27 @@
                             <li><strong>Weeks 3-4:</strong> Adjustments to retail positions</li>
                             <li><strong>Week 4:</strong> Full price adjustment in cryptocurrency markets</li>
                         </ul>
-                        
+                
                         <h3>Empirical Evolution</h3>
-                        <p>The empirical literature reveals a dramatic evolution in the relationships between stocks and cryptocurrencies, with correlation coefficients increasing 17-fold during the COVID-19 period. Bitcoin-S&P 500 correlations jumped from 0.01 (2017-2019) to 0.36 (2020-2021), while Bitcoin-NASDAQ correlations reached 0.50 during the same period.</p>
-                        
+                        <p>The empirical literature reveals a dramatic evolution in the relationships between stocks and cryptocurrencies, with correlation coefficients increasing 17-fold during the COVID-19 period. Bitcoin-S&amp;P 500 correlations jumped from 0.01 (2017-2019) to 0.36 (2020-2021), while Bitcoin-NASDAQ correlations reached 0.50 during the same period.</p>
+                
                         <h3>Practical Applications</h3>
                         <p>The academic literature provides extensive evidence for practical applications of lead-lag dynamics in portfolio management. Quantitative trading strategies utilizing lead-lag relationships have generated impressive returns, with research achieving annualized returns over 20% spanning multiple decades.</p>
                         
                         <p>Dynamic hedging applications have evolved significantly, with studies showing that futures markets lead spot markets by 0-5 minutes, providing real-time hedging opportunities. However, implementation challenges are substantial, including capacity constraints, regime changes during market stress, estimation errors, and execution risks.</p>
-                        
+                
                         <h3>Information Transmission Mechanisms</h3>
                         <p>Research on information transmission reveals complex, multi-channel mechanisms connecting traditional and digital asset markets. Price discovery analysis shows that Bitcoin spot markets lead exchange-traded products in incorporating new information, though mixed evidence exists regarding futures versus spot market leadership.</p>
                         
                         <p>Network effects and contagion models demonstrate that COVID-19 significantly altered network structures and intensified information flows. Research reveals asymmetric contagion effects, with stronger transmission during market downturns and changing correlation structures during crisis periods.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Conclusion Section -->
-        <section id="conclusion" class="research-section">
-            <h2 class="research-section__title">Conclusion</h2>
-            
-            <div class="content-text">
+                <!-- Conclusion Section -->
+                <section id="conclusion" class="research-section">
+                    <h2 class="research-section__title">Conclusion</h2>
+                    
+                    <div class="content-text">
                         <h3>Primary Research Findings</h3>
                         <p>This study provides the first comprehensive empirical analysis addressing the fundamental question: "Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?" Through a multi-methodological framework, we present robust evidence that fundamentally answers this research question.</p>
                         
@@ -600,45 +594,43 @@
                         
                         <p>As cryptocurrency markets continue to mature and integrate with traditional financial systems, understanding these lead-lag dynamics becomes increasingly crucial for investors, regulators, and policymakers navigating the evolving financial landscape.</p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- References Section -->
-        <section id="references" class="research-section">
-            <h2 class="research-section__title">References</h2>
-            
-            <div class="references-list">
+                <!-- References Section -->
+                <section id="references" class="research-section">
+                    <h2 class="research-section__title">References</h2>
+                    
+                    <div class="references-list">
                         <div class="reference-item">
                             <p>Ah Mand, A. A. (2024). Cryptocurrency returns and cryptocurrency uncertainty: A time–frequency analysis. <em>Financial Innovation</em>, 10, Article 734.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Baur, D. G., Dimpfl, T., & Kuck, K. (2018). Bitcoin, gold and the US dollar—A replication and extension. <em>Finance Research Letters</em>, 25, 103–110.</p>
+                            <p>Baur, D. G., Dimpfl, T., &amp; Kuck, K. (2018). Bitcoin, gold and the US dollar—A replication and extension. <em>Finance Research Letters</em>, 25, 103–110.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate: A practical and powerful approach to multiple testing. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, 57(1), 289–300.</p>
+                            <p>Benjamini, Y., &amp; Hochberg, Y. (1995). Controlling the false discovery rate: A practical and powerful approach to multiple testing. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, 57(1), 289–300.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Burns, A. F., & Mitchell, W. C. (1946). <em>Measuring business cycles</em>. National Bureau of Economic Research.</p>
+                            <p>Burns, A. F., &amp; Mitchell, W. C. (1946). <em>Measuring business cycles</em>. National Bureau of Economic Research.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Cartea, Á., Cucuringu, M., & Jin, R. (2023). Detecting lead–lag relationships in stock returns and portfolio strategies. Mathematical Institute, University of Oxford.</p>
+                            <p>Cartea, Á., Cucuringu, M., &amp; Jin, R. (2023). Detecting lead–lag relationships in stock returns and portfolio strategies. Mathematical Institute, University of Oxford.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Conrad, J., & Kaul, G. (1998). An anatomy of trading strategies. <em>The Review of Financial Studies</em>, 11(3), 489–519.</p>
+                            <p>Conrad, J., &amp; Kaul, G. (1998). An anatomy of trading strategies. <em>The Review of Financial Studies</em>, 11(3), 489–519.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Corbet, S., Larkin, C., & Lucey, B. M. (2020). The contagion effects of the COVID-19 pandemic: Evidence from gold and cryptocurrencies. <em>Finance Research Letters</em>, 35, Article 101554.</p>
+                            <p>Corbet, S., Larkin, C., &amp; Lucey, B. M. (2020). The contagion effects of the COVID-19 pandemic: Evidence from gold and cryptocurrencies. <em>Finance Research Letters</em>, 35, Article 101554.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Estrella, A., & Mishkin, F. S. (1998). Predicting U.S. recessions: Financial variables as leading indicators. <em>The Review of Economics and Statistics</em>, 80(1), 45–61.</p>
+                            <p>Estrella, A., &amp; Mishkin, F. S. (1998). Predicting U.S. recessions: Financial variables as leading indicators. <em>The Review of Economics and Statistics</em>, 80(1), 45–61.</p>
                         </div>
                         
                         <div class="reference-item">
@@ -654,15 +646,15 @@
                         </div>
                         
                         <div class="reference-item">
-                            <p>Harvey, C. R., Hoyle, S., Korgaonkar, R., Rattray, S., Sargaison, M., & Van Hemert, O. (2020). The best of strategies for the worst of times: Can portfolios be crisis proofed? <em>The Journal of Portfolio Management</em>, 46(5), 107–119.</p>
+                            <p>Harvey, C. R., Hoyle, S., Korgaonkar, R., Rattray, S., Sargaison, M., &amp; Van Hemert, O. (2020). The best of strategies for the worst of times: Can portfolios be crisis proofed? <em>The Journal of Portfolio Management</em>, 46(5), 107–119.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. <em>Neural Computation</em>, 9(8), 1735–1780.</p>
+                            <p>Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural Computation</em>, 9(8), 1735–1780.</p>
                         </div>
                         
                         <div class="reference-item">
-                            <p>Newey, W. K., & West, K. D. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. <em>Econometrica</em>, 55(3), 703–708.</p>
+                            <p>Newey, W. K., &amp; West, K. D. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. <em>Econometrica</em>, 55(3), 703–708.</p>
                         </div>
                         
                         <div class="reference-item">
@@ -670,7 +662,7 @@
                         </div>
                         
                         <div class="reference-item">
-                            <p>Romer, C. D., & Romer, D. H. (2004). A new measure of monetary shocks: Derivation and implications. <em>American Economic Review</em>, 94(4), 1055–1084.</p>
+                            <p>Romer, C. D., &amp; Romer, D. H. (2004). A new measure of monetary shocks: Derivation and implications. <em>American Economic Review</em>, 94(4), 1055–1084.</p>
                         </div>
                         
                         <div class="reference-item">
@@ -686,79 +678,74 @@
                         </div>
                         
                         <div class="reference-item">
-                            <p>Yousaf, I., & Ali, S. (2020). The COVID-19 outbreak and high-frequency information transmission between major cryptocurrencies: Evidence from the VAR-DCC-GARCH approach. <em>Borsa Istanbul Review</em>, 20(S1), S1–S10.</p>
+                            <p>Yousaf, I., &amp; Ali, S. (2020). The COVID-19 outbreak and high-frequency information transmission between major cryptocurrencies: Evidence from the VAR-DCC-GARCH approach. <em>Borsa Istanbul Review</em>, 20(S1), S1–S10.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Related Research -->
-        <section class="section">
-            <div class="container">
-                <div class="related-research">
-                    <h2 class="section__title">Related Research</h2>
-                    <div class="project-grid">
-                        <article class="project-card">
-                            <div class="project-card__content">
-                                <h4 class="project-card__title">Deep Learning for Circular RNA Classification</h4>
-                                <p class="project-card__description">Implementation of ANN with Gaussian Blur preprocessing achieving 75.11% accuracy in circRNA-disease association prediction.</p>
-                                <div class="project-card__tech">
-                                    <span>Deep Learning</span>
-                                    <span>Neural Networks</span>
-                                    <span>Bioinformatics</span>
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="related-research">
+                        <div class="project-grid">
+                            <article class="project-card">
+                                <div class="project-card__content">
+                                    <h4 class="project-card__title">Deep Learning for Circular RNA Classification</h4>
+                                    <p class="project-card__description">Implementation of ANN with Gaussian Blur preprocessing achieving 75.11% accuracy in circRNA-disease association prediction.</p>
+                                    <div class="project-card__tech">
+                                        <span>Deep Learning</span>
+                                        <span>Neural Networks</span>
+                                        <span>Bioinformatics</span>
+                                    </div>
+                                    <a href="circular-rna.html" class="project-card__link">View Research →</a>
                                 </div>
-                                <a href="research1.html" class="project-card__link">View Research →</a>
-                            </div>
-                        </article>
-                        
-                        <article class="project-card">
-                            <div class="project-card__content">
-                                <h4 class="project-card__title">Cancer Mutation Analysis in P-53 Gene</h4>
-                                <p class="project-card__description">Genetic algorithms analysis of P-53 tumor suppressor gene mutations using self-organizing maps in a closed environment model.</p>
-                                <div class="project-card__tech">
-                                    <span>Genetic Algorithms</span>
-                                    <span>SOM Clustering</span>
-                                    <span>Bioinformatics</span>
+                            </article>
+                            
+                            <article class="project-card">
+                                <div class="project-card__content">
+                                    <h4 class="project-card__title">Cancer Mutation Analysis in P-53 Gene</h4>
+                                    <p class="project-card__description">Genetic algorithms analysis of P-53 tumor suppressor gene mutations using self-organizing maps in a closed environment model.</p>
+                                    <div class="project-card__tech">
+                                        <span>Genetic Algorithms</span>
+                                        <span>SOM Clustering</span>
+                                        <span>Bioinformatics</span>
+                                    </div>
+                                    <a href="p53-mutation.html" class="project-card__link">View Research →</a>
                                 </div>
-                                <a href="research2.html" class="project-card__link">View Research →</a>
-                            </div>
-                        </article>
-                        
-                        <article class="project-card">
-                            <div class="project-card__content">
-                                <h4 class="project-card__title">GDP Growth Analysis</h4>
-                                <p class="project-card__description">Clustering global GDP trajectories of 190 countries over 45 years to identify distinct development patterns.</p>
-                                <div class="project-card__tech">
-                                    <span>Data Analysis</span>
-                                    <span>SOM Clustering</span>
-                                    <span>Economics</span>
+                            </article>
+                            
+                            <article class="project-card">
+                                <div class="project-card__content">
+                                    <h4 class="project-card__title">GDP Growth Analysis</h4>
+                                    <p class="project-card__description">Clustering global GDP trajectories of 190 countries over 45 years to identify distinct development patterns.</p>
+                                    <div class="project-card__tech">
+                                        <span>Data Analysis</span>
+                                        <span>SOM Clustering</span>
+                                        <span>Economics</span>
+                                    </div>
+                                    <a href="../global-gdp-patterns.html" class="project-card__link">View Analysis →</a>
                                 </div>
-                                <a href="gdp_analysis.html" class="project-card__link">View Analysis →</a>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Back to Portfolio -->
-        <section class="research-section">
-            <div class="back-to-portfolio">
-                <a href="index.html#projects" class="animated-button">
-                    <span>Back to Portfolio</span>
-                    <div class="icon">
-                        <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                        </svg>
-                        <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                        </svg>
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#projects" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        </section>
-
+                </section>
             </div>
         </div>
     </main>
@@ -766,13 +753,20 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p class="copyright">&copy; 2025 Evint Leovonzko. All Rights Reserved.</p>
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">© 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="theme-toggle.js"></script>
-    <script src="main.js"></script>
+    <script src="../assets/js/main-theme.js"></script>
 </body>
 
 </html>
