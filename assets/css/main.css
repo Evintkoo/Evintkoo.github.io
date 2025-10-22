@@ -312,6 +312,8 @@ p {
   font-size: var(--text-lg);
   color: var(--text-primary);
   transition: opacity var(--transition-base);
+  border-radius: 0;
+  overflow: visible;
 }
 
 .nav__logo:hover {
@@ -321,7 +323,8 @@ p {
 .nav__logo-img {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-md);
+  border-radius: 0;
+  overflow: visible;
 }
 
 .nav__logo-text {
