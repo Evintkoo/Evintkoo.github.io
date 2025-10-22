@@ -327,6 +327,12 @@ svg {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.research-sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .research-sidebar.active {
@@ -369,6 +375,7 @@ svg {
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
   font-size: var(--text-sm);
+  border: 1px solid transparent;
 }
 
 .research-sidebar__link:hover {
@@ -377,14 +384,33 @@ svg {
 }
 
 .research-sidebar__link.active {
-  background: var(--accent-primary);
-  color: white;
+  background: var(--bg-tertiary);
+  color: var(--accent-primary);
+  border-color: var(--border-secondary);
+  font-weight: 600;
+}
+
+.research-sidebar__link.active .research-sidebar__icon,
+.research-sidebar__link.active .research-sidebar__text {
+  color: inherit;
+  background: transparent;
+}
+
+.research-sidebar__link.active .research-sidebar__icon {
+  background: var(--bg-primary);
+}
+
+.research-sidebar__link.active .research-sidebar__icon svg {
+  color: inherit;
+  fill: currentColor;
+  opacity: 1;
 }
 
 .research-sidebar__text {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  color: inherit;
 }
 
 .research-sidebar__icon {
@@ -394,11 +420,14 @@ svg {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: inherit;
 }
 
 .research-sidebar__icon svg {
   width: 16px;
   height: 16px;
+  color: inherit;
+  fill: currentColor;
 }
 
 .research-sidebar-toggle {
@@ -408,14 +437,16 @@ svg {
   z-index: 101;
   width: 48px;
   height: 48px;
-  border: none;
-  border-radius: var(--radius-full);
-  background: var(--accent-primary);
-  color: white;
+  border: 1px solid var(--border-primary);
+  border-radius: 0;
+  background: var(--bg-secondary);
+  color: var(--accent-primary);
   cursor: pointer;
   box-shadow: var(--shadow-lg);
   transition: all 0.2s ease;
   display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .research-sidebar-toggle:hover {
@@ -423,9 +454,29 @@ svg {
   box-shadow: var(--shadow-xl);
 }
 
+.research-sidebar-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Ensure toggle button icon is always visible */
 .research-sidebar-toggle svg {
   width: 20px;
   height: 20px;
+  color: currentColor;
+  fill: currentColor;
+  display: block;
+  opacity: 1;
+}
+
+/* Active state for toggle button */
+.research-sidebar-toggle.active {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.research-sidebar-toggle.active svg {
+  color: currentColor;
+  fill: currentColor;
 }
 
 @media (max-width: 1200px) {
@@ -442,9 +493,28 @@ svg {
   }
   
   .research-sidebar-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    background: var(--bg-tertiary) !important;
+    color: var(--accent-primary) !important;
+  }
+  
+  .research-sidebar-toggle svg {
+    color: currentColor !important;
+    fill: currentColor !important;
+    display: block !important;
+    opacity: 1 !important;
+  }
+  
+  .research-sidebar-toggle.active {
+    background: var(--accent-primary) !important;
+    color: var(--bg-primary) !important;
+  }
+  
+  .research-sidebar-toggle.active svg {
+    color: currentColor !important;
+    fill: currentColor !important;
   }
 }
 
@@ -480,8 +550,37 @@ svg {
 }
 
 .badge-icon {
-  font-size: 0.9em;
-  /* Remove floating animation - too distracting */
+  width: 1.5rem;
+  height: 1.5rem;
+  color: inherit;
+}
+
+.badge-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.icon-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  flex-shrink: 0;
+}
+
+.icon-inline svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.icon-inline--trailing {
+  margin-left: var(--space-2);
+}
+
+.icon-inline--leading {
+  margin-right: var(--space-2);
 }
 
 /* Button icons */
@@ -1461,17 +1560,6 @@ svg {
     will-change: transform, opacity;
   }
   
-  .abstract-item:nth-child(1) { animation-delay: 0.1s; }
-  .abstract-item:nth-child(2) { animation-delay: 0.2s; }
-  .abstract-item:nth-child(3) { animation-delay: 0.3s; }
-  .abstract-item:nth-child(4) { animation-delay: 0.4s; }
-  .abstract-item:nth-child(5) { animation-delay: 0.5s; }
-  
-  .method-card:nth-child(1) { animation-delay: 0.15s; }
-  .method-card:nth-child(2) { animation-delay: 0.3s; }
-  .method-card:nth-child(3) { animation-delay: 0.45s; }
-  .method-card:nth-child(4) { animation-delay: 0.6s; }
-  
   /* Neural network animation */
   .neural-network {
     animation: fadeInUp 0.8s ease-out 0.2s backwards;
@@ -1482,19 +1570,10 @@ svg {
     animation: nodePulse 2s ease-in-out infinite;
   }
   
-  .network-node:nth-child(odd) {
-    animation-delay: 0.5s;
-  }
-  
   /* Step badge entrance */
   .method-step-badge {
     animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
   }
-  
-  .method-card:nth-child(1) .method-step-badge { animation-delay: 0.2s; }
-  .method-card:nth-child(2) .method-step-badge { animation-delay: 0.35s; }
-  .method-card:nth-child(3) .method-step-badge { animation-delay: 0.5s; }
-  .method-card:nth-child(4) .method-step-badge { animation-delay: 0.65s; }
 }
 
 @keyframes fadeInUp {

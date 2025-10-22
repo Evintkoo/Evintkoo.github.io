@@ -86,12 +86,14 @@
   // Dark Mode Toggle
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
+  const logoImg = document.querySelector('.nav__logo-img');
   const html = document.documentElement;
   
   // Check for saved theme preference or default to 'light' mode
   const currentTheme = localStorage.getItem('theme') || 'light';
   html.setAttribute('data-theme', currentTheme);
   updateThemeIcon(currentTheme);
+  updateLogo(currentTheme);
   
   if (themeToggle) {
     themeToggle.addEventListener('click', function() {
@@ -101,6 +103,7 @@
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       updateThemeIcon(newTheme);
+      updateLogo(newTheme);
     });
   }
   
@@ -125,6 +128,16 @@
         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       `;
+    }
+  }
+  
+  function updateLogo(theme) {
+    if (!logoImg) return;
+    
+    if (theme === 'dark') {
+      logoImg.src = 'assets/images/logos/logo-dark.png';
+    } else {
+      logoImg.src = 'assets/images/logos/logo-light.png';
     }
   }
 
@@ -174,12 +187,6 @@
   const animatedElements = document.querySelectorAll('.card, .research-card, .timeline__item');
   animatedElements.forEach(el => {
     observer.observe(el);
-  });
-
-  // Add stagger animation to cards
-  const cards = document.querySelectorAll('.card');
-  cards.forEach((card, index) => {
-    card.style.animationDelay = `${index * 0.1}s`;
   });
 
   // External link icons
@@ -253,6 +260,76 @@
         link.classList.add('active');
       }
     });
+  });
+  
+  // Mobile-specific fixes for research section
+  function handleMobileResearchInteractions() {
+    // Fix for research section highlighting on mobile
+    const researchSection = document.getElementById('research');
+    if (researchSection) {
+      // Add touch event handlers for proper mobile highlighting
+      researchSection.addEventListener('touchstart', function() {
+        this.classList.add('highlighted');
+      });
+      
+      researchSection.addEventListener('touchend', function() {
+        // Keep highlighted state briefly for visual feedback
+        setTimeout(() => {
+          this.classList.remove('highlighted');
+        }, 150);
+      });
+    }
+    
+    // Ensure card links work properly on mobile
+    const cardLinks = document.querySelectorAll('.card__link');
+    cardLinks.forEach(link => {
+      // Add proper touch handling for card links
+      link.addEventListener('touchstart', function(e) {
+        this.style.transform = 'translateX(2px)';
+        const svg = this.querySelector('svg');
+        if (svg) {
+          svg.style.transform = 'translateX(4px)';
+        }
+      });
+      
+      link.addEventListener('touchend', function(e) {
+        this.style.transform = '';
+        const svg = this.querySelector('svg');
+        if (svg) {
+          svg.style.transform = '';
+        }
+      });
+    });
+    
+    // Fix for tag interactions on mobile
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+      tag.addEventListener('touchstart', function(e) {
+        this.style.backgroundColor = 'var(--accent-primary)';
+        this.style.color = 'var(--bg-primary)';
+        this.style.transform = 'scale(0.95)';
+      });
+      
+      tag.addEventListener('touchend', function(e) {
+        setTimeout(() => {
+          this.style.backgroundColor = '';
+          this.style.color = '';
+          this.style.transform = '';
+        }, 150);
+      });
+    });
+  }
+  
+  // Initialize mobile fixes
+  if (window.innerWidth <= 767) {
+    handleMobileResearchInteractions();
+  }
+  
+  // Re-initialize on window resize
+  window.addEventListener('resize', function() {
+    if (window.innerWidth <= 767) {
+      handleMobileResearchInteractions();
+    }
   });
 
   // Console message

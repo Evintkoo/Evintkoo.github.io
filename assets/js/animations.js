@@ -271,7 +271,6 @@ const CircRNAAnimations = (function() {
     structures.forEach(({ class: className, delay }) => {
       const structure = document.createElement('div');
       structure.className = `rna-structure ${className}`;
-      structure.style.animationDelay = `${delay}s`;
       hero.appendChild(structure);
     });
   }
@@ -400,7 +399,6 @@ const CircRNAAnimations = (function() {
       for (let i = 0; i < config.nodes; i++) {
         const node = document.createElement('div');
         node.className = 'network-node';
-        node.style.animationDelay = `${(i * 0.1) + (layerIndex * 0.2)}s`;
         nodeGroup.appendChild(node);
       }
 
@@ -424,7 +422,6 @@ const CircRNAAnimations = (function() {
           connection.style.width = '80px';
           connection.style.left = '40px';
           connection.style.top = '50%';
-          connection.style.animationDelay = `${nodeIndex * 0.1}s`;
           node.appendChild(connection);
         });
       }
@@ -516,7 +513,7 @@ const CircRNAAnimations = (function() {
       bar.innerHTML = `
         <div class="performance-label">${item.label}</div>
         <div class="performance-bar">
-          <div class="performance-fill" style="width: ${item.value * 100}%; animation-delay: ${index * 0.1}s;"></div>
+          <div class="performance-fill" style="width: ${item.value * 100}%;"></div>
         </div>
         <div class="performance-value">${(item.value * 100).toFixed(1)}%</div>
       `;
