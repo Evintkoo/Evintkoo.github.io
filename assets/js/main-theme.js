@@ -1,5 +1,15 @@
 // Anthropic-inspired theme JavaScript
 
+// Apply theme immediately to prevent flash
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const html = document.documentElement;
+  html.setAttribute('data-theme', savedTheme);
+  if (savedTheme === 'light') {
+    html.classList.add('light');
+  }
+})();
+
 (function() {
   'use strict';
 
@@ -89,9 +99,17 @@
   const logoImg = document.querySelector('.nav__logo-img');
   const html = document.documentElement;
   
-  // Check for saved theme preference or default to 'light' mode
-  const currentTheme = localStorage.getItem('theme') || 'light';
+  // Check for saved theme preference or default to 'dark' mode
+  const currentTheme = localStorage.getItem('theme') || 'dark';
   html.setAttribute('data-theme', currentTheme);
+  
+  // Also update the root class for backwards compatibility with main.css
+  if (currentTheme === 'light') {
+    html.classList.add('light');
+  } else {
+    html.classList.remove('light');
+  }
+  
   updateThemeIcon(currentTheme);
   updateLogo(currentTheme);
   
@@ -101,6 +119,14 @@
       const newTheme = theme === 'light' ? 'dark' : 'light';
       
       html.setAttribute('data-theme', newTheme);
+      
+      // Also update the root class for backwards compatibility with main.css
+      if (newTheme === 'light') {
+        html.classList.add('light');
+      } else {
+        html.classList.remove('light');
+      }
+      
       localStorage.setItem('theme', newTheme);
       updateThemeIcon(newTheme);
       updateLogo(newTheme);
@@ -134,60 +160,64 @@
   function updateLogo(theme) {
     if (!logoImg) return;
     
+    // Dark theme shows light logo, light theme shows dark logo
     if (theme === 'dark') {
-      logoImg.src = 'assets/images/logos/logo-dark.png';
-    } else {
       logoImg.src = 'assets/images/logos/logo-light.png';
+    } else {
+      logoImg.src = 'assets/images/logos/logo-dark.png';
     }
   }
 
-  // Navbar background on scroll
+  // Navbar background on scroll - optimized with throttling
   const nav = document.querySelector('.nav');
   let lastScrollTop = 0;
+  let scrollTicking = false;
 
-  window.addEventListener('scroll', function() {
+  function updateNavOnScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const theme = html.getAttribute('data-theme');
+    const theme = html.getAttribute('data-theme') || 'dark';
     
     if (scrollTop > 50) {
-      if (theme === 'dark') {
-        nav.style.backgroundColor = 'rgba(10, 10, 10, 0.98)';
-      } else {
-        nav.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-      }
-      nav.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+      nav.classList.add('nav--scrolled');
     } else {
-      if (theme === 'dark') {
-        nav.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
-      } else {
-        nav.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-      }
-      nav.style.boxShadow = 'none';
+      nav.classList.remove('nav--scrolled');
     }
     
     lastScrollTop = scrollTop;
-  });
+    scrollTicking = false;
+  }
 
-  // Intersection Observer for fade-in animations
+  window.addEventListener('scroll', function() {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(updateNavOnScroll);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  // Intersection Observer for fade-in animations - optimized
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
   };
 
   const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('fade-in-up');
+        requestAnimationFrame(() => {
+          entry.target.classList.add('fade-in-up');
+        });
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  // Observe cards and sections
+  // Observe cards and sections - only if they exist
   const animatedElements = document.querySelectorAll('.card, .research-card, .timeline__item');
-  animatedElements.forEach(el => {
-    observer.observe(el);
-  });
+  if (animatedElements.length > 0) {
+    animatedElements.forEach(el => {
+      observer.observe(el);
+    });
+  }
 
   // External link icons
   document.querySelectorAll('a[target="_blank"]').forEach(link => {
@@ -196,27 +226,31 @@
     }
   });
 
-  // Preload images
+  // Preload images - optimized lazy loading
   const images = document.querySelectorAll('img[data-src]');
-  if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-          imageObserver.unobserve(img);
-        }
+  if (images.length > 0) {
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            imageObserver.unobserve(img);
+          }
+        });
+      }, {
+        rootMargin: '50px'
       });
-    });
 
-    images.forEach(img => imageObserver.observe(img));
-  } else {
-    // Fallback for browsers that don't support IntersectionObserver
-    images.forEach(img => {
-      img.src = img.dataset.src;
-      img.removeAttribute('data-src');
-    });
+      images.forEach(img => imageObserver.observe(img));
+    } else {
+      // Fallback for browsers that don't support IntersectionObserver
+      images.forEach(img => {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      });
+    }
   }
 
   // Console message
@@ -239,28 +273,41 @@
     });
   }
   
-  // Research section navigation
+  // Research section navigation - optimized with throttling
   const researchLinks = document.querySelectorAll('.research-sidebar__link');
   const researchSections = document.querySelectorAll('.research-section');
   
-  // Update active link on scroll
-  window.addEventListener('scroll', function() {
-    let current = '';
-    researchSections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-      if (window.pageYOffset >= (sectionTop - 200)) {
-        current = section.getAttribute('id');
-      }
-    });
+  if (researchLinks.length > 0 && researchSections.length > 0) {
+    let researchScrollTicking = false;
     
-    researchLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
+    function updateResearchNav() {
+      let current = '';
+      researchSections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= (sectionTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      researchLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+      
+      researchScrollTicking = false;
+    }
+    
+    // Update active link on scroll - throttled
+    window.addEventListener('scroll', function() {
+      if (!researchScrollTicking) {
+        window.requestAnimationFrame(updateResearchNav);
+        researchScrollTicking = true;
       }
-    });
-  });
+    }, { passive: true });
+  }
   
   // Mobile-specific fixes for research section
   function handleMobileResearchInteractions() {

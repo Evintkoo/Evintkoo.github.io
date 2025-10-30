@@ -159,20 +159,22 @@ const ResearchAnimations = (function() {
         if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
           const activeId = entry.target.id;
           
-          sidebarLinks.forEach(link => {
-            const isActive = link.getAttribute('href') === `#${activeId}`;
-            link.classList.toggle('active', isActive);
-            
-            // Update progress states
-            if (isActive) {
-              const index = Array.from(sidebarLinks).indexOf(link);
-              updateProgressState(index);
-            }
+          requestAnimationFrame(() => {
+            sidebarLinks.forEach(link => {
+              const isActive = link.getAttribute('href') === `#${activeId}`;
+              link.classList.toggle('active', isActive);
+              
+              // Update progress states
+              if (isActive) {
+                const index = Array.from(sidebarLinks).indexOf(link);
+                updateProgressState(index);
+              }
+            });
           });
         }
       });
     }, {
-      threshold: [0, 0.3, 0.5],
+      threshold: 0.4,
       rootMargin: '-100px 0px -30% 0px'
     });
 
@@ -338,6 +340,7 @@ const CircRNAAnimations = (function() {
   }
 
   function setupMolecularObserver(nav, sections) {
+    // Optimize with single threshold for better performance
     const observer = new IntersectionObserver((entries) => {
       const visibleEntries = entries.filter(entry => entry.isIntersecting);
       if (!visibleEntries.length) return;
@@ -356,16 +359,18 @@ const CircRNAAnimations = (function() {
 
       const molecularLink = nav.children[index];
       if (molecularLink) {
-        updateActiveLink(molecularLink);
+        requestAnimationFrame(() => {
+          updateActiveLink(molecularLink);
+        });
       }
     }, {
-      threshold: [0, 0.15, 0.3, 0.5],
+      threshold: 0.3,
       rootMargin: '-45% 0px -45% 0px'
     });
 
     sections.forEach(section => observer.observe(section));
     
-    setTimeout(() => setInitialActiveState(nav), 100);
+    requestAnimationFrame(() => setInitialActiveState(nav));
   }
 
   /**
@@ -729,6 +734,7 @@ const P53Animations = (function() {
   }
 
   function setupP53Observer(nav, sections) {
+    // Optimize observer with single threshold and better settings
     const observer = new IntersectionObserver((entries) => {
       const entry = entries
         .filter(item => item.isIntersecting)
@@ -739,19 +745,21 @@ const P53Animations = (function() {
       const index = sections.indexOf(entry.target);
       if (index === -1) return;
 
-      const activeLink = nav.children[index];
-      updateMolecularLinks(activeLink);
+      requestAnimationFrame(() => {
+        const activeLink = nav.children[index];
+        updateMolecularLinks(activeLink);
 
-      const fallbackNav = document.querySelector('.research-sidebar__nav');
-      if (fallbackNav) {
-        const fallbackLinks = fallbackNav.querySelectorAll('.research-sidebar__link');
-        fallbackLinks.forEach(link => link.classList.remove('active'));
-        if (fallbackLinks[index]) {
-          fallbackLinks[index].classList.add('active');
+        const fallbackNav = document.querySelector('.research-sidebar__nav');
+        if (fallbackNav) {
+          const fallbackLinks = fallbackNav.querySelectorAll('.research-sidebar__link');
+          fallbackLinks.forEach(link => link.classList.remove('active'));
+          if (fallbackLinks[index]) {
+            fallbackLinks[index].classList.add('active');
+          }
         }
-      }
+      });
     }, {
-      threshold: [0.2, 0.4],
+      threshold: 0.3,
       rootMargin: '-40% 0px -40% 0px'
     });
 

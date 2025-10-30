@@ -252,16 +252,26 @@ p {
   left: 0;
   right: 0;
   height: var(--nav-height);
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.8);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-primary);
   z-index: 1000;
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), box-shadow var(--transition-base);
+  will-change: background-color, box-shadow;
 }
 
 [data-theme="dark"] .nav {
-  background-color: rgba(10, 10, 10, 0.95);
+  background-color: rgba(10, 10, 10, 0.8);
+}
+
+.nav--scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .nav--scrolled {
+  background-color: rgba(10, 10, 10, 0.98);
 }
 
 .nav__container {
@@ -707,6 +717,10 @@ p {
   grid-template-columns: 1fr;
 }
 
+.tech-stack-grid {
+  margin-top: var(--space-12);
+}
+
 @media (min-width: 768px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
@@ -785,6 +799,10 @@ p {
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-bottom: var(--space-6);
+}
+
+.card__tags--spaced {
+  margin-top: var(--space-4);
 }
 
 .tag {
@@ -978,6 +996,20 @@ p {
 }
 
 /* ================================
+   EXPERIENCE STATS
+================================ */
+
+.experience-stats {
+  margin-top: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.experience-stat-number {
+  font-size: var(--text-2xl);
+  color: var(--accent-primary);
+}
+
+/* ================================
    FOOTER
 ================================ */
 
@@ -1158,4 +1190,74 @@ p {
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
   }
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+================================ */
+
+/* GPU acceleration for frequently animated elements */
+.card,
+.nav,
+.nav__menu,
+.theme-toggle,
+.btn,
+.tag {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce repaints for scrolling elements */
+.nav,
+.scroll-to-top,
+.reading-progress {
+  will-change: transform;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fade-in animation for cards */
+.fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+/* Optimize image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Contain layout shifts */
+.card,
+.section {
+  contain: layout style paint;
+}
+
+/* Improve font rendering */
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
