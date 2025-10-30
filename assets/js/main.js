@@ -6,7 +6,6 @@
 class PortfolioApp {
   constructor() {
     this.state = {
-      theme: localStorage.getItem('theme') || 'dark',
       activeFilter: 'all',
       mobileMenuOpen: false
     };
@@ -15,9 +14,7 @@ class PortfolioApp {
   }
 
   init() {
-    this.applyTheme(this.state.theme);
-    this.setupNavigation();
-    this.setupThemeToggle();
+    // Only initialize if elements exist to avoid unnecessary processing
     this.setupProjectFilters();
     this.setupAnimations();
     this.setupTechStack();
@@ -26,163 +23,9 @@ class PortfolioApp {
   }
 
   /* ===================================
-     THEME MANAGEMENT
+     THEME & NAVIGATION
+     Note: Handled by main-theme.js for consistency
   =================================== */
-  applyTheme(theme) {
-    const root = document.documentElement;
-    const logo = document.querySelector('.logo__image');
-
-    if (theme === 'light') {
-      root.classList.add('light');
-      if (logo) logo.src = 'images/logo-dark.png';
-    } else {
-      root.classList.remove('light');
-      if (logo) logo.src = 'images/logo-light.png';
-    }
-
-    this.state.theme = theme;
-    localStorage.setItem('theme', theme);
-  }
-
-  setupThemeToggle() {
-    const button = document.getElementById('themeToggle');
-    if (!button) return;
-
-    button.addEventListener('click', () => {
-      this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
-      this.applyTheme(this.state.theme);
-      this.updateThemeIcon(button);
-    });
-
-    this.updateThemeIcon(button);
-  }
-
-  createThemeButton() {
-    const button = document.createElement('button');
-    button.className = 'theme-toggle';
-    button.setAttribute('aria-label', 'Toggle theme');
-    button.innerHTML = `
-      <svg class="theme-icon moon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Z"/>
-      </svg>
-      <svg class="theme-icon sun" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-        <path d="M12,2A1,1,0,0,0,11,3V4a1,1,0,0,0,2,0V3A1,1,0,0,0,12,2ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM4,11H3a1,1,0,0,0,0,2H4a1,1,0,0,0,0-2ZM17.66,6.42,18.36,5.64a1,1,0,0,0-1.41-1.41L16.24,5.05a1,1,0,1,0,1.42,1.37ZM6.42,17.66,5.64,18.36a1,1,0,0,0,1.41,1.41l.71-.71a1,1,0,0,0-1.34-1.4ZM17.66,17.56l.71.71a1,1,0,0,0,1.41-1.41l-.71-.71a1,1,0,0,0-1.41,1.41ZM6.42,6.42a1,1,0,0,0-1.41-1.41L4.3,5.64A1,1,0,0,0,5.64,7.05ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
-      </svg>
-    `;
-    return button;
-  }
-
-  updateThemeIcon(button) {
-    const icon = button.querySelector('#themeIcon');
-    if (!icon) return;
-    
-    if (this.state.theme === 'light') {
-      // Moon icon for light theme (to switch to dark)
-      icon.innerHTML = `
-        <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Z"/>
-      `;
-    } else {
-      // Sun icon for dark theme (to switch to light)
-      icon.innerHTML = `
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      `;
-    }
-  }
-
-  /* ===================================
-     NAVIGATION
-  =================================== */
-  setupNavigation() {
-    const toggle = document.getElementById('navToggle');
-    const navMenu = document.querySelector('.nav__menu');
-    const overlay = document.getElementById('nav-overlay');
-    const links = document.querySelectorAll('.nav__link');
-
-    if (!toggle || !navMenu) return;
-
-    // Mobile menu toggle
-    toggle.addEventListener('click', () => {
-      this.state.mobileMenuOpen = !this.state.mobileMenuOpen;
-      navMenu.classList.toggle('active', this.state.mobileMenuOpen);
-      overlay?.classList.toggle('active', this.state.mobileMenuOpen);
-      toggle.classList.toggle('active', this.state.mobileMenuOpen);
-      document.body.classList.toggle('no-scroll', this.state.mobileMenuOpen);
-      
-      toggle.setAttribute('aria-expanded', this.state.mobileMenuOpen);
-    });
-
-    // Close menu on link click
-    links.forEach(link => {
-      link.addEventListener('click', () => {
-        if (this.state.mobileMenuOpen) {
-          this.closeMobileMenu(toggle, navMenu, overlay);
-        }
-      });
-    });
-
-    // Close on overlay click
-    overlay?.addEventListener('click', () => {
-      this.closeMobileMenu(toggle, navMenu, overlay);
-    });
-
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.state.mobileMenuOpen) {
-        this.closeMobileMenu(toggle, navMenu, overlay);
-      }
-    });
-
-    // Close on outside click (mobile)
-    document.addEventListener('click', (e) => {
-      if (this.state.mobileMenuOpen && 
-          !navMenu.contains(e.target) &&
-          !toggle.contains(e.target)) {
-        this.closeMobileMenu(toggle, navMenu, overlay);
-      }
-    });
-
-    // Smooth scrolling for anchor links
-    this.setupSmoothScroll();
-  }
-
-  closeMobileMenu(toggle, navMenu, overlay) {
-    this.state.mobileMenuOpen = false;
-    navMenu.classList.remove('active');
-    overlay?.classList.remove('active');
-    toggle.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-    toggle.setAttribute('aria-expanded', 'false');
-  }
-
-  setupSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        const href = anchor.getAttribute('href');
-        if (href === '#') return;
-        
-        e.preventDefault();
-        const target = document.querySelector(href);
-        
-        if (target) {
-          const headerHeight = document.querySelector('.header')?.offsetHeight || 72;
-          const targetPosition = target.offsetTop - headerHeight - 20;
-
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  }
 
   /* ===================================
      PROJECT FILTERING
@@ -231,28 +74,33 @@ class PortfolioApp {
      ANIMATIONS & OBSERVERS
   =================================== */
   setupAnimations() {
+    const elements = document.querySelectorAll('.project, .tech-hex, .contact__link, .about__text');
+    if (elements.length === 0) return;
+
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -80px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // For project cards, add staggered animation
-          if (entry.target.classList.contains('project')) {
-            this.animateProjectEntry(entry.target);
-          } else {
-            // For other elements, just fade in
-            entry.target.classList.add('fade-in');
-          }
+          requestAnimationFrame(() => {
+            // For project cards, add staggered animation
+            if (entry.target.classList.contains('project')) {
+              this.animateProjectEntry(entry.target);
+            } else {
+              // For other elements, just fade in
+              entry.target.classList.add('fade-in');
+            }
+          });
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     // Observe animated elements
-    document.querySelectorAll('.project, .tech-hex, .contact__link, .about__text').forEach(el => {
+    elements.forEach(el => {
       observer.observe(el);
     });
   }
@@ -428,7 +276,7 @@ class PortfolioApp {
       progressBar.style.width = `${Math.min(progress, 100)}%`;
     };
 
-    // Update on scroll with debouncing for performance
+    // Update on scroll with throttling for performance
     let ticking = false;
     window.addEventListener('scroll', () => {
       if (!ticking) {
@@ -438,7 +286,7 @@ class PortfolioApp {
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
 
     // Initial update
     updateProgress();
@@ -552,7 +400,7 @@ class PortfolioApp {
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
   }
 
   addRevealAnimations() {
@@ -626,7 +474,7 @@ class PortfolioApp {
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
   }
 
   addReadingTime() {
@@ -669,14 +517,6 @@ function debounce(func, wait) {
    INITIALIZATION
 =================================== */
 
-// Apply theme immediately (before DOM load)
-(function() {
-  const theme = localStorage.getItem('theme') || 'dark';
-  if (theme === 'light') {
-    document.documentElement.classList.add('light');
-  }
-})();
-
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   window.portfolioApp = new PortfolioApp();
@@ -690,10 +530,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Performance monitoring
-if ('performance' in window) {
+if ('performance' in window && window.location.hostname === 'localhost') {
   window.addEventListener('load', () => {
-    const perfData = performance.getEntriesByType('navigation')[0];
-    console.log(`⚡ Page loaded in ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
+    setTimeout(() => {
+      const perfData = performance.getEntriesByType('navigation')[0];
+      if (perfData) {
+        const metrics = {
+          'DNS Lookup': Math.round(perfData.domainLookupEnd - perfData.domainLookupStart),
+          'TCP Connection': Math.round(perfData.connectEnd - perfData.connectStart),
+          'Request Time': Math.round(perfData.responseStart - perfData.requestStart),
+          'Response Time': Math.round(perfData.responseEnd - perfData.responseStart),
+          'DOM Processing': Math.round(perfData.domComplete - perfData.domLoading),
+          'Total Load Time': Math.round(perfData.loadEventEnd - perfData.fetchStart)
+        };
+        console.log('⚡ Performance Metrics:', metrics);
+      }
+    }, 0);
   });
 }
 

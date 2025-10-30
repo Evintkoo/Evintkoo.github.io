@@ -28,6 +28,10 @@
     <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="assets/css/main-theme.css">
+    
+    <!-- Preconnect to improve performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 </head>
 
 <body>
@@ -114,11 +118,11 @@
                     </div>
                     
                     <!-- Technology Stack -->
-                    <div class="cards" style="margin-top: var(--space-12);">
+                    <div class="cards tech-stack-grid">
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">Languages & Core</div>
-                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                <div class="card__tags card__tags--spaced">
                                     <span class="tag">Python</span>
                                     <span class="tag">C++</span>
                                 </div>
@@ -128,7 +132,7 @@
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">ML Frameworks</div>
-                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                <div class="card__tags card__tags--spaced">
                                     <span class="tag">PyTorch</span>
                                     <span class="tag">TensorFlow</span>
                                     <span class="tag">FastAPI</span>
@@ -139,7 +143,7 @@
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">Data Science</div>
-                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                <div class="card__tags card__tags--spaced">
                                     <span class="tag">Pandas</span>
                                     <span class="tag">NumPy</span>
                                     <span class="tag">OpenCV</span>
@@ -151,7 +155,7 @@
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">MLOps & Tools</div>
-                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                <div class="card__tags card__tags--spaced">
                                     <span class="tag">Docker</span>
                                     <span class="tag">CUDA</span>
                                     <span class="tag">MLflow</span>
@@ -163,7 +167,7 @@
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">UI Frameworks</div>
-                                <div class="card__tags" style="margin-top: var(--space-4);">
+                                <div class="card__tags card__tags--spaced">
                                     <span class="tag">Streamlit</span>
                                     <span class="tag">Gradio</span>
                                 </div>
@@ -173,10 +177,10 @@
                         <div class="card">
                             <div class="card__content">
                                 <div class="card__label">Experience</div>
-                                <p style="margin-top: var(--space-4); color: var(--text-secondary);">
-                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">5+</strong> Years Experience<br>
-                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">15+</strong> Technologies<br>
-                                    <strong style="font-size: var(--text-2xl); color: var(--accent-primary);">10+</strong> Projects
+                                <p class="experience-stats">
+                                    <strong class="experience-stat-number">5+</strong> Years Experience<br>
+                                    <strong class="experience-stat-number">15+</strong> Technologies<br>
+                                    <strong class="experience-stat-number">10+</strong> Projects
                                 </p>
                             </div>
                         </div>
@@ -594,6 +598,7 @@
         </div>
     </footer>
 
-    <script src="assets/js/main-theme.js"></script>
+    <!-- Load JavaScript with defer for better performance -->
+    <script src="assets/js/main-theme.js" defer></script>
 </body>
 </html>

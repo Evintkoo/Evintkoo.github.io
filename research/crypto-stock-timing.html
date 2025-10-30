@@ -21,15 +21,30 @@
     <meta property="twitter:description" content="A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries - Research by Evint Leovonzko">
     <meta property="twitter:image" content="https://evint_portofolio.github.io/assets/images/logos/logo-light.png">
     
-    <!-- Fonts -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://evint_portofolio.github.io/research/crypto-stock-timing.html">
+    
+    <!-- Preconnect to improve performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=ABC+Monument+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Fonts with display swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="../assets/css/main-theme.css" as="style">
+    <link rel="preload" href="../assets/css/research.css" as="style">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main-theme.css">
     <link rel="stylesheet" href="../assets/css/research.css">
+    
+    <!-- Prefetch PDF for faster loading when clicked -->
+    <link rel="prefetch" href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf">
 </head>
 
 <body>
@@ -37,11 +52,11 @@
     <nav class="nav">
         <div class="nav__container">
             <a href="../index.html" class="nav__logo">
-                <img src="../assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img">
+                <img src="../assets/images/logos/logo-light.png" alt="Evint Logo" class="nav__logo-img" width="40" height="40" loading="eager">
                 <span class="nav__logo-text">Evint Leovonzko</span>
             </a>
             
-            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -71,6 +86,9 @@
             </div>
         </div>
     </nav>
+    
+    <!-- Navigation overlay for mobile -->
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <main class="research-layout">
         <div class="research-sidebar-container">
@@ -182,14 +200,14 @@
                                 </div>
                             </div>
                             <div class="paper-meta-actions">
-                                <a href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" class="btn btn-primary">
-                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <a href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--primary" aria-label="Download research paper PDF">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                         <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                                     </svg>
                                     <span class="btn-text">Download PDF</span>
                                 </a>
-                                <a href="#introduction" class="btn btn-secondary">
-                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <a href="#introduction" class="btn btn--secondary" aria-label="Jump to introduction section">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                         <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
                                     </svg>
                                     <span class="btn-text">Read Research</span>
@@ -766,7 +784,25 @@
         </div>
     </footer>
 
-    <script src="../assets/js/main-theme.js"></script>
+    <!-- Load JavaScript with defer for better performance -->
+    <script src="../assets/js/main-theme.js" defer></script>
+    
+    <!-- Schema.org structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Leading or Lagging? A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries",
+        "author": {
+            "@type": "Person",
+            "name": "Evint Leovonzko"
+        },
+        "datePublished": "2025-07-01",
+        "description": "Empirical Analysis of Cross-Asset Market Dynamics in Business Cycle Prediction",
+        "keywords": "cryptocurrency, stock market, recession indicators, business cycles, market timing",
+        "inLanguage": "en"
+    }
+    </script>
 </body>
 
 </html>
