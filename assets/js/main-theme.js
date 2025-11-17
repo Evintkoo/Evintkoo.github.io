@@ -160,11 +160,15 @@
   function updateLogo(theme) {
     if (!logoImg) return;
     
+    // Determine if we're in a subdirectory (research pages)
+    const isSubdirectory = window.location.pathname.includes('/research/');
+    const pathPrefix = isSubdirectory ? '../' : '';
+    
     // Dark theme shows light logo, light theme shows dark logo
     if (theme === 'dark') {
-      logoImg.src = 'assets/images/logos/logo-light.png';
+      logoImg.src = pathPrefix + 'assets/images/logos/logo-light.png';
     } else {
-      logoImg.src = 'assets/images/logos/logo-dark.png';
+      logoImg.src = pathPrefix + 'assets/images/logos/logo-dark.png';
     }
   }
 
