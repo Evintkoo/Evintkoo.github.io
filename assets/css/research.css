@@ -1706,6 +1706,93 @@ tbody td strong {
   }
 }
 
+/* ================================
+   NEURAL NETWORK DIAGRAM STYLES
+================================ */
+.neural-network {
+  padding: var(--space-8);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  margin: var(--space-12) 0;
+}
+
+.network-layers {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8) 0;
+  overflow-x: auto;
+}
+
+.network-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  position: relative;
+}
+
+.layer-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--space-2);
+  white-space: nowrap;
+}
+
+.layer-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.network-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.input-layer .network-node {
+  background: var(--accent-primary);
+}
+
+.hidden-layer .network-node {
+  background: var(--accent-secondary);
+}
+
+.output-layer .network-node {
+  background: var(--text-primary);
+}
+
+.network-node:hover {
+  transform: scale(1.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .network-layers {
+    gap: var(--space-4);
+    padding: var(--space-6) 0;
+  }
+  
+  .network-node {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .layer-label {
+    font-size: var(--text-xs);
+  }
+}
+
 @keyframes fadeInUp {
   from { 
     opacity: 0;
