@@ -1069,6 +1069,123 @@ svg {
 }
 
 /* ================================
+   TABLE STYLES - Standard HTML Tables
+================================ */
+.table-container {
+  overflow-x: auto;
+  margin: var(--space-8) 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+}
+
+.results-table h4 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-base);
+  background: var(--bg-primary);
+}
+
+thead {
+  background: var(--bg-tertiary);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+thead th {
+  padding: var(--space-4);
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border-primary);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border-primary);
+  transition: background-color var(--transition-fast);
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: var(--bg-tertiary);
+}
+
+tbody td {
+  padding: var(--space-4);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+tbody td strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Responsive tables */
+@media (max-width: 768px) {
+  .table-container {
+    border: none;
+    background: transparent;
+  }
+  
+  table {
+    font-size: var(--text-sm);
+  }
+  
+  thead {
+    display: none;
+  }
+  
+  tbody tr {
+    display: block;
+    margin-bottom: var(--space-4);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+  }
+  
+  tbody td {
+    display: block;
+    text-align: right;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-primary);
+    position: relative;
+    padding-left: 50%;
+  }
+  
+  tbody td:last-child {
+    border-bottom: none;
+  }
+  
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: var(--space-4);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    text-align: left;
+  }
+  
+  tbody td strong {
+    display: block;
+  }
+}
+
+/* ================================
    Methods Timeline - Enhanced
 ================================ */
 .methods-timeline {
