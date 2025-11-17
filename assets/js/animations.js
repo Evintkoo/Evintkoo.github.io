@@ -255,6 +255,26 @@ const CircRNAAnimations = (function() {
     setupMetricBarVisuals();
     setupGradientDefinitions();
     setupMobileSidebarToggle();
+    setupFadeInAnimations();
+  }
+
+  /**
+   * Setup fade-in animations for abstract items and method cards
+   */
+  function setupFadeInAnimations() {
+    const elements = document.querySelectorAll('.abstract-item, .method-card');
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    elements.forEach(el => observer.observe(el));
   }
 
   /**
@@ -673,6 +693,26 @@ const P53Animations = (function() {
     setupMolecularNavigation();
     setupHeroCounters();
     setupMetricHighlights();
+    setupFadeInAnimations();
+  }
+
+  /**
+   * Setup fade-in animations for abstract items and method cards
+   */
+  function setupFadeInAnimations() {
+    const elements = document.querySelectorAll('.abstract-item, .method-card');
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    elements.forEach(el => observer.observe(el));
   }
 
   function createHelixBackground() {

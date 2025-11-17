@@ -253,8 +253,7 @@
     }
   }
 
-  // Console message
-    // Research sidebar functionality
+  // Research sidebar functionality
   const researchSidebarToggle = document.getElementById('research-sidebar-toggle');
   const floatingSidebar = document.getElementById('floating-sidebar');
   
