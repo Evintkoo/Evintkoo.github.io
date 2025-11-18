@@ -522,27 +522,55 @@ const CircRNAAnimations = (function() {
     if (!container) return;
 
     const performanceData = [
-      { label: 'Our Algorithm', value: 0.7511 },
-      { label: 'SVM', value: 0.7328 },
-      { label: 'Random Forest', value: 0.7186 },
-      { label: 'DeepCirCode', value: 0.8129 },
-      { label: 'Att-CNN', value: 0.7264 }
+      { label: 'Our Algorithm', value: 0.7511, color: '#3B82F6', highlight: true, subtitle: '75.1%' },
+      { label: 'SVM', value: 0.7328, color: '#6366F1', highlight: false, subtitle: '73.3%' },
+      { label: 'Random Forest', value: 0.7186, color: '#8B5CF6', highlight: false, subtitle: '71.9%' },
+      { label: 'DeepCirCode', value: 0.8129, color: '#10B981', highlight: false, subtitle: '81.3%' },
+      { label: 'Att-CNN', value: 0.7264, color: '#F59E0B', highlight: false, subtitle: '72.6%' }
     ];
 
+    const maxValue = Math.max(...performanceData.map(d => d.value));
     const barsContainer = document.createElement('div');
     barsContainer.className = 'performance-bars';
 
     performanceData.forEach((item, index) => {
       const bar = document.createElement('div');
-      bar.className = 'performance-item';
+      bar.className = `performance-item${item.highlight ? ' performance-item--highlight' : ''}`;
+      
+      const widthPercent = (item.value / maxValue) * 100;
+      const isBest = item.value === maxValue;
+      
       bar.innerHTML = `
-        <div class="performance-label">${item.label}</div>
-        <div class="performance-bar">
-          <div class="performance-fill" style="width: ${item.value * 100}%;"></div>
+        <div class="performance-label">
+          <span class="performance-label-text">${item.label}</span>
+          ${item.highlight ? '<span class="performance-badge">Ours</span>' : ''}
+          ${isBest ? '<span class="performance-badge performance-badge--best">Best</span>' : ''}
         </div>
-        <div class="performance-value">${(item.value * 100).toFixed(1)}%</div>
+        <div class="performance-bar-wrapper">
+          <div class="performance-bar">
+            <div class="performance-fill" style="--bar-width: ${widthPercent}%; --bar-color: ${item.color};">
+              <div class="performance-fill-gradient"></div>
+              <div class="performance-fill-shine"></div>
+            </div>
+          </div>
+          <div class="performance-value">${item.subtitle}</div>
+        </div>
       `;
       barsContainer.appendChild(bar);
+      
+      // Animate on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('animated');
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      
+      observer.observe(bar);
     });
 
     container.appendChild(barsContainer);
