@@ -133,114 +133,9 @@ const PortfolioAnimations = (function() {
   };
 })();
 
-// Research Page Animations
-const ResearchAnimations = (function() {
-  'use strict';
+// Research Page Animations - Deprecated (Moved to main-theme.js)
+// const ResearchAnimations = ... (Removed to avoid conflict)
 
-  /**
-   * Initialize research page animations
-   */
-  function initResearchAnimations() {
-    setupSectionObserver();
-    setupSmoothScroll();
-  }
-
-  /**
-   * Section Observer for Sidebar - Clean navigation
-   */
-  function setupSectionObserver() {
-    const sections = document.querySelectorAll('.research-section[id]');
-    const sidebarLinks = document.querySelectorAll('.research-sidebar__link');
-    
-    if (!sections.length || !sidebarLinks.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-          const activeId = entry.target.id;
-          
-          requestAnimationFrame(() => {
-            sidebarLinks.forEach(link => {
-              const isActive = link.getAttribute('href') === `#${activeId}`;
-              link.classList.toggle('active', isActive);
-              
-              // Update progress states
-              if (isActive) {
-                const index = Array.from(sidebarLinks).indexOf(link);
-                updateProgressState(index);
-              }
-            });
-          });
-        }
-      });
-    }, {
-      threshold: 0.4,
-      rootMargin: '-100px 0px -30% 0px'
-    });
-
-    sections.forEach(section => observer.observe(section));
-  }
-
-  /**
-   * Update sidebar progress state
-   */
-  function updateProgressState(activeIndex) {
-    const list = document.querySelector('.research-sidebar__list');
-    if (!list) return;
-
-    const links = list.querySelectorAll('.research-sidebar__link');
-    
-    // Mark all previous items as completed
-    links.forEach((link, index) => {
-      if (index < activeIndex) {
-        link.classList.add('completed');
-        link.classList.remove('visited');
-      } else if (index === activeIndex) {
-        link.classList.add('visited');
-        link.classList.remove('completed');
-      } else {
-        link.classList.remove('completed', 'visited');
-      }
-    });
-
-    // Update progress bar
-    list.setAttribute('data-progress', activeIndex);
-  }
-
-  /**
-   * Smooth Scroll to Section
-   */
-  function setupSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === '#' || href === '#!') return;
-        
-        const target = document.querySelector(href);
-        if (!target) return;
-
-        e.preventDefault();
-        
-        const headerHeight = document.querySelector('.header')?.offsetHeight || 72;
-        const targetPosition = target.offsetTop - headerHeight - 20;
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-
-        // Update URL without jumping
-        if (history.pushState) {
-          history.pushState(null, null, href);
-        }
-      });
-    });
-  }
-
-  return {
-    init: initResearchAnimations
-  };
-})();
 
 // Circular RNA Research Animations
 const CircRNAAnimations = (function() {
@@ -969,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize research animations on research pages
   if (document.querySelector('.research-page')) {
-    ResearchAnimations.init();
+    // ResearchAnimations.init(); // Handled by main-theme.js
     
     // Initialize specific research theme animations
     if (document.querySelector('.circrna-hero')) {
@@ -984,6 +879,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Export for manual initialization if needed
 window.PortfolioAnimations = PortfolioAnimations;
-window.ResearchAnimations = ResearchAnimations;
+// window.ResearchAnimations = ResearchAnimations;
 window.CircRNAAnimations = CircRNAAnimations;
 window.P53Animations = P53Animations;

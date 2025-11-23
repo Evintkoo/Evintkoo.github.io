@@ -209,6 +209,7 @@
       if (entry.isIntersecting) {
         requestAnimationFrame(() => {
           entry.target.classList.add('fade-in-up');
+          entry.target.classList.add('visible');
         });
         observer.unobserve(entry.target);
       }
@@ -216,7 +217,7 @@
   }, observerOptions);
 
   // Observe cards and sections - only if they exist
-  const animatedElements = document.querySelectorAll('.card, .research-card, .timeline__item');
+  const animatedElements = document.querySelectorAll('.card, .research-card, .timeline__item, .method-card, .abstract-item');
   if (animatedElements.length > 0) {
     animatedElements.forEach(el => {
       observer.observe(el);
@@ -257,130 +258,269 @@
     }
   }
 
-  // Research sidebar functionality
-  const researchSidebarToggle = document.getElementById('research-sidebar-toggle');
-  const floatingSidebar = document.getElementById('floating-sidebar');
-  
-  if (researchSidebarToggle && floatingSidebar) {
-    researchSidebarToggle.addEventListener('click', function() {
-      floatingSidebar.classList.toggle('active');
-      researchSidebarToggle.classList.toggle('active');
-    });
+  // Research Page Functionality
+  function initResearchFeatures() {
+    const sidebar = document.querySelector('.research-sidebar');
+    const sections = document.querySelectorAll('.research-section');
     
-    // Close sidebar when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!researchSidebarToggle.contains(event.target) && !floatingSidebar.contains(event.target)) {
-        floatingSidebar.classList.remove('active');
-        researchSidebarToggle.classList.remove('active');
-      }
-    });
-  }
-  
-  // Research section navigation - optimized with throttling
-  const researchLinks = document.querySelectorAll('.research-sidebar__link');
-  const researchSections = document.querySelectorAll('.research-section');
-  
-  if (researchLinks.length > 0 && researchSections.length > 0) {
-    let researchScrollTicking = false;
+    // Only run if we're on a research page
+    if (!sidebar && sections.length === 0) return;
+
+    // Sidebar Toggle
+    const toggle = document.querySelector('.research-sidebar-toggle');
+    const container = document.querySelector('.research-sidebar-container');
     
-    function updateResearchNav() {
-      let current = '';
-      researchSections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= (sectionTop - 200)) {
-          current = section.getAttribute('id');
+    if (toggle && container) {
+      toggle.addEventListener('click', () => {
+        container.classList.toggle('show');
+        document.body.classList.toggle('no-scroll');
+      });
+
+      // Close on outside click (mobile)
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024 && 
+            container.classList.contains('show') &&
+            !container.contains(e.target) &&
+            !toggle.contains(e.target)) {
+          container.classList.remove('show');
+          document.body.classList.remove('no-scroll');
         }
       });
-      
-      researchLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-      
-      researchScrollTicking = false;
     }
+
+    // Reading Progress Bar
+    let progressBar = document.querySelector('.reading-progress');
+    if (!progressBar) {
+      progressBar = document.createElement('div');
+      progressBar.className = 'reading-progress';
+      document.body.appendChild(progressBar);
+    }
+
+    const updateProgress = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const scrolled = window.pageYOffset;
+      const progress = (scrolled / documentHeight) * 100;
+      
+      progressBar.style.width = `${Math.min(progress, 100)}%`;
+    };
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    updateProgress();
+
+    // Section Tracking for Sidebar
+    const links = document.querySelectorAll('.research-sidebar__link');
+    const progressList = document.querySelector('.research-sidebar__list');
+    const visitedSections = new Set();
     
-    // Update active link on scroll - throttled
-    window.addEventListener('scroll', function() {
-      if (!researchScrollTicking) {
-        window.requestAnimationFrame(updateResearchNav);
-        researchScrollTicking = true;
+    if ('IntersectionObserver' in window && sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const activeId = entry.target.id;
+            visitedSections.add(activeId);
+            
+            // Update active link
+            if (links.length > 0) {
+              links.forEach(link => {
+                const isActive = link.getAttribute('href') === `#${activeId}`;
+                link.classList.toggle('active', isActive);
+                
+                // Mark as visited if we've scrolled past it
+                if (!isActive && entry.boundingClientRect.top < 0) {
+                  link.classList.add('visited');
+                }
+              });
+            }
+
+            // Update progress attribute
+            if (progressList) {
+               const mainSections = Array.from(sections).filter(s => 
+                 !['introduction', 'references', 'conclusion'].includes(s.id)
+               );
+               const visitedMain = mainSections.filter(s => visitedSections.has(s.id));
+               // Clamp to max 4 steps as per CSS design
+               const progress = Math.min(visitedMain.length, 4);
+               progressList.setAttribute('data-progress', progress);
+            }
+          }
+        });
+      }, {
+        threshold: 0.2,
+        rootMargin: '-20% 0px -50% 0px'
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+  }
+
+  // Scroll to Top Button
+  function initScrollToTop() {
+    let scrollBtn = document.querySelector('.scroll-to-top');
+    if (!scrollBtn) {
+      scrollBtn = document.createElement('button');
+      scrollBtn.className = 'scroll-to-top';
+      scrollBtn.setAttribute('aria-label', 'Scroll to top');
+      scrollBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      `;
+      document.body.appendChild(scrollBtn);
+      
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          scrollBtn.classList.toggle('visible', scrolled > 500);
+          ticking = false;
+        });
+        ticking = true;
       }
     }, { passive: true });
   }
-  
-  // Mobile-specific fixes for research section
-  function handleMobileResearchInteractions() {
-    // Fix for research section highlighting on mobile
-    const researchSection = document.getElementById('research');
-    if (researchSection) {
-      // Add touch event handlers for proper mobile highlighting
-      researchSection.addEventListener('touchstart', function() {
-        this.classList.add('highlighted');
-      });
-      
-      researchSection.addEventListener('touchend', function() {
-        // Keep highlighted state briefly for visual feedback
-        setTimeout(() => {
-          this.classList.remove('highlighted');
-        }, 150);
-      });
-    }
+
+  // Project Slider Functionality (Infinite Loop)
+  function initProjectSlider() {
+    const track = document.querySelector('.project-slider__track');
+    const prevBtn = document.querySelector('.slider-btn--prev');
+    const nextBtn = document.querySelector('.slider-btn--next');
     
-    // Ensure card links work properly on mobile
-    const cardLinks = document.querySelectorAll('.card__link');
-    cardLinks.forEach(link => {
-      // Add proper touch handling for card links
-      link.addEventListener('touchstart', function(e) {
-        this.style.transform = 'translateX(2px)';
-        const svg = this.querySelector('svg');
-        if (svg) {
-          svg.style.transform = 'translateX(4px)';
-        }
-      });
-      
-      link.addEventListener('touchend', function(e) {
-        this.style.transform = '';
-        const svg = this.querySelector('svg');
-        if (svg) {
-          svg.style.transform = '';
-        }
-      });
+    if (!track || !prevBtn || !nextBtn) return;
+
+    // Clone items for infinite loop
+    const originalCards = Array.from(track.querySelectorAll('.slider-card'));
+    const cloneCount = 3; // Max visible cards
+    
+    // Clone start and end
+    const startClones = originalCards.slice(0, cloneCount).map(card => {
+      const clone = card.cloneNode(true);
+      clone.classList.add('slider-clone');
+      return clone;
     });
     
-    // Fix for tag interactions on mobile
-    const tags = document.querySelectorAll('.tag');
-    tags.forEach(tag => {
-      tag.addEventListener('touchstart', function(e) {
-        this.style.backgroundColor = 'var(--accent-primary)';
-        this.style.color = 'var(--bg-primary)';
-        this.style.transform = 'scale(0.95)';
-      });
+    const endClones = originalCards.slice(-cloneCount).map(card => {
+      const clone = card.cloneNode(true);
+      clone.classList.add('slider-clone');
+      return clone;
+    });
+
+    // Append/Prepend clones
+    startClones.forEach(clone => track.appendChild(clone));
+    endClones.reverse().forEach(clone => track.insertBefore(clone, track.firstChild));
+
+    let currentIndex = cloneCount; // Start at first real item
+    let cardWidth = 0;
+    let visibleCards = 1;
+    let isTransitioning = false;
+
+    function updateSliderDimensions() {
+      const cards = track.querySelectorAll('.slider-card');
+      const containerWidth = track.parentElement.offsetWidth;
+      const cardMarginRight = parseFloat(window.getComputedStyle(track).gap) || 24;
       
-      tag.addEventListener('touchend', function(e) {
-        setTimeout(() => {
-          this.style.backgroundColor = '';
-          this.style.color = '';
-          this.style.transform = '';
-        }, 150);
-      });
+      if (window.innerWidth >= 1024) {
+        visibleCards = 3;
+      } else if (window.innerWidth >= 640) {
+        visibleCards = 2;
+      } else {
+        visibleCards = 1;
+      }
+
+      cardWidth = (containerWidth - (cardMarginRight * (visibleCards - 1))) / visibleCards;
+      
+      // Update position without transition
+      updateSliderPosition(false);
+    }
+
+    function updateSliderPosition(enableTransition = true) {
+      const cardMarginRight = parseFloat(window.getComputedStyle(track).gap) || 24;
+      const moveAmount = (cardWidth + cardMarginRight) * currentIndex;
+      
+      if (enableTransition) {
+        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+      } else {
+        track.style.transition = 'none';
+      }
+      
+      track.style.transform = `translateX(-${moveAmount}px)`;
+    }
+
+    function handleTransitionEnd() {
+      isTransitioning = false;
+      const totalRealCards = originalCards.length;
+      
+      // If we reached the appended clones (end), jump to real start
+      if (currentIndex >= totalRealCards + cloneCount) {
+        currentIndex = cloneCount;
+        updateSliderPosition(false);
+      }
+      
+      // If we reached the prepended clones (start), jump to real end
+      if (currentIndex < cloneCount) {
+        currentIndex = totalRealCards + cloneCount - 1; // Last real item index? No, wait.
+        // Indices: 0,1,2 (clones) | 3,4,5... (real)
+        // If we are at index 2 (last clone), we want to go to last real item.
+        // Last real item index is: cloneCount + totalRealCards - 1.
+        // Wait, if we are at index < cloneCount, we are in prepended clones.
+        // Example: cloneCount=3. Real=8. Total=14.
+        // Indices: 0,1,2 (end clones) | 3..10 (real) | 11,12,13 (start clones)
+        // If current is 2 (clone of last real), jump to 10 (last real).
+        // Formula: currentIndex + totalRealCards
+        currentIndex += totalRealCards;
+        updateSliderPosition(false);
+      }
+    }
+
+    track.addEventListener('transitionend', handleTransitionEnd);
+
+    prevBtn.addEventListener('click', () => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex--;
+      updateSliderPosition(true);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex++;
+      updateSliderPosition(true);
+    });
+
+    // Initial setup
+    updateSliderDimensions();
+
+    // Update on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateSliderDimensions, 100);
     });
   }
-  
-  // Initialize mobile fixes
-  if (window.innerWidth <= 767) {
-    handleMobileResearchInteractions();
-  }
-  
-  // Re-initialize on window resize
-  window.addEventListener('resize', function() {
-    if (window.innerWidth <= 767) {
-      handleMobileResearchInteractions();
-    }
-  });
+
+  // Initialize new features
+  initResearchFeatures();
+  initScrollToTop();
+  initProjectSlider();
 
   // Console message
   console.log('%cWelcome to Evint\'s Portfolio!', 'color: #212529; font-size: 24px; font-weight: bold;');

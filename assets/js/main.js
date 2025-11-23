@@ -6,8 +6,7 @@
 class PortfolioApp {
   constructor() {
     this.state = {
-      activeFilter: 'all',
-      mobileMenuOpen: false
+      activeFilter: 'all'
     };
     
     this.init();
@@ -222,7 +221,8 @@ class PortfolioApp {
             link.classList.toggle('active', isActive);
 
             // Mark as visited if scrolled past
-            if (!isActive && entry.target.getBoundingClientRect().top < 0) {
+            // Improved logic: if section is above viewport, it's visited
+            if (!isActive && entry.boundingClientRect.top < 0) {
               link.classList.add('visited');
             }
           });
@@ -313,7 +313,7 @@ class PortfolioApp {
             !['introduction', 'references', 'conclusion'].includes(s.id)
           );
           const visitedMain = mainSections.filter(s => visitedSections.has(s.id));
-          const progress = Math.min(visitedMain.length, mainSections.length);
+          const progress = Math.min(visitedMain.length, 4); // Clamp to max 4 steps
           
           // Update progress attribute
           progressList.setAttribute('data-progress', progress);

@@ -29,6 +29,7 @@
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css">
+    <link rel="stylesheet" href="../assets/css/research.css">
 </head>
 
 <body>
@@ -71,578 +72,606 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero__content">
-                <h1 class="hero__title">
-                    Cancer Leading Mutation DNA of P-53 Gene
-                    <span class="icon-inline icon-inline--trailing" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
-                            <path d="M7 2c3 3 7 3 10 0" />
-                            <path d="M7 8c3 3 7 3 10 0" />
-                            <path d="M7 14c3 3 7 3 10 0" />
-                            <path d="M7 20c3-3 7-3 10 0" />
-                            <path d="M7 2v18" />
-                            <path d="M17 2v18" />
-                        </svg>
-                    </span>
-                    <span class="hero__title--accent">Genetic algorithms analysis of tumor suppressor mutations</span>
-                </h1>
-                <p class="hero__description">
-                    Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise the P-53 tumour suppressor as malignant cascades begin. This award-winning research provides early detection insights for cancer screening.
-                </p>
-                <div class="hero__actions">
-                    <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" rel="noopener" class="btn btn--primary">View Source Code</a>
-                    <a href="#abstract" class="btn btn--secondary">Read Research</a>
-                </div>
-            </div>
+    <main class="research-layout">
+        <div class="research-sidebar-container">
+            <aside class="research-sidebar" id="floating-sidebar">
+                <nav class="research-sidebar__nav">
+                    <h2 class="research-sidebar__title">Research Sections</h2>
+                    
+                    <ul class="research-sidebar__list" data-progress="0">
+                        <li class="research-sidebar__item">
+                            <a href="#introduction" class="research-sidebar__link active">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"/>
+                                        </svg>
+                                    </span>
+                                    Introduction
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#abstract" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                    </span>
+                                    Overview
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#methods" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M5,7H19V5H5V7M5,19V9H11V19H5M19,19H13V15H19V19M19,13H13V9H19V13Z"/>
+                                        </svg>
+                                    </span>
+                                    Methods
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#results" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19H22V21H2V19H4.54L10.23,9.25L16,11.78Z"/>
+                                        </svg>
+                                    </span>
+                                    Key Findings
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#discussion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                                        </svg>
+                                    </span>
+                                    Discussion
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#conclusion" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                                        </svg>
+                                    </span>
+                                    Conclusion
+                                </span>
+                            </a>
+                        </li>
+                        <li class="research-sidebar__item">
+                            <a href="#references" class="research-sidebar__link">
+                                <span class="research-sidebar__text">
+                                    <span class="research-sidebar__icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z"/>
+                                        </svg>
+                                    </span>
+                                    References
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
         </div>
-    </section>
 
-    <!-- Introduction -->
-    <section class="section" id="introduction">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Introduction</h2>
-                <p class="section__subtitle">
-                    Understanding P-53's role as the guardian of the genome and the critical need for early mutation detection
-                </p>
-            </div>
-            <div class="cards">
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">The Genome Sentinel</div>
-                        <h3 class="card__title">P-53 Guardian Function</h3>
-                        <p class="card__description">
+        <button class="research-sidebar-toggle" id="research-sidebar-toggle" aria-label="Toggle Navigation">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+            </svg>
+        </button>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Hero Section -->
+                <section class="hero hero--research">
+                    <div class="hero__content">
+                        <h1 class="hero__title">
+                            Cancer Leading Mutation DNA of P-53 Gene
+                            <span class="icon-inline icon-inline--trailing" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <path d="M7 2c3 3 7 3 10 0" />
+                                    <path d="M7 8c3 3 7 3 10 0" />
+                                    <path d="M7 14c3 3 7 3 10 0" />
+                                    <path d="M7 20c3-3 7-3 10 0" />
+                                    <path d="M7 2v18" />
+                                    <path d="M17 2v18" />
+                                </svg>
+                            </span>
+                            <span class="hero__title--accent">Genetic algorithms analysis of tumor suppressor mutations</span>
+                        </h1>
+                        <p class="hero__subtitle">
+                            Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise the P-53 tumour suppressor as malignant cascades begin. This award-winning research provides early detection insights for cancer screening.
+                        </p>
+                        
+                        <div class="paper-meta-box">
+                            <div class="paper-meta-content">
+                                <div class="authors">
+                                    <span class="author-label">Author:</span>
+                                    <span class="author-names">Evint Leovonzko</span>
+                                </div>
+                                <div class="journal-info">
+                                    <span class="journal-label">Award:</span>
+                                    <span class="journal-name">Best Research Project (UBC Vantage)</span>
+                                </div>
+                            </div>
+                            <div class="paper-meta-actions">
+                                <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" rel="noopener" class="btn btn--primary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                    <span class="btn-text">View Source Code</span>
+                                </a>
+                                <a href="#abstract" class="btn btn--secondary">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Read Research</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section class="research-section" id="introduction">
+                    <h2 class="research-section__title">Introduction</h2>
+                    
+                    <div class="content-text">
+                        <p>
                             P-53 operates as the "guardian of the genome," halting cell division when DNA damage is detected. Mutations in this gene contribute to over 50% of all human cancers, making it a critical target for early detection strategies.
                         </p>
-                        <div class="card__tags">
-                            <span class="tag">Tumor Suppressor</span>
-                            <span class="tag">DNA Guardian</span>
-                            <span class="tag">50% Cancers</span>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Research Gap: Pre-Malignant Detection</h4>
+                                <p>
+                                    Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Research Gap</div>
-                        <h3 class="card__title">Pre-Malignant Detection</h3>
-                        <p class="card__description">
-                            Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Early Detection</span>
-                            <span class="tag">Pre-Malignant</span>
-                            <span class="tag">Prevention</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Innovation</div>
-                        <h3 class="card__title">Genetic Algorithm Approach</h3>
-                        <p class="card__description">
+                        
+                        <p>
                             Combining genetic algorithms with self-organizing maps to trace deterministic pathways from healthy to malignant P-53 sequences, revealing early-warning biomarkers for clinical application.
                         </p>
-                        <div class="card__tags">
-                            <span class="tag">Genetic Algorithms</span>
-                            <span class="tag">SOM</span>
-                            <span class="tag">Biomarkers</span>
-                        </div>
                     </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                </section>
 
-    <!-- Research Overview -->
-    <section class="section section--alt" id="abstract">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Research Overview</h2>
-                <p class="section__subtitle">
-                    Award-winning research analyzing P-53 mutations using genetic algorithms and machine learning
-                </p>
-            </div>
+                <!-- Research Overview -->
+                <section class="research-section" id="abstract">
+                    <h2 class="research-section__title">Research Overview</h2>
+                    
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Award Winner · UBC Vantage College</div>
+                                <h3 class="card__title">Best Research Project</h3>
+                                <p class="card__description">
+                                    Awarded Best Research Project at UBC Vantage College Capstone Conference for innovative genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Award Winner</span>
+                                    <span class="card__tag">Genetic Algorithms</span>
+                                    <span class="card__tag">Cancer Research</span>
+                                    <span class="card__tag">UBC</span>
+                                </div>
+                            </div>
+                        </article>
 
-            <div class="cards">
-                <article class="card card--featured">
-                    <div class="card__content">
-                        <div class="card__label">Award Winner · UBC Vantage College</div>
-                        <h3 class="card__title">Best Research Project</h3>
-                        <p class="card__description">
-                            Awarded Best Research Project at UBC Vantage College Capstone Conference for innovative genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Award Winner</span>
-                            <span class="tag">Genetic Algorithms</span>
-                            <span class="tag">Cancer Research</span>
-                            <span class="tag">UBC</span>
-                        </div>
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Research Objective</div>
+                                <h3 class="card__title">Early Cancer Detection</h3>
+                                <p class="card__description">
+                                    Identify recurring mutation motifs that precede carcinogenic behaviour in the P-53 tumor suppressor gene by simulating mitotic propagation under controlled conditions.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">P-53 Gene</span>
+                                    <span class="card__tag">Mutation Analysis</span>
+                                    <span class="card__tag">Early Detection</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Key Results</div>
+                                <h3 class="card__title">High-Risk Motifs Identified</h3>
+                                <p class="card__description">
+                                    The SOM surfaced six high-risk pentamer motifs (cagcc, agcca, cccag, ccagg, ttttt, ctttt) with an optimal 0.451 silhouette score under a 1×6 matrix configuration.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">6 Motifs</span>
+                                    <span class="card__tag">0.451 Score</span>
+                                    <span class="card__tag">SOM Clustering</span>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </article>
+                </section>
 
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Research Objective</div>
-                        <h3 class="card__title">Early Cancer Detection</h3>
-                        <p class="card__description">
-                            Identify recurring mutation motifs that precede carcinogenic behaviour in the P-53 tumor suppressor gene by simulating mitotic propagation under controlled conditions.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">P-53 Gene</span>
-                            <span class="tag">Mutation Analysis</span>
-                            <span class="tag">Early Detection</span>
-                        </div>
+                <!-- Methods -->
+                <section class="research-section" id="methods">
+                    <h2 class="research-section__title">Research Methods</h2>
+                    
+                    <div class="methods-timeline">
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 1: Dataset Assembly</h3>
+                                    <p class="method-description">
+                                        Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">NCBI Database</span>
+                                        <span class="method-tag">25 DNA Strands</span>
+                                        <span class="method-tag">Data Preprocessing</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 2: Generative Mitosis Tree</h3>
+                                    <p class="method-description">
+                                        Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Binary Tree</span>
+                                        <span class="method-tag">14 Generations</span>
+                                        <span class="method-tag">Mitosis Simulation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 3: Mutation Path Scoring</h3>
+                                    <p class="method-description">
+                                        Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Levenshtein Distance</span>
+                                        <span class="method-tag">Path Analysis</span>
+                                        <span class="method-tag">Drift Scoring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 4: k-mer Encoding</h3>
+                                    <p class="method-description">
+                                        Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">k-mer Analysis</span>
+                                        <span class="method-tag">Feature Vectors</span>
+                                        <span class="method-tag">73.5k Rows</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 5: SOM Clustering</h3>
+                                    <p class="method-description">
+                                        Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Self-Organizing Maps</span>
+                                        <span class="method-tag">1×6 Grid</span>
+                                        <span class="method-tag">Clustering</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </article>
+                </section>
 
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Key Results</div>
-                        <h3 class="card__title">High-Risk Motifs Identified</h3>
-                        <p class="card__description">
-                            The SOM surfaced six high-risk pentamer motifs (cagcc, agcca, cccag, ccagg, ttttt, ctttt) with an optimal 0.451 silhouette score under a 1×6 matrix configuration.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">6 Motifs</span>
-                            <span class="tag">0.451 Score</span>
-                            <span class="tag">SOM Clustering</span>
-                        </div>
+                <!-- Key Findings -->
+                <section class="research-section" id="results">
+                    <h2 class="research-section__title">Key Findings</h2>
+                    
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Primary Discovery</div>
+                                <h3 class="card__title">Six High-Risk Mutation Motifs</h3>
+                                <p class="card__description">
+                                    The SOM revealed six distinct mutation clusters with clearly differentiated nucleotide signatures. Clusters enriched in thymine-heavy motifs surfaced consistently in malignant branches, providing early warning indicators for cancer development.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">cagcc motif</span>
+                                    <span class="card__tag">agcca motif</span>
+                                    <span class="card__tag">cccag motif</span>
+                                    <span class="card__tag">ccagg motif</span>
+                                    <span class="card__tag">ttttt motif</span>
+                                    <span class="card__tag">ctttt motif</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Performance Metrics</div>
+                                <h3 class="card__title">Optimal Clustering Results</h3>
+                                <p class="card__description">
+                                    Achieved optimal 0.451 silhouette score with 1×6 grid configuration, indicating well-separated cluster centroids with minimal overlap between mutational trajectories.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">0.451 Silhouette Score</span>
+                                    <span class="card__tag">1×6 Optimal Grid</span>
+                                    <span class="card__tag">Well-Separated Clusters</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Clinical Implications</div>
+                                <h3 class="card__title">Early Detection Pipeline</h3>
+                                <p class="card__description">
+                                    Highlighted motifs align with known loss-of-function trajectories for P-53, establishing a computational pipeline to monitor early mutational convergence in other cancer datasets.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Early Detection</span>
+                                    <span class="card__tag">Clinical Pipeline</span>
+                                    <span class="card__tag">Screening Protocol</span>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                </section>
 
-    <!-- Methods -->
-    <section class="section" id="methods">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Research Methods</h2>
-                <p class="section__subtitle">
-                    Five-step computational pipeline for analyzing P-53 mutations
-                </p>
-            </div>
+                <!-- Discussion -->
+                <section class="research-section" id="discussion">
+                    <h2 class="research-section__title">Discussion</h2>
+                    
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Key Insight</div>
+                                <h3 class="card__title">Pathway-Dependent Progression</h3>
+                                <p class="card__description">
+                                    Six clusters emerged as reliable precursors to malignant outcomes. Each cluster possesses a signature nucleotide fingerprint, reinforcing that mutation progression is pathway-dependent, not random.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">6 Clusters</span>
+                                    <span class="card__tag">Deterministic</span>
+                                    <span class="card__tag">Fingerprints</span>
+                                </div>
+                            </div>
+                        </article>
 
-            <div class="cards">
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Step 1 · Data Collection</div>
-                        <h3 class="card__title">Dataset Assembly</h3>
-                        <p class="card__description">
-                            Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">NCBI Database</span>
-                            <span class="tag">25 DNA Strands</span>
-                            <span class="tag">Data Preprocessing</span>
-                        </div>
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Clustering Analysis</div>
+                                <h3 class="card__title">Optimal Configuration</h3>
+                                <p class="card__description">
+                                    Silhouette scores climbed steadily from 1×2 through 1×6 matrices before dropping sharply. The 1×6 configuration maintains separation without sacrificing interpretability.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Silhouette Analysis</span>
+                                    <span class="card__tag">1×6 Matrix</span>
+                                    <span class="card__tag">Interpretable</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Limitations</div>
+                                <h3 class="card__title">Study Constraints</h3>
+                                <p class="card__description">
+                                    Limitations include simulated rather than patient-specific conditions and a relatively small number of base sequences. Framework is portable for expanding datasets.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Simulated Data</span>
+                                    <span class="card__tag">Small Dataset</span>
+                                    <span class="card__tag">Portable Framework</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Future Directions</div>
+                                <h3 class="card__title">Scaling Potential</h3>
+                                <p class="card__description">
+                                    Scaling this methodology to other tumour suppressor genes could expose similar early-warning mutation signatures, guiding screening pipelines before clinical symptoms manifest.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Tumour Suppressors</span>
+                                    <span class="card__tag">Early Warning</span>
+                                    <span class="card__tag">Clinical Screening</span>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </article>
+                </section>
 
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Step 2 · Simulation</div>
-                        <h3 class="card__title">Generative Mitosis Tree</h3>
-                        <p class="card__description">
-                            Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Binary Tree</span>
-                            <span class="tag">14 Generations</span>
-                            <span class="tag">Mitosis Simulation</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Step 3 · Analysis</div>
-                        <h3 class="card__title">Mutation Path Scoring</h3>
-                        <p class="card__description">
-                            Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Levenshtein Distance</span>
-                            <span class="tag">Path Analysis</span>
-                            <span class="tag">Drift Scoring</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Step 4 · Feature Engineering</div>
-                        <h3 class="card__title">k-mer Encoding</h3>
-                        <p class="card__description">
-                            Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">k-mer Analysis</span>
-                            <span class="tag">Feature Vectors</span>
-                            <span class="tag">73.5k Rows</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Step 5 · Machine Learning</div>
-                        <h3 class="card__title">SOM Clustering</h3>
-                        <p class="card__description">
-                            Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Self-Organizing Maps</span>
-                            <span class="tag">1×6 Grid</span>
-                            <span class="tag">Clustering</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Findings -->
-    <section class="section section--alt" id="results">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Key Findings</h2>
-                <p class="section__subtitle">
-                    Significant insights from the genetic algorithm analysis
-                </p>
-            </div>
-
-            <div class="cards">
-                <article class="card card--featured">
-                    <div class="card__content">
-                        <div class="card__label">Primary Discovery</div>
-                        <h3 class="card__title">Six High-Risk Mutation Motifs</h3>
-                        <p class="card__description">
-                            The SOM revealed six distinct mutation clusters with clearly differentiated nucleotide signatures. Clusters enriched in thymine-heavy motifs surfaced consistently in malignant branches, providing early warning indicators for cancer development.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">cagcc motif</span>
-                            <span class="tag">agcca motif</span>
-                            <span class="tag">cccag motif</span>
-                            <span class="tag">ccagg motif</span>
-                            <span class="tag">ttttt motif</span>
-                            <span class="tag">ctttt motif</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Performance Metrics</div>
-                        <h3 class="card__title">Optimal Clustering Results</h3>
-                        <p class="card__description">
-                            Achieved optimal 0.451 silhouette score with 1×6 grid configuration, indicating well-separated cluster centroids with minimal overlap between mutational trajectories.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">0.451 Silhouette Score</span>
-                            <span class="tag">1×6 Optimal Grid</span>
-                            <span class="tag">Well-Separated Clusters</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Clinical Implications</div>
-                        <h3 class="card__title">Early Detection Pipeline</h3>
-                        <p class="card__description">
-                            Highlighted motifs align with known loss-of-function trajectories for P-53, establishing a computational pipeline to monitor early mutational convergence in other cancer datasets.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Early Detection</span>
-                            <span class="tag">Clinical Pipeline</span>
-                            <span class="tag">Screening Protocol</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Discussion -->
-    <section class="section section--alt" id="discussion">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Discussion</h2>
-                <p class="section__subtitle">
-                    Analysis of results, limitations, and implications for future cancer research
-                </p>
-            </div>
-
-            <div class="cards">
-                <article class="card card--featured">
-                    <div class="card__content">
-                        <div class="card__label">Key Insight</div>
-                        <h3 class="card__title">Pathway-Dependent Progression</h3>
-                        <p class="card__description">
-                            Six clusters emerged as reliable precursors to malignant outcomes. Each cluster possesses a signature nucleotide fingerprint, reinforcing that mutation progression is pathway-dependent, not random.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">6 Clusters</span>
-                            <span class="tag">Deterministic</span>
-                            <span class="tag">Fingerprints</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Clustering Analysis</div>
-                        <h3 class="card__title">Optimal Configuration</h3>
-                        <p class="card__description">
-                            Silhouette scores climbed steadily from 1×2 through 1×6 matrices before dropping sharply. The 1×6 configuration maintains separation without sacrificing interpretability.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Silhouette Analysis</span>
-                            <span class="tag">1×6 Matrix</span>
-                            <span class="tag">Interpretable</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Limitations</div>
-                        <h3 class="card__title">Study Constraints</h3>
-                        <p class="card__description">
-                            Limitations include simulated rather than patient-specific conditions and a relatively small number of base sequences. Framework is portable for expanding datasets.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Simulated Data</span>
-                            <span class="tag">Small Dataset</span>
-                            <span class="tag">Portable Framework</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Future Directions</div>
-                        <h3 class="card__title">Scaling Potential</h3>
-                        <p class="card__description">
-                            Scaling this methodology to other tumour suppressor genes could expose similar early-warning mutation signatures, guiding screening pipelines before clinical symptoms manifest.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Tumour Suppressors</span>
-                            <span class="tag">Early Warning</span>
-                            <span class="tag">Clinical Screening</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Conclusion -->
-    <section class="section" id="conclusion">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Conclusion</h2>
-                <p class="section__subtitle">
-                    Key takeaways and future roadmap for P-53 mutation research
-                </p>
-            </div>
-
-            <div class="cards">
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Key Takeaways</div>
-                        <h3 class="card__title">Research Achievements</h3>
-                        <p class="card__description">
+                <!-- Conclusion -->
+                <section class="research-section" id="conclusion">
+                    <h2 class="research-section__title">Conclusion</h2>
+                    
+                    <div class="content-text">
+                        <p>
                             Genetic algorithms plus SOM clustering expose deterministic shifts toward malignancy. Six pentamer motifs consistently precede malignant conversion, providing high-clarity monitoring targets.
                         </p>
-                        <div class="card__tags">
-                            <span class="tag">Deterministic Shifts</span>
-                            <span class="tag">6 Motifs</span>
-                            <span class="tag">Monitoring Targets</span>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Clinical Impact</h4>
+                                <p>
+                                    Encoded feature space remains interpretable, enabling rapid clinician dialogue. The motif shortlist now feeds wet-lab validation and computational monitoring pipelines.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Clinical Impact</div>
-                        <h3 class="card__title">Interpretable Results</h3>
-                        <p class="card__description">
-                            Encoded feature space remains interpretable, enabling rapid clinician dialogue. The motif shortlist now feeds wet-lab validation and computational monitoring pipelines.
+                        
+                        <p>
+                            Future work will expand datasets with longitudinal patient samples and fuse expression-level data to link mutational motifs with phenotypic impact.
                         </p>
-                        <div class="card__tags">
-                            <span class="tag">Clinician Friendly</span>
-                            <span class="tag">Wet-Lab Ready</span>
-                            <span class="tag">Monitoring Pipeline</span>
-                        </div>
                     </div>
-                </article>
+                </section>
 
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Future Roadmap</div>
-                        <h3 class="card__title">Next Steps</h3>
-                        <p class="card__description">
-                            Expand datasets with longitudinal patient samples. Fuse expression-level data to link mutational motifs with phenotypic impact. Prototype variational autoencoders.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Patient Samples</span>
-                            <span class="tag">Expression Data</span>
-                            <span class="tag">VAE Models</span>
-                        </div>
+                <!-- References -->
+                <section class="research-section" id="references">
+                    <h2 class="research-section__title">References</h2>
+                    
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Foundation Research</div>
+                                <h3 class="card__title">P-53 Cancer Research</h3>
+                                <p class="card__description">
+                                    <strong>Di Leo, A., et al. (2007).</strong> p-53 gene mutations as a predictive marker in advanced breast cancer. <em>Annals of Oncology</em>, 18(6), 997-1003.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Clinical Study</span>
+                                    <span class="card__tag">Breast Cancer</span>
+                                    <span class="card__tag">Predictive Markers</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Seminal Work</div>
+                                <h3 class="card__title">P-53 Network Analysis</h3>
+                                <p class="card__description">
+                                    <strong>Vogelstein, B., Lane, D., & Levine, A. J. (2000).</strong> Surfing the p53 network. <em>Nature</em>, 408, 307–310.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Nature</span>
+                                    <span class="card__tag">Network Biology</span>
+                                    <span class="card__tag">Foundational</span>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                </section>
 
-    <!-- Related Research -->
-    <section class="section section--alt" id="related">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">Related Research</h2>
-                <p class="section__subtitle">
-                    Explore related projects in bioinformatics and machine learning
-                </p>
-            </div>
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards">
+                        <a href="circular-rna.html" class="card">
+                            <div class="card__content">
+                                <div class="card__label">Published Research · First Author</div>
+                                <h3 class="card__title">Deep Learning for Circular RNA Classification</h3>
+                                <p class="card__description">
+                                    Novel CNN architecture for predicting circRNA-disease associations with advanced preprocessing techniques. Published in leading bioinformatics journal.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">First Author</span>
+                                    <span class="card__tag">Deep Learning</span>
+                                    <span class="card__tag">Bioinformatics</span>
+                                    <span class="card__tag">CNN</span>
+                                </div>
+                                <span class="card__link">
+                                    Read Publication
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </a>
 
-            <div class="cards">
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Published Research · First Author</div>
-                        <h3 class="card__title">Deep Learning for Circular RNA Classification</h3>
-                        <p class="card__description">
-                            Novel CNN architecture for predicting circRNA-disease associations with advanced preprocessing techniques. Published in leading bioinformatics journal.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">First Author</span>
-                            <span class="tag">Deep Learning</span>
-                            <span class="tag">Bioinformatics</span>
-                            <span class="tag">CNN</span>
-                        </div>
-                        <a href="circular-rna.html" class="card__link">
-                            Read Publication
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        <a href="crypto-stock-timing.html" class="card">
+                            <div class="card__content">
+                                <div class="card__label">Analysis · Finance</div>
+                                <h3 class="card__title">Crypto vs Stock Market Timing</h3>
+                                <p class="card__description">
+                                    Comparative analysis of equity and cryptocurrency markets using advanced time series models and volatility forecasting.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Time Series</span>
+                                    <span class="card__tag">GARCH</span>
+                                    <span class="card__tag">Finance</span>
+                                </div>
+                                <span class="card__link">
+                                    View Analysis
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </a>
+
+                        <a href="global-gdp-patterns.html" class="card">
+                            <div class="card__content">
+                                <div class="card__label">Analysis · Economics</div>
+                                <h3 class="card__title">Global GDP Trajectory Analysis</h3>
+                                <p class="card__description">
+                                    Multi-country GDP pattern analysis using Self-Organizing Map clustering techniques to identify economic growth patterns.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">SOM</span>
+                                    <span class="card__tag">Economics</span>
+                                    <span class="card__tag">Clustering</span>
+                                </div>
+                                <span class="card__link">
+                                    View Analysis
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
                         </a>
                     </div>
-                </article>
+                </section>
 
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Analysis · Finance</div>
-                        <h3 class="card__title">Crypto vs Stock Market Timing</h3>
-                        <p class="card__description">
-                            Comparative analysis of equity and cryptocurrency markets using advanced time series models and volatility forecasting.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Time Series</span>
-                            <span class="tag">GARCH</span>
-                            <span class="tag">Finance</span>
-                        </div>
-                        <a href="crypto-stock-timing.html" class="card__link">
-                            View Analysis
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#projects" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
                         </a>
                     </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Analysis · Economics</div>
-                        <h3 class="card__title">Global GDP Trajectory Analysis</h3>
-                        <p class="card__description">
-                            Multi-country GDP pattern analysis using Self-Organizing Map clustering techniques to identify economic growth patterns.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">SOM</span>
-                            <span class="tag">Economics</span>
-                            <span class="tag">Clustering</span>
-                        </div>
-                        <a href="global-gdp-patterns.html" class="card__link">
-                            View Analysis
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
+                </section>
             </div>
         </div>
-    </section>
-
-    <!-- References -->
-    <section class="section" id="references">
-        <div class="container">
-            <div class="section__header">
-                <h2 class="section__title">References</h2>
-                <p class="section__subtitle">
-                    Key publications and research foundations for this study
-                </p>
-            </div>
-
-            <div class="cards">
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Foundation Research</div>
-                        <h3 class="card__title">P-53 Cancer Research</h3>
-                        <p class="card__description">
-                            <strong>Di Leo, A., et al. (2007).</strong> p-53 gene mutations as a predictive marker in advanced breast cancer. <em>Annals of Oncology</em>, 18(6), 997-1003.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Clinical Study</span>
-                            <span class="tag">Breast Cancer</span>
-                            <span class="tag">Predictive Markers</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card__content">
-                        <div class="card__label">Seminal Work</div>
-                        <h3 class="card__title">P-53 Network Analysis</h3>
-                        <p class="card__description">
-                            <strong>Vogelstein, B., Lane, D., & Levine, A. J. (2000).</strong> Surfing the p53 network. <em>Nature</em>, 408, 307–310.
-                        </p>
-                        <div class="card__tags">
-                            <span class="tag">Nature</span>
-                            <span class="tag">Network Biology</span>
-                            <span class="tag">Foundational</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section section--cta">
-        <div class="container">
-            <div class="cta">
-                <h2 class="cta__title">Explore the Research</h2>
-                <p class="cta__description">
-                    Dive deeper into the methodology and findings, or explore the complete source code implementation on GitHub.
-                </p>
-                <div class="cta__actions">
-                    <a href="https://github.com/Evintkoo/Vant-149-project" target="_blank" rel="noopener" class="btn btn--primary btn--large">
-                        View Source Code
-                    </a>
-                    <a href="../index.html#projects" class="btn btn--secondary btn--large">
-                        Back to Portfolio
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
