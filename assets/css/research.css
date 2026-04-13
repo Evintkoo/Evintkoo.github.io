@@ -329,9 +329,9 @@ svg {
    Paper Meta Snapshot
 ================================ */
 .paper-meta-snapshot {
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
@@ -371,7 +371,7 @@ svg {
 }
 
 [data-theme="dark"] .paper-meta-snapshot {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .paper-meta-heading {
@@ -727,9 +727,9 @@ svg {
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
@@ -739,7 +739,7 @@ svg {
 }
 
 [data-theme="dark"] .paper-hero__badge {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .badge-icon {
@@ -837,9 +837,9 @@ svg {
   min-width: 160px;
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   position: relative;
   overflow: hidden;
   transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -873,7 +873,7 @@ svg {
 }
 
 [data-theme="dark"] .meta-highlight {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .meta-highlight__value {
@@ -901,9 +901,9 @@ svg {
   padding: var(--space-5);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   position: relative;
   overflow: hidden;
   transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -937,7 +937,7 @@ svg {
 }
 
 [data-theme="dark"] .meta-detail {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .meta-detail__label {
@@ -1068,9 +1068,9 @@ svg {
   display: flex;
   gap: var(--space-6);
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1085,7 +1085,7 @@ svg {
 }
 
 [data-theme="dark"] .abstract-item {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .abstract-item.visible {
@@ -1245,15 +1245,15 @@ svg {
   margin: var(--space-10) 0;
   border-radius: var(--radius-2xl);
   border: 1px solid var(--border-primary);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   overflow: hidden;
   transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-slow);
 }
 
 [data-theme="dark"] .research-highlight {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .research-highlight:hover {
@@ -1422,13 +1422,13 @@ svg {
   margin: var(--space-8) 0;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-primary);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 [data-theme="dark"] .table-container {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .results-table h4 {
@@ -1634,9 +1634,9 @@ tbody td strong {
   display: flex;
   gap: var(--space-6);
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1659,7 +1659,7 @@ tbody td strong {
 }
 
 [data-theme="dark"] .method-content {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .method-card.visible:hover .method-content {
@@ -1723,9 +1723,9 @@ tbody td strong {
 /* Formula Box */
 .formula-box {
   padding: var(--space-6);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-left: 3px solid var(--accent-warm);
   border-radius: var(--radius-lg);
@@ -1734,7 +1734,7 @@ tbody td strong {
 }
 
 [data-theme="dark"] .formula-box {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .formula {
@@ -1816,9 +1816,9 @@ tbody td strong {
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1830,7 +1830,7 @@ tbody td strong {
 }
 
 [data-theme="dark"] .related-research-card {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 /* Subtle top border - always visible */
@@ -2121,16 +2121,16 @@ tbody td strong {
 ================================ */
 .neural-network {
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   margin: var(--space-12) 0;
 }
 
 [data-theme="dark"] .neural-network {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .network-layers {
@@ -2218,15 +2218,15 @@ tbody td strong {
   gap: var(--space-8);
   margin: var(--space-12) 0;
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
 }
 
 [data-theme="dark"] .circular-metrics {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .metric-circle {
@@ -2279,15 +2279,15 @@ tbody td strong {
 .performance-chart {
   margin: var(--space-12) 0;
   padding: var(--space-8);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
 }
 
 [data-theme="dark"] .performance-chart {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .chart-header {
@@ -2436,15 +2436,15 @@ tbody td strong {
 ================================ */
 .performance-comparison {
   margin: var(--space-12) 0;
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
 [data-theme="dark"] .performance-comparison {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .performance-comparison__header {
@@ -2468,16 +2468,16 @@ tbody td strong {
 }
 
 .performance-table {
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 [data-theme="dark"] .performance-table {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .performance-table__header {
@@ -2580,15 +2580,15 @@ tbody td strong {
   margin-top: var(--space-6);
   text-align: center;
   padding: var(--space-6);
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-primary);
 }
 
 [data-theme="dark"] .performance-summary {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 /* Additional monochromatic elements */
@@ -2621,9 +2621,9 @@ tbody td strong {
 }
 
 .related-research-card {
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -2632,7 +2632,7 @@ tbody td strong {
 }
 
 [data-theme="dark"] .related-research-card {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .related-research-card:hover {
@@ -2775,9 +2775,9 @@ tbody td strong {
 .card {
   display: flex;
   flex-direction: column;
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -2794,7 +2794,7 @@ tbody td strong {
 }
 
 [data-theme="dark"] .card {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .card::after {

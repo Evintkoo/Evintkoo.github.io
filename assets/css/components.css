@@ -57,9 +57,9 @@
 
 /* Base card */
 .card {
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -72,7 +72,7 @@
 }
 
 [data-theme="dark"] .card {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .card::after {
@@ -102,9 +102,9 @@
 /* Project cards */
 .project {
   position: relative;
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-2xl);
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -115,7 +115,7 @@
 }
 
 [data-theme="dark"] .project {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .project::before {
@@ -161,14 +161,14 @@
   flex: 1;
   position: relative;
   z-index: 1;
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-2xl);
 }
 
 [data-theme="dark"] .project__content {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .project__header {
@@ -431,9 +431,9 @@
 }
 
 .timeline__content {
-  background: rgba(250, 248, 245, 0.7);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(250, 248, 245, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   border: 1px solid var(--border-primary);
@@ -441,7 +441,7 @@
 }
 
 [data-theme="dark"] .timeline__content {
-  background: rgba(18, 18, 22, 0.65);
+  background: rgba(18, 18, 22, 0.10);
 }
 
 .timeline__item:hover .timeline__content {
