@@ -69,3 +69,7 @@ private/
 sensitive/
 .secret/
 .playwright-mcp/
+
+# Claude/Superpowers local tooling
+.superpowers/
+graphify-out/
