@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APT Fitness Assistant | Evint Leovonzko</title>
+    <meta name="description" content="Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="APT Fitness Assistant | Evint Leovonzko">
+    <meta property="og:description" content="Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/project.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="proj-hero">
+            <div class="container">
+                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <div class="proj-hero__tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Computer Vision</span>
+                </div>
+                <h1 class="proj-hero__title">APT Fitness Assistant</h1>
+                <p class="proj-hero__subtitle">Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations — your AI gym partner, running locally from your webcam.</p>
+            </div>
+        </section>
+
+        <div class="proj-body">
+            <div class="container proj-content">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Overview</p>
+                    <h2 class="proj-section__title">What is it?</h2>
+                    <div class="proj-section__body">
+                        <p>Most people lift alone without feedback on their form — and bad form leads to injury. APT (Automated Personal Trainer) uses your webcam and MediaPipe's pose landmark detection to give you real-time, frame-by-frame feedback on movement quality.</p>
+                        <p>It counts reps by tracking joint angles through the full range of motion, flags form breaks with visual overlays, and suggests adjustments. Everything runs locally — no cloud, no subscription, no data leaving your device. Built as a Streamlit app so setup is a single <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-tertiary); padding: 2px 6px; border-radius: 4px;">pip install</code>.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Features</p>
+                    <h2 class="proj-section__title">What it does</h2>
+                    <div class="proj-feature-grid">
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🏋️</span>
+                            <p class="proj-feature-card__title">Pose Estimation</p>
+                            <p class="proj-feature-card__desc">MediaPipe detects 33 body landmarks per frame in real time — shoulders, elbows, hips, knees, and more.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">✅</span>
+                            <p class="proj-feature-card__title">Form Correction</p>
+                            <p class="proj-feature-card__desc">Compares your joint angles against reference ranges and flags deviations with on-screen cues.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔢</span>
+                            <p class="proj-feature-card__title">Rep Counting</p>
+                            <p class="proj-feature-card__desc">Tracks range-of-motion completion per exercise to count reps accurately without manual input.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">💡</span>
+                            <p class="proj-feature-card__title">Workout Recommendations</p>
+                            <p class="proj-feature-card__desc">Suggests follow-up exercises based on session data — progressive overload, muscle balance, recovery.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🖥️</span>
+                            <p class="proj-feature-card__title">Streamlit UI</p>
+                            <p class="proj-feature-card__desc">Clean browser interface with live video feed, landmark overlay, and stats panel — no frontend code needed.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔒</span>
+                            <p class="proj-feature-card__title">Fully Local</p>
+                            <p class="proj-feature-card__desc">All processing happens on your machine. No video data sent anywhere — complete privacy by design.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Stack</p>
+                    <h2 class="proj-section__title">Built with</h2>
+                    <div class="proj-tech-pills">
+                        <span class="proj-tech-pill">Python</span>
+                        <span class="proj-tech-pill">MediaPipe</span>
+                        <span class="proj-tech-pill">OpenCV</span>
+                        <span class="proj-tech-pill">Streamlit</span>
+                        <span class="proj-tech-pill">NumPy</span>
+                    </div>
+                </div>
+
+                <div class="proj-cta">
+                    <div class="proj-cta__text">
+                        <h3>See the code</h3>
+                        <p>Full source and setup instructions on GitHub.</p>
+                    </div>
+                    <div class="proj-cta__actions">
+                        <a href="https://github.com/Evintkoo/APT-Fitness-Assistant" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                            View on GitHub
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+</html>

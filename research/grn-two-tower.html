@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Tower Hybrid Embedding Networks for GRN Inference | Evint Leovonzko</title>
+    <meta name="description" content="Two-Tower Hybrid Embedding Networks for Gene Regulatory Network Inference from Single-Cell Transcriptomics - Research by Evint Leovonzko">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/research/grn-two-tower.html">
+    <meta property="og:title" content="Two-Tower Hybrid Embedding Networks for GRN Inference | Evint Leovonzko">
+    <meta property="og:description" content="Two-Tower Hybrid Embedding Networks for Gene Regulatory Network Inference from Single-Cell Transcriptomics - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/research/grn-two-tower.html">
+    <meta property="twitter:title" content="Two-Tower Hybrid Embedding Networks for GRN Inference | Evint Leovonzko">
+    <meta property="twitter:description" content="Two-Tower Hybrid Embedding Networks for Gene Regulatory Network Inference from Single-Cell Transcriptomics - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/research.css?v=6">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark"><img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"     class="rsb__link active">Abstract</a>
+                    <a href="#introduction" class="rsb__link">Introduction</a>
+                    <a href="#methods"      class="rsb__link">Methods</a>
+                    <a href="#results"      class="rsb__link">Results</a>
+                    <a href="#discussion"   class="rsb__link">Discussion</a>
+                    <a href="#conclusion"   class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Paper Header -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                        <path d="M7 2c3 3 7 3 10 0"/>
+                                        <path d="M7 8c3 3 7 3 10 0"/>
+                                        <path d="M7 14c3 3 7 3 10 0"/>
+                                        <path d="M7 20c3-3 7-3 10 0"/>
+                                        <path d="M7 2v18"/>
+                                        <path d="M17 2v18"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">Two-Tower Hybrid Embedding Networks for GRN Inference</h1>
+                            <p class="circrna-subtitle">Gene Regulatory Network Inference from Single-Cell Transcriptomics</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">A pure-Rust two-tower MLP that learns entity embeddings and cell-type expression profiles to predict transcription factor&ndash;gene interactions &mdash; 83% ensemble accuracy, CPU-trainable without any deep learning framework.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">83.06%</span>
+                                        <span class="hero-metric__label">Ensemble accuracy</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">0.844</span>
+                                        <span class="hero-metric__label">AUROC</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">47,388</span>
+                                        <span class="hero-metric__label">TF&ndash;gene pairs</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://github.com/Evintkoo/grn-encoder-comparison/blob/main/paper/main.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Full Paper</span>
+                                    </a>
+                                    <a href="https://github.com/Evintkoo/grn-encoder-comparison" target="_blank" rel="noopener" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                                        </svg>
+                                        <span class="btn-text">View Repository</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Architecture details, dataset, and key performance metrics for this GRN inference study.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">83.06%</span>
+                                        <span class="meta-highlight__label">Ensemble accuracy</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">0.844</span>
+                                        <span class="meta-highlight__label">AUROC</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">~4 hrs</span>
+                                        <span class="meta-highlight__label">CPU training time</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Author</span>
+                                        <span class="meta-detail__value">Evint Leovonzko</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Dataset</span>
+                                        <span class="meta-detail__value">Human brain single-cell RNA-seq &mdash; 47,388 TF&ndash;gene pairs from DoRothEA &amp; TRRUST databases.</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Implementation</span>
+                                        <span class="meta-detail__value">Pure Rust without PyTorch or TensorFlow, enabling deterministic CPU training.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Gene Regulatory Networks</span>
+                                        <span class="meta-pill">Two-Tower MLP</span>
+                                        <span class="meta-pill">scRNA-seq</span>
+                                        <span class="meta-pill">Rust</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Introduction</h3>
+                                <p>Inferring gene regulatory networks (GRNs) from single-cell RNA-seq data is a central challenge in computational biology. This paper proposes a two-tower multilayer perceptron that jointly learns entity embeddings for transcription factors and target genes alongside cell-type-specific expression profiles to predict regulatory interactions.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Methods</h3>
+                                <p>Separate encoder towers process 512-dimensional learnable embeddings and 11-dimensional cell-type expression profiles through three fully connected layers with batch normalization and dropout. Interaction scores are produced via temperature-scaled dot-product similarity (&tau; = 0.05). The system is implemented entirely in Rust without external deep learning dependencies.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Results</h3>
+                                <p>On a human brain dataset with 47,388 TF&ndash;gene pairs, the single model achieves <strong>80.14% accuracy</strong> and AUROC of <strong>0.844</strong>. A 5-model ensemble reaches <strong>83.06% accuracy</strong>. Hyperparameter optimization alone contributed 77% of total improvement (+16.1 pp), with cross-seed variance (CV = 2.06%) confirming model robustness.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="discussion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Discussion</h3>
+                                <p>A competing cross-attention model (GCAN) achieved 91% accuracy but only 0.692 F1-score due to poor recall, underperforming on balanced prediction metrics. This highlights a critical accuracy&ndash;F1 paradox where high accuracy masks poor generalization under class imbalance.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Conclusion</h3>
+                                <p>A carefully optimized standard MLP can achieve competitive GRN inference results (83%) while remaining CPU-trainable, challenging the assumption that complex architectures are necessary for strong performance on this task.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">Gene regulatory networks encode the interactions between transcription factors (TFs) and target genes that govern cellular identity and function. Reconstructing these networks from single-cell RNA-seq data is challenging due to the high dimensionality, sparsity, and cell-type heterogeneity of expression measurements.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Key Motivation</h4>
+                                <p>Prior work on GRN inference often relies on complex graph neural networks or attention mechanisms. This study investigates whether a well-tuned, simple MLP can close the gap &mdash; with the added benefit of full CPU trainability and no framework dependencies.</p>
+                            </div>
+                        </div>
+
+                        <p>This paper presents a two-tower architecture that separately encodes TF and gene identities through learned embeddings, while a second pathway encodes cell-type-specific expression profiles. The towers are combined via temperature-scaled dot-product similarity to produce regulatory link predictions.</p>
+                    </div>
+                </section>
+
+                <!-- Methods -->
+                <section id="methods" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Methods</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Dataset &amp; Regulatory Priors</h3>
+                                    <p class="method-description">Human brain single-cell RNA-seq data was paired with regulatory ground truth from the DoRothEA and TRRUST databases, yielding 47,388 TF&ndash;gene pairs split 70/15/15 for training, validation, and testing.</p>
+                                    <div class="method-tags"><span class="method-tag">DoRothEA</span><span class="method-tag">TRRUST</span><span class="method-tag">scRNA-seq</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Two-Tower Architecture</h3>
+                                    <p class="method-description">Each tower consists of three fully connected layers with batch normalization and dropout. The entity tower processes 512-dimensional learnable embeddings for TFs and genes; the expression tower processes 11-dimensional cell-type mean expression profiles.</p>
+                                    <div class="method-tags"><span class="method-tag">MLP</span><span class="method-tag">Batch Normalization</span><span class="method-tag">Dropout</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"></path></svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Similarity Scoring &amp; Training</h3>
+                                    <p class="method-description">Tower outputs are combined via temperature-scaled dot-product similarity (&tau;&nbsp;=&nbsp;0.05) with sigmoid activation. Training uses Adam optimizer with L2 regularization (&lambda;&nbsp;=&nbsp;0.01), learning rate 5&times;10&sup3;, and early stopping with 10-epoch patience.</p>
+                                    <div class="method-tags"><span class="method-tag">Adam</span><span class="method-tag">L2 Regularization</span><span class="method-tag">Early Stopping</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="4">
+                            <div class="method-step-badge"><span class="step-number">04</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Ensemble &amp; Evaluation</h3>
+                                    <p class="method-description">Five independently trained models are aggregated by averaging predicted probabilities. Cross-seed evaluation across five random initializations measures variance (CV = 2.06%). Metrics include accuracy, F1, AUROC, and a comparison against GCAN (cross-attention baseline).</p>
+                                    <div class="method-tags"><span class="method-tag">Ensemble</span><span class="method-tag">AUROC</span><span class="method-tag">Cross-seed</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">Performance is evaluated on 47,388 human brain TF&ndash;gene pairs across single and ensemble configurations.</p>
+                    </div>
+
+                    <div class="performance-comparison">
+                        <div class="performance-comparison__header">
+                            <h3 class="performance-comparison__title">Model Performance Comparison</h3>
+                            <p class="performance-comparison__subtitle">Single model vs ensemble vs GCAN baseline on human brain scRNA-seq data.</p>
+                        </div>
+
+                        <div class="performance-table">
+                            <div class="performance-table__header">
+                                <div class="table-cell table-cell--model">Model</div>
+                                <div class="table-cell table-cell--metric">Accuracy</div>
+                                <div class="table-cell table-cell--metric">AUROC</div>
+                                <div class="table-cell table-cell--metric">F1-Score</div>
+                            </div>
+                            <div class="performance-table__body">
+                                <div class="table-row table-row--primary">
+                                    <div class="table-cell table-cell--model"><div class="model-info"><div class="model-name">Two-Tower (Ensemble &times;5)</div><div class="model-type">Our Model</div></div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy"><div class="metric-value metric-value--best">83.06%</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="AUROC"><div class="metric-value">0.844</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score"><div class="metric-value metric-value--best">~0.83</div></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model"><div class="model-info"><div class="model-name">Two-Tower (Single)</div><div class="model-type">Our Model</div></div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy"><div class="metric-value">80.14%</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="AUROC"><div class="metric-value">0.844</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score"><div class="metric-value">~0.80</div></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model"><div class="model-info"><div class="model-name">GCAN (Cross-Attention)</div><div class="model-type">Baseline</div></div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy"><div class="metric-value">91%</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="AUROC"><div class="metric-value">&mdash;</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score"><div class="metric-value">0.692</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="performance-summary">
+                            <p class="summary-text">GCAN's 91% accuracy masks a 0.692 F1-score driven by poor recall &mdash; the two-tower ensemble is more reliable on balanced prediction despite a lower headline accuracy.</p>
+                        </div>
+                    </div>
+
+                    <div class="research-highlight research-highlight--success">
+                        <div class="highlight-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
+                        </div>
+                        <div class="highlight-content">
+                            <h4 class="highlight-title">Accuracy Attribution</h4>
+                            <p>Hyperparameter tuning alone contributed <strong>+16.1 percentage points</strong> (77% of total improvement). Ensemble aggregation added +2.9 pp and expression features +1.8 pp.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Discussion</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">The results challenge the common narrative that GRN inference requires increasingly complex architectures. A carefully tuned two-tower MLP, implemented without any deep learning framework, achieves competitive accuracy on a challenging human brain dataset.</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">The Accuracy&ndash;F1 Paradox</h4>
+                                <p>GCAN's 91% accuracy is inflated by biased recall. When evaluated on balanced metrics, the two-tower model outperforms it, illustrating why accuracy alone is insufficient for imbalanced biological datasets.</p>
+                            </div>
+                        </div>
+
+                        <p>The pure-Rust implementation introduces a useful engineering constraint: no automatic differentiation, no GPU assumed, full determinism. This forced explicit numerical decisions (temperature scaling, L2 regularization) that ultimately contributed to model stability, evidenced by a cross-seed CV of only 2.06%.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">This study demonstrates that a standard, well-tuned MLP implemented in pure Rust can achieve 83% ensemble accuracy on GRN inference from single-cell RNA-seq data &mdash; competitive with significantly more complex architectures.</p>
+
+                        <p>The dominant contribution of hyperparameter optimization over architectural complexity suggests that future work on GRN inference should prioritize thorough tuning before escalating model complexity. The CPU-trainable implementation also makes the approach accessible to researchers without GPU infrastructure.</p>
+
+                        <p>The accuracy&ndash;F1 paradox observed in the GCAN comparison is a cautionary note for benchmarking in computational biology: headline accuracy on imbalanced datasets can be misleading, and balanced metrics like F1 and AUROC should be primary evaluation criteria.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=3"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+
+</html>

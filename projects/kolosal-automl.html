@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolosal AutoML Platform | Evint Leovonzko</title>
+    <meta name="description" content="End-to-end AutoML with Gradio UI, Optuna hyperparameter tuning, and MLflow experiment tracking — all in one open-source platform.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kolosal AutoML Platform | Evint Leovonzko">
+    <meta property="og:description" content="End-to-end AutoML with Gradio UI — from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one platform.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/project.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="proj-hero">
+            <div class="container">
+                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <div class="proj-hero__tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">AutoML</span>
+                </div>
+                <h1 class="proj-hero__title">Kolosal AutoML Platform</h1>
+                <p class="proj-hero__subtitle">End-to-end AutoML with a Gradio UI — from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one open-source platform built under Kolosal AI.</p>
+            </div>
+        </section>
+
+        <div class="proj-body">
+            <div class="container proj-content">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Overview</p>
+                    <h2 class="proj-section__title">What is it?</h2>
+                    <div class="proj-section__body">
+                        <p>AutoML tooling is either too opinionated or too complex to extend. Kolosal AutoML Platform is a fully open-source alternative that gives you a visual UI, a tuning engine, and experiment tracking in one deployable service.</p>
+                        <p>You upload a dataset, pick a target column, and the platform searches for the best model and hyperparameters automatically — while logging every trial to MLflow so nothing is lost. All accessible through a clean Gradio interface, no code required.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Features</p>
+                    <h2 class="proj-section__title">What it does</h2>
+                    <div class="proj-feature-grid">
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🎛️</span>
+                            <p class="proj-feature-card__title">Gradio UI</p>
+                            <p class="proj-feature-card__desc">No-code interface for uploading data, configuring runs, and inspecting results — all in the browser.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔍</span>
+                            <p class="proj-feature-card__title">Optuna Tuning</p>
+                            <p class="proj-feature-card__desc">Bayesian hyperparameter search with pruning — finds good configs faster than grid search.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">📊</span>
+                            <p class="proj-feature-card__title">MLflow Tracking</p>
+                            <p class="proj-feature-card__desc">Every experiment, metric, and artifact is logged automatically — full reproducibility out of the box.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔁</span>
+                            <p class="proj-feature-card__title">End-to-end Pipeline</p>
+                            <p class="proj-feature-card__desc">From raw data to a trained, evaluated model — preprocessing, training, and evaluation in one flow.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🌐</span>
+                            <p class="proj-feature-card__title">FastAPI Backend</p>
+                            <p class="proj-feature-card__desc">REST API layer for programmatic access — trigger runs, fetch results, and serve models via HTTP.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔓</span>
+                            <p class="proj-feature-card__title">Fully Open Source</p>
+                            <p class="proj-feature-card__desc">No vendor lock-in. Deploy anywhere, extend freely, and contribute back to the community.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Stack</p>
+                    <h2 class="proj-section__title">Built with</h2>
+                    <div class="proj-tech-pills">
+                        <span class="proj-tech-pill">Gradio</span>
+                        <span class="proj-tech-pill">MLflow</span>
+                        <span class="proj-tech-pill">Optuna</span>
+                        <span class="proj-tech-pill">FastAPI</span>
+                        <span class="proj-tech-pill">Python</span>
+                        <span class="proj-tech-pill">scikit-learn</span>
+                    </div>
+                </div>
+
+                <div class="proj-cta">
+                    <div class="proj-cta__text">
+                        <h3>See the code</h3>
+                        <p>Full source, docs, and usage examples on GitHub.</p>
+                    </div>
+                    <div class="proj-cta__actions">
+                        <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                            View on GitHub
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+</html>

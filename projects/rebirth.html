@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebirth Educational Platform | Evint Leovonzko</title>
+    <meta name="description" content="Community-driven platform connecting learners and researchers through structured courses and peer mentorship programs.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rebirth Educational Platform | Evint Leovonzko">
+    <meta property="og:description" content="Community-driven platform connecting learners and researchers through structured courses and peer mentorship programs.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/project.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="proj-hero">
+            <div class="container">
+                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <div class="proj-hero__tags">
+                    <span class="tag">Community</span>
+                    <span class="tag">Education</span>
+                </div>
+                <h1 class="proj-hero__title">Rebirth Educational Platform</h1>
+                <p class="proj-hero__subtitle">A community-driven platform connecting learners and researchers through structured courses and peer mentorship — built on the belief that good education should be accessible, not gatekept.</p>
+            </div>
+        </section>
+
+        <div class="proj-body">
+            <div class="container proj-content">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Overview</p>
+                    <h2 class="proj-section__title">What is it?</h2>
+                    <div class="proj-section__body">
+                        <p>Rebirth started from a simple frustration: the gap between people who want to learn rigorous topics — research methods, data science, scientific thinking — and the resources that actually teach them well. Most online content is either too shallow or too isolated; there's no community around it.</p>
+                        <p>The platform pairs structured course content with peer mentorship, so learners don't just consume material — they discuss it, get feedback, and build connections with researchers and practitioners. The goal is a learning environment that feels closer to a research lab than a MOOC.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">What we're building</p>
+                    <h2 class="proj-section__title">Core pillars</h2>
+                    <div class="proj-feature-grid">
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">📚</span>
+                            <p class="proj-feature-card__title">Structured Courses</p>
+                            <p class="proj-feature-card__desc">Curriculum designed by researchers and practitioners — not optimized for views, but for actual understanding.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🤝</span>
+                            <p class="proj-feature-card__title">Peer Mentorship</p>
+                            <p class="proj-feature-card__desc">Learners are matched with mentors who've walked the same path — structured 1:1 sessions, not just forums.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🔗</span>
+                            <p class="proj-feature-card__title">Researcher Connections</p>
+                            <p class="proj-feature-card__desc">Bridges the gap between students and active researchers — creating pathways into real projects and labs.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🌱</span>
+                            <p class="proj-feature-card__title">Community-driven</p>
+                            <p class="proj-feature-card__desc">Content, feedback, and direction come from the community — participants shape what gets built and taught.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Status</p>
+                    <h2 class="proj-section__title">Where it's at</h2>
+                    <div class="proj-section__body">
+                        <p>Rebirth is currently in development. The platform link will be live here once we're ready for early access. If you're interested in contributing, mentoring, or being part of the first cohort — reach out directly.</p>
+                    </div>
+                    <div style="margin-top: var(--space-6);">
+                        <span class="proj-coming-soon">Platform coming soon</span>
+                    </div>
+                </div>
+
+                <div class="proj-cta">
+                    <div class="proj-cta__text">
+                        <h3>Interested?</h3>
+                        <p>Get in touch if you want to mentor, contribute, or join the early cohort.</p>
+                    </div>
+                    <div class="proj-cta__actions">
+                        <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                            Reach out on LinkedIn
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional Group Analysis of Drug-Like Chemical Space | Evint Leovonzko</title>
+    <meta name="description" content="Graph-level variational encoding and Self-Organising Maps map functional group composition across 249,455 ZINC15 molecules, with counterfactual QED decomposition - Research by Evint Leovonzko">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/research/functional-group-analysis.html">
+    <meta property="og:title" content="Functional Group Analysis of Drug-Like Chemical Space | Evint Leovonzko">
+    <meta property="og:description" content="GAT-VGAE and SOM analysis of 249,455 ZINC15 molecules reveals functional group enrichment patterns, counterfactual QED decomposition, and phenyl-depleted drug-likeness clusters">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/research/functional-group-analysis.html">
+    <meta property="twitter:title" content="Functional Group Analysis of Drug-Like Chemical Space | Evint Leovonzko">
+    <meta property="twitter:description" content="GAT-VGAE and SOM analysis of 249,455 ZINC15 molecules reveals functional group enrichment patterns, counterfactual QED decomposition, and phenyl-depleted drug-likeness clusters">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/research.css?v=6">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark"><img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"     class="rsb__link active">Abstract</a>
+                    <a href="#introduction" class="rsb__link">Introduction</a>
+                    <a href="#methods"      class="rsb__link">Methods</a>
+                    <a href="#results"      class="rsb__link">Results</a>
+                    <a href="#discussion"   class="rsb__link">Discussion</a>
+                    <a href="#conclusion"   class="rsb__link">Conclusion</a>
+                    <a href="#references"   class="rsb__link">References</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Hero Section -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <circle cx="5" cy="6" r="2"/>
+                                        <circle cx="19" cy="6" r="2"/>
+                                        <circle cx="5" cy="18" r="2"/>
+                                        <circle cx="19" cy="18" r="2"/>
+                                        <line x1="9.5" y1="10.5" x2="6.5" y2="7.5"/>
+                                        <line x1="14.5" y1="10.5" x2="17.5" y2="7.5"/>
+                                        <line x1="9.5" y1="13.5" x2="6.5" y2="16.5"/>
+                                        <line x1="14.5" y1="13.5" x2="17.5" y2="16.5"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">Functional Group Analysis of Drug-Like Chemical Space</h1>
+                            <p class="circrna-subtitle">Using Graph-Level Variational Graph Encoding and Self-Organising Maps</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">Graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing map how functional group composition varies across 249,455 ZINC15 drug-like molecules &mdash; with counterfactual QED analysis decomposing scoring artefacts from genuine chemical signals.</p>
+                                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.75rem;">
+                                    <strong>Evint Leovonzko</strong>, Callixta F. Cahyaningrum, Rachmania Ulwani &mdash; Department of Chemistry, Universitas Gadjah Mada
+                                </p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">249,455</span>
+                                        <span class="hero-metric__label">ZINC15 molecules</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">22</span>
+                                        <span class="hero-metric__label">Functional group types</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">5,496</span>
+                                        <span class="hero-metric__label">Molecules/sec throughput</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://github.com/Evintkoo/Functional-Group-Analysis" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Source Code</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Pipeline details, co-authors, and headline metrics behind this cheminformatics study.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">249,455</span>
+                                        <span class="meta-highlight__label">Molecules analysed</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">18%</span>
+                                        <span class="meta-highlight__label">Lower QE vs. baseline</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">0.68</span>
+                                        <span class="meta-highlight__label">Bootstrap ARI stability</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Authors</span>
+                                        <span class="meta-detail__value">Evint Leovonzko, Callixta F. Cahyaningrum, Rachmania Ulwani</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Affiliation</span>
+                                        <span class="meta-detail__value">Department of Chemistry, Universitas Gadjah Mada, Yogyakarta, Indonesia</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Pipeline</span>
+                                        <span class="meta-detail__value">GAT-VGAE (3-layer, 16-dim latent) &rarr; QED-stratified autotuned SOM &rarr; FDR-corrected enrichment &mdash; all in Rust with Burn 0.16.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">ZINC15</span>
+                                        <span class="meta-pill">GAT-VGAE</span>
+                                        <span class="meta-pill">Self-Organising Maps</span>
+                                        <span class="meta-pill">Counterfactual QED</span>
+                                        <span class="meta-pill">Rust / Burn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="context">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Context</h3>
+                                <p>This study combines graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing to map how functional group composition varies across drug-like chemical space. Analysis of 249,455 ZINC15 molecules encoded via GAT-VGAE, stratified by QED, and clustered with autotuned SOMs.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="finding-1">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Finding 1: Counterfactual QED Decomposition</h3>
+                                <p>Counterfactual QED analysis decomposes the &gt;22-fold nitro prevalence gradient into 78% entailed (attributable to QED&rsquo;s structural alert penalty) and 22% empirical (genuine physicochemical disfavour from elevated MW and LogP).</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="finding-2">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Finding 2: Phenyl-Depleted Drug-Likeness</h3>
+                                <p>A high-QED cluster (n=1,615) shows 7.2-fold phenyl depletion with enrichment for saturated groups &mdash; thioethers, tertiary amines, ethers &mdash; demonstrating drug-likeness without aromatic dominance, though representing only 2% of high-QED space.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="finding-3">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Finding 3: Pharmacophore Signatures</h3>
+                                <p>Sulfonamide&ndash;heterocycle&ndash;nitrile pharmacophore signatures recur across all five QED strata with non-random co-occurrence (p&laquo;0.001, &chi;&sup2;). Comparison with Morgan fingerprint baselines confirms 72% top-10 enrichment agreement, while VGAE provides 18% lower quantization error.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="validation">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Validation</h3>
+                                <p>Functional groups identified via substructure matching (22 types, 96.3% agreement with RDKit), not learned by encoder. Bootstrap resampling (1,000 iterations) yields mean cluster stability of ARI = 0.68. Six ablation experiments confirm each pipeline component contributes to final resolution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section class="research-section" id="introduction">
+                    <h2 class="research-section__title">Introduction</h2>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">
+                            Functional groups &mdash; hydroxyl, carbonyl, amine, sulfonyl, and hundreds more &mdash; are the primary carriers of chemical reactivity, physicochemical properties, and biological activity. Each imparts characteristic properties: carboxylic acids introduce ionisability at physiological pH, amide bonds provide hydrogen bonding, aromatic rings contribute hydrophobicity, halogens modulate lipophilicity and metabolic resistance.
+                        </p>
+
+                        <p>
+                            Drug-likeness &mdash; the degree to which a molecule&rsquo;s properties are consistent with oral bioavailability &mdash; serves as a key filtering criterion in early-stage drug discovery. Lipinski&rsquo;s Rule of Five provides binary pass/fail filtering (MW &le;500, LogP &le;5, HBD &le;5, HBA &le;10), but cannot quantify <em>degree</em> of drug-likeness. The Quantitative Estimate of Drug-likeness (QED) addresses this gap as a continuous 0&ndash;1 score integrating eight molecular descriptors, calibrated against 771 FDA-approved oral drugs.
+                        </p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Research Gap</h4>
+                                <p>
+                                    Despite the recognised importance of functional groups, systematic large-scale analyses relating functional group composition to quantitative drug-likeness scores remain sparse. Traditional fingerprint methods flatten molecular topology into fixed-length bit vectors, losing the structural context that makes chemistry meaningful.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p>
+                            This study extends a prior analysis by the present authors applying a feed-forward autoencoder and Deep SOM to the same 249,455 molecules. That study found sp&sup2; hybridisation correlated negatively with drug-likeness (r = &minus;0.45) while Fsp&sup3; correlated positively (r = +0.26), but was limited by a flat feature vector, deterministic autoencoder, and aggregate atomic statistics rather than functional group analysis.
+                        </p>
+
+                        <p>
+                            The present work advances to full molecular graph representations, graph attention network encoding, variational inference for smooth latent manifolds, and a 22-type functional group vocabulary with formal enrichment testing. The primary methodological contribution is <strong>counterfactual QED analysis</strong>, which disentangles scoring-function artefacts from genuine chemical signals.
+                        </p>
+                    </div>
+
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Question 1</div>
+                                <h3 class="card__title">Functional Group Landscape</h3>
+                                <p class="card__description">
+                                    What is the functional group landscape of drug-like chemical space, and how does it relate to known structural trends in approved drugs?
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Census</span>
+                                    <span class="card__tag">Prevalence</span>
+                                    <span class="card__tag">Distribution</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Question 2</div>
+                                <h3 class="card__title">FG&ndash;Property Relationships</h3>
+                                <p class="card__description">
+                                    What are the quantitative functional group&ndash;property relationships, with effect sizes and confidence intervals, for QED, LogP, and synthetic accessibility?
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Correlations</span>
+                                    <span class="card__tag">QED</span>
+                                    <span class="card__tag">LogP &amp; SAS</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Question 3</div>
+                                <h3 class="card__title">Cluster Substructure</h3>
+                                <p class="card__description">
+                                    Does unsupervised clustering resolve interpretable FG-level substructure? What is the relationship between aromatic character and drug-likeness?
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">SOM Clustering</span>
+                                    <span class="card__tag">Aromaticity</span>
+                                    <span class="card__tag">Enrichment</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Question 4</div>
+                                <h3 class="card__title">Entailed vs. Empirical</h3>
+                                <p class="card__description">
+                                    To what extent are QED-stratified patterns artefacts of QED&rsquo;s construction versus genuine chemical signals? Addressed through counterfactual QED decomposition &mdash; the study&rsquo;s primary methodological contribution.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Counterfactual</span>
+                                    <span class="card__tag">Decomposition</span>
+                                    <span class="card__tag">Novel Method</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Methods -->
+                <section class="research-section" id="methods">
+                    <h2 class="research-section__title">Methodology</h2>
+
+                    <div class="methods-timeline">
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 1: Dataset &amp; Molecular Graph Construction</h3>
+                                    <p class="method-description">
+                                        249,455 drug-like molecules from ZINC15 (Lipinski-compliant, commercially available), deduplicated by canonical SMILES. Each molecule represented as undirected graph G = (V, E) with <strong>29-dimensional node features</strong> (atom type one-hot, degree, charge, hybridisation, aromaticity, ring membership, atomic mass, chirality) and <strong>9-dimensional edge features</strong> (bond type, conjugation, ring membership, stereochemistry). Mean graph size: 23.2 atoms, 24.9 bonds; totalling 5.78M atoms and 6.21M bonds.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">ZINC15</span>
+                                        <span class="method-tag">249,455 Molecules</span>
+                                        <span class="method-tag">29-dim Node Features</span>
+                                        <span class="method-tag">9-dim Edge Features</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 2: Functional Group Detection</h3>
+                                    <p class="method-description">
+                                        Substructure pattern matching identifies <strong>22 functional group types</strong> across six categories: oxygen-containing (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-containing (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-containing (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). Priority-based two-pass algorithm resolves overlapping substructures. <strong>Validated at 96.3% agreement with RDKit</strong> (range: 91.8% ketone to 99.7% nitro).
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">22 FG Types</span>
+                                        <span class="method-tag">Two-Pass Matching</span>
+                                        <span class="method-tag">96.3% RDKit Agreement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 3: GAT-VGAE Encoding</h3>
+                                    <p class="method-description">
+                                        Encoder: input projection (29&rarr;64) followed by <strong>three GAT layers</strong> with edge-aware attention, residual connections, and ReLU. Global attention pooling produces graph-level embeddings. Two parallel heads project to mean &mu; and log-variance (both &isin; &Ropf;&sup1;&sup6;). Sampling via reparameterisation trick. Decoder reconstructs node features via three linear layers (16&rarr;64&rarr;128&rarr;29). Loss: MSE + &beta;KL with <strong>&beta; = 0.001</strong> (selected via grid search to prevent posterior collapse). Trained 100 epochs with Adam, cosine annealing, batch size 128. <strong>Validation MSE = 0.0512</strong> (training: 0.0505, &Delta; = 1.4%).
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">3-Layer GAT</span>
+                                        <span class="method-tag">16-dim Latent</span>
+                                        <span class="method-tag">&beta; = 0.001</span>
+                                        <span class="method-tag">MSE = 0.051</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 4: QED-Stratified SOM Clustering</h3>
+                                    <p class="method-description">
+                                        Molecules divided into <strong>five strata</strong> via automated valley detection on QED distribution (breakpoints at 0.399, 0.520, 0.694, 0.814). Per-stratum SOM trained on 16-dim latent embeddings with <strong>autotuned grid size</strong> (10&times;10 to 30&times;30, composite score of QE + TE + ActiveRatio). Training: 128 epochs, Gaussian neighbourhood, K-Means++ init. Clusters characterised by functional group census, enrichment ratios with 95% CIs, Fisher&rsquo;s exact test with <strong>Benjamini&ndash;Hochberg FDR correction</strong> (&alpha; = 0.05). Total: 68,836 enrichment tests with three safeguards.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">5 QED Strata</span>
+                                        <span class="method-tag">Autotuned SOM</span>
+                                        <span class="method-tag">Fisher&rsquo;s Exact Test</span>
+                                        <span class="method-tag">68,836 Tests</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Step 5: Counterfactual QED Analysis</h3>
+                                    <p class="method-description">
+                                        QED recomputed with the structural alert component removed (QED<sub>no-alert</sub>), using geometric mean of seven non-alert desirability functions. Each molecule re-stratified using same valley-detection algorithm. Decomposes observed gradients into <strong>entailed components</strong> (attributable to QED&rsquo;s construction) and <strong>empirical components</strong> (genuine chemical signals). Primary methodological contribution of the study.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Counterfactual Scoring</span>
+                                        <span class="method-tag">Entailed vs. Empirical</span>
+                                        <span class="method-tag">Novel Method</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="method-card">
+                            <div class="method-content">
+                                <div class="method-text">
+                                    <h3 class="method-title">Implementation</h3>
+                                    <p class="method-description">
+                                        Full pipeline in <strong>Rust (2021 edition)</strong> using Burn 0.16 (wgpu/Metal GPU backend), petgraph 0.7, rayon for parallelism. Training on Apple M2 Ultra (76-core GPU) completed in ~45 minutes. Throughput: <strong>5,496 molecules/second</strong>. Visualisation via UMAP-rs with plotters SVG output in colorblind-safe palettes. Fixed random seed (42) for primary run; metrics reported as mean &plusmn; std over 5 seeds.
+                                    </p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Rust + Burn 0.16</span>
+                                        <span class="method-tag">wgpu/Metal</span>
+                                        <span class="method-tag">~45 min Training</span>
+                                        <span class="method-tag">5,496 mol/s</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section class="research-section" id="results">
+                    <h2 class="research-section__title">Results</h2>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">
+                            The dataset comprises 249,455 molecules with mean QED = 0.728 &plusmn; 0.140, mean LogP = 2.457 &plusmn; 1.434, and mean SAS = 3.053 &plusmn; 0.835. All 22 functional group types were detected. Prevalence is highly skewed: phenyl (83.0%), amide (68.0%), and heterocycle (58.0%) dominate, while nitro (4.3%), carboxyl (3.8%), and phosphate (0.1%) are rare.
+                        </p>
+                    </div>
+
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Functional Group Census</div>
+                                <h3 class="card__title">Aromatic Dominance of ZINC15</h3>
+                                <p class="card__description">
+                                    83.0% of molecules contain &ge;1 phenyl ring (mean 2.42 rings/molecule). 96.2% contain at least one ring system. Phenyl accounts for 604,208 total occurrences &mdash; followed by heterocycle (338,210), amide (221,905), halide (135,900), and ether (122,335).
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">83% Phenyl</span>
+                                    <span class="card__tag">68% Amide</span>
+                                    <span class="card__tag">58% Heterocycle</span>
+                                    <span class="card__tag">2.42 Rings/mol</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">FG&ndash;Property Correlations</div>
+                                <h3 class="card__title">Key Structure&ndash;Property Relationships</h3>
+                                <p class="card__description">
+                                    Nitro shows strongest negative QED correlation (r = &minus;0.321). Phenyl dominates LogP (r = +0.397) and SAS (r = &minus;0.427). Amide has strongest SAS association (r = &minus;0.290), reflecting amide coupling as the most-used C&ndash;N bond-forming reaction. No single binary FG&ndash;property correlation exceeds |r| = 0.43.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Nitro: r(QED) = &minus;0.32</span>
+                                    <span class="card__tag">Phenyl: r(LogP) = +0.40</span>
+                                    <span class="card__tag">Amide: r(SAS) = &minus;0.29</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">VGAE Encoding</div>
+                                <h3 class="card__title">Latent Space Quality</h3>
+                                <p class="card__description">
+                                    Reconstruction MSE = 0.0505 (43% error reduction over per-atom-type baseline). Dimension 0 carries highest variance (&sigma;&sup2; = 0.952) encoding phenyl presence (|r| = 0.543). Dimensions 5 and 7 show strongest QED associations (r = +0.322, +0.315). Negligible overfitting (&Delta; = 1.4% train/val gap).
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">MSE = 0.051</span>
+                                    <span class="card__tag">43% Error Reduction</span>
+                                    <span class="card__tag">16-dim Latent</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">QED Stratification</div>
+                                <h3 class="card__title">Five-Stratum Structure</h3>
+                                <p class="card__description">
+                                    Automated valley detection yields five strata: S0 (n=6,830, QED &lt;0.40), S1 (n=17,622), S2 (n=60,427), S3 (n=83,673), S4 (n=80,903, QED &gt;0.81). Quantization error drops 33% from S0 (1.10) to S4 (0.74), indicating high-QED molecules occupy progressively more compact latent space.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">S0: n = 6,830</span>
+                                    <span class="card__tag">S4: n = 80,903</span>
+                                    <span class="card__tag">33% QE Reduction</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="content-text" style="margin-top: var(--space-8);">
+                        <h3>Headline Enrichment Findings</h3>
+                    </div>
+
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Stratum 4 &middot; High QED</div>
+                                <h3 class="card__title">Phenyl-Depleted Drug-Likeness</h3>
+                                <p class="card__description">
+                                    <strong>Cluster 0</strong> (n=1,615, QED&#x0304; = 0.847, 2.0% of S4): 7.2-fold phenyl depletion (11.5% vs. 83.0% overall). Enriched for thioether (1.89&times;, 95% CI [1.62, 2.20]), tertiary amine (1.81&times;, CI [1.58, 2.07]), ether (1.41&times;, CI [1.24, 1.60]). Identifies saturated 3D scaffolds &mdash; piperidines, morpholines, tetrahydropyrans &mdash; achieving drug-likeness without aromatic dominance.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">7.2&times; Phenyl Depletion</span>
+                                    <span class="card__tag">Thioether 1.9&times;</span>
+                                    <span class="card__tag">Tert. Amine 1.8&times;</span>
+                                    <span class="card__tag">n = 1,615</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Cross-Stratum Pattern</div>
+                                <h3 class="card__title">Sulfonamide Pharmacophore Recurrence</h3>
+                                <p class="card__description">
+                                    Sulfonyl-enriched clusters (1.5&ndash;2.1&times;, all p<sub>adj</sub> &lt; 0.01) consistently co-enrich for nitrile (1.3&ndash;1.8&times;), imine (1.4&ndash;2.6&times;), and heterocyclic nitrogen (1.2&ndash;1.5&times;) across all five strata. Non-random co-occurrence confirmed (p &laquo; 0.001, Yates-corrected &chi;&sup2;). Matches known pharmacophore of ATP-competitive kinase inhibitors and sulfonamide antibacterials.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">5 Strata Recurrence</span>
+                                    <span class="card__tag">p &laquo; 0.001</span>
+                                    <span class="card__tag">Kinase Inhibitor Motif</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Stratum 4 &middot; Cluster 899</div>
+                                <h3 class="card__title">Carboxylate-Bearing Drug-Like Molecules</h3>
+                                <p class="card__description">
+                                    Largest high-QED cluster (n=3,347, QED&#x0304; = 0.871). Carboxyl enrichment <strong>3.67&times;</strong> [3.3, 4.1], halide 1.51&times; [1.4, 1.6], sulfonyl 1.50&times; [1.3, 1.7]. Challenges the assumption carboxylic acids preclude oral bioavailability &mdash; many approved drugs (ibuprofen, valsartan, atorvastatin) use anionic carboxylate for salt-bridge target engagement.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">COOH 3.7&times;</span>
+                                    <span class="card__tag">Halide 1.5&times;</span>
+                                    <span class="card__tag">n = 3,347</span>
+                                    <span class="card__tag">NSAID-like</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Cross-Stratum Gradient</div>
+                                <h3 class="card__title">&gt;22-fold Nitro Depletion</h3>
+                                <p class="card__description">
+                                    Nitro prevalence drops monotonically: S0 = 29.6%, S1 = 17.5%, S2 = 9.2%, S3 = 4.6%, S4 = 1.3% (&gt;22-fold reduction). <strong>Counterfactual analysis</strong> decomposes this: ~78% attributable to QED&rsquo;s structural alert penalty, ~22% reflects genuine physicochemical disfavour (nitro-bearing molecules have +34 Da MW and +0.8 LogP at matched ring count).
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">29.6% &rarr; 1.3%</span>
+                                    <span class="card__tag">78% Entailed</span>
+                                    <span class="card__tag">22% Empirical</span>
+                                    <span class="card__tag">+34 Da MW</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Stratum 0 &middot; Low QED</div>
+                                <h3 class="card__title">Polar Aliphatic Peptidomimetics</h3>
+                                <p class="card__description">
+                                    <strong>Cluster 600</strong> (n=302, LogP = &minus;0.19): primary amine 3.8&times; (p<sub>adj</sub> &lt; 10<sup>&minus;12</sup>), hydroxyl 3.7&times; (p<sub>adj</sub> &lt; 10<sup>&minus;10</sup>), carboxyl 2.5&times; (p<sub>adj</sub> &lt; 10<sup>&minus;6</sup>). Identifies amino acid derivatives that fail QED not because pharmacologically inert, but because QED penalises low LogP and high polar surface area &mdash; a known limitation for transporter-mediated drugs like gabapentin.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">NH&sub2; 3.8&times;</span>
+                                    <span class="card__tag">OH 3.7&times;</span>
+                                    <span class="card__tag">LogP = &minus;0.19</span>
+                                    <span class="card__tag">Peptidomimetics</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Baseline Comparison</div>
+                                <h3 class="card__title">VGAE vs. Morgan Fingerprints</h3>
+                                <p class="card__description">
+                                    1024-bit Morgan fingerprints (ECFP4) reduced to 16 dims via PCA produce 18% higher QE. ARI between methods: 0.34 (different but overlapping partitions). <strong>72% of top-10 enrichments shared</strong>. Broad patterns robust to embedding method, but Morgan/PCA cannot resolve phenyl-depleted Cluster 0 as distinct (1,615 molecules split across 8 clusters with enrichment &lt;2.0&times;).
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">72% Agreement</span>
+                                    <span class="card__tag">18% Higher QE</span>
+                                    <span class="card__tag">ARI = 0.34</span>
+                                    <span class="card__tag">Finer Resolution</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section class="research-section" id="discussion">
+                    <h2 class="research-section__title">Discussion</h2>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">
+                            The functional group census reveals a striking aromatic bias: 83.0% of 249,455 ZINC15 molecules contain at least one phenyl ring, with a mean of 2.42 aromatic rings per molecule. This dominance reflects the well-documented bias toward flat, sp&sup2;-rich scaffolds in commercial chemical libraries.
+                        </p>
+
+                        <h3>The Aromatic Dominance Problem</h3>
+
+                        <p>
+                            Excessive aromaticity impairs drug-likeness through three interconnected mechanisms: each additional aromatic ring increases LogP ~0.5 units, reducing aqueous solubility; electron-rich &pi;-systems are preferential substrates for CYP-mediated oxidative metabolism (particularly CYP1A2, CYP3A4), reducing oral bioavailability; and flat aromatic surfaces promote crystal packing and &pi;-stacking, reducing dissolution rates and increasing plasma protein binding.
+                        </p>
+
+                        <p>
+                            Stratum 4&rsquo;s Cluster 0 provides granular evidence for the &ldquo;escape from flatland&rdquo; hypothesis: 7.2-fold phenyl depletion with enrichment for saturated groups indicates piperidine, morpholine, and tetrahydropyran scaffolds. However, this cluster represents only 2.0% of Stratum 4 (n=1,615 of 80,903), so phenyl-depleted drug-likeness remains uncommon &mdash; likely reflecting synthetic accessibility bias, as flat aromatic scaffolds dominate vendor catalogues via well-established cross-coupling reactions.
+                        </p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Drug-Likeness&ndash;Synthetic Accessibility Trade-off</h4>
+                                <p>
+                                    LogP decreases with increasing QED (S0 mean = 3.21 &rarr; S4 mean = 1.97; &Delta; = &minus;1.24, p &lt; 10<sup>&minus;10</sup>). Conversely, SAS increases with QED (S0 mean = 2.52 &rarr; S4 mean = 3.48; &Delta; = +0.96). Molecule-level correlation is moderate (r = +0.31, R&sup2; = 0.096) &mdash; substantial within-stratum variance implies &ldquo;Pareto-efficient&rdquo; molecules achieving high QED without proportionate SAS penalties.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3>Topology of Drug-Like Chemical Space</h3>
+
+                        <p>
+                            Quantization error decreases monotonically from Stratum 0 (QE = 1.10) to Stratum 4 (QE = 0.74) &mdash; a 33% reduction. Topographic error drops 44%, and U-matrix maxima decrease 33%. Together, these metrics indicate drug-like molecules occupy a progressively more compact latent space region with smoother inter-cluster transitions. Stratum 4 has the smoothest internal topology (U-max = 0.074), suggesting the high-QED latent surface can serve as a navigation tool for scaffold hopping via centroid interpolation.
+                        </p>
+                    </div>
+
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Ablation Results</div>
+                                <h3 class="card__title">Component Validation</h3>
+                                <p class="card__description">
+                                    Six ablation experiments confirm each component&rsquo;s contribution. Deterministic AE (&beta;=0) achieves lower reconstruction loss but fragments latent space (+12% QE, 76% FG agreement). GCN encoder degrades both metrics. Fixed 10&times;10 SOM shows largest degradation (64% FG agreement). However, 15&times;15 grids reproduce all principal findings within 15% enrichment ratios.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">6 Ablations</span>
+                                    <span class="card__tag">&beta;=0: +12% QE</span>
+                                    <span class="card__tag">GCN: Degraded</span>
+                                    <span class="card__tag">Fixed SOM: 64%</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Cluster Stability</div>
+                                <h3 class="card__title">Bootstrap Validation</h3>
+                                <p class="card__description">
+                                    1,000 bootstrap iterations (80% subsample) yield mean ARI = 0.68 (range: 0.61 for S0 to 0.74 for S4). Highlighted clusters have per-cluster Jaccard stability 0.72 (Cluster 0) and 0.78 (Cluster 899). 5-fold cross-validation yields 82% mean concordance for top-10 enriched FGs per stratum. Moderate stability &mdash; clusters are locally enriched neighbourhood partitions, not sharply defined subpopulations.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">ARI = 0.68</span>
+                                    <span class="card__tag">1,000 Iterations</span>
+                                    <span class="card__tag">82% CV Concordance</span>
+                                    <span class="card__tag">Jaccard 0.72&ndash;0.78</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Design Implications</div>
+                                <h3 class="card__title">Actionable Insights for Medicinal Chemistry</h3>
+                                <p class="card__description">
+                                    (1) Aromatic ring reduction viable but uncommon (2% of high-QED space). (2) Sulfonamide pharmacophores are QED-robust and combinatorially predictable across all strata. (3) 3.67&times; carboxyl enrichment in S4&rsquo;s largest cluster challenges the assumption carboxylic acids preclude oral bioavailability. (4) Nitro 78%/22% decomposition quantifies known structural alert contribution.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Ring Reduction</span>
+                                    <span class="card__tag">Sulfonamide QED-Robust</span>
+                                    <span class="card__tag">Carboxylate Challenge</span>
+                                    <span class="card__tag">Nitro Decomposition</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Limitations</div>
+                                <h3 class="card__title">Study Constraints</h3>
+                                <p class="card__description">
+                                    No external bioactivity validation (most significant limitation). ZINC15 biased toward synthetically tractable scaffolds. QED calibrated on 771 historical oral drugs, doesn&rsquo;t account for PROTACs or non-oral administration. 22-type FG vocabulary misses boronic acids, azetidines, covalent warheads. Detection is stereo-agnostic. VGAE decoder broadcasts single code to all nodes. Cluster stability moderate (ARI = 0.68).
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">No Bioactivity Data</span>
+                                    <span class="card__tag">Commercial Bias</span>
+                                    <span class="card__tag">Stereo-Agnostic</span>
+                                    <span class="card__tag">Moderate ARI</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section class="research-section" id="conclusion">
+                    <h2 class="research-section__title">Conclusion</h2>
+
+                    <div class="content-text">
+                        <p>
+                            This work contributes an integrated analysis pipeline &mdash; graph-level variational encoding, stratified SOM clustering, formal enrichment testing &mdash; and applies it to 249,455 ZINC15 molecules. The primary methodological contribution is counterfactual QED decomposition, disentangling scoring-function artefacts from genuine chemical patterns: the &gt;22-fold nitro prevalence gradient decomposes into 78% entailed by QED&rsquo;s alert penalty and 22% empirical.
+                        </p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Principal Findings</h4>
+                                <p>
+                                    Phenyl-depleted drug-likeness (n=1,615, 2% of high-QED space) and recurring sulfonamide pharmacophore co-occurrence quantitatively confirm established observations with effect sizes, confidence intervals, and FDR-controlled significance. Broad patterns robust to embedding method (72% top-10 agreement with Morgan fingerprints), while VGAE provides finer resolution (18% lower QE). Cluster stability moderate (ARI = 0.68, 1,000 bootstrap iterations).
+                                </p>
+                            </div>
+                        </div>
+
+                        <p>
+                            The study is descriptive; no bioactivity validation was performed. The critical next step is overlaying ChEMBL bioactivity data to test whether the structural organisation identified here predicts shared pharmacological activity. Additional priorities include extending to the COCONUT natural product database, incorporating 3D conformer generation, and using stratified SOM centroids as conditioning variables for constrained molecular generation.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- References -->
+                <section class="research-section" id="references">
+                    <h2 class="research-section__title">References</h2>
+
+                    <div class="cards">
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Drug-Likeness</div>
+                                <h3 class="card__title">Quantitative Estimate of Drug-likeness (QED)</h3>
+                                <p class="card__description">
+                                    <strong>Bickerton, G. R., Paolini, G. V., Besnard, J., Muresan, S., &amp; Hopkins, A. L. (2012).</strong> Quantifying the chemical beauty of drugs. <em>Nature Chemistry</em>, 4(2), 90&ndash;98.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Nature Chemistry</span>
+                                    <span class="card__tag">Drug-Likeness Score</span>
+                                    <span class="card__tag">771 Oral Drugs</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Foundational</div>
+                                <h3 class="card__title">Lipinski&rsquo;s Rule of Five</h3>
+                                <p class="card__description">
+                                    <strong>Lipinski, C. A., Lombardo, F., Dominy, B. W., Feeney, P. J. (1997).</strong> Experimental and computational approaches to estimate solubility and permeability in drug discovery. <em>Advanced Drug Delivery Reviews</em>, 23(1&ndash;3), 3&ndash;25.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Ro5</span>
+                                    <span class="card__tag">Oral Bioavailability</span>
+                                    <span class="card__tag">Seminal Work</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Database</div>
+                                <h3 class="card__title">ZINC15</h3>
+                                <p class="card__description">
+                                    <strong>Sterling, T., &amp; Irwin, J. J. (2015).</strong> ZINC 15 &mdash; Ligand discovery for everyone. <em>Journal of Chemical Information and Modeling</em>, 55(11), 2324&ndash;2337.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Virtual Screening</span>
+                                    <span class="card__tag">Drug Discovery</span>
+                                    <span class="card__tag">750M Compounds</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Graph Neural Networks</div>
+                                <h3 class="card__title">Graph Attention Networks (GAT)</h3>
+                                <p class="card__description">
+                                    <strong>Veli&#x10D;kovi&#x107;, P., Cucurull, G., Casanova, A., Romero, A., Li&ograve;, P., &amp; Bengio, Y. (2018).</strong> Graph attention networks. <em>ICLR 2018</em>.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Attention Mechanism</span>
+                                    <span class="card__tag">Message Passing</span>
+                                    <span class="card__tag">ICLR</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Variational Inference</div>
+                                <h3 class="card__title">Variational Graph Auto-Encoders</h3>
+                                <p class="card__description">
+                                    <strong>Kipf, T. N., &amp; Welling, M. (2016).</strong> Variational graph auto-encoders. <em>NeurIPS Workshop on Bayesian Deep Learning</em>.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">VGAE</span>
+                                    <span class="card__tag">Generative Models</span>
+                                    <span class="card__tag">Latent Space</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Clustering</div>
+                                <h3 class="card__title">Self-Organising Maps</h3>
+                                <p class="card__description">
+                                    <strong>Kohonen, T. (1990).</strong> The self-organizing map. <em>Proceedings of the IEEE</em>, 78(9), 1464&ndash;1480.<br>
+                                    <strong>Kohonen, T. (2001).</strong> <em>Self-Organizing Maps</em>. Springer Series in Information Sciences, Vol. 30.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">SOM</span>
+                                    <span class="card__tag">Topology Preservation</span>
+                                    <span class="card__tag">Unsupervised Learning</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Synthetic Accessibility</div>
+                                <h3 class="card__title">SAS Score</h3>
+                                <p class="card__description">
+                                    <strong>Ertl, P., &amp; Schuffenhauer, A. (2009).</strong> Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions. <em>Journal of Cheminformatics</em>, 1, 8.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Synthetic Feasibility</span>
+                                    <span class="card__tag">Molecular Complexity</span>
+                                    <span class="card__tag">Fragment-Based</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Chemical Space</div>
+                                <h3 class="card__title">&ldquo;Escape from Flatland&rdquo;</h3>
+                                <p class="card__description">
+                                    <strong>Lovering, F., Bikker, J., &amp; Humblet, C. (2009).</strong> Escape from flatland: Increasing saturation as an approach to improving clinical success. <em>Journal of Medicinal Chemistry</em>, 52(21), 6752&ndash;6756.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Fsp&sup3;</span>
+                                    <span class="card__tag">Saturation</span>
+                                    <span class="card__tag">Clinical Success</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Statistics</div>
+                                <h3 class="card__title">FDR Correction</h3>
+                                <p class="card__description">
+                                    <strong>Benjamini, Y., &amp; Hochberg, Y. (1995).</strong> Controlling the false discovery rate: A practical and powerful approach to multiple testing. <em>Journal of the Royal Statistical Society: Series B</em>, 57(1), 289&ndash;300.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Multiple Testing</span>
+                                    <span class="card__tag">FDR</span>
+                                    <span class="card__tag">Foundational</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__content">
+                                <div class="card__label">Medicinal Chemistry</div>
+                                <h3 class="card__title">Fluorine in Drug Design &amp; Sulfonamides</h3>
+                                <p class="card__description">
+                                    <strong>Meanwell, N. A. (2018).</strong> Fluorine and fluorinated motifs in the design and application of bioisosteres. <em>J. Med. Chem.</em>, 61(14), 5822&ndash;5880.<br>
+                                    <strong>Supuran, C. T. (2017).</strong> Special issue: Sulfonamides. <em>Molecules</em>, 22(10), 1642.
+                                </p>
+                                <div class="card__tags">
+                                    <span class="card__tag">Fluorine Bioisosteres</span>
+                                    <span class="card__tag">Sulfonamide Drugs</span>
+                                    <span class="card__tag">Metabolic Stability</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Related Research (auto-generated by recommendation engine) -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=3"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evint Leovonzko | Cofounder of Kolosal AI</title>
+    <meta name="description" content="Evint Leovonzko — Cofounder of Kolosal AI, Researcher at UBC. Building AI for biology, finance, and beyond.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/">
+    <meta property="og:title" content="Evint Leovonzko | Cofounder of Kolosal AI">
+    <meta property="og:description" content="Evint Leovonzko — Cofounder of Kolosal AI, Researcher at UBC">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/">
+    <meta property="twitter:title" content="Evint Leovonzko | Cofounder of Kolosal AI">
+    <meta property="twitter:description" content="Evint Leovonzko — Cofounder of Kolosal AI, Researcher at UBC">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css?v=12">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://github.com">
+    <link rel="dns-prefetch" href="https://www.linkedin.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="#projects" class="nav__link">Projects</a>
+                <a href="#research" class="nav__link">Research</a>
+                <a href="#about" class="nav__link">About</a>
+                <a href="#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Navigation overlay for mobile -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__accent" aria-hidden="true"></div>
+        <div class="hero__accent hero__accent--secondary" aria-hidden="true"></div>
+        <div class="container">
+            <div class="hero__content">
+                <div class="hero__eyebrow">
+                    <span class="hero__eyebrow-line" aria-hidden="true"></span>
+                    <span class="hero__eyebrow-text">Evint Leovonzko</span>
+                </div>
+                <h1 class="hero__title">
+                    Cofounder of<br><span class="hero__ampersand">Kolosal</span> AI
+                </h1>
+                <p class="hero__description">
+                    Building the future of artificial intelligence at <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="hero__inline-link">Kolosal AI</a>.
+                    Researcher at UBC, where I teach machines to decode biology &mdash; from circular RNA to tumor suppressor genes &mdash; and occasionally, the stock market.
+                </p>
+                <div class="hero__actions">
+                    <a href="#projects" class="btn btn--primary">
+                        <span>See my work</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="#about" class="btn btn--ghost">About me</a>
+                </div>
+            </div>
+        </div>
+        <button class="hero__scroll-hint" id="scrollHint" aria-label="Scroll to content">
+            <span>Scroll</span>
+            <div class="hero__scroll-line"></div>
+            <svg class="hero__scroll-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider" aria-hidden="true">
+        <div class="section-divider__line"></div>
+    </div>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-eyebrow" data-reveal>
+                <div class="section-eyebrow__line"></div>
+                <span class="section-eyebrow__label">01 / Projects</span>
+                <div class="section-eyebrow__line"></div>
+            </div>
+            <h2 class="section__title" data-reveal>Things I've built</h2>
+            <p class="section__subtitle" data-reveal>Open-source tools, platforms, and applications</p>
+
+            <article class="project-featured" data-reveal>
+                <div class="project-featured__body">
+                    <div class="project-featured__eyebrow">
+                        <span class="project-featured__tag project-featured__tag--featured">Featured</span>
+                        <span class="project-featured__tag">Co-Founder</span>
+                        <span class="project-featured__tag">MLOps</span>
+                    </div>
+                    <h3 class="project-featured__title">Kolosal AI</h3>
+                    <p class="project-featured__desc">
+                        Open-source platform for running large language models locally &mdash; private, fast, and fully under your control. Custom training and production-ready inference at scale.
+                    </p>
+                    <div class="project-featured__tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">CUDA</span>
+                    </div>
+                </div>
+                <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">
+                    Visit Platform <span class="arrow">&nearr;</span>
+                </a>
+            </article>
+
+            <div class="projects-grid" data-reveal>
+                <!-- PyTorch Inference Framework -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Infrastructure</div>
+                        <h3 class="project-card__title">PyTorch Inference Framework</h3>
+                        <p class="project-card__desc">
+                            Production-ready inference with TensorRT acceleration. Handles batching, model versioning, and GPU memory management out of the box.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">TensorRT</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/torch-inference.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Kolosal AutoML -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; AutoML</div>
+                        <h3 class="project-card__title">Kolosal AutoML Platform</h3>
+                        <p class="project-card__desc">
+                            End-to-end AutoML with Gradio UI &mdash; from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one platform.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Gradio</span>
+                            <span class="tech-tag">MLflow</span>
+                            <span class="tech-tag">Optuna</span>
+                            <span class="tech-tag">FastAPI</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/kolosal-automl.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- SOM Plus Clustering -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Machine Learning</div>
+                        <h3 class="project-card__title">SOM Plus Clustering</h3>
+                        <p class="project-card__desc">
+                            Industrial-grade Self-Organizing Map and clustering library for Rust &mdash; published to crates.io with CPU, CUDA, and Metal backends. Supports SOM classification, KMeans variants, and automatic model selection via silhouette scoring.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">SOM</span>
+                            <span class="tech-tag">CUDA</span>
+                            <span class="tech-tag">Metal</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/som-plus.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- APT Fitness Assistant -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Computer Vision</div>
+                        <h3 class="project-card__title">APT Fitness Assistant</h3>
+                        <p class="project-card__desc">
+                            Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">MediaPipe</span>
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">OpenCV</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/apt-fitness.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/Evintkoo/APT-Fitness-Assistant" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Chain Reaction Simulation -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Physics</div>
+                        <h3 class="project-card__title">Chain Reaction Simulation</h3>
+                        <p class="project-card__desc">
+                            High-performance nuclear chain reaction simulator in Rust &mdash; GPU-accelerated particle physics with real-time 3D visualization, 150+ isotope library from ENDF/B-VIII.0 nuclear data.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">wgpu</span>
+                            <span class="tech-tag">GPU</span>
+                            <span class="tech-tag">Nuclear Physics</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/chain-reaction-simulation.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/Evintkoo/chain_reaction_simulation" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Faction App -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Finance</div>
+                        <h3 class="project-card__title">Faction &mdash; Stock Analysis App</h3>
+                        <p class="project-card__desc">
+                            Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM &mdash; fully offline, no cloud required.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Tauri</span>
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">LLM</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/faction-app.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/Evintkoo/FactionApp" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Rebirth Educational Platform -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Community &middot; Education</div>
+                        <h3 class="project-card__title">Rebirth Educational Platform</h3>
+                        <p class="project-card__desc">
+                            Community-driven platform connecting learners and researchers through structured courses and peer mentorship programs.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Education</span>
+                            <span class="tech-tag">Community</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/rebirth.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PsychIDN -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Community &middot; Mental Health</div>
+                        <h3 class="project-card__title">PsychIDN Community</h3>
+                        <p class="project-card__desc">
+                            Building mental health awareness across Indonesia through accessible psychology content and peer-to-peer support networks.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Psychology</span>
+                            <span class="tech-tag">Mental Health</span>
+                            <span class="tech-tag">Community</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/psychidn.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider" aria-hidden="true">
+        <div class="section-divider__line"></div>
+    </div>
+
+    <!-- Research & Analysis Section -->
+    <section class="section" id="research">
+        <div class="container">
+            <div class="section-eyebrow" data-reveal>
+                <div class="section-eyebrow__line"></div>
+                <span class="section-eyebrow__label">02 / Research &amp; Analysis</span>
+                <div class="section-eyebrow__line"></div>
+            </div>
+            <h2 class="section__title" data-reveal>Papers &amp; analyses</h2>
+            <p class="section__subtitle" data-reveal>First-author research in ML, computational biology, and quantitative finance</p>
+
+            <div class="research-list" data-reveal>
+                <!-- Dual-Encoder vs Cross-Encoder (IEEE TNNLS) -->
+                <a href="research/grn-dual-vs-cross-encoder.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Dual-Encoder vs Cross-Encoder for GRN Links</div>
+                        <div class="research-row__subtitle">Computational Biology &middot; IEEE TNNLS</div>
+                        <div class="research-row__keywords">deep learning, GRN inference, encoder architecture</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Parameter-matched comparison (5.58M params) of dual-encoder and cross-encoder architectures across four imbalance regimes, ablation, pruning, and cold-start evaluation &mdash; submitted to IEEE TNNLS.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag research-row__tag--first-author">First Author</span>
+                        <span class="research-row__tag research-row__tag--ieee">IEEE TNNLS</span>
+                        <span class="research-row__link" aria-hidden="true">Read Paper &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- GRN Modular vs Monolithic -->
+                <a href="research/grn-modular-vs-monolithic.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Modular vs Monolithic GRN Architectures</div>
+                        <div class="research-row__subtitle">Computational Biology &middot; Research</div>
+                        <div class="research-row__keywords">cross-encoder, gradient failure, AUROC</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Diagnosed three critical gradient failures in two-tower GRN models, then compared corrected modular and monolithic cross-encoders &mdash; cross-encoder achieves AUROC 0.904 vs 0.810, with far greater imbalance robustness.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag research-row__tag--first-author">First Author</span>
+                        <span class="research-row__link" aria-hidden="true">Read Paper &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- GRN Two-Tower -->
+                <a href="research/grn-two-tower.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Two-Tower Networks for GRN Inference</div>
+                        <div class="research-row__subtitle">Computational Biology &middot; scRNA-seq</div>
+                        <div class="research-row__keywords">two-tower MLP, scRNA-seq, Rust</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Pure-Rust two-tower MLP learning entity embeddings and cell-type expression profiles to predict TF&ndash;gene interactions &mdash; 83.06% ensemble accuracy, CPU-trainable, no deep learning framework.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag research-row__tag--first-author">First Author</span>
+                        <span class="research-row__link" aria-hidden="true">Read Paper &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Circular RNA -->
+                <a href="research/circular-rna.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Deep Learning for Circular RNA</div>
+                        <div class="research-row__subtitle">Computational Biology &middot; Published</div>
+                        <div class="research-row__keywords">circRNA, ANN, disease classification</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Published ANN pipeline classifying circRNA-disease associations with Gaussian blur preprocessing &mdash; 75% accuracy at 0.14ms per prediction.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag research-row__tag--first-author">First Author</span>
+                        <span class="research-row__link" aria-hidden="true">Read Paper &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Functional Group Analysis -->
+                <a href="research/functional-group-analysis.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Functional Group Analysis</div>
+                        <div class="research-row__subtitle">Cheminformatics &middot; Research</div>
+                        <div class="research-row__keywords">GAT-VGAE, SOM, drug-likeness</div>
+                    </div>
+                    <div class="research-row__desc">
+                        GAT-VGAE + SOM pipeline analysing 249,455 ZINC15 molecules with counterfactual QED decomposition &mdash; mapping functional group enrichment across drug-like chemical space in Rust.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag">Cheminformatics</span>
+                        <span class="research-row__link" aria-hidden="true">Read Research &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- GDP Trajectory Clustering -->
+                <a href="research/global-gdp-patterns.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">GDP Trajectory Clustering</div>
+                        <div class="research-row__subtitle">Economics &middot; Analysis</div>
+                        <div class="research-row__keywords">unsupervised clustering, macroeconomics, k-means</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Unsupervised clustering of 190 countries over 45 years reveals four distinct economic paths &mdash; from stagnation to exponential growth.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag">Analysis</span>
+                        <span class="research-row__link" aria-hidden="true">View Analysis &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Crypto vs Stock Timing -->
+                <a href="research/crypto-stock-timing.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Crypto vs Stock Timing</div>
+                        <div class="research-row__subtitle">Finance &middot; Analysis</div>
+                        <div class="research-row__keywords">Bitcoin, cross-correlation, Granger causality</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Do crypto markets lead or lag equities around recessions? Cross-correlation and Granger causality analysis across five business cycles.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag">Finance</span>
+                        <span class="research-row__link" aria-hidden="true">View Analysis &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Bitcoin Portfolio Allocation -->
+                <a href="research/bitcoin-portfolio-allocation.html" class="research-row">
+                    <div>
+                        <div class="research-row__title">Bitcoin Portfolio Allocation</div>
+                        <div class="research-row__subtitle">Finance &middot; Analysis</div>
+                        <div class="research-row__keywords">risk budgeting, BTC sizing, portfolio optimization</div>
+                    </div>
+                    <div class="research-row__desc">
+                        Optimal BTC sizing via Risk-Budget Framework. Component Risk Contribution analysis across five portfolio profiles finds 10&ndash;12% is the evidence-based ceiling.
+                    </div>
+                    <div class="research-row__meta">
+                        <span class="research-row__tag">Finance</span>
+                        <span class="research-row__link" aria-hidden="true">View Analysis &rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Minimal List) -->
+    <section class="section section--alt" id="experience">
+        <div class="container">
+            <div class="section__header" data-reveal>
+                <div class="section__label">
+                    <span class="section__number">02</span>
+                    <span class="section__label-text">Background</span>
+                </div>
+                <h2 class="section__title">Experience</h2>
+            </div>
+
+            <div class="experience-list" data-stagger>
+                <div class="experience-item">
+                    <div class="experience-item__year">Current</div>
+                    <div class="experience-item__content">
+                        <h4 class="experience-item__title">University of British Columbia</h4>
+                        <p class="experience-item__role">Undergraduate Researcher</p>
+                        <p class="experience-item__desc">Building deep learning pipelines for circular RNA classification and genomic sequence analysis.</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-item__year">2023 — Present</div>
+                    <div class="experience-item__content">
+                        <h4 class="experience-item__title">Kolosal AI</h4>
+                        <p class="experience-item__role">Co-Founder</p>
+                        <p class="experience-item__desc">Architecting open-source tools for local LLM deployment, inference optimization, and MLOps automation.</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-item__year">2024</div>
+                    <div class="experience-item__content">
+                        <h4 class="experience-item__title">Publication</h4>
+                        <p class="experience-item__role">First Author</p>
+                        <p class="experience-item__desc">"Deep Learning Algorithm with Gaussian Blur Data Pre-processing in Circular RNA Classification"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Tech Stack -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text" data-stagger>
+                    <div class="section__label">
+                        <span class="section__number">03</span>
+                        <span class="section__label-text">Who I am</span>
+                    </div>
+                    <h2 class="section__title">About</h2>
+                    <p>
+                        I chase problems where data hides something meaningful &mdash; a motif buried in RNA sequences,
+                        a leading signal in financial time series, or a chance to make ML infrastructure less painful.
+                    </p>
+                    <p>
+                        Currently an undergraduate researcher at UBC building deep learning systems for genomic data,
+                        and co-founding <strong>Kolosal AI</strong> to make running LLMs locally actually simple.
+                        My first-author publication on circular RNA classification is live in URNCST Journal.
+                    </p>
+                    <p class="about-text__aside">
+                        When I'm not debugging loss curves, I'm reading about macroeconomics or exploring Vancouver's trails.
+                    </p>
+                </div>
+                <div class="tech-list" data-reveal>
+                    <h3 class="tech-list__title">What I work with</h3>
+                    <ul class="tech-grid" data-stagger>
+                        <li>Python</li>
+                        <li>PyTorch</li>
+                        <li>TensorFlow</li>
+                        <li>FastAPI</li>
+                        <li>Docker</li>
+                        <li>CUDA</li>
+                        <li>Pandas</li>
+                        <li>OpenCV</li>
+                        <li>Streamlit</li>
+                        <li>MLflow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section section--cta" id="contact">
+        <div class="container">
+            <div class="cta" data-reveal="scale">
+                <div class="cta__badge">
+                    <span class="cta__badge-dot"></span>
+                    Open to opportunities
+                </div>
+                <h2 class="cta__title">Let's build<br><em>something</em> together</h2>
+                <p class="cta__description">
+                    Always open to interesting conversations &mdash; whether it's a research collaboration,
+                    an open-source idea, or a dataset that made you stop scrolling.
+                </p>
+                <div class="cta__actions">
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--large">
+                        <span>LinkedIn</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="btn btn--secondary btn--large">
+                        <span>GitHub</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <p class="footer__tagline">Designed & built with curiosity.</p>
+            </div>
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">&copy; 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load JavaScript -->
+    <script src="assets/js/main-theme.js?v=11" defer></script>
+    <script type="module" src="assets/js/hero-scene.js?v=3"></script>
+</body>
+</html>

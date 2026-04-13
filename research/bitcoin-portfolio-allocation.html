@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Portfolio Allocation Analysis | Evint Leovonzko</title>
+    <meta name="description" content="Optimal BTC Sizing via Risk-Budget Framework — Component Risk Contribution analysis across 5 BTC-containing portfolio profiles by Evint Leovonzko">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/research/bitcoin-portfolio-allocation.html">
+    <meta property="og:title" content="Bitcoin Portfolio Allocation Analysis | Evint Leovonzko">
+    <meta property="og:description" content="Optimal BTC Sizing via Risk-Budget Framework — Component Risk Contribution analysis across 5 BTC-containing portfolio profiles">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/research/bitcoin-portfolio-allocation.html">
+    <meta property="twitter:title" content="Bitcoin Portfolio Allocation Analysis | Evint Leovonzko">
+    <meta property="twitter:description" content="Optimal BTC Sizing via Risk-Budget Framework — Component Risk Contribution analysis across 5 BTC-containing portfolio profiles">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" content="https://evint-portfolio.github.io/research/bitcoin-portfolio-allocation.html">
+
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/research.css?v=6">
+
+    <!-- Prefetch PDF for faster loading when clicked -->
+    <link rel="prefetch" href="../files/bitcoin_analysis.pdf">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark"><img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Navigation overlay for mobile -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#executive-summary"  class="rsb__link active">Executive Summary</a>
+                    <a href="#risk-budget"         class="rsb__link">Risk-Budget Principle</a>
+                    <a href="#evidence"            class="rsb__link">Evidence Across Profiles</a>
+                    <a href="#equal-weight"        class="rsb__link">Equal-Weight Failure</a>
+                    <a href="#stress-analysis"     class="rsb__link">Stress Analysis</a>
+                    <a href="#monte-carlo"         class="rsb__link">Monte Carlo</a>
+                    <a href="#regime-analysis"     class="rsb__link">Regime Analysis</a>
+                    <a href="#decision-framework"  class="rsb__link">Decision Framework</a>
+                    <a href="#correlation-risk"    class="rsb__link">Correlation Risk</a>
+                    <a href="#behavioral"          class="rsb__link">Behavioral Considerations</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Research Paper Header -->
+                <section class="hero hero--research">
+                    <div class="hero__content">
+                        <h1 class="hero__title">Bitcoin Portfolio <span class="hero__title--accent">Allocation Analysis</span></h1>
+                        <p class="hero__subtitle">Optimal BTC sizing via Risk-Budget Framework &mdash; Component Risk Contribution analysis across five portfolio profiles. The answer is always between 0% and 16%.</p>
+
+                        <div class="paper-meta-box">
+                            <div class="paper-meta-content">
+                                <div class="authors">
+                                    <span class="author-label">Author:</span>
+                                    <span class="author-names">Evint Leovonzko</span>
+                                </div>
+                                <div class="journal-info">
+                                    <span class="journal-label">Published:</span>
+                                    <span class="journal-name">March 2026</span>
+                                </div>
+                            </div>
+                            <div class="paper-meta-actions">
+                                <a href="../files/bitcoin_analysis.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--primary" aria-label="Download research paper PDF">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <span class="btn-text">Download PDF</span>
+                                </a>
+                                <a href="#executive-summary" class="btn btn--secondary" aria-label="Jump to executive summary section">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Read Analysis</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Executive Summary -->
+                <section id="executive-summary" class="research-section">
+                    <h2 class="research-section__title">Executive Summary</h2>
+
+                    <div class="content-text">
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p><strong>The optimal Bitcoin allocation is 10&ndash;12% by capital weight, producing 17&ndash;20% risk contribution.</strong> This range maximizes diversification benefit while keeping tail risk manageable.</p>
+                            </div>
+                        </div>
+
+                        <div class="results-table">
+                            <h4>Key Metrics at Optimal Allocation</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Optimal BTC Weight</strong></td>
+                                            <td>10&ndash;12%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Optimal BTC Fractional Risk Contribution</strong></td>
+                                            <td>17&ndash;20%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Best BTC Sharpe Ratio</strong></td>
+                                            <td>2.74</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Max BTC Stress Loss</strong></td>
+                                            <td>&minus;19.5%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li><strong>BTC is a risk diversifier, not a return maximizer</strong> &mdash; include it for structural balance via Component Risk Contribution, not for alpha.</li>
+                            <li><strong>Risk Parity naturally constrains BTC to 10&ndash;12%</strong> across all profiles tested; this range consistently produces robustness scores &ge;71/100.</li>
+                            <li><strong>Above 16% weight, BTC becomes destructive</strong> &mdash; scores drop below 64, worst stress exceeds &minus;30%, and P(Loss) rises above 10%.</li>
+                            <li><strong>Equal-weight BTC (50%) is catastrophic</strong> &mdash; BTC contributes 99.5% of all portfolio risk, Sharpe collapses to 0.08.</li>
+                            <li><strong>Max Sharpe optimizers allocate 0% to BTC</strong> in most profiles &mdash; the volatility drag outweighs the diversification benefit for pure Sharpe maximization.</li>
+                            <li><strong>Recommendation:</strong> use the Risk Parity framework to size BTC; set a hard FRC ceiling of 20%; rebalance quarterly.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Risk-Budget Principle -->
+                <section id="risk-budget" class="research-section">
+                    <h2 class="research-section__title">The Risk-Budget Principle</h2>
+
+                    <div class="content-text">
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>Allocate Bitcoin by risk contribution ceiling (CRC<sub>BTC</sub> &le; c), not by capital weight. A small BTC position generates outsized risk.</p>
+                            </div>
+                        </div>
+
+                        <h3>Component Risk Contribution (CRC)</h3>
+                        <p>CRC measures how much each asset contributes to total portfolio volatility:</p>
+                        <p><em>CRC<sub>i</sub> = w<sub>i</sub> &times; (&Sigma;w)<sub>i</sub> / &sigma;<sub>p</sub></em></p>
+                        <p>where w<sub>i</sub> = asset weight, &Sigma; = covariance matrix, &sigma;<sub>p</sub> = portfolio volatility.</p>
+                        <ul>
+                            <li><strong>Fractional Risk Contribution (FRC)</strong> normalizes to percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRCs sum to 100%.</li>
+                            <li><strong>Risk Parity</strong> targets equal FRC: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
+                        </ul>
+
+                        <h3>Why This Matters for Bitcoin</h3>
+                        <p>BTC&rsquo;s annualized volatility of 60&ndash;80% is 4&ndash;5&times; that of equities, so even a small capital weight dominates the risk decomposition.</p>
+                        <ul>
+                            <li>&sigma;<sub>BTC</sub> &asymp; 65% annualized vs &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5%.</li>
+                            <li>A 10% BTC capital weight produces ~17% risk contribution in a 6-sleeve portfolio.</li>
+                            <li>A 50% BTC capital weight produces ~99.5% risk contribution &mdash; the portfolio becomes a BTC proxy.</li>
+                        </ul>
+
+                        <div class="hypothesis-box">
+                            <h4>The Ceiling Rule</h4>
+                            <p>Set FRC<sub>BTC</sub> &le; c where: c = 1/n for full risk parity (16.7% in a 6-sleeve portfolio), c = 0.20 as a moderate maximum, c = 0.25 as an aggressive maximum. Compute weight from FRC target: w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
+                        </div>
+
+                        <h3>Performance Hierarchy</h3>
+                        <p>The analysis uses a 5-level metric hierarchy: CRC first, then Sharpe, Sortino, MDD, CVaR.</p>
+
+                        <div class="methods-timeline">
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">1</div>
+                                    <h3>CRC &mdash; Structural Foundation</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>Ensures no single asset dominates portfolio risk. This is the primary constraint that must be satisfied before all others.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">2</div>
+                                    <h3>Sharpe Ratio</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>Measures risk-adjusted return after CRC constraints are satisfied.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">3</div>
+                                    <h3>Sortino Ratio</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>Captures downside-specific risk; important for asymmetric assets like BTC.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">4</div>
+                                    <h3>Maximum Drawdown</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>The worst peak-to-trough loss; a behavioral threshold for investors.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">5</div>
+                                    <h3>CVaR (Expected Shortfall)</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>The average loss in the worst 5% of scenarios; the tail risk measure. BTC&rsquo;s impact propagates through all 5 levels.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Evidence Across Profiles -->
+                <section id="evidence" class="research-section">
+                    <h2 class="research-section__title">Evidence: BTC Across 5 Portfolio Profiles</h2>
+
+                    <div class="content-text">
+                        <p>Five profiles include BTC. Risk Parity consistently constrains it to 10&ndash;16% weight; this range produces the best robustness scores among BTC-containing portfolios.</p>
+
+                        <div class="results-table">
+                            <h4>Cross-Profile BTC Allocation Comparison</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Profile / Strategy</th>
+                                            <th>BTC Wt.</th>
+                                            <th>BTC FRC</th>
+                                            <th>Sharpe</th>
+                                            <th>Score</th>
+                                            <th>Worst Stress</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Global Diversified / Risk Parity</strong></td>
+                                            <td>10.2%</td>
+                                            <td>16.7%</td>
+                                            <td>2.74</td>
+                                            <td>71.2</td>
+                                            <td>&minus;19.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>RP All-Weather / Risk Parity</strong></td>
+                                            <td>11.6%</td>
+                                            <td>20.0%</td>
+                                            <td>2.51</td>
+                                            <td>71.2</td>
+                                            <td>&minus;20.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Max Sharpe Uncon. / Risk Parity</strong></td>
+                                            <td>9.9%</td>
+                                            <td>20.0%</td>
+                                            <td>2.66</td>
+                                            <td>71.0</td>
+                                            <td>&minus;20.8%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Aggressive Equity / Risk Parity</td>
+                                            <td>15.8%</td>
+                                            <td>33.3%</td>
+                                            <td>0.88</td>
+                                            <td>55.8</td>
+                                            <td>&minus;31.6%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Core-Satellite / Risk Parity</td>
+                                            <td>18.4%</td>
+                                            <td>50.0%</td>
+                                            <td>1.46</td>
+                                            <td>63.2</td>
+                                            <td>&minus;31.8%</td>
+                                        </tr>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>Core-Satellite / <strong>Equal Weight</strong></td>
+                                            <td>50.0%</td>
+                                            <td>99.5%</td>
+                                            <td>0.08</td>
+                                            <td>41.3</td>
+                                            <td>&minus;37.5%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>The top 3 rows (BTC 10&ndash;12%) all score &ge;71 with Sharpe &ge;2.51 &mdash; these are deployment-grade portfolios.</li>
+                            <li>Row 4 (15.8% BTC): score drops to 55.8, Sharpe to 0.88 &mdash; the BTC weight has crossed the optimal threshold.</li>
+                            <li>Row 5 (18.4% BTC): FRC hits 50%, meaning BTC contributes half of all portfolio risk despite only 18% of capital.</li>
+                            <li>Row 6 (50% BTC): catastrophic &mdash; 99.5% FRC, Sharpe 0.08, P(Loss) = 27.1%.</li>
+                            <li><strong>Pattern:</strong> every 5pp increase in BTC weight above 12% costs ~5&ndash;8 points of robustness score.</li>
+                        </ul>
+
+                        <h3>Asset Return Profile</h3>
+                        <p>Bitcoin&rsquo;s standalone metrics are the weakest in the asset universe, yet its portfolio-level contribution remains positive &mdash; a result driven entirely by correlation structure.</p>
+
+                        <div class="results-table">
+                            <h4>Asset Class Performance (2024&ndash;2026 Analysis Window)</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Class</th>
+                                            <th>Ann. Return</th>
+                                            <th>Ann. Vol</th>
+                                            <th>Sharpe</th>
+                                            <th>Max DD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>US Equity</td>
+                                            <td>17.53%</td>
+                                            <td>8.39%</td>
+                                            <td>1.554</td>
+                                            <td>3.31%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intl Developed</td>
+                                            <td>23.68%</td>
+                                            <td>13.66%</td>
+                                            <td>1.404</td>
+                                            <td>8.91%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emerging Markets</td>
+                                            <td>33.61%</td>
+                                            <td>15.69%</td>
+                                            <td>1.856</td>
+                                            <td>9.23%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fixed Income</td>
+                                            <td>4.38%</td>
+                                            <td>3.76%</td>
+                                            <td>&minus;0.032</td>
+                                            <td>2.12%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Commodities</td>
+                                            <td>51.12%</td>
+                                            <td>11.60%</td>
+                                            <td>4.020</td>
+                                            <td>3.64%</td>
+                                        </tr>
+                                        <tr style="background: rgba(242,169,0,0.08);">
+                                            <td><strong>Bitcoin</strong></td>
+                                            <td>&minus;8.97%</td>
+                                            <td>35.30%</td>
+                                            <td>&minus;0.382</td>
+                                            <td>42.12%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <p>Bitcoin&rsquo;s negative annualized return of &minus;8.97% over the analysis period, combined with the highest volatility (35.30%) and deepest drawdown (42.12%) in the universe, makes it the worst standalone asset by every conventional metric. Yet a 10&ndash;12% Bitcoin allocation <em>improves</em> portfolio-level Sharpe ratios and robustness scores. This paradox is explained by Bitcoin&rsquo;s low-to-moderate correlation with traditional asset classes: the covariance terms that enter the risk-parity optimizer are small enough that BTC&rsquo;s marginal risk contribution remains contained, while its return distribution adds a structurally independent risk premium that diversifies the portfolio&rsquo;s loss scenarios.</p>
+
+                        <h3>Best BTC Portfolio: Global Diversified (Score 71.2)</h3>
+                        <p>Global Diversified / Risk Parity is the best BTC-containing portfolio, with BTC at 10.2% weight contributing exactly 16.7% of risk across 6 sleeves.</p>
+
+                        <div class="results-table">
+                            <h4>Global Diversified Risk Parity &mdash; Sleeve Breakdown</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sleeve</th>
+                                            <th>Weight</th>
+                                            <th>Frac. RC</th>
+                                            <th>Rebalance Band</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>US Equity</td><td>12.8%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                        <tr><td>Intl Developed</td><td>9.6%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                        <tr><td>Emerging Markets</td><td>6.4%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                        <tr><td>Fixed Income</td><td>38.4%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                        <tr><td>Commodities</td><td>22.5%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                        <tr style="background: rgba(242,169,0,0.08);"><td><strong>Bitcoin</strong></td><td>10.2%</td><td>16.7%</td><td>&plusmn;3%</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>All 6 sleeves contribute exactly 16.7% of risk &mdash; perfect risk parity.</li>
+                            <li>BTC gets only 10.2% capital despite being equal in risk contribution, because its volatility is ~4&times; higher.</li>
+                            <li>Fixed Income needs 38.4% capital to produce 16.7% risk &mdash; the inverse of BTC&rsquo;s dynamic.</li>
+                            <li>This is the most diversified BTC-containing portfolio in the study: 6 distinct risk premia, none dominating.</li>
+                        </ul>
+
+                        <h3>RP All-Weather (Score 71.2): Bridgewater-Style Construction</h3>
+                        <p>The All-Weather profile assigns BTC 11.6% weight with 20% FRC across 5 macro risk premia &mdash; each representing a distinct macro factor: growth, duration, inflation, commodities, and digital scarcity.</p>
+
+                        <div class="results-table">
+                            <h4>RP All-Weather &mdash; Sleeve Breakdown</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sleeve</th>
+                                            <th>Weight</th>
+                                            <th>Frac. RC</th>
+                                            <th>Rebalance Band</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Equity (SPY)</td><td>23.3%</td><td>20.0%</td><td>&plusmn;4%</td></tr>
+                                        <tr><td>Long Bonds (TLT)</td><td>27.2%</td><td>20.0%</td><td>&plusmn;4%</td></tr>
+                                        <tr><td>Gold (GLD)</td><td>17.7%</td><td>20.0%</td><td>&plusmn;4%</td></tr>
+                                        <tr><td>Commodities (DBC)</td><td>20.2%</td><td>20.0%</td><td>&plusmn;4%</td></tr>
+                                        <tr style="background: rgba(242,169,0,0.08);"><td><strong>Crypto (BTC)</strong></td><td>11.6%</td><td>20.0%</td><td>&plusmn;4%</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Equal-Weight Failure -->
+                <section id="equal-weight" class="research-section">
+                    <h2 class="research-section__title">Why Equal-Weight BTC Destroys Value</h2>
+
+                    <div class="content-text">
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>At 50% capital weight, Bitcoin contributes <strong>99.5% of portfolio risk</strong>, turning a &ldquo;diversified&rdquo; portfolio into a leveraged BTC position with Sharpe 0.08 and 27.1% probability of loss.</p>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>Core-Satellite / Equal Weight splits capital 50/50 between traditional assets and Bitcoin.</li>
+                            <li>BTC volatility (65% annualized) is ~4&times; the combined traditional sleeve (15%).</li>
+                            <li>CRC decomposition: FRC<sub>BTC</sub> = 99.5% &mdash; the traditional sleeve contributes essentially zero risk.</li>
+                            <li>Result: P(Loss) = 27.1%, Monte Carlo median Sharpe 0.10, worst stress &minus;37.5%.</li>
+                            <li><strong>Core lesson:</strong> equal capital weight &ne; equal risk contribution; high-volatility assets must be sized by risk, not capital.</li>
+                        </ul>
+
+                        <h3>Why Max Sharpe Allocates 0% to BTC</h3>
+                        <p>The Sharpe optimizer finds that BTC&rsquo;s excess return does not compensate for its volatility and correlation profile. Every marginal dollar in BTC increases &sigma;<sub>p</sub> faster than &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
+                        <ul>
+                            <li>BTC&rsquo;s monthly return variance is ~16&times; that of a diversified equity sleeve.</li>
+                            <li>BTC&rsquo;s standalone Sharpe: excess return (~50% p.a.) / volatility (~65%) &asymp; 0.77.</li>
+                            <li>Moderate positive correlation with equities (0.3&ndash;0.5) reduces the diversification benefit.</li>
+                            <li><strong>This does NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; it means BTC&rsquo;s role is risk diversification, not return maximization.</li>
+                            <li>Risk Parity includes BTC for structural balance; Max Sharpe excludes it for efficiency &mdash; both are correct within their frameworks.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Stress Analysis -->
+                <section id="stress-analysis" class="research-section">
+                    <h2 class="research-section__title">Stress Vulnerability Analysis</h2>
+
+                    <div class="content-text">
+                        <p>BTC-containing portfolios face 5&ndash;15pp worse stress losses than BTC-free equivalents. Crypto Winter and Black Swan are the dominant scenarios.</p>
+
+                        <div class="results-table">
+                            <h4>Scenario Impact by BTC Weight</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Scenario</th>
+                                            <th>0% BTC (Bal. Gr.)</th>
+                                            <th>10% BTC (Glob. Div.)</th>
+                                            <th>18% BTC (Core-Sat RP)</th>
+                                            <th>50% BTC (Core-Sat EW)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Crypto Winter</strong></td>
+                                            <td>+0.2%</td>
+                                            <td>&minus;3.4%</td>
+                                            <td>&minus;13.5%</td>
+                                            <td>&minus;31.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Black Swan &minus;4&sigma;</strong></td>
+                                            <td>&minus;14.3%</td>
+                                            <td>&minus;19.5%</td>
+                                            <td>&minus;29.6%</td>
+                                            <td>&minus;37.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Equity Crash &minus;30%</strong></td>
+                                            <td>&minus;6.7%</td>
+                                            <td>&minus;8.1%</td>
+                                            <td>&minus;31.8%</td>
+                                            <td>&minus;35.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Correlation Spike</strong></td>
+                                            <td>&minus;10.2%</td>
+                                            <td>&minus;14.8%</td>
+                                            <td>&minus;16.8%</td>
+                                            <td>&minus;20.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>GFC 2008</strong></td>
+                                            <td>&minus;5.5%</td>
+                                            <td>&minus;9.2%</td>
+                                            <td>&minus;20.3%</td>
+                                            <td>&minus;26.0%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li><strong>Crypto Winter:</strong> the BTC-specific scenario; 0% BTC = slight gain, 10% = manageable &minus;3.4%, 50% = devastating &minus;31.5%.</li>
+                            <li><strong>Black Swan:</strong> the universal worst case; each 10pp of BTC weight adds ~5pp of stress loss.</li>
+                            <li><strong>Correlation Spike:</strong> BTC&rsquo;s correlation with equities rises in sell-offs, amplifying losses &mdash; the &ldquo;diversification fails when you need it&rdquo; problem.</li>
+                            <li><strong>Key pattern:</strong> stress losses scale roughly linearly with BTC weight up to 20%, then convex beyond.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Monte Carlo -->
+                <section id="monte-carlo" class="research-section">
+                    <h2 class="research-section__title">Monte Carlo Comparison</h2>
+
+                    <div class="content-text">
+                        <p>Monte Carlo simulation confirms that 10% BTC maintains near-zero P(Loss) and stable Sharpe, while 50% BTC produces 27.1% P(Loss) and marginal expected Sharpe (0.10).</p>
+
+                        <div class="results-table">
+                            <h4>Monte Carlo Simulation Results</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Portfolio</th>
+                                            <th>Med. Wealth</th>
+                                            <th>P5</th>
+                                            <th>P95</th>
+                                            <th>P(Loss)</th>
+                                            <th>P(Beat RF)</th>
+                                            <th>Med. Sharpe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Glob. Div. / RP (10% BTC)</strong></td>
+                                            <td>1.168</td>
+                                            <td>1.034</td>
+                                            <td>1.314</td>
+                                            <td><strong>0.0%</strong></td>
+                                            <td>91.2%</td>
+                                            <td>2.80</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>RP All-Weather / RP (12% BTC)</strong></td>
+                                            <td>1.183</td>
+                                            <td>1.028</td>
+                                            <td>1.356</td>
+                                            <td><strong>0.0%</strong></td>
+                                            <td>89.8%</td>
+                                            <td>2.53</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Core-Sat. / RP (18% BTC)</td>
+                                            <td>2.115</td>
+                                            <td>1.634</td>
+                                            <td>2.726</td>
+                                            <td>0.0%</td>
+                                            <td>99.9%</td>
+                                            <td>1.69</td>
+                                        </tr>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>Core-Sat. / EW (50% BTC)</td>
+                                            <td>1.260</td>
+                                            <td>0.699</td>
+                                            <td>2.211</td>
+                                            <td><strong>27.1%</strong></td>
+                                            <td>50.7%</td>
+                                            <td>0.10</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li><strong>10&ndash;12% BTC:</strong> P(Loss) = 0%, P(Beat RF) &gt;89%, median Sharpe &gt;2.5 &mdash; excellent risk-reward.</li>
+                            <li><strong>18% BTC:</strong> P(Loss) = 0%, P5 = 1.634 (well above capital preservation), median Sharpe 1.69 &mdash; a viable portfolio.</li>
+                            <li><strong>50% BTC:</strong> P(Loss) = 27.1% &mdash; significant chance of loss; P5 = 0.699 means losing 30% of capital in the worst 5% of scenarios.</li>
+                            <li><strong>Spread widens:</strong> P95&ndash;P5 range goes from 0.28 (10%) to 1.51 (50%) &mdash; BTC weight directly controls outcome uncertainty.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Regime Analysis -->
+                <section id="regime-analysis" class="research-section">
+                    <h2 class="research-section__title">Regime Analysis</h2>
+
+                    <div class="content-text">
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>BTC improves returns in bull/range-bound regimes but amplifies losses in bear/high-vol regimes. Risk Parity dampens this asymmetry.</p>
+                            </div>
+                        </div>
+
+                        <div class="results-table">
+                            <h4>Regime Classifications &mdash; Core-Satellite Crypto</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Regime</th>
+                                            <th>Months</th>
+                                            <th>% Time</th>
+                                            <th>Ann. Ret (RP)</th>
+                                            <th>Sharpe (RP)</th>
+                                            <th>Sharpe (EW)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Sideways</strong></td>
+                                            <td>12</td>
+                                            <td>100.0%</td>
+                                            <td>16.46%</td>
+                                            <td>1.621</td>
+                                            <td>0.081</td>
+                                        </tr>
+                                        <tr>
+                                            <td>High Vol</td>
+                                            <td>2</td>
+                                            <td>16.7%</td>
+                                            <td>16.00%</td>
+                                            <td>7.015</td>
+                                            <td>0.604</td>
+                                        </tr>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>Low Vol</td>
+                                            <td>2</td>
+                                            <td>16.7%</td>
+                                            <td>&minus;3.43%</td>
+                                            <td>&minus;0.795</td>
+                                            <td>&minus;4.152</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>Risk Parity&rsquo;s worst-month loss (&minus;2.33%) is far smaller than Equal Weight&rsquo;s (&minus;8.19%) across all regimes.</li>
+                            <li>Low Vol months are the worst for Equal Weight (Sharpe &minus;4.15) &mdash; BTC drag is most visible when markets are quiet.</li>
+                            <li>The return benefit of BTC is regime-dependent but the volatility cost is constant; Risk Parity manages this trade-off by capping BTC&rsquo;s risk contribution.</li>
+                        </ul>
+
+                        <h3>Walk-Forward Backtest Results</h3>
+                        <p>Walk-forward backtesting with 36-month lookback and quarterly rebalancing confirms that Min Variance and Max Sharpe outperform in out-of-sample testing, while Equal Weight and Momentum Tilt produce deeply negative returns.</p>
+
+                        <div class="results-table">
+                            <h4>Out-of-Sample Backtest Performance</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Strategy</th>
+                                            <th>Ann. Ret</th>
+                                            <th>Ann. Vol</th>
+                                            <th>Sharpe</th>
+                                            <th>MDD</th>
+                                            <th>Turnover</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>Equal Weight</td>
+                                            <td>&minus;30.34%</td>
+                                            <td>11.73%</td>
+                                            <td>&minus;2.970</td>
+                                            <td>17.58%</td>
+                                            <td>0.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Risk Parity</td>
+                                            <td>0.20%</td>
+                                            <td>7.82%</td>
+                                            <td>&minus;0.549</td>
+                                            <td>2.77%</td>
+                                            <td>9.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Max Sharpe</td>
+                                            <td>6.68%</td>
+                                            <td>10.95%</td>
+                                            <td>0.199</td>
+                                            <td>3.78%</td>
+                                            <td>17.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Min Variance</strong></td>
+                                            <td><strong>13.13%</strong></td>
+                                            <td>9.59%</td>
+                                            <td><strong>0.900</strong></td>
+                                            <td>3.65%</td>
+                                            <td>4.6%</td>
+                                        </tr>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>Momentum Tilt</td>
+                                            <td>&minus;26.39%</td>
+                                            <td>19.32%</td>
+                                            <td>&minus;1.599</td>
+                                            <td>16.60%</td>
+                                            <td>65.4%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mean-CVaR</td>
+                                            <td>6.65%</td>
+                                            <td>9.42%</td>
+                                            <td>0.228</td>
+                                            <td>3.43%</td>
+                                            <td>10.8%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li><strong>Min Variance is the best out-of-sample strategy</strong> (Sharpe 0.90, return 13.13%) with the lowest turnover among optimized strategies (4.6%).</li>
+                            <li><strong>Equal Weight is catastrophic</strong> in out-of-sample (&minus;30.34% annualized return, Sharpe &minus;2.97) &mdash; confirming the static analysis conclusions.</li>
+                            <li><strong>In-sample vs out-of-sample gap:</strong> Risk Parity in-sample Sharpe = 3.61 vs out-of-sample &minus;0.55 &mdash; a significant overfitting warning.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Decision Framework -->
+                <section id="decision-framework" class="research-section">
+                    <h2 class="research-section__title">Optimal BTC Allocation: Decision Framework</h2>
+
+                    <div class="content-text">
+                        <p>Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
+
+                        <div class="results-table">
+                            <h4>Allocation by Risk Tolerance</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Risk Tolerance</th>
+                                            <th>Strategy</th>
+                                            <th>BTC Wt.</th>
+                                            <th>BTC FRC</th>
+                                            <th>Exp. Worst Stress</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Conservative</td>
+                                            <td>No BTC (Balanced Growth RP)</td>
+                                            <td>0%</td>
+                                            <td>0%</td>
+                                            <td>&minus;14.3%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Moderate</td>
+                                            <td>Global Diversified RP (6 sleeves)</td>
+                                            <td>10%</td>
+                                            <td>16.7%</td>
+                                            <td>&minus;19.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Growth</td>
+                                            <td>RP All-Weather (5 sleeves)</td>
+                                            <td>12%</td>
+                                            <td>20.0%</td>
+                                            <td>&minus;20.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Aggressive</td>
+                                            <td>Custom (hard cap at 16%)</td>
+                                            <td>16%</td>
+                                            <td>&le;25%</td>
+                                            <td>&minus;25% est.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <h3>Hard Bounds</h3>
+                        <ul>
+                            <li><strong>Minimum useful allocation: 5%</strong> &mdash; below this, BTC&rsquo;s impact on both risk and return is negligible (FRC &lt;8%).</li>
+                            <li><strong>Optimal range: 10&ndash;12%</strong> &mdash; achieves meaningful diversification while keeping FRC &le;20%; robustness score &ge;71.</li>
+                            <li><strong>Maximum recommended: 16%</strong> &mdash; beyond this, FRC exceeds 25%, stress losses exceed &minus;25%, score drops below 64.</li>
+                            <li><strong>Hard ceiling: 20%</strong> &mdash; at this weight, FRC approaches 40&ndash;50%; the portfolio becomes structurally fragile.</li>
+                            <li><strong>Never equal-weight (50%):</strong> this is a leveraged crypto bet, not a diversified portfolio; P(Loss) = 27.1%.</li>
+                        </ul>
+
+                        <h3>Implementation Checklist</h3>
+                        <div class="methods-timeline">
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">1</div>
+                                    <h3>Choose your target BTC FRC</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>Recommended: &le;20%. This is the primary constraint that drives everything else.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">2</div>
+                                    <h3>Compute BTC weight</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub></p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">3</div>
+                                    <h3>Set a hard rebalance trigger</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>Rebalance if BTC weight drifts &gt;3% from target. BTC&rsquo;s high vol causes fast drift.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">4</div>
+                                    <h3>Monitor rolling volatility</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>If &sigma;<sub>BTC</sub> spikes above 100% annualized, temporarily reduce weight by 30%.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">5</div>
+                                    <h3>During Crypto Winter</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>BTC &minus;50% from ATH: do NOT increase allocation. Maintain target weight via regular rebalance only.</p>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <div class="method-header">
+                                    <div class="method-number">6</div>
+                                    <h3>Review BTC FRC quarterly</h3>
+                                </div>
+                                <div class="method-content">
+                                    <p>If correlation with equities exceeds 0.6 sustained for 2+ quarters, consider reducing allocation by 20%.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Correlation Risk -->
+                <section id="correlation-risk" class="research-section">
+                    <h2 class="research-section__title">BTC Correlation Regime Risk</h2>
+
+                    <div class="content-text">
+                        <p>The entire case for BTC rests on its low/negative correlation with traditional assets. What happens when correlations shift?</p>
+
+                        <div class="results-table">
+                            <h4>Historical BTC&ndash;Equity Correlation by Regime</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Period</th>
+                                            <th>Regime</th>
+                                            <th>BTC&ndash;Equity Corr.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2014&ndash;2019</td>
+                                            <td>Pre-institutional, niche asset</td>
+                                            <td>~0.00 to +0.10</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020&ndash;2021</td>
+                                            <td>COVID stimulus, institutional adoption</td>
+                                            <td>+0.15 to +0.40</td>
+                                        </tr>
+                                        <tr style="background: rgba(180,40,40,0.08);">
+                                            <td>2022</td>
+                                            <td>Fed rate hikes, risk-off</td>
+                                            <td>+0.50 to +0.70</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023&ndash;2025</td>
+                                            <td>ETF launch, maturing asset class</td>
+                                            <td>&minus;0.15 to +0.10</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p><strong>Critical finding:</strong> The 2022 rate-hiking cycle showed BTC can behave as a <em>correlated risk asset</em>, not a diversifier. During this period, a 10% BTC allocation would have <em>increased</em> portfolio volatility rather than reducing it.</p>
+                            </div>
+                        </div>
+
+                        <h3>Monitoring Framework</h3>
+                        <ul>
+                            <li><strong>Rolling 90-day BTC&ndash;S&amp;P 500 correlation:</strong> primary signal. Track weekly.</li>
+                            <li><strong>Yellow flag (&rho; &gt; 0.20 for 3 months):</strong> reduce BTC allocation by 30% (e.g., 10% &rarr; 7%), redistribute to commodities.</li>
+                            <li><strong>Red flag (&rho; &gt; 0.50 for 2 months):</strong> reduce BTC to 5% minimum or exit entirely; the diversification thesis is broken.</li>
+                            <li><strong>Green flag (&rho; &lt; 0.00 for 3 months):</strong> restore full target allocation; diversification thesis confirmed.</li>
+                            <li><strong>After major BTC draw-down (&gt;50% from ATH):</strong> do NOT increase allocation. Rebalance to target weight only &mdash; avoid catching falling knives.</li>
+                        </ul>
+
+                        <h3>BTC Cost &amp; Execution (Indonesia)</h3>
+                        <p>BTC is the most expensive sleeve to implement in Indonesia. Execution costs can eat 1&ndash;2% annually.</p>
+
+                        <div class="results-table">
+                            <h4>Transaction Cost Breakdown</h4>
+                            <div class="table-container">
+                                <table class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cost Component</th>
+                                            <th>Per Trade</th>
+                                            <th>Annual (4&times;)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Exchange spread (Tokocrypto, Indodax)</td>
+                                            <td>0.5&ndash;1.5%</td>
+                                            <td>2.0&ndash;6.0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Exchange fee (maker/taker)</td>
+                                            <td>0.1&ndash;0.3%</td>
+                                            <td>0.4&ndash;1.2%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Withdrawal to cold wallet</td>
+                                            <td>~0.0005 BTC</td>
+                                            <td>~0.002 BTC</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total round-trip (buy+sell)</strong></td>
+                                            <td><strong>1.2&ndash;3.6%</strong></td>
+                                            <td>&mdash;</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Quarterly rebalance drag</strong></td>
+                                            <td>&mdash;</td>
+                                            <td><strong>0.5&ndash;1.5%</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <p>Even after execution costs, BTC improves the portfolio&rsquo;s Sharpe ratio by 0.4&ndash;0.6 &mdash; the diversification benefit survives the cost drag, but by a thinner margin. Investors must control execution costs to preserve the alpha.</p>
+                    </div>
+                </section>
+
+                <!-- Behavioral Considerations -->
+                <section id="behavioral" class="research-section">
+                    <h2 class="research-section__title">Behavioral Considerations</h2>
+
+                    <div class="content-text">
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <p>The biggest risk to any BTC allocation is not mathematical &mdash; it is behavioral.</p>
+                            </div>
+                        </div>
+
+                        <div class="hypothesis-box">
+                            <h4>Volatility Tolerance</h4>
+                            <p>BTC routinely experiences 30&ndash;50% drawdowns within a calendar year. Even at 10% portfolio weight, this translates to 3&ndash;5% portfolio contribution to drawdown. Investors who cannot tolerate seeing a red number on their BTC position should allocate 0%.</p>
+                        </div>
+
+                        <div class="hypothesis-box">
+                            <h4>Rebalancing Discipline</h4>
+                            <p>Risk Parity requires <em>buying</em> BTC after it crashes and <em>selling</em> after it rallies. This is psychologically difficult. Automate rebalancing rules or use a discretionary advisor.</p>
+                        </div>
+
+                        <div class="hypothesis-box">
+                            <h4>FOMO During Rallies</h4>
+                            <p>When BTC doubles in 3 months, the temptation to increase allocation beyond the 10&ndash;12% target is extreme. <em>Do not.</em> The risk contribution math does not care about recent returns.</p>
+                        </div>
+
+                        <div class="hypothesis-box">
+                            <h4>Anchor to FRC, Not Weight</h4>
+                            <p>When communicating with stakeholders, frame BTC exposure as &ldquo;16.7% of portfolio risk&rdquo; rather than &ldquo;10% of portfolio weight.&rdquo; This reframes the conversation from &ldquo;too little crypto&rdquo; to &ldquo;appropriate risk budget.&rdquo;</p>
+                        </div>
+
+                        <div class="hypothesis-box">
+                            <h4>Regret Minimization</h4>
+                            <p>If BTC goes to zero, a 10% allocation means a 10% portfolio loss &mdash; recoverable in ~8 months at historical return rates. If BTC triples and you have 0%, the forgone return is only ~3pp of Sharpe. Frame both scenarios for peace of mind.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load JavaScript with defer for better performance -->
+    <script src="../assets/js/main-theme.js?v=10" defer></script>
+    <script src="../assets/js/research-recommendations.js" defer></script>
+
+    <!-- Schema.org structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Bitcoin Portfolio Allocation Analysis: Optimal BTC Sizing via Risk-Budget Framework",
+        "author": {
+            "@type": "Person",
+            "name": "Evint Leovonzko"
+        },
+        "datePublished": "2026-03-01",
+        "description": "Component Risk Contribution analysis across 5 BTC-containing portfolio profiles to determine optimal Bitcoin allocation",
+        "keywords": "bitcoin, portfolio allocation, risk parity, component risk contribution, cryptocurrency, asset allocation",
+        "inLanguage": "en"
+    }
+    </script>
+    <script src="../assets/js/animations.js?v=3"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+
+</html>

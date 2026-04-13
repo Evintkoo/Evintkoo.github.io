@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Reaction Simulation | Evint Leovonzko</title>
+    <meta name="description" content="High-performance nuclear chain reaction simulator in Rust with GPU-accelerated physics, real-time 3D visualization, and 150+ isotope library from ENDF/B-VIII.0 data.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Chain Reaction Simulation | Evint Leovonzko">
+    <meta property="og:description" content="High-performance nuclear chain reaction simulator in Rust with GPU-accelerated physics and real-time 3D visualization.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/project.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="proj-hero">
+            <div class="container">
+                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <div class="proj-hero__tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Physics</span>
+                </div>
+                <h1 class="proj-hero__title">Chain Reaction Simulation</h1>
+                <p class="proj-hero__subtitle">A high-performance nuclear chain reaction simulator written in Rust &mdash; GPU-accelerated particle physics, real-time 3D visualization, and a 150+ isotope library drawn from ENDF/B-VIII.0 nuclear data.</p>
+            </div>
+        </section>
+
+        <div class="proj-body">
+            <div class="container proj-content">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Overview</p>
+                    <h2 class="proj-section__title">What is it?</h2>
+                    <div class="proj-section__body">
+                        <p>Most nuclear simulation tools are either too high-level to be educational or too specialized to be accessible. This project bridges that gap &mdash; a fully configurable simulator that runs real nuclear physics (fission, neutron capture, decay chains) at interactive speeds using GPU compute shaders.</p>
+                        <p>Built in Rust with wgpu for cross-platform GPU acceleration (Vulkan, Metal, DX12), it ships both a real-time 3D renderer for visualization and a headless mode for batch experiments and CI. The nuclear data comes from ENDF/B-VIII.0, with point-wise cross-sections and log-log interpolation replacing crude 2-point approximations.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Features</p>
+                    <h2 class="proj-section__title">What it does</h2>
+                    <div class="proj-feature-grid">
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">⚛️</span>
+                            <p class="proj-feature-card__title">Nuclear Physics Engine</p>
+                            <p class="proj-feature-card__desc">Fission, neutron capture, and radioactive decay with energy-dependent cross-sections, asymmetric fission product yields, and full decay chain tracking.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">📚</span>
+                            <p class="proj-feature-card__title">ENDF/B-VIII.0 Data</p>
+                            <p class="proj-feature-card__desc">~1000 energy points per isotope with log-log interpolation packed into a compact binary .ndb database &mdash; replaces crude 2-point cross-section models.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🧪</span>
+                            <p class="proj-feature-card__title">150+ Isotope Library</p>
+                            <p class="proj-feature-card__desc">Actinides, fission products, moderators, structural materials, and neutron poisons. Configure fuel compositions, enrichment levels, and geometry regions.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">⚡</span>
+                            <p class="proj-feature-card__title">GPU-Accelerated</p>
+                            <p class="proj-feature-card__desc">wgpu compute shaders handle particle integration and collision detection across Vulkan, Metal, and DX12 &mdash; with automatic CPU fallback.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">🖥️</span>
+                            <p class="proj-feature-card__title">Real-Time 3D Visualization</p>
+                            <p class="proj-feature-card__desc">wgpu + winit renderer with colored particle sprites, orbit and fly cameras, keyboard controls, and pause/resume support.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">📊</span>
+                            <p class="proj-feature-card__title">Advanced Analysis</p>
+                            <p class="proj-feature-card__desc">Neutron energy spectrum tracking, per-isotope reaction tallies, neutron genealogy trees, and detailed CSV export for post-processing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Stack</p>
+                    <h2 class="proj-section__title">Built with</h2>
+                    <div class="proj-tech-pills">
+                        <span class="proj-tech-pill">Rust</span>
+                        <span class="proj-tech-pill">wgpu</span>
+                        <span class="proj-tech-pill">winit</span>
+                        <span class="proj-tech-pill">Vulkan / Metal / DX12</span>
+                        <span class="proj-tech-pill">ENDF/B-VIII.0</span>
+                    </div>
+                </div>
+
+                <div class="proj-cta">
+                    <div class="proj-cta__text">
+                        <h3>See the code</h3>
+                        <p>Full source, configuration docs, and nuclear data on GitHub.</p>
+                    </div>
+                    <div class="proj-cta__actions">
+                        <a href="https://github.com/Evintkoo/chain_reaction_simulation" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                            View on GitHub
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning for Circular RNA Classification | Evint Leovonzko</title>
+    <meta name="description" content="Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/research/circular-rna.html">
+    <meta property="og:title" content="Deep Learning for Circular RNA Classification | Evint Leovonzko">
+    <meta property="og:description" content="Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/research/circular-rna.html">
+    <meta property="twitter:title" content="Deep Learning for Circular RNA Classification | Evint Leovonzko">
+    <meta property="twitter:description" content="Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/research.css?v=6">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark"><img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"     class="rsb__link active">Abstract</a>
+                    <a href="#introduction" class="rsb__link">Introduction</a>
+                    <a href="#methods"      class="rsb__link">Methods</a>
+                    <a href="#results"      class="rsb__link">Results</a>
+                    <a href="#discussion"   class="rsb__link">Discussion</a>
+                    <a href="#conclusion"   class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Research Paper Header -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                        <path d="M7 2c3 3 7 3 10 0" />
+                                        <path d="M7 8c3 3 7 3 10 0" />
+                                        <path d="M7 14c3 3 7 3 10 0" />
+                                        <path d="M7 20c3-3 7-3 10 0" />
+                                        <path d="M7 2v18" />
+                                        <path d="M17 2v18" />
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">Deep Learning for Circular RNA Classification</h1>
+                            <p class="circrna-subtitle">Implementation with Gaussian Blur Data Preprocessing in Detection and Classification</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">A lightweight ANN pipeline that turns circAtlas k-mer frequencies into reliable disease predictions &mdash; fast enough for real-time screening, accurate enough for clinical relevance.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">75.11%</span>
+                                        <span class="hero-metric__label">Model accuracy</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">0.14 ms</span>
+                                        <span class="hero-metric__label">Prediction runtime</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">8 min</span>
+                                        <span class="hero-metric__label">Reading time</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://urncst.com/index.php/urncst/article/view/601" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Full Paper</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Publication context, collaborators, and key metrics behind this circRNA classification study.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">75.11%</span>
+                                        <span class="meta-highlight__label">Model accuracy</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">0.14 ms</span>
+                                        <span class="meta-highlight__label">Prediction runtime</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">8 min</span>
+                                        <span class="meta-highlight__label">Reading time</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Authors</span>
+                                        <span class="meta-detail__value">Evint Leovonzko, Callixta F. Cahyaningrum, Rachmania Ulwani</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Publication</span>
+                                        <span class="meta-detail__value">URNCST Journal, Volume 8 Issue 7 (2024) — Undergraduate Research in Natural and Clinical Science and Technology.</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Workflow</span>
+                                        <span class="meta-detail__value">5-layer ANN with k-mer (k = 4) features and Gaussian blur smoothing for circAtlas RNA sequences.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Circular RNA</span>
+                                        <span class="meta-pill">Deep Learning</span>
+                                        <span class="meta-pill">K-mer Features</span>
+                                        <span class="meta-pill">Gaussian Blur</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract Section -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Introduction</h3>
+                                <p>Circular RNAs (circRNAs) are increasingly recognized as key regulators of gene expression due to their unique closed-loop structure and involvement in various cellular processes. This study investigates the utilization of machine learning algorithms in predicting circRNA-disease associations.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Methods</h3>
+                                <p>This study proposes a novel deep learning approach leveraging artificial neural networks (ANN) for circRNA classification. The methodology involves data collection from circRNA databases, k-mers counting for feature extraction, Gaussian blur implementation for data smoothing, and ANN-based model training.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"></path>
+                                    <path d="M18 17V9"></path>
+                                    <path d="M13 17V5"></path>
+                                    <path d="M8 17v-3"></path>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Results</h3>
+                                <p>Evaluation of the trained models based on precision, recall, and f1-score metrics shows an overall accuracy of <strong>0.7511</strong>, with an average precision score of <strong>0.7982</strong>, recall of <strong>0.7511</strong>, and f1-score of <strong>0.7637</strong>.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="abstract-item" data-phase="discussion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Discussion</h3>
+                                <p>The results indicate that our ANN-based algorithm effectively detects and classifies circRNA datasets with considerable accuracy. Compared to the algorithm from past research, our algorithm is also shown to have <strong>significantly less computational requirements</strong>.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Conclusion</h3>
+                                <p>Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction Section -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="content-text">
+                        <p class="lead-paragraph">Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.</p>
+                        
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Key Insight</h4>
+                                <p>CircRNAs are emerging as valuable biomarkers due to their high stability and tissue-specific expression patterns, making them reliable indicators for various diseases.</p>
+                            </div>
+                        </div>
+                        
+                        <p>The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.</p>
+                    </div>
+                </section>
+
+                <!-- Methods Section -->
+                <section id="methods" class="research-section">
+                    <span id="method" class="section-anchor" aria-hidden="true"></span>
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Methods</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Neural Network Visualization -->
+                    <div class="neural-network">
+                        <h3 class="chart-title">Artificial Neural Network Architecture</h3>
+                        <p class="chart-subtitle">5-layer ANN with 256 input nodes for k-mers features</p>
+                        <!-- Network layers will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge">
+                                <span class="step-number">01</span>
+                            </div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Dataset Collection</h3>
+                                    <p class="method-description">Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA).</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Python</span>
+                                        <span class="method-tag">circAtlas</span>
+                                        <span class="method-tag">RNA Sequences</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge">
+                                <span class="step-number">02</span>
+                            </div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Feature Extraction with K-mers</h3>
+                                    <p class="method-description">K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula:</p>
+                                    <div class="formula-box">
+                                        <code class="formula">k = log<sub>k</sub>(average of l)</code>
+                                        <span class="formula-note">where l is the length of sequences</span>
+                                    </div>
+                                    <p class="method-note">For k = 4, there are 4-mers obtained, e.g., {ACGT, GTAA, CGTT} which were then processed.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">K-mer Analysis</span>
+                                        <span class="method-tag">Feature Engineering</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge">
+                                <span class="step-number">03</span>
+                            </div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"></path>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Gaussian Blur Implementation</h3>
+                                    <p class="method-description">Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula:</p>
+                                    <div class="formula-box">
+                                        <code class="formula">f(x) = 1/(σ√(2π))e<sup>-1/2((x-μ)/σ)<sup>2</sup></sup></code>
+                                        <span class="formula-note">The value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment.</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Data Preprocessing</span>
+                                        <span class="method-tag">Gaussian Blur</span>
+                                        <span class="method-tag">Signal Processing</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="4">
+                            <div class="method-step-badge">
+                                <span class="step-number">04</span>
+                            </div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Model Architecture</h3>
+                                    <p class="method-description">The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Neural Network</span>
+                                        <span class="method-tag">Deep Learning</span>
+                                        <span class="method-tag">Leaky ReLU</span>
+                                        <span class="method-tag">Dropout</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="content-text">
+                        <p class="lead-paragraph">Our neural network models for both detection and classification showed promising training progress with the following performance metrics:</p>
+                    </div>
+
+                    <!-- Circular Progress Metrics -->
+                    <div class="circular-metrics">
+                        <!-- Metrics will be generated by JavaScript -->
+                    </div>
+
+                    <div class="performance-comparison">
+                        <div class="performance-comparison__header">
+                            <h3 class="performance-comparison__title">Model Performance Comparison</h3>
+                            <p class="performance-comparison__subtitle">Evaluation metrics and runtime performance across tested algorithms.</p>
+                        </div>
+                        
+                        <div class="performance-table">
+                            <div class="performance-table__header">
+                                <div class="table-cell table-cell--model">Model</div>
+                                <div class="table-cell table-cell--metric">Accuracy</div>
+                                <div class="table-cell table-cell--metric">Precision</div>
+                                <div class="table-cell table-cell--metric">F1-Score</div>
+                                <div class="table-cell table-cell--metric">Runtime</div>
+                            </div>
+                            
+                            <div class="performance-table__body">
+                                <div class="table-row table-row--primary">
+                                    <div class="table-cell table-cell--model">
+                                        <div class="model-info">
+                                            <div class="model-name">ANN + Gaussian Blur</div>
+                                            <div class="model-type">Our Algorithm</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy">
+                                        <div class="metric-value">75.11%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Precision">
+                                        <div class="metric-value">79.82%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score">
+                                        <div class="metric-value">76.37%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Runtime">
+                                        <div class="metric-value metric-value--best">0.14 ms</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model">
+                                        <div class="model-info">
+                                            <div class="model-name">DeepCirCode</div>
+                                            <div class="model-type">Deep Learning</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy">
+                                        <div class="metric-value metric-value--best">81.29%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Precision">
+                                        <div class="metric-value metric-value--best">92.71%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score">
+                                        <div class="metric-value metric-value--best">83.65%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Runtime">
+                                        <div class="metric-value">6.74 ms</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model">
+                                        <div class="model-info">
+                                            <div class="model-name">Support Vector Machine</div>
+                                            <div class="model-type">Traditional ML</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy">
+                                        <div class="metric-value">73.28%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Precision">
+                                        <div class="metric-value">77.42%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score">
+                                        <div class="metric-value">79.21%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Runtime">
+                                        <div class="metric-value">0.84 ms</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model">
+                                        <div class="model-info">
+                                            <div class="model-name">Random Forest</div>
+                                            <div class="model-type">Ensemble</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy">
+                                        <div class="metric-value">71.86%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Precision">
+                                        <div class="metric-value">73.93%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score">
+                                        <div class="metric-value">79.18%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Runtime">
+                                        <div class="metric-value">0.62 ms</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model">
+                                        <div class="model-info">
+                                            <div class="model-name">Att-CNN</div>
+                                            <div class="model-type">Attention Model</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy">
+                                        <div class="metric-value">72.64%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Precision">
+                                        <div class="metric-value">74.52%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="F1-Score">
+                                        <div class="metric-value">76.96%</div>
+                                    </div>
+                                    <div class="table-cell table-cell--metric" data-label="Runtime">
+                                        <div class="metric-value">23.67 ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-summary">
+                            <p class="summary-text">Our algorithm achieves competitive performance while being <strong>significantly faster</strong> than deep learning approaches, making it ideal for real-time applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="research-highlight research-highlight--success">
+                        <div class="highlight-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                        </div>
+                        <div class="highlight-content">
+                            <h4 class="highlight-title">Performance Highlight</h4>
+                            <p>The proposed method's runtime was significantly faster than other existing algorithms, taking only <strong>0.14 milliseconds</strong> to predict one RNA. It was <strong>at least 10× faster</strong> than similar models like DeepCirCode and circDeep.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discussion Section -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Discussion</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="content-text">
+                        <p class="lead-paragraph">The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.</p>
+                        
+                        <p>The similarity between both training and validation evaluation scores shows that there was not an underfitting and overfitting issue on the detection model. However, the high difference between the training and validation loss in the classification model showed an indicator of overfitting that occurred in the training process.</p>
+                        
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Key Advantage</h4>
+                                <p>The proposed algorithm would likely have less computing power requirements and simpler implementation compared to previous research, which would make its implementation less costly and more efficient.</p>
+                            </div>
+                        </div>
+                        
+                        <p>By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion Section -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="content-text">
+                        <p class="lead-paragraph">This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.</p>
+                        
+                        <p>The results demonstrate that the proposed method was comparable to other similar algorithms. However, our algorithm was determined to have a better evaluation score compared to most other existing algorithms while requiring significantly less computational resources.</p>
+                        
+                        <p>In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research (auto-generated by recommendation engine) -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=3"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+
+</html>

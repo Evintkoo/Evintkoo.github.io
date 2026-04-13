@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modular vs Monolithic Architectures for GRN Edge Prediction | Evint Leovonzko</title>
+    <meta name="description" content="Modular Versus Monolithic Architectures for Gene Regulatory Network Edge Prediction: Gradient Stability Analysis - Research by Evint Leovonzko">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evint-portfolio.github.io/research/grn-modular-vs-monolithic.html">
+    <meta property="og:title" content="Modular vs Monolithic Architectures for GRN Edge Prediction | Evint Leovonzko">
+    <meta property="og:description" content="Modular Versus Monolithic Architectures for GRN Edge Prediction: Gradient Stability Analysis - Research by Evint Leovonzko">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evint-portfolio.github.io/research/grn-modular-vs-monolithic.html">
+    <meta property="twitter:title" content="Modular vs Monolithic Architectures for GRN Edge Prediction | Evint Leovonzko">
+    <meta property="twitter:description" content="Modular Versus Monolithic Architectures for GRN Edge Prediction: Gradient Stability Analysis - Research by Evint Leovonzko">
+    <meta property="twitter:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/research.css?v=6">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Persistent 3D Background -->
+    <div class="scene-bg" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark"><img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"     class="rsb__link active">Abstract</a>
+                    <a href="#introduction" class="rsb__link">Introduction</a>
+                    <a href="#methods"      class="rsb__link">Methods</a>
+                    <a href="#results"      class="rsb__link">Results</a>
+                    <a href="#discussion"   class="rsb__link">Discussion</a>
+                    <a href="#conclusion"   class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <!-- Research Content -->
+        <div class="research-content">
+            <div class="research-content__inner">
+                <!-- Paper Header -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                        <path d="M7 2c3 3 7 3 10 0"/>
+                                        <path d="M7 8c3 3 7 3 10 0"/>
+                                        <path d="M7 14c3 3 7 3 10 0"/>
+                                        <path d="M7 20c3-3 7-3 10 0"/>
+                                        <path d="M7 2v18"/>
+                                        <path d="M17 2v18"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">Modular vs Monolithic Architectures for GRN Edge Prediction</h1>
+                            <p class="circrna-subtitle">Gradient Stability Analysis and a Controlled Cross-Architecture Comparison</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference &mdash; diagnosing three critical gradient failures in the two-tower design and demonstrating that the cross-encoder outperforms it, especially under class imbalance.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">0.904</span>
+                                        <span class="hero-metric__label">Cross-encoder AUROC</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">83.03%</span>
+                                        <span class="hero-metric__label">Cross-encoder accuracy</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">&minus;6.87 pp</span>
+                                        <span class="hero-metric__label">Two-tower imbalance drop</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://github.com/Evintkoo/grn-encoder-comparison/blob/main/paper/main_v2.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Full Paper</span>
+                                    </a>
+                                    <a href="https://github.com/Evintkoo/grn-encoder-comparison" target="_blank" rel="noopener" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                                        </svg>
+                                        <span class="btn-text">View Repository</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Architecture comparison, gradient failure analysis, and imbalance robustness results.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">0.904</span>
+                                        <span class="meta-highlight__label">Cross-encoder AUROC</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">0.810</span>
+                                        <span class="meta-highlight__label">Two-tower AUROC</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">3</span>
+                                        <span class="meta-highlight__label">Gradient failures found</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Author</span>
+                                        <span class="meta-detail__value">Evint Leovonzko</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Dataset</span>
+                                        <span class="meta-detail__value">Human brain single-cell RNA-seq &mdash; 47,388 TF&ndash;gene pairs, balanced and 5:1 imbalanced.</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Implementation</span>
+                                        <span class="meta-detail__value">Pure Rust with per-batch Adam, gradient clipping (threshold: 5.0), stable backward pass.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Gradient Stability</span>
+                                        <span class="meta-pill">Cross-Encoder</span>
+                                        <span class="meta-pill">scRNA-seq</span>
+                                        <span class="meta-pill">Rust</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Introduction</h3>
+                                <p>This paper investigates the design trade-offs between modular two-tower models (using separate pathways and similarity scoring) and monolithic cross-encoders (processing pairs jointly through MLPs) for predicting transcription factor&ndash;gene interactions in gene regulatory networks.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Methods</h3>
+                                <p>Three critical gradient failures in the original two-tower implementation are identified and corrected: double-sigmoid in the backward pass, unstable gradient estimators, and missing gradient clipping. Both architectures are then evaluated on balanced and 5:1 imbalanced training configurations using accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Results</h3>
+                                <p>After gradient correction, the cross-encoder achieves <strong>83.03% accuracy</strong> vs the two-tower's 80.90%, with AUROC <strong>0.904</strong> vs 0.810 under balanced training. Under 5:1 imbalance, the two-tower degrades &minus;6.87 pp while the cross-encoder degrades only &minus;1.56 pp. Each gradient failure alone collapses training accuracy to ~50%.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="discussion">
+                            <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Discussion</h3>
+                                <p>The gradient failures explain a substantial portion of the two-tower's underperformance relative to the cross-encoder. Even after correction, the cross-encoder's joint processing of TF&ndash;gene pairs provides a fundamentally better inductive bias for interaction prediction than independent encoding followed by similarity scoring.</p>
+                            </div>
+                        </div>
+
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Conclusion</h3>
+                                <p>For GRN link prediction, monolithic cross-encoders outperform modular two-tower models on both accuracy and imbalance robustness, particularly in realistic biological settings where negative examples far outnumber positives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">Two-tower (dual-encoder) models are attractive for link prediction tasks because they can independently encode entities and support efficient nearest-neighbor retrieval at inference time. However, their modular design limits the model's ability to capture joint interactions between input pairs, which may be critical for biological link prediction.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Key Question</h4>
+                                <p>Does the modular separation of a two-tower model fundamentally limit its expressivity for GRN inference, or can the gap be closed by correcting implementation-level gradient failures?</p>
+                            </div>
+                        </div>
+
+                        <p>This study diagnoses three previously unreported gradient failures in a state-of-the-art two-tower GRN model, corrects them, and then conducts a controlled comparison against a monolithic cross-encoder to isolate the effect of architecture from implementation bugs.</p>
+                    </div>
+                </section>
+
+                <!-- Methods -->
+                <section id="methods" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Methods</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Gradient Failure Diagnosis</h3>
+                                    <p class="method-description">Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy.</p>
+                                    <div class="method-tags"><span class="method-tag">Gradient Analysis</span><span class="method-tag">Numerical Stability</span><span class="method-tag">Debugging</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Architecture Definitions</h3>
+                                    <p class="method-description">The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics.</p>
+                                    <div class="method-tags"><span class="method-tag">Two-Tower</span><span class="method-tag">Cross-Encoder</span><span class="method-tag">Adam</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Controlled Evaluation</h3>
+                                    <p class="method-description">Both architectures are evaluated on human brain scRNA-seq data (47,388 TF&ndash;gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                                    <div class="method-tags"><span class="method-tag">Bootstrap CI</span><span class="method-tag">Imbalance Testing</span><span class="method-tag">5 Seeds</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">After gradient correction, the cross-encoder consistently outperforms the corrected two-tower across all metrics and both training regimes.</p>
+                    </div>
+
+                    <div class="performance-comparison">
+                        <div class="performance-comparison__header">
+                            <h3 class="performance-comparison__title">Architecture Comparison (Balanced Training)</h3>
+                            <p class="performance-comparison__subtitle">Cross-encoder vs two-tower on human brain scRNA-seq &mdash; both with corrected gradients.</p>
+                        </div>
+
+                        <div class="performance-table">
+                            <div class="performance-table__header">
+                                <div class="table-cell table-cell--model">Model</div>
+                                <div class="table-cell table-cell--metric">Accuracy</div>
+                                <div class="table-cell table-cell--metric">AUROC</div>
+                                <div class="table-cell table-cell--metric">Imbalance Drop (5:1)</div>
+                            </div>
+                            <div class="performance-table__body">
+                                <div class="table-row table-row--primary">
+                                    <div class="table-cell table-cell--model"><div class="model-info"><div class="model-name">Cross-Encoder</div><div class="model-type">Monolithic MLP</div></div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy"><div class="metric-value metric-value--best">83.03%</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="AUROC"><div class="metric-value metric-value--best">0.904</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Imbalance Drop"><div class="metric-value metric-value--best">&minus;1.56 pp</div></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell table-cell--model"><div class="model-info"><div class="model-name">Two-Tower (corrected)</div><div class="model-type">Modular MLP</div></div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Accuracy"><div class="metric-value">80.90%</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="AUROC"><div class="metric-value">0.810</div></div>
+                                    <div class="table-cell table-cell--metric" data-label="Imbalance Drop"><div class="metric-value">&minus;6.87 pp</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="performance-summary">
+                            <p class="summary-text">The cross-encoder's joint input processing provides a fundamentally stronger inductive bias for GRN link prediction, remaining robust under the class imbalance ratios typical in real biological datasets.</p>
+                        </div>
+                    </div>
+
+                    <div class="research-highlight research-highlight--success">
+                        <div class="highlight-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
+                        </div>
+                        <div class="highlight-content">
+                            <h4 class="highlight-title">Gradient Failure Impact</h4>
+                            <p>Each of the three gradient failures individually collapsed training to approximately <strong>50% accuracy</strong> &mdash; no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Discussion</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">The gradient stability analysis reveals that a substantial portion of the two-tower's apparent underperformance in prior work was attributable to implementation bugs rather than architectural limitations. After correction, the performance gap narrows but persists.</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Imbalance as a Practical Concern</h4>
+                                <p>Real GRN datasets are highly imbalanced &mdash; regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's &minus;6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.</p>
+                            </div>
+                        </div>
+
+                        <p>The cross-encoder's monolithic joint processing naturally captures TF&ndash;gene co-expression patterns that the two-tower's independence assumption prevents. This architectural difference, not implementation quality, ultimately drives the AUROC gap of 0.094.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+
+                    <div class="content-text">
+                        <p class="lead-paragraph">This study provides two contributions: a gradient failure diagnosis applicable to any two-tower model implemented without automatic differentiation, and a controlled architectural comparison showing that monolithic cross-encoders outperform modular two-tower models for GRN link prediction.</p>
+
+                        <p>For practitioners, the gradient failure checklist (double-sigmoid, unstable estimator, missing clipping) is directly applicable to other Rust or custom-framework implementations. For researchers designing GRN inference architectures, the results favor joint encoding over independent encoding followed by similarity scoring.</p>
+
+                        <p>Future work should examine whether the two-tower's efficiency advantages (precomputed entity representations) can be retained while closing the AUROC gap through architectural modifications such as late interaction or cross-attention scoring.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=10"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=3"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=2"></script>
+</body>
+
+</html>
