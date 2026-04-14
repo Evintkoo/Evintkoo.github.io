@@ -1105,10 +1105,10 @@ body.no-scroll {
 ================================ */
 
 .project-featured {
-  background: rgba(250, 248, 245, 0.08);
+  background: var(--bg-secondary);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(180, 160, 130, 0.40);
+  border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   padding: var(--space-10) var(--space-12);
   margin-bottom: var(--space-4);
@@ -1149,8 +1149,9 @@ body.no-scroll {
   letter-spacing: 0.08em;
   padding: 0.2rem 0.6rem;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  color: #807b76;
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-primary);
 }
 
 .project-featured__tag--featured {
@@ -1162,14 +1163,14 @@ body.no-scroll {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 400;
-  color: #ebe8e4;
+  color: var(--text-primary);
   margin-bottom: var(--space-3);
   line-height: 1.2;
 }
 
 .project-featured__desc {
   font-size: var(--text-sm);
-  color: #807b76;
+  color: var(--text-tertiary);
   max-width: 480px;
   line-height: 1.65;
   margin-bottom: var(--space-6);
@@ -1182,9 +1183,9 @@ body.no-scroll {
 }
 
 .project-featured__tech .tech-tag {
-  background: rgba(255, 255, 255, 0.06);
-  color: #807b76;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-primary);
 }
 
 .project-featured__link {
