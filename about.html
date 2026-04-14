@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Evint Leovonzko</title>
+    <meta name="description" content="UBC researcher, Co-founder of Kolosal AI, and first-author in computational biology, ML, and economics. Based in Vancouver, BC.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Evint Leovonzko">
+    <meta property="og:description" content="UBC researcher, Co-founder of Kolosal AI. Computational biology, ML systems, macroeconomics — and the occasional trail in Vancouver.">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css?v=14">
+
+    <style>
+        /* ── Page shell ── */
+        .about-page {
+            min-height: 100vh;
+            padding-top: var(--nav-height);
+        }
+
+        /* ── Hero ── */
+        .about-hero {
+            padding: var(--space-20) 0 var(--space-16);
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .about-hero__inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-8);
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-16);
+            align-items: start;
+        }
+
+        .about-hero__eyebrow {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .about-hero__eyebrow-line {
+            height: 1px;
+            width: 40px;
+            background: var(--border-secondary);
+        }
+
+        .about-hero__eyebrow-label {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--text-tertiary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .about-hero__name {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.0;
+            color: var(--text-primary);
+            margin-bottom: var(--space-6);
+            letter-spacing: -0.02em;
+        }
+
+        .about-hero__name em {
+            font-style: italic;
+            color: var(--accent-warm);
+        }
+
+        .about-hero__tagline {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 540px;
+            margin-bottom: var(--space-8);
+        }
+
+        .about-hero__status {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--accent-warm-light);
+            border: 1px solid rgba(225, 29, 100, 0.15);
+            border-radius: var(--radius-full);
+            padding: var(--space-2) var(--space-4);
+            font-size: var(--text-sm);
+            font-family: var(--font-body);
+            color: var(--accent-warm);
+            font-weight: 500;
+            margin-bottom: var(--space-8);
+        }
+
+        .about-hero__status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-warm);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .about-hero__links {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .about-hero__link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-base);
+            background: var(--bg-primary);
+        }
+
+        .about-hero__link:hover {
+            border-color: var(--accent-warm);
+            color: var(--accent-warm);
+            background: var(--accent-warm-light);
+        }
+
+        .about-hero__link svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ── Sidebar card ── */
+        .about-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            position: sticky;
+            top: calc(var(--nav-height) + var(--space-6));
+        }
+
+        .about-card__avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-warm) 0%, var(--accent-sage) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: #fff;
+            margin-bottom: var(--space-5);
+            font-style: italic;
+        }
+
+        .about-card__name {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+        }
+
+        .about-card__role {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-6);
+        }
+
+        .about-card__divider {
+            height: 1px;
+            background: var(--border-primary);
+            margin: var(--space-5) 0;
+        }
+
+        .about-card__fact {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .about-card__fact:last-child { margin-bottom: 0; }
+
+        .about-card__fact-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--text-tertiary);
+        }
+
+        .about-card__fact-icon svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .about-card__fact-label {
+            font-size: var(--text-xs);
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+            margin-bottom: 2px;
+            letter-spacing: 0.04em;
+        }
+
+        .about-card__fact-value {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ── Main content layout ── */
+        .about-body {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--space-16) var(--space-8);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-20);
+        }
+
+        /* ── Section heading ── */
+        .ab-section-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .ab-section-label {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--text-tertiary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .ab-section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-primary);
+        }
+
+        .ab-section-title {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            color: var(--text-primary);
+            margin-bottom: var(--space-8);
+            letter-spacing: -0.01em;
+        }
+
+        /* ── Narrative ── */
+        .about-narrative p {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--space-5);
+            max-width: 680px;
+        }
+
+        .about-narrative p:last-child { margin-bottom: 0; }
+
+        .about-narrative strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-narrative .highlight-text {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            font-style: italic;
+            color: var(--accent-warm);
+        }
+
+        /* ── Timeline ── */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1px 1fr;
+            gap: 0 var(--space-8);
+            padding-bottom: var(--space-10);
+            position: relative;
+        }
+
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-date {
+            text-align: right;
+            padding-top: 2px;
+        }
+
+        .timeline-date__year {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--accent-warm);
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            display: block;
+        }
+
+        .timeline-date__range {
+            font-size: var(--text-xs);
+            color: var(--text-quaternary);
+        }
+
+        .timeline-spine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .timeline-spine__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-warm);
+            border: 2px solid var(--bg-primary);
+            box-shadow: 0 0 0 1px var(--accent-warm);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .timeline-spine__line {
+            flex: 1;
+            width: 1px;
+            background: var(--border-primary);
+            margin-top: 4px;
+        }
+
+        .timeline-item:last-child .timeline-spine__line {
+            display: none;
+        }
+
+        .timeline-content {
+            padding-bottom: var(--space-2);
+        }
+
+        .timeline-content__role {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+        }
+
+        .timeline-content__org {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--accent-warm);
+            margin-bottom: var(--space-3);
+        }
+
+        .timeline-content__desc {
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+            max-width: 560px;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .timeline-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            padding: 2px 8px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── Education ── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-5);
+        }
+
+        .edu-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .edu-card:hover {
+            border-color: var(--border-secondary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .edu-card__badge {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-sage);
+            background: var(--accent-sage-light);
+            border-radius: var(--radius-sm);
+            padding: 3px 8px;
+            display: inline-block;
+            margin-bottom: var(--space-4);
+        }
+
+        .edu-card__school {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+        }
+
+        .edu-card__program {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-3);
+        }
+
+        .edu-card__detail {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Awards ── */
+        .awards-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .award-item {
+            display: flex;
+            gap: var(--space-5);
+            align-items: flex-start;
+            padding: var(--space-5) var(--space-6);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            transition: border-color var(--transition-base);
+        }
+
+        .award-item:hover { border-color: var(--border-secondary); }
+
+        .award-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--accent-warm-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--accent-warm);
+        }
+
+        .award-icon svg { width: 18px; height: 18px; }
+
+        .award-title {
+            font-weight: 600;
+            font-size: var(--text-base);
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+        }
+
+        .award-sub {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+        }
+
+        /* ── Publications ── */
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .pub-item {
+            display: flex;
+            gap: var(--space-5);
+            align-items: flex-start;
+            padding: var(--space-5) var(--space-6);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-left: 3px solid var(--accent-warm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .pub-item:hover {
+            border-color: var(--accent-warm);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pub-item__num {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--text-quaternary);
+            flex-shrink: 0;
+            margin-top: 3px;
+            letter-spacing: 0.04em;
+        }
+
+        .pub-item__body { flex: 1; }
+
+        .pub-item__title {
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+            line-height: 1.5;
+        }
+
+        .pub-item__venue {
+            font-size: var(--text-sm);
+            color: var(--accent-warm);
+            font-weight: 500;
+            margin-bottom: var(--space-2);
+        }
+
+        .pub-item__desc {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .pub-badge {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pub-badge--published {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        [data-theme="dark"] .pub-badge--published {
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.25);
+        }
+
+        .pub-badge--preprint {
+            background: var(--accent-sage-light);
+            color: var(--accent-sage);
+            border: 1px solid rgba(124, 58, 237, 0.15);
+        }
+
+        /* ── Tech stack ── */
+        .skills-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .skill-group { }
+
+        .skill-group__title {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-3);
+        }
+
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .skill-pill {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-2) var(--space-4);
+            transition: all var(--transition-fast);
+            cursor: default;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--accent-warm);
+            color: var(--accent-warm);
+            background: var(--accent-warm-light);
+        }
+
+        .skill-pill--accent {
+            background: var(--accent-warm-light);
+            border-color: rgba(225, 29, 100, 0.2);
+            color: var(--accent-warm);
+        }
+
+        /* ── Stats row ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-16);
+        }
+
+        .stat-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            text-align: center;
+            transition: border-color var(--transition-base);
+        }
+
+        .stat-box:hover { border-color: var(--border-secondary); }
+
+        .stat-box__value {
+            font-family: var(--font-display);
+            font-size: var(--text-4xl);
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-box__label {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+        }
+
+        /* ── CTA ── */
+        .about-cta {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-12) var(--space-12);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-8);
+        }
+
+        .about-cta__heading {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .about-cta__sub {
+            font-size: var(--text-base);
+            color: var(--text-tertiary);
+            max-width: 420px;
+        }
+
+        .about-cta__actions {
+            display: flex;
+            gap: var(--space-3);
+            flex-shrink: 0;
+        }
+
+        .btn-primary-about {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            border: 1px solid var(--text-primary);
+        }
+
+        .btn-primary-about:hover {
+            background: var(--accent-warm);
+            border-color: var(--accent-warm);
+            color: #fff;
+        }
+
+        .btn-secondary-about {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-secondary);
+        }
+
+        .btn-secondary-about:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .about-hero__inner {
+                grid-template-columns: 1fr;
+                gap: var(--space-10);
+            }
+
+            .about-card {
+                position: static;
+            }
+
+            .timeline-item {
+                grid-template-columns: 80px 1px 1fr;
+                gap: 0 var(--space-5);
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: var(--space-8);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .about-hero {
+                padding: var(--space-12) 0 var(--space-10);
+            }
+
+            .about-hero__inner {
+                padding: 0 var(--space-5);
+            }
+
+            .about-body {
+                padding: var(--space-12) var(--space-5);
+                gap: var(--space-14);
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-3);
+            }
+
+            .timeline-item {
+                grid-template-columns: 70px 1px 1fr;
+                gap: 0 var(--space-4);
+            }
+        }
+
+        /* ── Fade-in on scroll ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body class="about-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="index.html#projects" class="nav__link">Projects</a>
+                <a href="index.html#research" class="nav__link">Research</a>
+                <a href="about.html" class="nav__link" aria-current="page">About</a>
+                <a href="index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <!-- ── Hero ── -->
+    <section class="about-hero">
+        <div class="about-hero__inner">
+            <div class="about-hero__left">
+                <div class="about-hero__eyebrow">
+                    <div class="about-hero__eyebrow-line"></div>
+                    <span class="about-hero__eyebrow-label">Who I am</span>
+                </div>
+
+                <h1 class="about-hero__name">
+                    Evint<br><em>Leovonzko</em>
+                </h1>
+
+                <div class="about-hero__status">
+                    <span class="about-hero__status-dot"></span>
+                    Open to opportunities &mdash; Vancouver, BC
+                </div>
+
+                <p class="about-hero__tagline">
+                    UBC researcher and co-founder building at the intersection of machine learning, computational biology, and open-source infrastructure. Originally from Indonesia; currently making LLMs less painful to run locally and teaching machines to read RNA.
+                </p>
+
+                <div class="about-hero__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="about-hero__link">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="about-hero__link">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="about-hero__link">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                        Instagram
+                    </a>
+                    <a href="mailto:evint.koo@gmail.com" class="about-hero__link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Email
+                    </a>
+                </div>
+            </div>
+
+            <aside class="about-card">
+                <div class="about-card__avatar">EL</div>
+                <div class="about-card__name">Evint Leovonzko</div>
+                <div class="about-card__role">Researcher &amp; Co-founder</div>
+
+                <div class="about-card__divider"></div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Location</div>
+                        <div class="about-card__fact-value">Vancouver, BC, Canada</div>
+                    </div>
+                </div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Education</div>
+                        <div class="about-card__fact-value">University of British Columbia</div>
+                    </div>
+                </div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Current role</div>
+                        <div class="about-card__fact-value">Co-founder, Kolosal AI</div>
+                    </div>
+                </div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Origin</div>
+                        <div class="about-card__fact-value">Indonesia</div>
+                    </div>
+                </div>
+
+                <div class="about-card__divider"></div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Published</div>
+                        <div class="about-card__fact-value">URNCST Journal, 2024</div>
+                    </div>
+                </div>
+
+                <div class="about-card__fact">
+                    <div class="about-card__fact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <div>
+                        <div class="about-card__fact-label">Award</div>
+                        <div class="about-card__fact-value">Best Research — UBC Capstone 2023</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- ── Body ── -->
+    <div class="about-body">
+
+        <!-- Stats row -->
+        <div class="stats-row reveal">
+            <div class="stat-box">
+                <div class="stat-box__value">13+</div>
+                <div class="stat-box__label">Research papers &amp; analyses</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box__value">3</div>
+                <div class="stat-box__label">Companies founded / co-founded</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box__value">1K+</div>
+                <div class="stat-box__label">Students trained (cloud / AWS)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box__value">OSN</div>
+                <div class="stat-box__label">Indonesia National Science Olympiad finalist</div>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">01 / Story</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">The story so far</h2>
+            <div class="about-narrative">
+                <p>
+                    I grew up in Indonesia competing in national science olympiads &mdash; the kind of thing that teaches you to be comfortable with hard problems and uncomfortable with easy answers. That instinct followed me to <strong>Vancouver</strong>, where I enrolled at UBC and immediately started looking for problems worth solving at the intersection of data, biology, and systems.
+                </p>
+                <p>
+                    My first published work applied deep learning and Gaussian blur preprocessing to <strong>circular RNA classification</strong>, achieving 75% accuracy with 0.14ms inference &mdash; fast enough to be clinically useful. Around the same time I won <strong>Best Research Project</strong> at UBC Vantage College's Capstone Conference for work on P-53 tumor suppressor gene mutation analysis using genetic algorithms. Two papers, two directions: one molecular, one computational.
+                </p>
+                <p class="highlight-text">&ldquo;I chase problems where data hides something meaningful.&rdquo;</p>
+                <p>
+                    On the infrastructure side, I co-founded <strong>Kolosal AI</strong> &mdash; an open-source platform for running large language models locally, privately, and fast. The desktop app and CLI together have earned over 900 GitHub stars. Before that, I served as CTO at <strong>Genta Technology</strong> and founded <strong>Dataktif</strong>, a data analytics company in Indonesia, while also training over 1,000 students in cloud computing across the country.
+                </p>
+                <p>
+                    My research portfolio has since expanded into ML clustering (SOM-TSK, GRASP), gene regulatory network inference, and most recently <strong>computational economics</strong> &mdash; building agent-based Keynesian models in Rust to study Minsky dynamics, zero lower bound persistence, and coordination failure. When I'm not debugging loss curves, I'm reading about macroeconomics or hiking the trails around Vancouver.
+                </p>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">02 / Experience</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">Work &amp; ventures</h2>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="timeline-date__year">2023</span>
+                        <span class="timeline-date__range">Present</span>
+                    </div>
+                    <div class="timeline-spine">
+                        <div class="timeline-spine__dot"></div>
+                        <div class="timeline-spine__line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-content__role">Co-Founder</div>
+                        <div class="timeline-content__org">Kolosal AI &mdash; Vancouver, BC</div>
+                        <p class="timeline-content__desc">
+                            Building open-source infrastructure to make running LLMs locally simple, private, and fast. The Kolosal desktop app and CLI have together earned 900+ GitHub stars. Products span a C++ inference server, AutoML platform with Optuna + MLflow, a model memory calculator, and a Retrieval Management System.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">C++</span>
+                            <span class="timeline-tag">Rust</span>
+                            <span class="timeline-tag">TypeScript</span>
+                            <span class="timeline-tag">PyTorch</span>
+                            <span class="timeline-tag">CUDA</span>
+                            <span class="timeline-tag">Docker</span>
+                            <span class="timeline-tag">FastAPI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="timeline-date__year">2023</span>
+                        <span class="timeline-date__range">Present</span>
+                    </div>
+                    <div class="timeline-spine">
+                        <div class="timeline-spine__dot"></div>
+                        <div class="timeline-spine__line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-content__role">Undergraduate Researcher</div>
+                        <div class="timeline-content__org">University of British Columbia &mdash; Vancouver, BC</div>
+                        <p class="timeline-content__desc">
+                            First-author research in computational biology (circular RNA, GRN inference), ML systems (SOM-TSK, GRASP), and computational economics (Keynesian ABM). Published in URNCST Journal; Best Research Project at UBC Vantage College Capstone Conference 2023.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Deep Learning</span>
+                            <span class="timeline-tag">Genomics</span>
+                            <span class="timeline-tag">Agent-Based Modelling</span>
+                            <span class="timeline-tag">Rust</span>
+                            <span class="timeline-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="timeline-date__year">2022</span>
+                        <span class="timeline-date__range">2023</span>
+                    </div>
+                    <div class="timeline-spine">
+                        <div class="timeline-spine__dot"></div>
+                        <div class="timeline-spine__line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-content__role">Chief Technology Officer</div>
+                        <div class="timeline-content__org">Genta Technology &mdash; Indonesia</div>
+                        <p class="timeline-content__desc">
+                            Built the Genta Academic Assistant &mdash; an AI-powered academic paper search tool using Streamlit, Weaviate, and the OpenAI API. Also served as AWS / Cloud Computing trainer, delivering courses to 1,000+ students across Indonesia.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Streamlit</span>
+                            <span class="timeline-tag">Weaviate</span>
+                            <span class="timeline-tag">OpenAI API</span>
+                            <span class="timeline-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="timeline-date__year">2021</span>
+                        <span class="timeline-date__range">2023</span>
+                    </div>
+                    <div class="timeline-spine">
+                        <div class="timeline-spine__dot"></div>
+                        <div class="timeline-spine__line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-content__role">Founder</div>
+                        <div class="timeline-content__org">Dataktif &mdash; Indonesia</div>
+                        <p class="timeline-content__desc">
+                            Founded a data analytics company focused on empowering data-driven decisions for Indonesian businesses. Built and deployed analytics pipelines and consulting services.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Data Analytics</span>
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Business Intelligence</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">03 / Education</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">Education</h2>
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <span class="edu-card__badge">2023 &mdash; Present</span>
+                    <div class="edu-card__school">University of British Columbia</div>
+                    <div class="edu-card__program">BSc Computer Science &mdash; Vancouver, BC</div>
+                    <p class="edu-card__detail">
+                        Enrolled via UBC Vantage College. Active undergraduate researcher in deep learning and genomics. First-author URNCST publication (2024). Best Research Project, Capstone Conference 2023.
+                    </p>
+                </div>
+                <div class="edu-card">
+                    <span class="edu-card__badge">Pre-2023</span>
+                    <div class="edu-card__school">Indonesia — National Olympiad</div>
+                    <div class="edu-card__program">OSN / KSN Finalist &mdash; Informatics</div>
+                    <p class="edu-card__detail">
+                        Competed at the national level in Indonesia's Science Olympiad (OSN/KSN) in the Informatics category, placing among the top students nationwide in computational thinking and programming.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">04 / Recognition</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">Awards &amp; honours</h2>
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <div>
+                        <div class="award-title">Best Research Project &mdash; UBC Vantage College Capstone Conference</div>
+                        <div class="award-sub">2023 &middot; P-53 Tumor Suppressor Gene Mutation Analysis using Genetic Algorithms &middot; University of British Columbia</div>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    </div>
+                    <div>
+                        <div class="award-title">National Science Olympiad Finalist &mdash; Informatics</div>
+                        <div class="award-sub">OSN / KSN &middot; Indonesia &middot; Competed against top students nationwide in computational thinking and programming</div>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div>
+                        <div class="award-title">First-Author Publication &mdash; URNCST Journal</div>
+                        <div class="award-sub">2024 &middot; &ldquo;Deep Learning with Gaussian Blur Preprocessing for Circular RNA Classification&rdquo; &middot; Vol. 8 &middot; DOI: 10.26685/urncst.601</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">05 / Research</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">Selected publications &amp; papers</h2>
+            <div class="pub-list">
+
+                <a href="https://doi.org/10.26685/urncst.601" target="_blank" rel="noopener" class="pub-item">
+                    <span class="pub-item__num">01</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">Deep Learning with Gaussian Blur Preprocessing for Circular RNA Classification and Detection</div>
+                        <div class="pub-item__venue">URNCST Journal, Vol. 8 &mdash; July 2024</div>
+                        <div class="pub-item__desc">k-mers feature extraction + ANN classifier. Accuracy 75.1%, precision 79.8%, inference 0.14 ms/prediction. Co-authors: Cahyaningrum, Ulwani (UBC Chemistry).</div>
+                    </div>
+                    <span class="pub-badge pub-badge--published">Published</span>
+                </a>
+
+                <a href="research/keynesian-abm-fiscal.html" class="pub-item">
+                    <span class="pub-item__num">02</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">Fiscal Stabilisers, Minsky Dynamics, and Distributional Outcomes in a Keynesian Agent-Based Model</div>
+                        <div class="pub-item__venue">Target: Journal of Economic Dynamics and Control</div>
+                        <div class="pub-item__desc">10,000-agent daily-frequency ABM in Rust. ZLB binds in 93.7% of MC periods &mdash; a novel result mirroring post-1998 Japan and post-2013 Euro-area.</div>
+                    </div>
+                    <span class="pub-badge pub-badge--preprint">Preprint</span>
+                </a>
+
+                <a href="research/keynesian-abm-coordination.html" class="pub-item">
+                    <span class="pub-item__num">03</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">Individual Optimality and Collective Failure in a Keynesian Agent-Based Model</div>
+                        <div class="pub-item__venue">Target: Journal of Economic Dynamics and Control</div>
+                        <div class="pub-item__desc">Grid search identifies survival-maximising strategies. All-best economy: GDP &minus;65%, firm bankruptcies 17&times; higher, mean profit negative &mdash; a structural coordination failure attractor.</div>
+                    </div>
+                    <span class="pub-badge pub-badge--preprint">Preprint</span>
+                </a>
+
+                <a href="research/grasp.html" class="pub-item">
+                    <span class="pub-item__num">04</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">GRASP: Graph-Routed Adaptive Spectral Partitioning</div>
+                        <div class="pub-item__venue">First-author &mdash; Clustering / ML</div>
+                        <div class="pub-item__desc">Parameter-free clustering pipeline. GNG &rarr; spectral gap &rarr; oracle routing to 6 specialists. ARI 0.378 on interlocking rings; 50K points in 140ms.</div>
+                    </div>
+                    <span class="pub-badge pub-badge--preprint">Preprint</span>
+                </a>
+
+                <a href="research/som-tsk.html" class="pub-item">
+                    <span class="pub-item__num">05</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">SOM-TSK: Topology-Seeded K-Means Clustering Framework</div>
+                        <div class="pub-item__venue">First-author &mdash; Clustering / ML</div>
+                        <div class="pub-item__desc">Three SOM-based seeding strategies + DenSOM + AutoSOM k-selection. 6 wins, 0 losses vs KMeans++ across 24 benchmark datasets.</div>
+                    </div>
+                    <span class="pub-badge pub-badge--preprint">Preprint</span>
+                </a>
+
+                <a href="research/grn-dual-vs-cross-encoder.html" class="pub-item">
+                    <span class="pub-item__num">06</span>
+                    <div class="pub-item__body">
+                        <div class="pub-item__title">Dual-Encoder vs Cross-Encoder for Gene Regulatory Network Inference</div>
+                        <div class="pub-item__venue">Target: IEEE TNNLS</div>
+                        <div class="pub-item__desc">Parameter-matched (5.58M) comparison across four imbalance regimes. Ablation, pruning, and cold-start evaluation.</div>
+                    </div>
+                    <span class="pub-badge pub-badge--preprint">Submitted</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Tech stack -->
+        <section class="reveal">
+            <div class="ab-section-eyebrow">
+                <span class="ab-section-label">06 / Skills</span>
+                <div class="ab-section-line"></div>
+            </div>
+            <h2 class="ab-section-title">What I work with</h2>
+            <div class="skills-section">
+                <div class="skill-group">
+                    <div class="skill-group__title">Languages</div>
+                    <div class="skill-pills">
+                        <span class="skill-pill skill-pill--accent">Rust</span>
+                        <span class="skill-pill skill-pill--accent">Python</span>
+                        <span class="skill-pill">TypeScript</span>
+                        <span class="skill-pill">C++</span>
+                        <span class="skill-pill">React</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group__title">Machine Learning &amp; Deep Learning</div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">PyTorch</span>
+                        <span class="skill-pill">TensorFlow</span>
+                        <span class="skill-pill">CUDA</span>
+                        <span class="skill-pill">TensorRT</span>
+                        <span class="skill-pill">MLflow</span>
+                        <span class="skill-pill">Optuna</span>
+                        <span class="skill-pill">MediaPipe</span>
+                        <span class="skill-pill">OpenCV</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group__title">Infrastructure &amp; Tools</div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Docker</span>
+                        <span class="skill-pill">FastAPI</span>
+                        <span class="skill-pill">AWS</span>
+                        <span class="skill-pill">wgpu</span>
+                        <span class="skill-pill">Tauri</span>
+                        <span class="skill-pill">Streamlit</span>
+                        <span class="skill-pill">Gradio</span>
+                        <span class="skill-pill">Weaviate</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group__title">Research domains</div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Computational Biology</span>
+                        <span class="skill-pill">Gene Regulatory Networks</span>
+                        <span class="skill-pill">Clustering / Unsupervised ML</span>
+                        <span class="skill-pill">Agent-Based Modelling</span>
+                        <span class="skill-pill">Keynesian Macroeconomics</span>
+                        <span class="skill-pill">Time Series / Finance</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="about-cta reveal">
+            <div>
+                <h2 class="about-cta__heading">Let&rsquo;s work together</h2>
+                <p class="about-cta__sub">Open to research collaborations, open-source ideas, or any dataset that made you stop scrolling.</p>
+            </div>
+            <div class="about-cta__actions">
+                <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="btn-primary-about">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="btn-secondary-about">GitHub</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main-theme.js?v=14"></script>
+    <script src="assets/js/animations.js?v=13"></script>
+    <script type="module" src="assets/js/hero-scene.js?v=13"></script>
+    <script>
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 60);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
