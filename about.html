@@ -791,6 +791,39 @@
             }
         }
 
+        /* ── Inline links ── */
+        .about-narrative a,
+        .timeline-content__desc a,
+        .edu-card__detail a,
+        .award-sub a,
+        .pub-item__desc a {
+            color: var(--accent-warm);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(225, 29, 100, 0.25);
+            transition: border-color var(--transition-fast), color var(--transition-fast);
+        }
+
+        .about-narrative a:hover,
+        .timeline-content__desc a:hover,
+        .edu-card__detail a:hover,
+        .award-sub a:hover,
+        .pub-item__desc a:hover {
+            color: var(--accent-warm-hover);
+            border-bottom-color: var(--accent-warm);
+        }
+
+        .timeline-content__org a {
+            color: var(--accent-warm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+        }
+
+        .timeline-content__org a:hover {
+            color: var(--accent-warm-hover);
+        }
+
         /* ── Fade-in on scroll ── */
         .reveal {
             opacity: 0;
@@ -997,17 +1030,17 @@
             <h2 class="ab-section-title">The story so far</h2>
             <div class="about-narrative">
                 <p>
-                    I grew up in Indonesia competing in national science olympiads &mdash; the kind of thing that teaches you to be comfortable with hard problems and uncomfortable with easy answers. That instinct followed me to <strong>Vancouver</strong>, where I enrolled at UBC and immediately started looking for problems worth solving at the intersection of data, biology, and systems.
+                    I grew up in Indonesia competing in national science olympiads &mdash; the kind of thing that teaches you to be comfortable with hard problems and uncomfortable with easy answers. That instinct followed me to <strong>Vancouver</strong>, where I enrolled at <a href="https://www.ubc.ca/" target="_blank" rel="noopener">UBC</a> and immediately started looking for problems worth solving at the intersection of data, biology, and systems.
                 </p>
                 <p>
-                    My first published work applied deep learning and Gaussian blur preprocessing to <strong>circular RNA classification</strong>, achieving 75% accuracy with 0.14ms inference &mdash; fast enough to be clinically useful. Around the same time I won <strong>Best Research Project</strong> at UBC Vantage College's Capstone Conference for work on P-53 tumor suppressor gene mutation analysis using genetic algorithms. Two papers, two directions: one molecular, one computational.
+                    My first published work applied deep learning and Gaussian blur preprocessing to <strong>circular RNA classification</strong>, achieving 75% accuracy with 0.14ms inference &mdash; fast enough to be clinically useful. The paper is <a href="https://doi.org/10.26685/urncst.601" target="_blank" rel="noopener">published in URNCST Journal</a>. Around the same time I won <strong>Best Research Project</strong> at <a href="https://vc-capstoneconference-2023.sites.olt.ubc.ca/science/science-shandins-teams/science-team-14/" target="_blank" rel="noopener">UBC Vantage College's Capstone Conference</a> for work on P-53 tumor suppressor gene mutation analysis using genetic algorithms. Two papers, two directions: one molecular, one computational.
                 </p>
                 <p class="highlight-text">&ldquo;I chase problems where data hides something meaningful.&rdquo;</p>
                 <p>
-                    On the infrastructure side, I co-founded <strong>Kolosal AI</strong> &mdash; an open-source platform for running large language models locally, privately, and fast. The desktop app and CLI together have earned over 900 GitHub stars. Before that, I served as CTO at <strong>Genta Technology</strong> and founded <strong>Dataktif</strong>, a data analytics company in Indonesia, while also training over 1,000 students in cloud computing across the country.
+                    On the infrastructure side, I co-founded <a href="https://kolosal.ai/" target="_blank" rel="noopener"><strong>Kolosal AI</strong></a> &mdash; an open-source platform for running large language models locally, privately, and fast. The <a href="https://github.com/KolosalAI" target="_blank" rel="noopener">desktop app and CLI</a> together have earned over 900 GitHub stars. Before that, I served as CTO at <strong>Genta Technology</strong> and founded <a href="https://www.dataktif.com/" target="_blank" rel="noopener"><strong>Dataktif</strong></a>, a data analytics company in Indonesia, while also training over 1,000 students in cloud computing across the country.
                 </p>
                 <p>
-                    My research portfolio has since expanded into ML clustering (SOM-TSK, GRASP), gene regulatory network inference, and most recently <strong>computational economics</strong> &mdash; building agent-based Keynesian models in Rust to study Minsky dynamics, zero lower bound persistence, and coordination failure. When I'm not debugging loss curves, I'm reading about macroeconomics or hiking the trails around Vancouver.
+                    My research portfolio has since expanded into ML clustering (<a href="research/som-tsk.html">SOM-TSK</a>, <a href="research/grasp.html">GRASP</a>), gene regulatory network inference, and most recently <strong>computational economics</strong> &mdash; building agent-based Keynesian models in Rust to study Minsky dynamics, zero lower bound persistence, and coordination failure. When I'm not debugging loss curves, I'm reading about macroeconomics or hiking the trails around Vancouver.
                 </p>
             </div>
         </section>
@@ -1032,9 +1065,9 @@
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-content__role">Co-Founder</div>
-                        <div class="timeline-content__org">Kolosal AI &mdash; Vancouver, BC</div>
+                        <div class="timeline-content__org"><a href="https://kolosal.ai/" target="_blank" rel="noopener">Kolosal AI</a> &mdash; Vancouver, BC</div>
                         <p class="timeline-content__desc">
-                            Building open-source infrastructure to make running LLMs locally simple, private, and fast. The Kolosal desktop app and CLI have together earned 900+ GitHub stars. Products span a C++ inference server, AutoML platform with Optuna + MLflow, a model memory calculator, and a Retrieval Management System.
+                            Building open-source infrastructure to make running LLMs locally simple, private, and fast. The <a href="https://github.com/KolosalAI" target="_blank" rel="noopener">Kolosal desktop app and CLI</a> have together earned 900+ GitHub stars. Products span a C++ inference server, AutoML platform with Optuna + MLflow, a model memory calculator, and a Retrieval Management System.
                         </p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">C++</span>
@@ -1059,9 +1092,9 @@
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-content__role">Undergraduate Researcher</div>
-                        <div class="timeline-content__org">University of British Columbia &mdash; Vancouver, BC</div>
+                        <div class="timeline-content__org"><a href="https://www.ubc.ca/" target="_blank" rel="noopener">University of British Columbia</a> &mdash; Vancouver, BC</div>
                         <p class="timeline-content__desc">
-                            First-author research in computational biology (circular RNA, GRN inference), ML systems (SOM-TSK, GRASP), and computational economics (Keynesian ABM). Published in URNCST Journal; Best Research Project at UBC Vantage College Capstone Conference 2023.
+                            First-author research in computational biology (circular RNA, GRN inference), ML systems (<a href="research/som-tsk.html">SOM-TSK</a>, <a href="research/grasp.html">GRASP</a>), and computational economics (Keynesian ABM). <a href="https://doi.org/10.26685/urncst.601" target="_blank" rel="noopener">Published in URNCST Journal</a>; Best Research Project at UBC Vantage College Capstone Conference 2023.
                         </p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Deep Learning</span>
@@ -1086,7 +1119,7 @@
                         <div class="timeline-content__role">Chief Technology Officer</div>
                         <div class="timeline-content__org">Genta Technology &mdash; Indonesia</div>
                         <p class="timeline-content__desc">
-                            Built the Genta Academic Assistant &mdash; an AI-powered academic paper search tool using Streamlit, Weaviate, and the OpenAI API. Also served as AWS / Cloud Computing trainer, delivering courses to 1,000+ students across Indonesia.
+                            Built the <a href="https://github.com/Genta-Technology/Academic-Assistant" target="_blank" rel="noopener">Genta Academic Assistant</a> &mdash; an AI-powered academic paper search tool using Streamlit, Weaviate, and the OpenAI API. Also served as AWS / Cloud Computing trainer, delivering courses to 1,000+ students across Indonesia.
                         </p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Python</span>
@@ -1109,7 +1142,7 @@
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-content__role">Founder</div>
-                        <div class="timeline-content__org">Dataktif &mdash; Indonesia</div>
+                        <div class="timeline-content__org"><a href="https://www.dataktif.com/" target="_blank" rel="noopener">Dataktif</a> &mdash; Indonesia</div>
                         <p class="timeline-content__desc">
                             Founded a data analytics company focused on empowering data-driven decisions for Indonesian businesses. Built and deployed analytics pipelines and consulting services.
                         </p>
