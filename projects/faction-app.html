@@ -34,7 +34,7 @@
             </button>
             <div class="nav__menu" id="navMenu">
                 <a href="../index.html#projects" class="nav__link">Projects</a>
-                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../about.html" class="nav__link">About</a>
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
@@ -83,32 +83,44 @@
                     <h2 class="proj-section__title">What it does</h2>
                     <div class="proj-feature-grid">
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">📈</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </span>
                             <p class="proj-feature-card__title">Technical Analysis</p>
                             <p class="proj-feature-card__desc">Scores stocks based on price action &mdash; candlestick patterns, momentum indicators &mdash; using a trained Keras model running entirely on-device.</p>
                         </div>
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">📋</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            </span>
                             <p class="proj-feature-card__title">Fundamental Analysis</p>
                             <p class="proj-feature-card__desc">Evaluates financial health through key ratios &mdash; ROE, free cash flow, debt/equity &mdash; scored by a second on-device ML model.</p>
                         </div>
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">🤖</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </span>
                             <p class="proj-feature-card__title">Local AI Chat</p>
                             <p class="proj-feature-card__desc">Ask questions about any stock using Qwen2.5 1.5B running locally via candle &mdash; Metal-accelerated on Apple Silicon, CPU on everything else.</p>
                         </div>
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">🗂️</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            </span>
                             <p class="proj-feature-card__title">Dashboard</p>
                             <p class="proj-feature-card__desc">Combined view of technical and fundamental scores with an optional AI insight strip for a quick read on any ticker.</p>
                         </div>
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">🔒</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path><path d="M10.71 5.05A16 16 0 0 1 22.56 9"></path><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+                            </span>
                             <p class="proj-feature-card__title">Fully Offline</p>
                             <p class="proj-feature-card__desc">All inference runs on your machine. No cloud API keys needed &mdash; market data via Yahoo Finance (Tiingo as fallback), model runs locally.</p>
                         </div>
                         <div class="proj-feature-card">
-                            <span class="proj-feature-card__icon">🦀</span>
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            </span>
                             <p class="proj-feature-card__title">Pure-Rust ML Backend</p>
                             <p class="proj-feature-card__desc">Keras .h5 models loaded directly via the hdf5 crate and ndarray &mdash; no Python runtime, no PyTorch, just native Rust inference.</p>
                         </div>
