@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOM-TSK: Topology-Seeded Clustering Framework | Evint Leovonzko</title>
+    <meta name="description" content="SOM-TSK: A Self-Organizing Map Topology-Seeded Clustering Framework with Deterministic Multi-Start Initialization and Adaptive Selection — Research by Evint Leovonzko">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SOM-TSK: Topology-Seeded Clustering | Evint Leovonzko">
+    <meta property="og:description" content="A clustering framework exploiting SOM topology to produce better-seeded K-means: 6 wins, 0 losses vs KMeans++ across 24 benchmark datasets.">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"      class="rsb__link active">Abstract</a>
+                    <a href="#introduction"  class="rsb__link">Introduction</a>
+                    <a href="#methods"       class="rsb__link">Methods</a>
+                    <a href="#results"       class="rsb__link">Results</a>
+                    <a href="#discussion"    class="rsb__link">Discussion</a>
+                    <a href="#conclusion"    class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+
+                <!-- Hero -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/>
+                                        <circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>
+                                        <line x1="12" y1="9" x2="7.5" y2="7.5"/><line x1="12" y1="9" x2="16.5" y2="7.5"/>
+                                        <line x1="12" y1="15" x2="7.5" y2="16.5"/><line x1="12" y1="15" x2="16.5" y2="16.5"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">SOM-TSK: Topology-Seeded Clustering Framework</h1>
+                            <p class="circrna-subtitle">A Self-Organizing Map Framework with Deterministic Multi-Start Initialization and Adaptive Selection</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">SOM-TSK exploits the manifold-mapping properties of a trained Self-Organizing Map to generate topology-guided seed pools for deterministic K-means &mdash; matching or exceeding KMeans++ on every one of 24 benchmark datasets, with zero losses.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">6 wins</span>
+                                        <span class="hero-metric__label">vs KMeans++</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">0 losses</span>
+                                        <span class="hero-metric__label">across 24 datasets</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">+0.014</span>
+                                        <span class="hero-metric__label">mean ARI gain</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://github.com/Evintkoo/SOMplus_clustering" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                                        </svg>
+                                        <span class="btn-text">View Code</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Clustering framework context, benchmark scope, and key quantitative findings.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">6 / 0</span>
+                                        <span class="meta-highlight__label">Wins / Losses</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">24</span>
+                                        <span class="meta-highlight__label">Benchmark datasets</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">+0.014</span>
+                                        <span class="meta-highlight__label">Mean ARI gain</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Author</span>
+                                        <span class="meta-detail__value">Evint Leovonzko</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Affiliation</span>
+                                        <span class="meta-detail__value">Department of Computer Science and Engineering</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Implementation</span>
+                                        <span class="meta-detail__value">Safe Rust (2021 edition) with Rayon parallelism, CUDA &amp; Metal backends. Benchmarks on Apple Silicon (M2, arm64).</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Datasets</span>
+                                        <span class="meta-detail__value">SIPU benchmarks, UCI real-world (Iris, Wine, Breast Cancer, Digits), synthetic shapes, scalability suites up to n = 50,000.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Self-Organizing Maps</span>
+                                        <span class="meta-pill">K-means Clustering</span>
+                                        <span class="meta-pill">Calinski-Harabasz</span>
+                                        <span class="meta-pill">Rust</span>
+                                        <span class="meta-pill">Unsupervised Learning</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Problem</h3>
+                                <p>Clustering remains one of the most widely applied problems in unsupervised machine learning. The K-means algorithm is ubiquitous owing to its simplicity and scalability, yet its quality is sensitive to initialization &mdash; KMeans++ provides a theoretical O(log k) improvement but still traps the algorithm in suboptimal local minima.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Approach</h3>
+                                <p>SOM-TSK presents a clustering framework that exploits the manifold-mapping properties of a trained Self-Organizing Map to generate a topology-aware candidate pool for deterministic K-means. The framework includes complementary selection criteria: Phase A (max-spread greedy), Phase A-alt, Phase B-bis (multi-start coverage-aware density), and Phase C (deterministic KMeans++ baseline), plus DenSOM for parameter-free density clustering and AutoSOM for automatic k-selection.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"></path>
+                                    <path d="M18 17V9"></path>
+                                    <path d="M13 17V5"></path>
+                                    <path d="M8 17v-3"></path>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Results</h3>
+                                <p>Comprehensive benchmarks on 24 datasets spanning 5 categories demonstrate that SOM-TSK matches or exceeds KMeans++ on every evaluation metric. SOM-TSK achieves <strong>6 wins, 18 ties, and 0 losses</strong> &mdash; it never performs more than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is <strong>+0.014</strong> across all 24 datasets.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Contribution</h3>
+                                <p>A rigorous comparative evaluation over 24 benchmarks and competitive implementation in safe Rust that provides competitive throughput at comparable quality. Three new seeding strategies, a novel density-based SOM clustering mode, and an automatic algorithm selection meta-algorithm are introduced and evaluated.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">K-means is the de facto clustering algorithm owing to its O(nkd) iteration cost and theoretical guarantees &mdash; yet its quality is bottlenecked entirely by initialization. KMeans++ provides an O(log k) competitive ratio in expectation, but a single initialization is still frequently inadequate when cluster boundaries are irregular or datasets are high-dimensional.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Key Insight</h4>
+                                <p>Self-Organizing Maps implicitly encode global topology &mdash; their neighbourhood relationships and weight matrix contain information about cluster structure that is entirely unexploited by standard K-means pipelines. SOM-TSK systematically mines this information.</p>
+                            </div>
+                        </div>
+
+                        <p>Several prior works have coupled SOMs with K-means. Vesanto and Alhoniemi cluster SOM neurons directly; Tasdemir and Merenyi showed SOM adjacency topology can reveal cluster boundaries invisible to standard metrics. SOM-TSK generalises this by constructing a structured pool of diverse candidates, each seeded from different topological perspectives of the SOM graph, rather than running brute-force multi-restart independently.</p>
+
+                        <p>The pool-based approach is more efficient than brute-force restart because each phase uses complementary structural information that reduces redundancy among candidates. After the pool is built, an inertia-windowed Calinski-Harabasz selection criterion picks the globally optimal partition while being wide enough to include SOM-seeded candidates that may have lower inertia but better topological quality.</p>
+                    </div>
+                </section>
+
+                <!-- Methods -->
+                <section id="methods" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Methods</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">SOM Training</h3>
+                                    <p class="method-description">A Self-Organizing Map with M = m&times;n prototype neurons is trained on the data using the competitive learning rule. The neighbourhood kernel h<sub>c,j</sub>(t) = exp(&minus;&Vert;r<sub>c</sub> &minus; r<sub>j</sub>&Vert;&sup2; / 2&sigma;&sup2;(t)) shrinks over T epochs. After training, each data point is assigned to its Best-Matching Unit (BMU), producing a topology-preserving codebook that implicitly compresses cluster structure.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Competitive Learning</span>
+                                        <span class="method-tag">Topology Preservation</span>
+                                        <span class="method-tag">Neighbourhood Kernel</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
+                                        <line x1="7" y1="12" x2="17" y2="6"/><line x1="7" y1="12" x2="17" y2="18"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Phase A &amp; A-alt — Max-Spread Greedy Seeding</h3>
+                                    <p class="method-description">Phase A applies a greedy max-spread strategy analogous to KMeans++ but on SOM neuron weights: the first neuron is the one with highest hit-count, and each subsequent neuron is the one maximally distant from already-selected centres. Phase A-alt uses maximum-spread (farthest from global centroid) as the first selection, providing a complementary topological perspective.</p>
+                                    <div class="formula-box">
+                                        <code class="formula">f* = arg max<sub>h</sub> (h<sub>i</sub> &ge; 0.5) &middot; min<sub>j &in; S</sub> &Vert;w<sub>i</sub> &minus; w<sub>j</sub>&Vert;</code>
+                                        <span class="formula-note">Starting with S = {1} and iterating until |S| = k</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Max-Spread</span>
+                                        <span class="method-tag">Greedy Seeding</span>
+                                        <span class="method-tag">Topology-Aware</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <circle cx="12" cy="12" r="6"/>
+                                        <circle cx="12" cy="12" r="2"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Phase B-bis — Multi-Start Coverage-Aware Density Seeding</h3>
+                                    <p class="method-description">Phase B-bis runs three independent instances of Phase B, each seeded from a different starting neuron (the 1st, 2nd, and 3rd highest hit-count neurons). This multi-start approach substantially reduces sensitivity to poor single-start choices. A final KMeans++ run on the top-3 B-bis candidates is then retained for the pool, improving ARI by up to 0.20 over a single start.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Multi-Start</span>
+                                        <span class="method-tag">Coverage-Aware</span>
+                                        <span class="method-tag">Density Seeding</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="4">
+                            <div class="method-step-badge"><span class="step-number">04</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">DenSOM — Density-Based SOM Clustering</h3>
+                                    <p class="method-description">DenSOM extracts density-defined cluster structure from the SOM activation map entirely, requiring no distance parameter &epsilon; and automatically determining k. Gaussian smoothing (standard deviation &sigma;) is applied via separable 1D convolution to the hit-count map, followed by Otsu thresholding to identify core neurons, and then topographic watershed flood-fill partitions neurons into clusters.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Density Clustering</span>
+                                        <span class="method-tag">Otsu Thresholding</span>
+                                        <span class="method-tag">Watershed Flood-Fill</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="5">
+                            <div class="method-step-badge"><span class="step-number">05</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">AutoSOM — Automatic k-Selection &amp; Routing</h3>
+                                    <p class="method-description">AutoSOM removes the need to specify k by fitting a Gaussian Mixture Model with BIC criterion for k &isin; {2, &hellip;, k<sub>max</sub>}. The optimal k is then passed to SOM-TSK or DenSOM depending on the geometry of the data, selected by evaluating the DenSOM path on a random min(n, 2000) subsample in parallel. Final selection uses silhouette score on min(n, 2000) samples.</p>
+                                    <div class="formula-box">
+                                        <code class="formula">k&#770; = arg min<sub>k</sub> BIC(k) = &minus;2&ell;<sub>k</sub> + p<sub>k</sub> ln n</code>
+                                        <span class="formula-note">where &ell;<sub>k</sub> is the maximised log-likelihood of a k-component GMM</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">GMM-BIC</span>
+                                        <span class="method-tag">Algorithm Routing</span>
+                                        <span class="method-tag">k-Selection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="6">
+                            <div class="method-step-badge"><span class="step-number">06</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Selection Criterion — Calinski-Harabasz with Inertia Window</h3>
+                                    <p class="method-description">A single candidate is chosen from the pool by maximising the Calinski-Harabasz (CH) score within an inertia window of 5% above the pool minimum. This window is wide enough to include SOM-seeded candidates with slightly higher inertia but better topological cluster separation. The 5% threshold avoids including pathologically compact but unnatural partitions.</p>
+                                    <div class="formula-box">
+                                        <code class="formula">CH(k) = [tr(B<sub>k</sub>) / tr(W<sub>k</sub>)] &middot; [(n&minus;k) / (k&minus;1)]</code>
+                                        <span class="formula-note">Select y &isin; P such that I(y) &le; 1.05 &middot; min I and CH(y) is maximised</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Calinski-Harabasz</span>
+                                        <span class="method-tag">Inertia Window</span>
+                                        <span class="method-tag">Candidate Selection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">SOM-TSK was evaluated on 24 benchmark datasets across five categories against KMeans++ (up to 300 Lloyd iterations, tolerance 10<sup>&minus;4</sup>), SL-TSK (SOM-TSK without shuffle), DenSOM, and AutoSOM. Six metrics were computed: ARI, NMI, FMI, Silhouette, Davies-Bouldin, and Calinski-Harabasz.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Zero Losses</h4>
+                                <p>SOM-TSK <em>never</em> performs worse than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is +0.014 across all 24 datasets &mdash; with no red bars in the ARI gain plot (SOM-TSK never loses).</p>
+                            </div>
+                        </div>
+
+                        <p>The four strongly significant wins (s2, a2, a3, Digits) have bootstrap confidence intervals entirely above zero, with &rho;&#770; = 1.00 for s2 and a2. These are topologically complex datasets where SOM's manifold approximation gives a decisive advantage over random KMeans++ seeding.</p>
+
+                        <p><strong>Scalability results</strong> at n = 1,000; 5,000; 10,000; 50,000 (d=2, k=5, 10&times;10 SOM) confirm that SOM-TSK's training time scales as T &middot; M &middot; n, while KMeans is loop-optimised for cache-efficient early convergence &mdash; giving SOM-TSK a training ratio of ~11&times; vs KMeans++, dominated by the O(nmk&middot;d) Nystr&ouml;m-free KMeans phase. The gap is larger than the analytic estimate because the Rust SOM implementation processes all n samples per epoch, while KMeans is cache-optimised.</p>
+
+                        <p><strong>High-dimensional evaluation</strong> (n=1000, k=5, d &isin; {32, 64, 128, 256}) shows SOM-TSK maintaining competitive quality through 256 dimensions, with the SOM grid size and epoch count adjusted per dataset to avoid over-fitting to small-n samples.</p>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Discussion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The results confirm that SOM topology carries actionable information about cluster structure &mdash; Phase A's max-spread approach alone outperforms a single KMeans++ run on well-separated, non-Gaussian datasets, and the multi-start pool eliminates the variance that plagues single-initialisation methods.</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">When SOM-TSK Wins</h4>
+                                <p>The strongest gains appear on non-convex shapes (s2, a2, a3) and datasets with large k (k=35, k=50), where KMeans++ is most susceptible to poor centroid placement. For high-dimensional data (Digits, d=64), the SOM's density-aware topology provides a structured initial codebook that random seeding cannot reliably replicate.</p>
+                            </div>
+                        </div>
+
+                        <p>The Calinski-Harabasz selection criterion with the 5% inertia window is a key design choice: without the window, CH maximisation would greedily select maximally compact partitions, potentially ignoring topologically superior SOM-seeded candidates. The window size of 1.05 was validated across the full 24-dataset suite.</p>
+
+                        <p>DenSOM provides a qualitatively different mode: parameter-free and k-free, it operates entirely on the SOM activation map. On 8 of 24 datasets where ground truth k was unknown, DenSOM correctly recovered the cluster count; where it failed, AutoSOM's BIC routing correctly delegated to SOM-TSK.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">SOM-TSK demonstrates that the SOM's topology-preserving weight matrix is a powerful, underutilised resource for K-means initialisation. By constructing a structured pool of topologically diverse candidates and selecting via inertia-windowed Calinski-Harabasz, the framework achieves 6 wins, 18 ties, and zero losses against KMeans++ across a comprehensive benchmark suite.</p>
+
+                        <p>The Rust implementation delivers competitive throughput: SOM training is fully parallelised via Rayon and optionally offloaded to CUDA or Metal backends. DenSOM eliminates both the k-specification and &epsilon;-specification requirements simultaneously &mdash; the only free parameter is the Gaussian smoothing &sigma;. AutoSOM removes even this through BIC-guided GMM selection and automatic algorithm routing.</p>
+
+                        <p>Future directions include extending the SOM-seeded pool to non-Euclidean metric spaces, integrating GRASP's topology-aware spectral routing as a downstream alternative to K-means, and evaluating on RNA-seq cell-type clustering tasks where topology preservation has direct biological interpretability.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=14"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=13"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>

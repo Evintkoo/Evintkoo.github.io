@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRASP: Graph-Routed Adaptive Spectral Partitioning | Evint Leovonzko</title>
+    <meta name="description" content="GRASP: An autonomous topology-aware clustering system with oracle-guided routing — parameter-free, processes 50,000 points in 140ms, 26-dataset benchmark evaluation.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GRASP: Autonomous Spectral Clustering | Evint Leovonzko">
+    <meta property="og:description" content="A parameter-free clustering pipeline that identifies geometric structure, estimates k automatically, and routes to the optimal specialist algorithm.">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"      class="rsb__link active">Abstract</a>
+                    <a href="#introduction"  class="rsb__link">Introduction</a>
+                    <a href="#pipeline"      class="rsb__link">Pipeline</a>
+                    <a href="#results"       class="rsb__link">Results</a>
+                    <a href="#analysis"      class="rsb__link">Analysis</a>
+                    <a href="#conclusion"    class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+
+                <!-- Hero -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper</span>
+                            </div>
+
+                            <h1 class="circrna-title">GRASP: Graph-Routed Adaptive Spectral Partitioning</h1>
+                            <p class="circrna-subtitle">An Autonomous Topology-Aware Clustering System with Oracle-Guided Routing</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">GRASP is a parameter-free clustering pipeline that constructs a topological fingerprint of any dataset, estimates the natural cluster count automatically, and dispatches to the most suitable specialist algorithm &mdash; without requiring labels, validation data, or user-specified hyperparameters.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">26</span>
+                                        <span class="hero-metric__label">benchmark datasets</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">140 ms</span>
+                                        <span class="hero-metric__label">for 50K points</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">6</span>
+                                        <span class="hero-metric__label">specialist algorithms</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="https://github.com/Evintkoo/SOMplus_clustering" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                                        </svg>
+                                        <span class="btn-text">View Code</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Pipeline architecture, benchmark scope, and performance characteristics.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">26</span>
+                                        <span class="meta-highlight__label">Benchmark datasets</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">140 ms</span>
+                                        <span class="meta-highlight__label">50K-point throughput</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">49 / 49</span>
+                                        <span class="meta-highlight__label">Unit tests passing</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Pipeline</span>
+                                        <span class="meta-detail__value">7 stages: Convex probe &rarr; GNG &rarr; Laplacian &rarr; Eigengap &rarr; Nystr&ouml;m &rarr; 6 specialists &rarr; Oracle routing</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Baselines</span>
+                                        <span class="meta-detail__value">KMeans++, DBSCAN (ARI 0.000), HDBSCAN (ARI 0.055), KnnSpectral (ARI 0.234)</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Key result</span>
+                                        <span class="meta-detail__value">ARI 0.378 on interlocking rings vs GRASP — a 14&times; improvement over DBSCAN, 7&times; over HDBSCAN.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Spectral Clustering</span>
+                                        <span class="meta-pill">Growing Neural Gas</span>
+                                        <span class="meta-pill">Nystr&ouml;m Approximation</span>
+                                        <span class="meta-pill">Oracle Routing</span>
+                                        <span class="meta-pill">Parameter-Free</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Problem</h3>
+                                <p>No single clustering algorithm is universally optimal — the No Free Lunch Theorem formalises this. The optimal choice depends critically on the geometric and statistical properties of the dataset, which are precisely unknown in unsupervised settings. Existing approaches either require user-specified hyperparameters or rely on heuristic ensemble methods.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="8" y1="21" x2="16" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="21"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Approach</h3>
+                                <p>GRASP presents a parameter-free autonomous pipeline that identifies the input distribution's geometric structure, estimates k via normalised spectral gap, and delegates the final assignment to one of six specialists &mdash; KMeans++, TopSOM, NnSom, WardAgglom, KnnSpectral, or RandNystrom &mdash; chosen by an oracle that maps topological and Euclidean diagnostic signals to the algorithm most likely to achieve Bayes-optimal partitioning.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Results</h3>
+                                <p>Evaluated on 26 benchmark datasets spanning non-convex shapes, SIPU S-sets and A-sets, UCI real-world data, and high-dimensional settings. GRASP achieves ARI 0.378 on interlocking rings against DBSCAN's ARI 0.000, passes all 49 unit tests, and processes 50,000 points within 140ms including full GNG training and Nystr&ouml;m embedding.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Contribution</h3>
+                                <p>A topology-prior partitioning principle, geometry-adaptive oracle routing, and selective spectral deployment &mdash; three design principles that together produce an interpretable, parameter-free system whose oracle converges to the Bayes-optimal specialist as n &rarr; &infin;.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The fundamental difficulty in clustering is that the optimal algorithm depends on geometric and statistical properties of the dataset that are precisely unknown in the unsupervised setting. In practice, practitioners execute several algorithms in succession, selecting among them via visual inspection or labelled validation data &mdash; neither of which is available in genuinely unsupervised analysis.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">The Normalised Spectral Gap</h4>
+                                <p>A topology-faithful graph makes cluster structure computationally accessible. The normalised spectral gap &delta;<sub>k</sub> = &lambda;<sub>k+1</sub>/&lambda;<sub>k+2</sub> is large when the graph decomposes cleanly into well-separated subgraphs &mdash; and small when cluster boundaries are topologically entangled. GRASP uses this gap to both estimate k and calibrate the oracle's routing decisions.</p>
+                            </div>
+                        </div>
+
+                        <p>GRASP's three design principles separate it from existing methods. First, topology-prior partitioning constructs a topology map before committing to any partitioning strategy, at cost O(nm) independent of k. Second, geometry-adaptive routing selects the specialist on the basis of diagnostics extracted from the topology map &mdash; not heuristics external to the pipeline. Third, selective spectral deployment applies full spectral computation only when topological evidence indicates Euclidean methods are insufficient, keeping the typical cost at O(nm).</p>
+
+                        <p>Full spectral clustering incurs O(n&sup2;) memory for the kernel matrix and O(n&sup3;) for eigendecomposition &mdash; prohibitive at n &ge; 10,000. GRASP's Nystr&ouml;m extension with GNG landmarks reduces this to O(nmk) with data-proportional coverage, enabling spectral-quality clustering at linear cost.</p>
+                    </div>
+                </section>
+
+                <!-- Pipeline -->
+                <section id="pipeline" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Pipeline</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 1 — Convex-Bypass Probe</h3>
+                                    <p class="method-description">On a random subsample X&#770; of size n<sub>s</sub> = 800, GRASP runs r = 2 independent KMeans++ restarts with k = k<sub>hint</sub>, computes the best mean silhouette s&#770; on the best labelling. If s&#770; &gt; 0.55, all n points are assigned by nearest-centroid and the pipeline terminates at cost O(n<sub>s</sub>kd). This fast convex-bypass saves 16 of 26 benchmark datasets, completing in 2&ndash;22ms.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Silhouette Probe</span>
+                                        <span class="method-tag">O(n<sub>s</sub>kd)</span>
+                                        <span class="method-tag">Fast Bypass</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="5" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
+                                        <circle cx="12" cy="12" r="1"/>
+                                        <line x1="6" y1="12" x2="11" y2="12"/><line x1="13" y1="12" x2="18" y2="12"/>
+                                        <line x1="12" y1="6" x2="12" y2="11"/><line x1="12" y1="13" x2="12" y2="18"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 2 — Growing Neural Gas Topology</h3>
+                                    <p class="method-description">GRASP trains a GNG on X using min(n, 8000) points for T = 50 epochs. GNG inserts new neurons at locations of maximal quantisation error, yielding a topology map whose connectivity emerges from data. The Competitive Hebbian Learning theorem guarantees the GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions &mdash; providing a formal topological fidelity guarantee. Edges older than d<sub>max</sub> are pruned every &lambda; steps.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Growing Neural Gas</span>
+                                        <span class="method-tag">Delaunay Subgraph</span>
+                                        <span class="method-tag">O(nmT)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 3 &amp; 4 — Graph Laplacian &amp; Eigengap k*</h3>
+                                    <p class="method-description">The bandwidth &sigma; = median({&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;}) is estimated from GNG edge lengths. The sparse affinity matrix A<sub>ij</sub> = exp(&minus;&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;&sup2;/2&sigma;&sup2;) is built, and the normalised Laplacian L = I&minus;D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup> is computed at constant cost in m. GRASP then estimates k* via the normalised gap &delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>)/max(&lambda;<sub>k+1</sub>, &epsilon;), setting k* = arg max &delta;<sub>i</sub>.</p>
+                                    <div class="formula-box">
+                                        <code class="formula">L = I &minus; D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup>,&nbsp;&nbsp;&nbsp;&delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>) / max(&lambda;<sub>k+1</sub>, &epsilon;)</code>
+                                        <span class="formula-note">k* = arg max<sub>i</sub> &delta;<sub>i</sub> — robust to spectral scale by construction</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Normalised Laplacian</span>
+                                        <span class="method-tag">Eigengap</span>
+                                        <span class="method-tag">Automatic k</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="4">
+                            <div class="method-step-badge"><span class="step-number">04</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <ellipse cx="12" cy="12" rx="10" ry="6"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 5 — Nystr&ouml;m Embedding</h3>
+                                    <p class="method-description">Given GNG eigenvectors U &isin; &#8477;<sup>m&times;k*</sup>, each data point x is embedded as &phi;(x) = &sum;<sub>i=1</sub><sup>m</sup> K(x, w<sub>i</sub>) / &radic;(D<sub>x</sub> &middot; d<sub>i</sub>) U<sub>ij</sub>. Each row of &phi;(x) is &ell;&sup2;-normalised. Because GNG neurons concentrate in proportion to data density, they systematically cover all cluster regions, whereas random landmarks may miss thin or low-density structures. The Rust implementation distributes the loop across all cores via Rayon.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Nystr&ouml;m Extension</span>
+                                        <span class="method-tag">GNG Landmarks</span>
+                                        <span class="method-tag">O(nmk)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="5">
+                            <div class="method-step-badge"><span class="step-number">05</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 6 — Six Specialist Sub-Algorithms</h3>
+                                    <p class="method-description">GRASP instantiates six specialists, each targeting a different geometric regime:</p>
+                                    <ul class="method-list">
+                                        <li><strong>KMeans++</strong> &mdash; O(nkd), on original features. Best for approximately Gaussian clusters.</li>
+                                        <li><strong>TopSOM</strong> &mdash; O(nm&sup2;), Laplacian &rarr; Eigengap &rarr; Nystr&ouml;m &rarr; KMeans. Full spectral pipeline on GNG topology.</li>
+                                        <li><strong>GNG-DenSom</strong> &mdash; O(nm), density-watershed segmentation on the GNG graph.</li>
+                                        <li><strong>WardAgglom</strong> &mdash; O(n&sup2;, n &le; 1000), Ward linkage on the Nystr&ouml;m embedding.</li>
+                                        <li><strong>KnnSpectral</strong> &mdash; Full k-NN spectral clustering on original features.</li>
+                                        <li><strong>RandNystrom</strong> &mdash; O(nm), Nystr&ouml;m with GNG landmarks, KMeans final step.</li>
+                                    </ul>
+                                    <div class="method-tags">
+                                        <span class="method-tag">6 Specialists</span>
+                                        <span class="method-tag">Spectral &amp; Euclidean</span>
+                                        <span class="method-tag">Density-Based</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="6">
+                            <div class="method-step-badge"><span class="step-number">06</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Stage 7 — Routing Oracle</h3>
+                                    <p class="method-description">The oracle maps three diagnostic signals to an algorithm choice: s<sub>ts</sub> (TopoSOM silhouette), s<sub>km</sub> (KMeans silhouette), and spectral advantage &Delta;. The routing logic encodes four cases: Case 2.5 (high-confidence Gaussian, &rho; &gt; 0.70 and s<sub>km</sub> &gt; 0.60 &rarr; KMeans); Case 2 (low ARI signals non-convex geometry &rarr; KnnSpectral/WardAgglom/TopoSOM); Cases 3a/3a&prime; (explicit spectral advantage &rarr; TopoSOM for large graphs); Case 3b (silhouette fallback &rarr; max(s<sub>ts</sub>, s<sub>km</sub>, s<sub>rn</sub>)).</p>
+                                    <div class="formula-box">
+                                        <code class="formula">&Delta; = s<sub>TopoSOM</sub> &minus; s<sub>KMeans</sub></code>
+                                        <span class="formula-note">Spectral advantage &Delta; &gt; 0.20 with p &gt; 0.05 routes to TopoSOM</span>
+                                    </div>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Oracle Routing</span>
+                                        <span class="method-tag">Silhouette Signals</span>
+                                        <span class="method-tag">Asymptotic Consistency</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">GRASP was evaluated on 26 benchmark datasets in six categories: non-convex shapes (moons, circles, spirals, interlocking rings, swiss_roll_2d, anisotropic, varied_density; n = 150&ndash;1000), SIPU S-sets s1&ndash;s4, A-sets a1&ndash;a3, UCI real-world (Iris, Wine, Breast Cancer, Digits), and scalability datasets at n = 50,000.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Interlocking Rings — GRASP ARI 0.378</h4>
+                                <p>On the interlocking rings benchmark where cluster boundaries are maximally topologically entangled: DBSCAN ARI 0.055, HDBSCAN ARI 0.055, KnnSpectral ARI 0.234 &mdash; GRASP achieves ARI 0.378 via TopoSOM routing, a 14&times; improvement over DBSCAN and 60% over KnnSpectral.</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Non-convex benchmarks</strong> show the clearest advantage: GNG correctly captures the ring and spiral topology, the Laplacian eigengap identifies k = 2 or k = 3, and the oracle routes to TopoSOM which recovers the true partition via spectral embedding. KMeans++ achieves mean ARI 0.188 on these datasets; GRASP achieves 0.376.</p>
+
+                        <p><strong>A-sets and S-sets</strong> (overlapping Gaussian clusters): The convex-bypass probe correctly activates on S4 (tight clusters, silhouette &gt; 0.55) and routes to KMeans on A1 (ρ = 0.862). On A3 (heavily overlapping, k = 50), GRASP routes to KMeans++ and achieves ARI 0.216 vs KMeans++ at 0.188.</p>
+
+                        <p><strong>Scalability</strong>: GNG, Laplacian, and eigendecomposition stages collectively incur O(m&sup3;) operations, entirely independent of n. The sole n-dependent step is the Nystr&ouml;m extension O(nmk); at n = 50,000 this completes in ~140ms. Standard SC requires O(n&sup2;d) at n = 10,000 this is 10<sup>12</sup> operations &mdash; GRASP's O(nm) is a 500&times; reduction at comparable quality.</p>
+                    </div>
+                </section>
+
+                <!-- Analysis -->
+                <section id="analysis" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Theoretical Analysis</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">GRASP's three main theoretical results establish conditions under which each component achieves its design goal.</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Theorem 2 — Spectral Cluster Recovery</h4>
+                                <p>If X is drawn from k distributions with compact support satisfying min<sub>j&ne;l</sub> d(C<sub>j</sub>, C<sub>l</sub>) &ge; &Delta; &gt; 0, and the GNG mean edge length &sigma; &lt; &Delta;/2, then L has exactly k zero eigenvalues whose eigenvectors span a subspace in which the k cluster indicator vectors are mutually orthogonal.</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Theorem 3 (Nystr&ouml;m error)</strong>: For rank-m Nystr&ouml;m approximation K&#771; with GNG landmarks, &Vert;K&minus;K&#771;&Vert;<sub>F</sub> &le; &lambda;<sub>m+1</sub>(K) &radic;(n&minus;m). The eigenvector error for the leading k components is O(&lambda;<sub>k+1</sub>/(&lambda;<sub>k</sub>&minus;&lambda;<sub>k+1</sub>)), which diminishes as the spectral gap increases &mdash; exactly the regime where GRASP routes to TopSOM.</p>
+
+                        <p><strong>Theorem 4 (Delaunay subgraph, Frötzke 2009)</strong>: The GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions. Hence any topologically separable cluster boundary present in the data's Delaunay structure is also represented in the GNG graph, bounding the Nystr&ouml;m approximation quality from below.</p>
+
+                        <p><strong>Proposition 5 (Oracle consistency)</strong>: As n &rarr; &infin; with fixed cluster counts, the routing oracle selects the Bayes-optimal specialist with probability approaching 1. The oracle uses ARI estimate ρ, silhouette coefficients, and spectral advantage &Delta; &mdash; all of which converge by law of large numbers, and eigenvector stability of symmetric operators stabilises at a fixed label corresponding to the asymptotically optimal specialist.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">GRASP demonstrates that autonomous, parameter-free clustering is achievable through principled geometric diagnosis rather than heuristic ensemble voting. The three-principle architecture &mdash; topology prior, geometry-adaptive routing, selective spectral deployment &mdash; produces a system that is simultaneously faster than full spectral methods, more robust than density methods on complex topology, and more accurate than KMeans++ on non-convex structure.</p>
+
+                        <p>The fast convex-bypass terminates 16 of 26 benchmarks in under 22ms. For the remaining 10, the full pipeline achieves state-of-the-art accuracy while processing 50,000 points within 140ms &mdash; scaling as O(nm) in n, independent of the O(m&sup3;) topology computation which depends only on the GNG size m.</p>
+
+                        <p>Future directions include extending GRASP's routing oracle with learned diagnostic features via a small neural classifier trained on the topology signals, integrating SOM-TSK's multi-start seeding as a replacement for KMeans++ in the KMeans specialist, and evaluating GRASP on single-cell RNA-seq datasets where cluster topology is biologically meaningful and ground truth is available via cell-type markers.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=14"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=13"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>
