@@ -92,32 +92,34 @@
     });
   });
 
-  // Dark Mode Toggle
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const html = document.documentElement;
-  
-  // Check for saved theme preference or default to 'dark' mode
+  // Dark Mode Toggle — animated sun ↔ moon
+  const themeToggle  = document.getElementById('themeToggle');
+  const themeStage   = document.getElementById('themeIconStage');
+  const sunIcon      = document.getElementById('themeIconSun');
+  const moonIcon     = document.getElementById('themeIconMoon');
+  const html         = document.documentElement;
+
+  // Check for saved theme preference or default to 'dark'
   const currentTheme = localStorage.getItem('theme') || 'dark';
   html.setAttribute('data-theme', currentTheme);
-  
-  // Also update the root class for backwards compatibility with main.css
+
+  // Backwards compatibility class
   if (currentTheme === 'light') {
     html.classList.add('light');
   } else {
     html.classList.remove('light');
   }
-  
-  updateThemeIcon(currentTheme);
+
+  // Set initial state with no animation
+  setIconState(currentTheme, false);
 
   if (themeToggle) {
-    themeToggle.addEventListener('click', function() {
-      const theme = html.getAttribute('data-theme');
+    themeToggle.addEventListener('click', function () {
+      const theme    = html.getAttribute('data-theme');
       const newTheme = theme === 'light' ? 'dark' : 'light';
 
       html.setAttribute('data-theme', newTheme);
 
-      // Also update the root class for backwards compatibility with main.css
       if (newTheme === 'light') {
         html.classList.add('light');
       } else {
@@ -125,32 +127,82 @@
       }
 
       localStorage.setItem('theme', newTheme);
-      updateThemeIcon(newTheme);
+      setIconState(newTheme, true);
     });
   }
-  
-  function updateThemeIcon(theme) {
-    if (!themeIcon) return;
-    
-    if (theme === 'dark') {
-      // Moon icon
-      themeIcon.innerHTML = `
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      `;
-    } else {
-      // Sun icon
-      themeIcon.innerHTML = `
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      `;
+
+  /**
+   * Show the correct icon, optionally animating the transition.
+   * @param {string}  theme    'dark' | 'light'
+   * @param {boolean} animate  false on first load
+   */
+  function setIconState(theme, animate) {
+    if (!sunIcon || !moonIcon) return;
+
+    if (!animate) {
+      // Instant — just show/hide without classes
+      if (theme === 'dark') {
+        sunIcon.classList.add('theme-icon--hidden');
+        moonIcon.classList.remove('theme-icon--hidden');
+      } else {
+        moonIcon.classList.add('theme-icon--hidden');
+        sunIcon.classList.remove('theme-icon--hidden');
+      }
+      return;
     }
+
+    // Stage squish — satisfying click feedback
+    if (themeStage) {
+      themeStage.classList.remove('squishing');
+      void themeStage.offsetWidth; // force reflow so animation restarts
+      themeStage.classList.add('squishing');
+      themeStage.addEventListener('animationend', function onSquish() {
+        themeStage.classList.remove('squishing');
+        themeStage.removeEventListener('animationend', onSquish);
+      });
+    }
+
+    if (theme === 'dark') {
+      // Sun exits — dizzy wobble-and-spiral
+      animateOut(sunIcon, function () {
+        sunIcon.classList.add('theme-icon--hidden');
+      });
+      // Moon enters — graceful arc
+      moonIcon.classList.remove('theme-icon--hidden', 'theme-icon--exiting');
+      animateIn(moonIcon);
+
+    } else {
+      // Moon exits — startled, swoops away
+      animateOut(moonIcon, function () {
+        moonIcon.classList.add('theme-icon--hidden');
+      });
+      // Sun enters — triumphant spring bounce
+      sunIcon.classList.remove('theme-icon--hidden', 'theme-icon--exiting');
+      animateIn(sunIcon);
+    }
+  }
+
+  /** Trigger the CSS entering animation on an icon element. */
+  function animateIn(el) {
+    el.classList.remove('theme-icon--entering', 'theme-icon--exiting');
+    void el.offsetWidth;
+    el.classList.add('theme-icon--entering');
+    el.addEventListener('animationend', function onIn() {
+      el.classList.remove('theme-icon--entering');
+      el.removeEventListener('animationend', onIn);
+    });
+  }
+
+  /** Trigger the CSS exiting animation, then call done(). */
+  function animateOut(el, done) {
+    el.classList.remove('theme-icon--entering', 'theme-icon--exiting');
+    void el.offsetWidth;
+    el.classList.add('theme-icon--exiting');
+    el.addEventListener('animationend', function onOut() {
+      el.classList.remove('theme-icon--exiting');
+      el.removeEventListener('animationend', onOut);
+      done();
+    });
   }
   
 

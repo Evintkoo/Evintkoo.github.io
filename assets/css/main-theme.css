@@ -543,24 +543,150 @@ button {
   align-items: center;
 }
 
-/* Theme Toggle */
+/* ========================================================
+   ANIMATED THEME TOGGLE — sun ↔ moon with personality
+   ======================================================== */
+
 .theme-toggle {
   background: none;
   border: none;
   color: var(--text-primary);
   padding: var(--space-2);
   cursor: pointer;
-  transition: transform var(--transition-base), color var(--transition-base);
+  transition: color var(--transition-base);
+  position: relative;
 }
 
 .theme-toggle:hover {
-  transform: rotate(20deg) scale(1.1);
   color: var(--accent-warm);
 }
 
-.theme-toggle svg {
+/* Stage: fixed-size container both icons live in */
+.theme-icon-stage {
   width: 20px;
   height: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Both icons: absolutely stacked */
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 50%;
+}
+
+/* Hidden state — off-stage, invisible */
+.theme-icon--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ──────────────────────────────────────────
+   KEYFRAMES
+   ────────────────────────────────────────── */
+
+/* Sun: enters with a triumphant spring bounce */
+@keyframes sun-enter {
+  0%   { opacity: 0; transform: scale(0.15) rotate(-120deg); }
+  45%  { opacity: 1; transform: scale(1.28) rotate(15deg);   }
+  65%  { transform: scale(0.88) rotate(-6deg); }
+  82%  { transform: scale(1.07) rotate(3deg);  }
+  100% { opacity: 1; transform: scale(1)   rotate(0deg);   }
+}
+
+/* Sun: exits in a dizzy wobble-and-spiral */
+@keyframes sun-exit {
+  0%   { opacity: 1; transform: scale(1)    rotate(0deg);   }
+  20%  { transform: scale(1.08) rotate(-22deg); }
+  38%  { transform: scale(1.04) rotate(14deg);  }
+  100% { opacity: 0; transform: scale(0.05) rotate(200deg) translateY(-8px); }
+}
+
+/* Sun rays: pop in one-by-one (apply per nth-child via JS class) */
+@keyframes ray-pop {
+  0%   { opacity: 0; stroke-dasharray: 0 4; stroke-width: 0; }
+  70%  { stroke-width: 2.8; }
+  100% { opacity: 1; stroke-dasharray: none; stroke-width: 2; }
+}
+
+/* Moon: enters with a graceful arc from the upper-right */
+@keyframes moon-enter {
+  0%   { opacity: 0; transform: translate(10px, -10px) scale(0.2) rotate(50deg); }
+  55%  { opacity: 1; transform: translate(-3px, 3px)   scale(1.12) rotate(-7deg); }
+  75%  { transform: translate(2px, -2px) scale(0.95) rotate(3deg); }
+  100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+
+/* Moon: exits startled — little jump then swoops bottom-left */
+@keyframes moon-exit {
+  0%   { opacity: 1; transform: scale(1)    rotate(0deg);   }
+  18%  { transform: scale(1.18) rotate(-8deg); } /* WHOA! */
+  100% { opacity: 0; transform: translate(-14px, 14px) scale(0.05) rotate(-70deg); }
+}
+
+/* Button: satisfying squish on every click */
+@keyframes toggle-squish {
+  0%   { transform: scale(1);    }
+  28%  { transform: scale(0.78); }
+  62%  { transform: scale(1.14); }
+  100% { transform: scale(1);    }
+}
+
+/* Sun hover: lazy warm spin, like sunbathing */
+@keyframes sun-hover-idle {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(30deg); }
+}
+
+/* Moon hover: sleepy nod side-to-side */
+@keyframes moon-hover-idle {
+  0%   { transform: rotate(0deg);   }
+  30%  { transform: rotate(-14deg); }
+  65%  { transform: rotate(10deg);  }
+  100% { transform: rotate(-4deg);  }
+}
+
+/* ──────────────────────────────────────────
+   ANIMATION TRIGGER CLASSES (set by JS)
+   ────────────────────────────────────────── */
+
+.theme-icon--sun.theme-icon--entering {
+  animation: sun-enter 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.theme-icon--sun.theme-icon--exiting {
+  animation: sun-exit 0.36s ease-in forwards;
+}
+
+.theme-icon--moon.theme-icon--entering {
+  animation: moon-enter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.theme-icon--moon.theme-icon--exiting {
+  animation: moon-exit 0.32s ease-in forwards;
+}
+
+/* Stage squish — applied to wrapper on click */
+.theme-icon-stage.squishing {
+  animation: toggle-squish 0.28s ease-out forwards;
+}
+
+/* ──────────────────────────────────────────
+   HOVER MICRO-INTERACTIONS
+   ────────────────────────────────────────── */
+
+.theme-toggle:hover .theme-icon--sun:not(.theme-icon--hidden):not(.theme-icon--entering):not(.theme-icon--exiting) {
+  animation: sun-hover-idle 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.theme-toggle:hover .theme-icon--moon:not(.theme-icon--hidden):not(.theme-icon--entering):not(.theme-icon--exiting) {
+  animation: moon-hover-idle 0.55s ease-in-out forwards;
 }
 
 /* Mobile Menu Toggle */
