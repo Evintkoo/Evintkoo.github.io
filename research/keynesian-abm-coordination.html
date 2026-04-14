@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Individual Optimality and Collective Failure in a Keynesian ABM | Evint Leovonzko</title>
+    <meta name="description" content="Survival-maximising strategies for each agent type in a Keynesian ABM: the all-best economy produces GDP growth 65% lower, unemployment 5x higher, and negative firm profits despite individually-optimal rules — Research by Evint Leovonzko">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Individual Optimality and Collective Failure | Evint Leovonzko">
+    <meta property="og:description" content="Grid search over agent decision rules reveals that survival-maximising strategies produce a coordination failure attractor: GDP growth &minus;65%, firm bankruptcies 17x higher, mean profit negative.">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"      class="rsb__link active">Abstract</a>
+                    <a href="#introduction"  class="rsb__link">Introduction</a>
+                    <a href="#methods"       class="rsb__link">Methods</a>
+                    <a href="#results"       class="rsb__link">Results</a>
+                    <a href="#discussion"    class="rsb__link">Discussion</a>
+                    <a href="#conclusion"    class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+
+                <!-- Hero -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper &mdash; Paper 2 of 2</span>
+                            </div>
+
+                            <h1 class="circrna-title">Individual Optimality and Collective Failure: Survival-Maximising Strategies in a Keynesian Agent-Based Model</h1>
+                            <p class="circrna-subtitle">Grid Search over Agent Decision Rules Reveals a Structural Coordination Failure Attractor</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">Using a grid search over key decision parameters for households, firms, and banks, this paper identifies survival-maximising rules empirically &mdash; without imposing theoretical equilibrium conditions. When all agent types simultaneously follow their individually-optimal strategies, aggregate outcomes diverge sharply: GDP growth falls 65%, firm bankruptcies rise 17-fold, and mean firm profit turns negative.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">&minus;65%</span>
+                                        <span class="hero-metric__label">GDP growth drop</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">17&times;</span>
+                                        <span class="hero-metric__label">firm bankruptcy increase</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">&minus;$9.21</span>
+                                        <span class="hero-metric__label">mean firm profit</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="../files/keynesian_abm_paper2.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Full Paper</span>
+                                    </a>
+                                    <a href="keynesian-abm-fiscal.html" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                        </svg>
+                                        <span class="btn-text">&larr; Read Paper 1</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Two attractor states, grid search design, and key welfare comparisons.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">4.60%</span>
+                                        <span class="meta-highlight__label">GDP CAGR (baseline)</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">1.60%</span>
+                                        <span class="meta-highlight__label">GDP CAGR (all-best)</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">+76%</span>
+                                        <span class="meta-highlight__label">median household wealth</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Target journal</span>
+                                        <span class="meta-detail__value">Journal of Economic Dynamics and Control</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Key finding</span>
+                                        <span class="meta-detail__value">Two stable attractor states: coordinated equilibrium (GDP 4.60%, bankruptcy 0.27%/yr) vs. decentralised equilibrium (GDP 1.60%, bankruptcy 4.73%/yr, profit &minus;$9.21).</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Historical validation</span>
+                                        <span class="meta-detail__value">Japan 1991&ndash;2003, Euro-area periphery 2010&ndash;2015, US balance-sheet recession 2008&ndash;2012 each confirm the demand-deficiency mechanism.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Coordination Failure</span>
+                                        <span class="meta-pill">Grid Search</span>
+                                        <span class="meta-pill">Survivability Optimisation</span>
+                                        <span class="meta-pill">Keynesian ABM</span>
+                                        <span class="meta-pill">Decentralised Equilibrium</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Question</h3>
+                                <p>This paper investigates what decision rules maximise the individual survivability and welfare of each agent type in a single-sector Keynesian agent-based model, and what aggregate outcome emerges when all agent types simultaneously follow their individually-optimal strategies. Using a grid search over key decision parameters for households, firms, and banks, survival-maximising rules are identified empirically &mdash; without imposing theoretical equilibrium conditions.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="8" y1="21" x2="16" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="21"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Approach</h3>
+                                <p>For each agent type in isolation, a grid search identifies the parameter combination that maximises a composite survivability score &mdash; incorporating survival rate, wealth accumulation, profit, and financial stability &mdash; against the bounded-rational baseline economy. The survival-optimal rules for households, firms, and banks are then activated simultaneously to form the &ldquo;all-best economy&rdquo;, whose aggregate outcomes are compared to the baseline and to the coordination failure documented in the companion paper.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Result</h3>
+                                <p>The all-best economy produces aggregate outcomes that diverge markedly from the bounded-rational baseline: GDP growth is lower (1.60% vs. 4.60%), unemployment is higher (1.29% vs. 0.24%), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20) despite each agent following individually-optimal rules. Paradoxically, zero lower bound frequency declines as credit demand collapses rather than as a result of improved monetary traction.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Implication</h3>
+                                <p>The coordination failure identified in the companion paper does not depend on the theoretical-optimality assumption; it is a structural property of decentralised individual optimisation in a Keynesian economy. Bounded rationality acts not merely as a modelling convenience, but as a structural stabiliser maintaining the consumption and credit flows required for aggregate coherence. JEL codes: C63, E12, E32, C61.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">A central question in macroeconomics is whether individually rational behaviour aggregates to socially desirable outcomes. In Keynesian models with strategic complementarities, the answer is generically no &mdash; but the mechanism and severity of the failure depend critically on the decision rules agents actually use.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Two Attractor States</h4>
+                                <p>The simulation identifies two stable attractor states: a <strong>coordinated equilibrium</strong> under bounded-rational rules (GDP 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20) and a <strong>decentralised equilibrium</strong> under survival-optimal rules (GDP 1.60%/yr, unemployment 1.29%, firm bankruptcy 4.73%/yr, mean profit &minus;$9.21). Both states are stable across 50 Monte Carlo seeds &mdash; the coordination failure is a genuine long-run attractor, not a transitional trajectory.</p>
+                            </div>
+                        </div>
+
+                        <p>This paper builds directly on the companion paper (<a href="keynesian-abm-fiscal.html">Paper 1</a>), which established the baseline model and documented the persistent ZLB result. The present paper asks a different question: what happens when, instead of bounded-rational heuristics, each agent type adopts the strategy that best serves its own survival? The grid search methodology identifies these strategies empirically, without imposing Nash equilibrium or rational-expectations conditions.</p>
+
+                        <p>The result connects to three strands of literature: Diamond's (1982) multiplicity of equilibria in search economies, the coordination failure literature following Cooper and John (1988), and the recent macro-ABM literature documenting bounded rationality as a stabiliser (Dosi et al. 2010, 2013, 2015; Fagiolo and Roventini 2017).</p>
+                    </div>
+                </section>
+
+                <!-- Methods -->
+                <section id="methods" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Methods</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 3v18h18"/>
+                                        <path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Composite Survivability Score</h3>
+                                    <p class="method-description">Each agent type is evaluated by a composite score that aggregates multiple welfare dimensions: household score weights survival rate, median wealth, and consumption stability; firm score weights survival rate, mean profit, and employment; bank score weights survival rate, capital adequacy, and net interest income. All components are normalised to [0,1] and combined with equal weights. The composite score at the bounded-rational baseline is used as the reference (score = 0.61 for households, 0.58 for firms, 0.55 for banks).</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Multi-objective Welfare</span>
+                                        <span class="method-tag">Normalised Score</span>
+                                        <span class="method-tag">Empirical Optimisation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="3" y1="9" x2="21" y2="9"/>
+                                        <line x1="3" y1="15" x2="21" y2="15"/>
+                                        <line x1="9" y1="3" x2="9" y2="21"/>
+                                        <line x1="15" y1="3" x2="15" y2="21"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Grid Search Protocol</h3>
+                                    <p class="method-description">For each agent type, a discrete grid is constructed over the four most consequential decision parameters. For households: savings propensity &sigma; &isin; {0.05, 0.10, 0.15, 0.20}, risk aversion &rho; &isin; {0.20, 0.40, 0.60, 0.70}, habit &eta; &isin; {0.50, 0.70}, wage decay &delta;<sub>W</sub> &isin; {0.02, 0.05}. Each grid point is evaluated over a 10-year simulation run against the bounded-rational baseline economy. The grid point achieving the highest composite score is identified as the survival-optimal strategy.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">4-parameter Grid</span>
+                                        <span class="method-tag">10-year Evaluation</span>
+                                        <span class="method-tag">Against Baseline Economy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">The All-Best Economy</h3>
+                                    <p class="method-description">After identifying survival-optimal rules for each agent type in isolation, all three agent types are simultaneously assigned their best-found parameter vectors. This &ldquo;all-best economy&rdquo; is then simulated for 10 years across 50 Halton-seed Monte Carlo draws, producing stable aggregate statistics that characterise the decentralised equilibrium. The result is compared to the bounded-rational baseline and to the theoretical-optimal coordination failure documented in Paper 1.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Simultaneous Optimisation</span>
+                                        <span class="method-tag">50-seed Monte Carlo</span>
+                                        <span class="method-tag">Decentralised Equilibrium</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The grid search identifies survival-maximising strategies for each agent type that are individually coherent but collectively destructive when activated simultaneously.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Per-Agent Best Strategies</h4>
+                                <p><strong>Households</strong> raise savings propensity fourfold (&sigma; = 0.20 vs. 0.05), triple risk aversion (&rho; = 0.70 vs. 0.20), and halve reservation-wage decay (&delta;<sub>W</sub> = 0.02 vs. 0.05). <strong>Firms</strong> cut investment 70% (&chi; = 0.03 vs. 0.10), raise R&amp;D tenfold (&phi; = 0.05 vs. 0.005), and loosen hiring threshold. <strong>Banks</strong> cut risk premium 80% (&zeta;<sup>B</sup> = 0.10 vs. 0.50), contract lending appetite (0.50 vs. 0.80), and raise CAR floor to 12%.</p>
+                            </div>
+                        </div>
+
+                        <p><strong>All-best aggregate outcomes:</strong> When all three agent types adopt survival-optimal rules simultaneously, GDP growth falls from 4.60%/yr to 1.60%/yr (&minus;65.2%), unemployment rises from 0.24% to 1.29%, firm bankruptcy rate surges from 0.27% to 4.73%/yr (a 17.5&times; increase), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20). The decentralised equilibrium is stable across all 50 Monte Carlo seeds.</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">The Paradox: Household Wealth Rises</h4>
+                                <p>Median household wealth rises 76% in the all-best economy (from $3,842 to $6,757), confirming that the failure is not one of individual welfare but of social welfare aggregated across all agent types. Households rationally defect from the coordinated consumption path; the cost is borne collectively by firms and, in the long run, by households themselves as the productive base that supports their income erodes. ZLB frequency paradoxically declines as credit demand collapses rather than as a result of improved monetary traction.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Historical Case Studies</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">Three historical episodes confirm that the demand-deficiency mechanism identified computationally is not a model artefact but a recurring structural feature of advanced economies.</p>
+
+                        <p><strong>Japan&apos;s Lost Decades (1991&ndash;2003):</strong> Following the asset bubble collapse, Japanese households dramatically raised savings rates (precautionary motive), banks contracted credit despite near-zero interest rates, and firms slashed investment. Each decision was individually rational given the environment. The aggregate result was a decade of stagnation with GDP growth averaging 0.5%/yr and deflation despite the ZLB &mdash; matching the all-best attractor closely.</p>
+
+                        <p><strong>Euro-area periphery (2010&ndash;2015):</strong> Under fiscal austerity conditionality, households in Greece, Portugal, and Spain cut consumption simultaneously, banks tightened credit in response to sovereign risk, and firms reduced investment. Each decision was individually rational given sovereign risk premia. The aggregate result was a 6&ndash;26% cumulative GDP contraction, precisely the demand-deficiency mechanism the model isolates.</p>
+
+                        <p><strong>US balance-sheet recession (2008&ndash;2012):</strong> Following the housing collapse, US households deleveraged rapidly (individually rational given negative equity), banks contracted credit (individually rational given regulatory pressure and NPL uncertainty), and firms cut investment (individually rational given demand uncertainty). The aggregate result was the deepest post-war US recession, recovered only by large fiscal transfers &mdash; consistent with the model&apos;s prediction that the decentralised equilibrium requires external coordination to escape.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">Three conclusions emerge from the analysis. First, coordination failure is structural: the all-best economy produces markedly worse aggregate outcomes than the bounded-rational baseline even though every agent type is following individually-optimal rules. Second, the failure mechanism here differs from the companion paper: rather than credit surge and ZLB lock-in, the channel is demand deficiency &mdash; conservative household savings and bank credit rationing suppress the consumption and investment flows that sustain firm viability. Third, bounded rationality is a structural stabiliser, not a modelling convenience.</p>
+
+                        <p>The result establishes that the bounded-rational behaviour documented in heterogeneous-agent macro models is not a modelling simplification but a stabilising feature. Replacing bounded rationality with survival-maximising rules &mdash; even without imposing theoretical equilibrium conditions &mdash; is sufficient to produce coordination failure. The economy possesses two stable attractor states: the coordinated equilibrium under bounded rationality and the decentralised equilibrium under survival-optimal rules.</p>
+
+                        <p>Future work should investigate whether an iterative best-response dynamic (each agent type updating its strategy in response to others&apos; strategies) converges to a stable Nash equilibrium or cycles, and whether the resulting equilibrium is closer to the bounded-rational baseline or to the all-best outcome documented here. See <a href="keynesian-abm-fiscal.html">Paper 1</a> for the companion study on the baseline model, ZLB dynamics, and Minsky dynamics.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=14"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=13"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>

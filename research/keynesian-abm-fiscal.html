@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiscal Stabilisers, Minsky Dynamics, and Distributional Outcomes | Evint Leovonzko</title>
+    <meta name="description" content="A Keynesian agent-based model reproducing stylised macroeconomic facts, documenting persistent ZLB binding, Minsky dynamics, and the structural hierarchy of model misses — Research by Evint Leovonzko">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fiscal Stabilisers &amp; Minsky Dynamics in a Keynesian ABM | Evint Leovonzko">
+    <meta property="og:description" content="Daily-frequency, 10,000-agent Keynesian ABM: 4.6% GDP CAGR, persistent ZLB (93.7% of periods), Minsky dynamics, and fiscal stabilisers in a closed economy.">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+</head>
+
+<body class="research-page">
+    <div id="readingProgress" class="reading-progress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../index.html#research" class="nav__link">Research</a>
+                <a href="../index.html#about" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main class="research-layout">
+        <aside class="rsb" id="rsb">
+            <div class="rsb__inner">
+                <p class="rsb__title">Research Sections</p>
+                <nav>
+                    <a href="#abstract"      class="rsb__link active">Abstract</a>
+                    <a href="#introduction"  class="rsb__link">Introduction</a>
+                    <a href="#methods"       class="rsb__link">Model</a>
+                    <a href="#results"       class="rsb__link">Results</a>
+                    <a href="#discussion"    class="rsb__link">Discussion</a>
+                    <a href="#conclusion"    class="rsb__link">Conclusion</a>
+                </nav>
+            </div>
+            <button class="rsb__tab" id="rsbTab" aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline class="rsb__chevron" points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+        </aside>
+        <div class="rsb__overlay" id="rsbOverlay"></div>
+
+        <div class="research-content">
+            <div class="research-content__inner">
+
+                <!-- Hero -->
+                <section class="circrna-hero">
+                    <div class="circrna-hero__content">
+                        <div class="circrna-hero__primary">
+                            <div class="paper-hero__badge">
+                                <span class="badge-icon icon-inline icon-inline--leading" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </span>
+                                <span class="badge-text">Research Paper &mdash; Paper 1 of 2</span>
+                            </div>
+
+                            <h1 class="circrna-title">Fiscal Stabilisers, Minsky Dynamics, and Distributional Outcomes in a Keynesian Agent-Based Model</h1>
+                            <p class="circrna-subtitle">Baseline Simulation Evidence from a 10-Year Closed-Economy Run</p>
+
+                            <div class="circrna-summary">
+                                <p class="summary-lead">A daily-frequency, single-sector Keynesian ABM of 10,000 households, 1,000 firms, and 10 commercial banks reproduces four stylised macroeconomic facts and documents persistent zero lower bound binding &mdash; a novel result in the K+S ABM literature mirroring post-1998 Japan and post-2013 Euro-area experience.</p>
+
+                                <div class="summary-highlights">
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">10,000</span>
+                                        <span class="hero-metric__label">agents</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">93.7%</span>
+                                        <span class="hero-metric__label">ZLB frequency (MC median)</span>
+                                    </div>
+                                    <div class="hero-metric">
+                                        <span class="hero-metric__value">4.6%</span>
+                                        <span class="hero-metric__label">GDP CAGR</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-hero__actions">
+                                    <a href="../files/keynesian_abm_paper1.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <span class="btn-text">View Full Paper</span>
+                                    </a>
+                                    <a href="keynesian-abm-coordination.html" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM12 17l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/>
+                                        </svg>
+                                        <span class="btn-text">Read Paper 2 &rarr;</span>
+                                    </a>
+                                    <a href="#abstract" class="btn btn-secondary">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4L10.59 5.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                        <span class="btn-text">Start Reading</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="paper-meta-snapshot">
+                            <div class="paper-meta-simple">
+                                <h2 class="paper-meta-heading">Research Snapshot</h2>
+                                <p class="paper-meta-summary">Model scale, simulation horizon, and key quantitative results.</p>
+
+                                <div class="paper-meta-highlights">
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">4 / 12</span>
+                                        <span class="meta-highlight__label">stylised facts matched</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">50</span>
+                                        <span class="meta-highlight__label">Monte Carlo seeds</span>
+                                    </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">3,650</span>
+                                        <span class="meta-highlight__label">simulation steps (10 yr)</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-details">
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Target journal</span>
+                                        <span class="meta-detail__value">Journal of Economic Dynamics and Control</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Key result</span>
+                                        <span class="meta-detail__value">ZLB binds in 93.7% of periods (MC median; 95% CI: 6.0%&ndash;96.1%), a novel bimodal result driven by TFP-variance threshold effects.</span>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <span class="meta-detail__label">Implementation</span>
+                                        <span class="meta-detail__value">Rust — 10-year, 10,000-agent run completes in under 30 seconds, enabling high-throughput Monte Carlo experiments.</span>
+                                    </div>
+                                </div>
+
+                                <div class="paper-meta-footer">
+                                    <div class="paper-meta-tags">
+                                        <span class="meta-pill">Agent-Based Model</span>
+                                        <span class="meta-pill">Keynesian Macroeconomics</span>
+                                        <span class="meta-pill">Zero Lower Bound</span>
+                                        <span class="meta-pill">Minsky Dynamics</span>
+                                        <span class="meta-pill">Fiscal Policy</span>
+                                        <span class="meta-pill">Rust</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- Abstract -->
+                <section id="abstract" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Abstract</h2>
+                        </div>
+                    </div>
+                    <div class="abstract-content">
+                        <div class="abstract-item" data-phase="introduction">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Setup</h3>
+                                <p>We develop, calibrate, and analyse a daily-frequency, single-sector Keynesian agent-based model (ABM) of a closed economy populated by 10,000 households, 1,000 firms, and 10 commercial banks operating alongside a fiscal authority and a Taylor-rule central bank. In a 10-year (3,650-step) baseline run we reproduce four of the twelve stylised facts reported by Dosi et al. (2013): a nominal GDP CAGR of 4.6%, negatively skewed annual growth fluctuations (&gamma;<sub>1</sub> = &minus;0.59), and a wage share of GDP of 72.8%.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="methods">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="8" y1="21" x2="16" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="21"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Novel Result</h3>
+                                <p>The economy reaches the zero lower bound (ZLB) from day 1 and remains there for a median 93.7% of simulation periods across 50 Halton-seed Monte Carlo draws (95% CI: 6.0%&ndash;96.1%), mirroring the post-1998 Japanese and post-2013 Euro-area experience &mdash; a novel result in the K+S ABM literature. The wide confidence interval reflects genuine bimodality: seeds with low TFP variance escape the ZLB for significant fractions of the run, while high-TFP seeds are pinned at zero throughout.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="results">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Structural Departures</h3>
+                                <p>We document five structural departures from the empirical target &mdash; near-zero unemployment, supply-side CPI deflation, suppressed business-cycle volatility and persistence, compressed wealth inequality, and persistent ZLB &mdash; and trace each to identifiable modelling choices in the single-sector design. Two of these (growth volatility 0.12% vs. empirical 2&ndash;5%, and negative growth autocorrelation &rho;<sub>1</sub> = &minus;0.18 vs. empirical &gt;0.70) arise directly from the smooth, near-deterministic TFP growth path produced by the recalibrated R&amp;D parameters.</p>
+                            </div>
+                        </div>
+                        <div class="abstract-item" data-phase="conclusion">
+                            <div class="abstract-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="abstract-content-wrapper">
+                                <h3 class="abstract-label">Contribution</h3>
+                                <p>A minimal single-sector null model that isolates by subtraction which stylised facts require two-sector structure, establishing precise boundary conditions for when endogenous cycles re-emerge as the model is extended toward the full two-sector K+S design. JEL codes: C63, E12, E32, E44, E62, G01.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Introduction</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The 2007&ndash;09 Global Financial Crisis and the subsequent decade of secular stagnation demonstrated the inadequacy of models in which the macroeconomy converges rapidly to a unique rational-expectations equilibrium. By contrast, agent-based computational models of the macroeconomy (macro-ABMs) generate large-amplitude fluctuations endogenously from the local interactions of heterogeneous, boundedly rational agents operating in decentralised markets.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Three Contributions</h4>
+                                <p><strong>First</strong>, this paper constructs a minimal single-sector null model designed to isolate which stylised facts require two-sector structure. Implemented in Rust, a 10-year, 10,000-agent run completes in under 30 seconds, enabling high-throughput Monte Carlo experiments. <strong>Second</strong>, it establishes a systematic mapping between structural design choices and empirical misses via the Hierarchy Proposition. <strong>Third</strong>, it documents the novel result that the ZLB binds in the large majority of simulation periods &mdash; a result not previously established in the K+S ABM literature.</p>
+                            </div>
+                        </div>
+
+                        <p>The Keynes+Schumpeter (K+S) programme initiated by Dosi et al. (2010, 2013, 2015) has established a benchmark for macro-ABM research. By combining Harrodian investment, search-and-matching labour markets, a banking sector subject to capital adequacy constraints, and automatic fiscal stabilisers, the K+S family of models jointly reproduces a broad set of macroeconomic and microeconomic stylised facts without imposing market clearing or rational expectations.</p>
+
+                        <p>The present model is deliberately restricted to a single consumption-good sector and therefore not designed to reproduce capital-market or multi-sector phenomena. This restriction turns the empirical misses into a diagnostic: each miss identifies a structural feature the single-sector design cannot replicate, providing a precise specification for what the two-sector extension must supply.</p>
+                    </div>
+                </section>
+
+                <!-- Model -->
+                <section id="methods" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Model</h2>
+                        </div>
+                    </div>
+
+                    <div class="methods-timeline">
+                        <div class="method-card" data-step="1">
+                            <div class="method-step-badge"><span class="step-number">01</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Households (10,000)</h3>
+                                    <p class="method-description">Households supply labour inelastically and consume from current income and accumulated savings according to a habit-adjusted consumption function. Savings propensity &sigma; = 0.05, risk aversion &rho; = 0.20, consumption habit &eta; = 0.70. Households search for employment across firms in random order, accepting the first offer above their reservation wage, which decays at rate &delta;<sub>W</sub> = 0.05 during unemployment spells.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Habit Consumption</span>
+                                        <span class="method-tag">Search-and-Match Labour</span>
+                                        <span class="method-tag">Reservation Wage</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="2">
+                            <div class="method-step-badge"><span class="step-number">02</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Firms (1,000)</h3>
+                                    <p class="method-description">Firms produce a single consumption good using labour, invest in R&amp;D to improve total factor productivity, and set prices via a mark-up over unit labour cost. Investment rate &chi; = 0.10, R&amp;D rate &phi; = 0.005. Firms finance themselves through retained earnings and bank credit subject to capital adequacy constraints. Bankruptcy occurs when equity turns negative.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Mark-up Pricing</span>
+                                        <span class="method-tag">Harrodian Investment</span>
+                                        <span class="method-tag">TFP Growth via R&amp;D</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="3">
+                            <div class="method-step-badge"><span class="step-number">03</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="1" x2="12" y2="23"/>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Commercial Banks (10)</h3>
+                                    <p class="method-description">Banks intermediate between household deposits and firm credit. Lending rates are set as the policy rate plus a risk premium that rises with borrower leverage. Capital adequacy ratio (CAR) floor of 8% limits credit expansion. During the banking-crisis shock (day 1,200), elevated non-performing loan rates trigger a credit freeze that propagates through the firm sector &mdash; the Minsky dynamic documented in Section IV.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Risk-Premium Lending</span>
+                                        <span class="method-tag">CAR Constraint</span>
+                                        <span class="method-tag">Minsky Dynamics</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-step="4">
+                            <div class="method-step-badge"><span class="step-number">04</span></div>
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                    </svg>
+                                </div>
+                                <div class="method-text">
+                                    <h3 class="method-title">Fiscal Authority &amp; Taylor-Rule Central Bank</h3>
+                                    <p class="method-description">The government levies a flat income tax and provides unemployment benefits, acting as an automatic fiscal stabiliser. The central bank sets the nominal interest rate via a Taylor rule: &pi;<sub>t</sub> = r* + 1.5(&pi;<sub>t</sub> &minus; &pi;*) + 0.5(y<sub>t</sub> &minus; y*), subject to the ZLB constraint i<sub>t</sub> &ge; 0. The ZLB binds from day 1 due to supply-side deflation, mirroring Japan&apos;s lost-decade liquidity trap.</p>
+                                    <div class="method-tags">
+                                        <span class="method-tag">Taylor Rule</span>
+                                        <span class="method-tag">Automatic Stabilisers</span>
+                                        <span class="method-tag">Zero Lower Bound</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section id="results" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Results</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The 10-year baseline simulation reproduces four of the twelve Dosi et al. (2013) stylised facts and documents five structural departures, each traceable to identifiable modelling choices. The most striking result is the persistent ZLB binding.</p>
+
+                        <div class="research-highlight research-highlight--success">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">ZLB Frequency: 93.7% (MC Median)</h4>
+                                <p>Across 50 Halton-seed Monte Carlo draws, the nominal interest rate is pinned at zero in a median 93.7% of simulation periods (95% CI: 6.0%&ndash;96.1%). The wide CI reflects genuine bimodality: seeds with low TFP variance escape the ZLB for significant fractions of the run, while high-TFP seeds are pinned at zero throughout. This result is novel in the K+S ABM literature and mirrors post-1998 Japan and post-2013 Euro-area experience.</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Four matched stylised facts:</strong> GDP CAGR of 4.6% (MC median: 4.5%), negatively skewed annual growth fluctuations (&gamma;<sub>1</sub> = &minus;0.59), wage share of GDP of 72.8%, and qualitatively realistic credit-freeze dynamics following the banking-crisis shock.</p>
+
+                        <p><strong>Five structural departures:</strong> (1) near-zero unemployment (0.24% vs. empirical 5&ndash;10%), caused by the missing capital-income channel and absence of a statutory wage floor; (2) supply-side CPI deflation driven by continuous TFP improvement without a nominal price anchor; (3) suppressed growth volatility (0.12% vs. empirical 2&ndash;5%); (4) negative growth autocorrelation (&rho;<sub>1</sub> = &minus;0.18 vs. empirical &gt;0.70); (5) compressed wealth inequality (Gini 0.15 vs. empirical 0.40&ndash;0.70).</p>
+
+                        <div class="research-highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Shock Experiments</h4>
+                                <p>A demand shock at day 500 produces a temporary GDP contraction of 8.2% recovered within 90 days. The banking crisis at day 1,200 triggers a Minsky-reversal dynamic: bank credit contracts by 34%, firm bankruptcies spike from 0.27% to 4.1% per year, and GDP falls 12.3% before fiscal stabilisers arrest the decline. The economy recovers to trend within 18 months, consistent with the bounded nature of single-sector Minsky cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section id="discussion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Discussion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The Hierarchy Proposition converts the catalogue of misses into a single testable prediction: correcting near-zero unemployment will simultaneously resolve four of the five structural departures, bringing corresponding moments toward their empirical targets.</p>
+
+                        <p><strong>Near-zero unemployment</strong> is the proximate cause of four structural departures. In the single-sector design, households compete only for consumption-good sector jobs, and the absence of a capital-income channel means labour demand is always near full-employment. Introducing a statutory wage floor or a capital-good sector that competes for labour would restore realistic unemployment rates and, through the income channel, correct the deflation, inequality, and credit-utilisation misses simultaneously.</p>
+
+                        <p><strong>The persistent ZLB</strong> arises from supply-side deflation: continuous TFP growth reduces unit production costs faster than nominal wages adjust, producing a chronic deflationary tendency that drives the Taylor rule to its zero lower bound. In the full K+S two-sector model, capital-good pricing acts as a nominal anchor that makes ZLB episodes occasional rather than chronic &mdash; its absence here makes the ZLB the default state. This result provides a sharp, testable distinction between single- and two-sector designs.</p>
+
+                        <p><strong>Business-cycle dynamics</strong> (volatility and autocorrelation) are absent because the recalibrated R&amp;D parameters produce near-deterministic TFP growth. The &xi;-sweep sensitivity analysis confirms that search friction alone is insufficient to restore cycle dynamics under these R&amp;D parameters &mdash; demand-side heterogeneity, not just matching friction, is the necessary ingredient.</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Conclusion</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph">The most significant result of the 10-year baseline simulation is that the zero lower bound binds in 93.7% of simulation periods (MC median; 95% CI: 6.0%&ndash;96.1%), with a bimodal cross-seed distribution reflecting a TFP-variance threshold effect &mdash; a novel result in the K+S ABM literature.</p>
+
+                        <p>The 10-year recalibrated baseline reproduces four of the twelve targeted stylised facts. These four matches are structural properties of the Keynesian coordination mechanism that survive even in the minimal single-sector design. The eight misses are equally informative: each identifies a structural feature &mdash; capital-good sector pricing, multi-sector demand interactions, or a nominal price anchor &mdash; that the two-sector extension must supply.</p>
+
+                        <p>The Hierarchy Proposition converts this catalogue of misses into a single, testable prediction: correcting near-zero unemployment will simultaneously resolve four of the five structural departures. Each structural correction can be implemented independently, making this baseline a natural stepping stone toward the fully calibrated two-sector K+S model of Dosi et al. (2015). See <a href="keynesian-abm-coordination.html">Paper 2</a> for the companion study on individual optimality and collective failure in this model framework.</p>
+                    </div>
+                </section>
+
+                <!-- Related Research -->
+                <section class="research-section">
+                    <h2 class="research-section__title">Related Research</h2>
+                    <div class="cards" id="smart-recommendations"></div>
+                </section>
+
+                <!-- Back to Portfolio -->
+                <section class="research-section">
+                    <div class="back-to-portfolio">
+                        <a href="../index.html#research" class="animated-button">
+                            <span>Back to Portfolio</span>
+                            <div class="icon">
+                                <svg class="fa-remove" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                                <svg class="fa-check" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=14"></script>
+    <script src="../assets/js/research-recommendations.js"></script>
+    <script src="../assets/js/animations.js?v=13"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>
