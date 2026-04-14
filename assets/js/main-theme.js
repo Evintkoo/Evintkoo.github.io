@@ -364,31 +364,50 @@
     const sectionIds = Array.from(sections).map(s => s.id).filter(Boolean);
 
     if ('IntersectionObserver' in window && sections.length > 0 && rsbLinks.length > 0) {
+      // Track every section currently visible in the active zone.
+      // The "active" section is always the first one in document order that is
+      // visible — this correctly handles both tall sections and scroll-up.
+      const visibleSections = new Set();
+
+      const applyActive = () => {
+        // First section in document order that is currently intersecting
+        let activeId = null;
+        for (const id of sectionIds) {
+          if (visibleSections.has(id)) { activeId = id; break; }
+        }
+        if (!activeId) return;
+
+        visitedSections.add(activeId);
+        const activeIdx = sectionIds.indexOf(activeId);
+        sectionIds.forEach((id, i) => {
+          if (i < activeIdx) visitedSections.add(id);
+        });
+
+        rsbLinks.forEach(link => {
+          const linkId = (link.getAttribute('href') || '').replace('#', '');
+          const isActive = linkId === activeId;
+          link.classList.toggle('active', isActive);
+          link.classList.toggle('visited', !isActive && visitedSections.has(linkId));
+          if (isActive) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      };
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const activeId = entry.target.id;
-          if (!activeId) return;
-
-          visitedSections.add(activeId);
-          // Mark all sections above the active one as visited
-          const activeIdx = sectionIds.indexOf(activeId);
-          sectionIds.forEach((id, i) => {
-            if (i < activeIdx) visitedSections.add(id);
-          });
-
-          rsbLinks.forEach(link => {
-            const linkId = (link.getAttribute('href') || '').replace('#', '');
-            const isActive = linkId === activeId;
-            link.classList.toggle('active', isActive);
-            link.classList.toggle('visited', !isActive && visitedSections.has(linkId));
-            if (isActive) link.setAttribute('aria-current', 'location');
-            else link.removeAttribute('aria-current');
-          });
+          if (entry.isIntersecting) {
+            visibleSections.add(entry.target.id);
+          } else {
+            visibleSections.delete(entry.target.id);
+          }
         });
+        applyActive();
       }, {
-        threshold: 0.2,
-        rootMargin: '-20% 0px -50% 0px',
+        threshold: 0,
+        // Active zone: below the nav (~80 px) down to 60% from the bottom.
+        // A section stays active for the full time its heading is in the
+        // upper 40 % of the viewport — even if it's very tall.
+        rootMargin: '-80px 0px -60% 0px',
       });
 
       sections.forEach(s => { if (s.id) observer.observe(s); });
