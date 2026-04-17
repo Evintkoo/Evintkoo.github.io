@@ -8,7 +8,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="APT Fitness Assistant | Evint Leovonzko">
     <meta property="og:description" content="Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.">
-    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <meta property="og:image" content="https://evintkoo.github.io/assets/images/logos/logo-light.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,28 +33,40 @@
                 <span></span><span></span><span></span>
             </button>
             <div class="nav__menu" id="navMenu">
-                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../projects.html" class="nav__link">Projects</a>
+                <a href="../research.html" class="nav__link">Research</a>
                 <a href="../about.html" class="nav__link">About</a>
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
                 </button>
             </div>
         </div>
     </nav>
 
+    <div class="nav-overlay" id="nav-overlay"></div>
+
     <main>
         <section class="proj-hero">
             <div class="container">
-                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <a href="../projects.html" class="proj-breadcrumb">Back to Portfolio</a>
                 <div class="proj-hero__tags">
                     <span class="tag">Open Source</span>
                     <span class="tag">Computer Vision</span>
@@ -151,7 +163,7 @@
                             View on GitHub
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </a>
-                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                        <a href="../projects.html" class="btn btn--secondary">All Projects</a>
                     </div>
                 </div>
 

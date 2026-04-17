@@ -35,6 +35,45 @@
     <link rel="dns-prefetch" href="https://github.com">
     <link rel="dns-prefetch" href="https://www.linkedin.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <style>
+        .research-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-4, 1rem);
+            margin-top: var(--space-8, 2rem);
+        }
+        .research-pagination__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(180, 160, 130, 0.35);
+            border-radius: var(--radius-full, 9999px);
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+        }
+        .research-pagination__btn:hover:not(:disabled) {
+            border-color: var(--color-accent-warm);
+            color: var(--color-accent-warm);
+        }
+        .research-pagination__btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .research-pagination__indicator {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--color-text-tertiary);
+            min-width: 3rem;
+            text-align: center;
+        }
+        .research-row[hidden] { display: none; }
+    </style>
 </head>
 
 <body>
@@ -229,13 +268,13 @@
                         <div class="project-card__category">Open Source &middot; Machine Learning</div>
                         <h3 class="project-card__title">SOM Plus Clustering</h3>
                         <p class="project-card__desc">
-                            Industrial-grade Self-Organizing Map and clustering library for Rust &mdash; published to crates.io with CPU, CUDA, and Metal backends. Supports SOM classification, KMeans variants, and automatic model selection via silhouette scoring.
+                            Extended self-organizing map library with PCA-guided initialization, silhouette scoring, and Davies-Bouldin evaluation &mdash; built for rigorous, reproducible unsupervised clustering in scientific workflows.
                         </p>
                         <div class="project-card__tech">
-                            <span class="tech-tag">Rust</span>
-                            <span class="tech-tag">SOM</span>
-                            <span class="tech-tag">CUDA</span>
-                            <span class="tech-tag">Metal</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NumPy</span>
+                            <span class="tech-tag">SciPy</span>
+                            <span class="tech-tag">scikit-learn</span>
                         </div>
                         <div class="project-card__links">
                             <a href="projects/som-plus.html" class="project-card__link">
@@ -780,46 +819,6 @@
     <!-- Load JavaScript -->
     <script src="assets/js/main-theme.js?v=11" defer></script>
     <script type="module" src="assets/js/hero-scene.js?v=13"></script>
-
-    <style>
-        .research-pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-4, 1rem);
-            margin-top: var(--space-8, 2rem);
-        }
-        .research-pagination__btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1.1rem;
-            border: 1px solid rgba(180, 160, 130, 0.35);
-            border-radius: var(--radius-full, 9999px);
-            background: transparent;
-            color: var(--color-text-secondary);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: border-color 0.2s, color 0.2s, opacity 0.2s;
-        }
-        .research-pagination__btn:hover:not(:disabled) {
-            border-color: var(--color-accent-warm);
-            color: var(--color-accent-warm);
-        }
-        .research-pagination__btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-        .research-pagination__indicator {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            color: var(--color-text-tertiary);
-            min-width: 3rem;
-            text-align: center;
-        }
-        .research-row[hidden] { display: none; }
-    </style>
 
     <script>
         (function () {

@@ -279,3 +279,8 @@
     justify-content: center;
   }
 }
+
+/* When feature grid has an orphan card (last card starts a new row), span full width */
+.proj-feature-grid .proj-feature-card:last-child:nth-child(3n+1) {
+  grid-column: 1 / -1;
+}
