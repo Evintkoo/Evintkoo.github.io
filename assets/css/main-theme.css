@@ -1093,6 +1093,19 @@ body.no-scroll {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
+a.section-eyebrow__label {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+}
+
+a.section-eyebrow__label:hover {
+  color: var(--accent-warm);
+  border-color: var(--accent-warm);
+  background: var(--accent-warm-light);
+  box-shadow: 0 0 0 3px rgba(244, 63, 122, 0.12), 0 1px 4px rgba(244, 63, 122, 0.2);
+}
+
 .section__subtitle {
   color: var(--text-tertiary);
   font-size: var(--text-sm);
