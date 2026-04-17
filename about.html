@@ -158,19 +158,58 @@
             top: calc(var(--nav-height) + var(--space-6));
         }
 
-        .about-card__avatar {
-            width: 72px;
-            height: 72px;
+        .about-card__photo-wrap {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: var(--space-5);
+        }
+
+        .about-card__photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-warm);
+            box-shadow: 0 0 0 4px rgba(244, 63, 122, 0.12), 0 0 28px rgba(244, 63, 122, 0.28);
+            display: block;
+        }
+
+        .about-card__photo-placeholder {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent-warm) 0%, var(--accent-sage) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-display);
-            font-size: 1.75rem;
+            font-size: 2.25rem;
             color: #fff;
-            margin-bottom: var(--space-5);
             font-style: italic;
+            border: 2px solid var(--accent-warm);
+            box-shadow: 0 0 0 4px rgba(244, 63, 122, 0.12), 0 0 28px rgba(244, 63, 122, 0.28);
+        }
+
+        .about-card__monogram-badge {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-warm) 0%, #ff6b9d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            color: #fff;
+            font-style: italic;
+            font-weight: 700;
+            border: 2px solid var(--bg-secondary);
+            box-shadow: 0 2px 8px rgba(244, 63, 122, 0.45);
+            letter-spacing: -0.02em;
         }
 
         .about-card__name {
@@ -927,7 +966,11 @@
             </div>
 
             <aside class="about-card">
-                <div class="about-card__avatar">EL</div>
+                <div class="about-card__photo-wrap">
+                    <img src="assets/images/profile.jpg" alt="Evint Leovonzko" class="about-card__photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="about-card__photo-placeholder" style="display:none">EL</div>
+                    <div class="about-card__monogram-badge">EL</div>
+                </div>
                 <div class="about-card__name">Evint Leovonzko</div>
                 <div class="about-card__role">Researcher &amp; Co-founder</div>
 
