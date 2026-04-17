@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>orderflow-rs | Evint Leovonzko</title>
+    <meta name="description" content="High-performance Rust pipeline for limit order book microstructure research — OFI features, 87 technical indicators, synthetic LOB simulation, and walk-forward backtesting.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="orderflow-rs | Evint Leovonzko">
+    <meta property="og:description" content="High-performance Rust pipeline for limit order book microstructure research — OFI features, 87 technical indicators, synthetic LOB simulation, and walk-forward backtesting.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
+    <link rel="stylesheet" href="../assets/css/project.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">
+                <img src="../assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="../assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="../index.html#projects" class="nav__link">Projects</a>
+                <a href="../about.html" class="nav__link">About</a>
+                <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="proj-hero">
+            <div class="container">
+                <a href="../index.html#projects" class="proj-breadcrumb">Back to Portfolio</a>
+                <div class="proj-hero__tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Quantitative Finance</span>
+                    <span class="tag">Rust</span>
+                </div>
+                <h1 class="proj-hero__title">orderflow-rs</h1>
+                <p class="proj-hero__subtitle">A high-performance Rust pipeline for limit order book microstructure research — ingesting raw tick data, computing order-flow imbalance features and 87 technical indicators, running synthetic LOB simulations, and backtesting signal-based strategies from a single binary.</p>
+            </div>
+        </section>
+
+        <div class="proj-body">
+            <div class="container proj-content">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Overview</p>
+                    <h2 class="proj-section__title">What is it?</h2>
+                    <div class="proj-section__body">
+                        <p>orderflow-rs is a research pipeline for studying high-frequency limit order book dynamics. It grows out of a companion paper — <em>Predictability of High-Frequency Limit Order Book Dynamics</em> — and is designed to run reproducibly from raw Dukascopy tick data all the way to ranked IC reports without any external ML framework.</p>
+                        <p>The pipeline covers four research phases: synthetic LOB simulation to validate OFI signal properties (P4), real FX data evaluation across ten currency pairs (P5), walk-forward backtesting with realistic transaction costs (P6), and a comprehensive technical indicator IC sweep across 1s–300s horizons (P7). Every phase produces CSV reports you can reproduce locally.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Research Results</p>
+                    <h2 class="proj-section__title">What the data says</h2>
+                    <div class="proj-feature-grid">
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            </span>
+                            <p class="proj-feature-card__title">P4 — Simulation</p>
+                            <p class="proj-feature-card__desc">OFI_1 predicts synthetic price moves with IC 0.15–0.33. Hypothesis validated in controlled LOB environment.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            </span>
+                            <p class="proj-feature-card__title">P5 — Real FX Data</p>
+                            <p class="proj-feature-card__desc">Partial signal: OFI_1 predicts returns on 5 of 10 currency pairs with IC 0.04–0.10. Pair-dependent predictability.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            </span>
+                            <p class="proj-feature-card__title">P6 — Backtest</p>
+                            <p class="proj-feature-card__desc">OFI signals produce negative PnL after 0.04% fee + half-spread. Transaction costs absorb the edge entirely.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </span>
+                            <p class="proj-feature-card__title">P7 — Tech Indicators</p>
+                            <p class="proj-feature-card__desc"><code>pivot_dist</code> dominates with IC = 0.40 at 1s, following a power-law decay τ⁻⁰·⁴³ across longer horizons.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            </span>
+                            <p class="proj-feature-card__title">87 Indicators</p>
+                            <p class="proj-feature-card__desc">Momentum, mean-reversion, trend, volatility, microstructure, and market-impact measures — all ranked by Spearman IC.</p>
+                        </div>
+                        <div class="proj-feature-card">
+                            <span class="proj-feature-card__icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                            </span>
+                            <p class="proj-feature-card__title">Zero-dependency core</p>
+                            <p class="proj-feature-card__desc">Core analysis compiles with no async deps. Optional feature flags for <code>ingest</code>, <code>io</code> (Parquet), and <code>sim</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Pipeline</p>
+                    <h2 class="proj-section__title">How it works</h2>
+                    <div class="proj-section__body">
+                        <p>The pipeline is driven by a single CLI binary with subcommands for each phase. Data flows from raw Dukascopy LOB tick files through feature extraction, simulation, backtesting, and finally IC report generation. All intermediate artifacts are Parquet files; final reports are CSV.</p>
+                        <p>The synthetic LOB simulator (P4) uses configurable spread and queue dynamics so you can stress-test signal properties before committing to live data. Walk-forward out-of-sample evaluation in the backtest phase (P6) guards against lookahead bias, and transaction costs are applied at the 0.04% fee + half-spread level to reflect realistic execution.</p>
+                    </div>
+                </div>
+
+                <hr class="proj-divider">
+
+                <div class="proj-section">
+                    <p class="proj-section__label">Stack</p>
+                    <h2 class="proj-section__title">Built with</h2>
+                    <div class="proj-tech-pills">
+                        <span class="proj-tech-pill">Rust</span>
+                        <span class="proj-tech-pill">Parquet / Arrow</span>
+                        <span class="proj-tech-pill">Spearman IC</span>
+                        <span class="proj-tech-pill">LOB Reconstruction</span>
+                        <span class="proj-tech-pill">OFI Features</span>
+                        <span class="proj-tech-pill">Walk-forward Backtest</span>
+                        <span class="proj-tech-pill">Criterion Benchmarks</span>
+                    </div>
+                </div>
+
+                <div class="proj-cta">
+                    <div class="proj-cta__text">
+                        <h3>See the code</h3>
+                        <p>Full source, phase reports, and the companion research paper on GitHub.</p>
+                    </div>
+                    <div class="proj-cta__actions">
+                        <a href="https://github.com/Evintkoo/orderflow-rs" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                            View on GitHub
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                        <a href="../index.html#projects" class="btn btn--secondary">All Projects</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main-theme.js?v=11"></script>
+    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>

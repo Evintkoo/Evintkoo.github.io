@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Evint Leovonzko</title>
+    <meta name="description" content="Open-source tools, platforms, and applications built by Evint Leovonzko — spanning ML infrastructure, quantitative finance, neuroscience, and community platforms.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Projects | Evint Leovonzko">
+    <meta property="og:description" content="Open-source tools, platforms, and applications built by Evint Leovonzko.">
+    <meta property="og:image" content="https://evint-portfolio.github.io/assets/images/logos/logo-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
+    <link rel="stylesheet" href="assets/css/main-theme.css?v=12">
+    <style>
+        .listing-hero { padding-top: calc(var(--nav-height) + var(--space-16)); }
+        @media (max-width: 768px) { .listing-hero { padding-top: calc(var(--nav-height) + var(--space-10)); } }
+        @media (max-width: 480px) { .listing-hero { padding-top: calc(var(--nav-height) + var(--space-8)); } }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scene-bg" aria-hidden="true"><canvas id="heroCanvas"></canvas></div>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/images/logos/logo-light.png" alt="EL" class="nav__logo-img nav__logo-img--dark">
+                <img src="assets/images/logos/logo-dark.png" alt="EL" class="nav__logo-img nav__logo-img--light">
+                <span class="nav__logo-text">Evint Leovonzko</span>
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <a href="projects.html" class="nav__link">Projects</a>
+                <a href="research.html" class="nav__link">Research</a>
+                <a href="about.html" class="nav__link">About</a>
+                <a href="index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
+            </div>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="theme-icon-stage" id="themeIconStage">
+                        <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle class="sun-core" cx="12" cy="12" r="5"></circle>
+                            <line class="sun-ray sun-ray--1" x1="12" y1="1" x2="12" y2="3"></line>
+                            <line class="sun-ray sun-ray--2" x1="12" y1="21" x2="12" y2="23"></line>
+                            <line class="sun-ray sun-ray--3" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line class="sun-ray sun-ray--4" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line class="sun-ray sun-ray--5" x1="1" y1="12" x2="3" y2="12"></line>
+                            <line class="sun-ray sun-ray--6" x1="21" y1="12" x2="23" y2="12"></line>
+                            <line class="sun-ray sun-ray--7" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line class="sun-ray sun-ray--8" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon--moon" id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <main>
+        <section class="section listing-hero">
+            <div class="container">
+                <div class="section-eyebrow" data-reveal>
+                    <div class="section-eyebrow__line"></div>
+                    <span class="section-eyebrow__label">Projects</span>
+                    <div class="section-eyebrow__line"></div>
+                </div>
+                <h1 class="section__title" data-reveal>Things I've built</h1>
+                <p class="section__subtitle" data-reveal>Open-source tools, platforms, and applications</p>
+
+                <article class="project-featured" data-reveal>
+                    <div class="project-featured__body">
+                        <div class="project-featured__eyebrow">
+                            <span class="project-featured__tag project-featured__tag--featured">Featured</span>
+                            <span class="project-featured__tag">Co-Founder</span>
+                            <span class="project-featured__tag">MLOps</span>
+                        </div>
+                        <h3 class="project-featured__title">Kolosal AI</h3>
+                        <p class="project-featured__desc">
+                            Open-source platform for running large language models locally &mdash; private, fast, and fully under your control. Custom training and production-ready inference at scale.
+                        </p>
+                        <div class="project-featured__tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">CUDA</span>
+                        </div>
+                    </div>
+                    <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">
+                        Visit Platform <span class="arrow">&nearr;</span>
+                    </a>
+                </article>
+
+                <div class="projects-grid" data-reveal>
+                    <!-- PyTorch Inference Framework -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Infrastructure</div>
+                            <h3 class="project-card__title">PyTorch Inference Framework</h3>
+                            <p class="project-card__desc">
+                                Production-ready inference with TensorRT acceleration. Handles batching, model versioning, and GPU memory management out of the box.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">PyTorch</span>
+                                <span class="tech-tag">TensorRT</span>
+                                <span class="tech-tag">FastAPI</span>
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/torch-inference.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/KolosalAI/torch-inference" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kolosal AutoML -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; AutoML</div>
+                            <h3 class="project-card__title">Kolosal AutoML Platform</h3>
+                            <p class="project-card__desc">
+                                End-to-end AutoML with Gradio UI &mdash; from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one platform.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Gradio</span>
+                                <span class="tech-tag">MLflow</span>
+                                <span class="tech-tag">Optuna</span>
+                                <span class="tech-tag">FastAPI</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/kolosal-automl.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/KolosalAI/kolosal_automl" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- SOM Plus Clustering -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Machine Learning</div>
+                            <h3 class="project-card__title">SOM Plus Clustering</h3>
+                            <p class="project-card__desc">
+                                Industrial-grade Self-Organizing Map and clustering library for Rust &mdash; published to crates.io with CPU, CUDA, and Metal backends. Supports SOM classification, KMeans variants, and automatic model selection via silhouette scoring.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Rust</span>
+                                <span class="tech-tag">SOM</span>
+                                <span class="tech-tag">CUDA</span>
+                                <span class="tech-tag">Metal</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/som-plus.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/SOM_plus_clustering" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- APT Fitness Assistant -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Computer Vision</div>
+                            <h3 class="project-card__title">APT Fitness Assistant</h3>
+                            <p class="project-card__desc">
+                                Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">MediaPipe</span>
+                                <span class="tech-tag">Streamlit</span>
+                                <span class="tech-tag">OpenCV</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/apt-fitness.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/APT-Fitness-Assistant" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Chain Reaction Simulation -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Physics</div>
+                            <h3 class="project-card__title">Chain Reaction Simulation</h3>
+                            <p class="project-card__desc">
+                                High-performance nuclear chain reaction simulator in Rust &mdash; GPU-accelerated particle physics with real-time 3D visualization, 150+ isotope library from ENDF/B-VIII.0 nuclear data.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Rust</span>
+                                <span class="tech-tag">wgpu</span>
+                                <span class="tech-tag">GPU</span>
+                                <span class="tech-tag">Nuclear Physics</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/chain-reaction-simulation.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/chain_reaction_simulation" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Faction App -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Finance</div>
+                            <h3 class="project-card__title">Faction &mdash; Stock Analysis App</h3>
+                            <p class="project-card__desc">
+                                Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM &mdash; fully offline, no cloud required.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Tauri</span>
+                                <span class="tech-tag">Rust</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">LLM</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/faction-app.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/FactionApp" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- orderflow-rs -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Quantitative Finance</div>
+                            <h3 class="project-card__title">orderflow-rs</h3>
+                            <p class="project-card__desc">
+                                High-performance Rust pipeline for limit order book microstructure research &mdash; OFI features, 87 technical indicators, synthetic LOB simulation, and walk-forward backtesting from a single binary.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Rust</span>
+                                <span class="tech-tag">LOB</span>
+                                <span class="tech-tag">OFI</span>
+                                <span class="tech-tag">Backtesting</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/orderflow-rs.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/orderflow-rs" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- TRIBE v2 Neural Prediction Workstation -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Open Source &middot; Neuroscience</div>
+                            <h3 class="project-card__title">TRIBE v2 &mdash; Neural Prediction Workstation</h3>
+                            <p class="project-card__desc">
+                                Interactive 3D brain visualization that predicts cortical activation across six regions in response to text, image, and audio stimuli &mdash; powered by LLaMA, CLIP, and Wav2Vec with a Rust backend.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Rust</span>
+                                <span class="tech-tag">Three.js</span>
+                                <span class="tech-tag">LLaMA</span>
+                                <span class="tech-tag">CLIP</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/tribe-playground.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                                <a href="https://github.com/Evintkoo/tribe-playground" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                    Repo <span class="arrow">&nearr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Rebirth Educational Platform -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Community &middot; Education</div>
+                            <h3 class="project-card__title">Rebirth Educational Platform</h3>
+                            <p class="project-card__desc">
+                                Community-driven platform connecting learners and researchers through structured courses and peer mentorship programs.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Education</span>
+                                <span class="tech-tag">Community</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/rebirth.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PsychIDN -->
+                    <article class="project-card">
+                        <div class="project-card__content">
+                            <div class="project-card__category">Community &middot; Mental Health</div>
+                            <h3 class="project-card__title">PsychIDN Community</h3>
+                            <p class="project-card__desc">
+                                Building mental health awareness across Indonesia through accessible psychology content and peer-to-peer support networks.
+                            </p>
+                            <div class="project-card__tech">
+                                <span class="tech-tag">Psychology</span>
+                                <span class="tech-tag">Mental Health</span>
+                                <span class="tech-tag">Community</span>
+                            </div>
+                            <div class="project-card__links">
+                                <a href="projects/psychidn.html" class="project-card__link">
+                                    Learn More <span class="arrow">&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <p class="footer__tagline">Designed &amp; built with curiosity.</p>
+            </div>
+            <div class="footer__content">
+                <div class="footer__left">
+                    <p class="footer__text">&copy; 2025 Evint Leovonzko</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/evint_leo/" target="_blank" rel="noopener noreferrer" class="footer__link">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main-theme.js?v=11" defer></script>
+    <script type="module" src="assets/js/hero-scene.js?v=13"></script>
+</body>
+</html>

@@ -388,6 +388,31 @@
                         </div>
                     </div>
                 </article>
+
+                <!-- orderflow-rs -->
+                <article class="project-card">
+                    <div class="project-card__content">
+                        <div class="project-card__category">Open Source &middot; Quantitative Finance</div>
+                        <h3 class="project-card__title">orderflow-rs</h3>
+                        <p class="project-card__desc">
+                            High-performance Rust pipeline for limit order book microstructure research &mdash; OFI features, 87 technical indicators, synthetic LOB simulation, and walk-forward backtesting from a single binary.
+                        </p>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">LOB</span>
+                            <span class="tech-tag">OFI</span>
+                            <span class="tech-tag">Backtesting</span>
+                        </div>
+                        <div class="project-card__links">
+                            <a href="projects/orderflow-rs.html" class="project-card__link">
+                                Learn More <span class="arrow">&rarr;</span>
+                            </a>
+                            <a href="https://github.com/Evintkoo/orderflow-rs" target="_blank" rel="noopener noreferrer" class="project-card__link">
+                                Repo <span class="arrow">&nearr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -408,9 +433,9 @@
             <h2 class="section__title" data-reveal>Papers &amp; analyses</h2>
             <p class="section__subtitle" data-reveal>First-author research in ML, computational biology, quantitative finance, and computational economics</p>
 
-            <div class="research-list" data-reveal>
+            <div class="research-list" id="researchList" data-reveal>
                 <!-- Keynesian ABM Paper 1: Fiscal Stabilisers & Minsky Dynamics -->
-                <a href="research/keynesian-abm-fiscal.html" class="research-row">
+                <a href="research/keynesian-abm-fiscal.html" class="research-row" data-research-item="0">
                     <div>
                         <div class="research-row__title">Fiscal Stabilisers, Minsky Dynamics, and Distributional Outcomes in a Keynesian ABM</div>
                         <div class="research-row__subtitle">Computational Economics &middot; Agent-Based Modelling</div>
@@ -426,7 +451,7 @@
                 </a>
 
                 <!-- Keynesian ABM Paper 2: Individual Optimality & Collective Failure -->
-                <a href="research/keynesian-abm-coordination.html" class="research-row">
+                <a href="research/keynesian-abm-coordination.html" class="research-row" data-research-item="1">
                     <div>
                         <div class="research-row__title">Individual Optimality and Collective Failure in a Keynesian Agent-Based Model</div>
                         <div class="research-row__subtitle">Computational Economics &middot; Coordination Failure</div>
@@ -442,7 +467,7 @@
                 </a>
 
                 <!-- SOM-TSK: Topology-Seeded Clustering -->
-                <a href="research/som-tsk.html" class="research-row">
+                <a href="research/som-tsk.html" class="research-row" data-research-item="2">
                     <div>
                         <div class="research-row__title">SOM-TSK: Topology-Seeded Clustering Framework</div>
                         <div class="research-row__subtitle">Machine Learning &middot; Clustering</div>
@@ -458,7 +483,7 @@
                 </a>
 
                 <!-- GRASP: Autonomous Spectral Clustering -->
-                <a href="research/grasp.html" class="research-row">
+                <a href="research/grasp.html" class="research-row" data-research-item="3">
                     <div>
                         <div class="research-row__title">GRASP: Graph-Routed Adaptive Spectral Partitioning</div>
                         <div class="research-row__subtitle">Machine Learning &middot; Clustering</div>
@@ -474,7 +499,7 @@
                 </a>
 
                 <!-- Dual-Encoder vs Cross-Encoder (IEEE TNNLS) -->
-                <a href="research/grn-dual-vs-cross-encoder.html" class="research-row">
+                <a href="research/grn-dual-vs-cross-encoder.html" class="research-row" data-research-item="4">
                     <div>
                         <div class="research-row__title">Dual-Encoder vs Cross-Encoder for GRN Links</div>
                         <div class="research-row__subtitle">Computational Biology &middot; IEEE TNNLS</div>
@@ -491,7 +516,7 @@
                 </a>
 
                 <!-- GRN Modular vs Monolithic -->
-                <a href="research/grn-modular-vs-monolithic.html" class="research-row">
+                <a href="research/grn-modular-vs-monolithic.html" class="research-row" data-research-item="5">
                     <div>
                         <div class="research-row__title">Modular vs Monolithic GRN Architectures</div>
                         <div class="research-row__subtitle">Computational Biology &middot; Research</div>
@@ -507,7 +532,7 @@
                 </a>
 
                 <!-- GRN Two-Tower -->
-                <a href="research/grn-two-tower.html" class="research-row">
+                <a href="research/grn-two-tower.html" class="research-row" data-research-item="6">
                     <div>
                         <div class="research-row__title">Two-Tower Networks for GRN Inference</div>
                         <div class="research-row__subtitle">Computational Biology &middot; scRNA-seq</div>
@@ -523,7 +548,7 @@
                 </a>
 
                 <!-- Circular RNA -->
-                <a href="research/circular-rna.html" class="research-row">
+                <a href="research/circular-rna.html" class="research-row" data-research-item="7">
                     <div>
                         <div class="research-row__title">Deep Learning for Circular RNA</div>
                         <div class="research-row__subtitle">Computational Biology &middot; Published</div>
@@ -539,7 +564,7 @@
                 </a>
 
                 <!-- Functional Group Analysis -->
-                <a href="research/functional-group-analysis.html" class="research-row">
+                <a href="research/functional-group-analysis.html" class="research-row" data-research-item="8">
                     <div>
                         <div class="research-row__title">Functional Group Analysis</div>
                         <div class="research-row__subtitle">Cheminformatics &middot; Research</div>
@@ -555,7 +580,7 @@
                 </a>
 
                 <!-- GDP Trajectory Clustering -->
-                <a href="research/global-gdp-patterns.html" class="research-row">
+                <a href="research/global-gdp-patterns.html" class="research-row" data-research-item="9">
                     <div>
                         <div class="research-row__title">GDP Trajectory Clustering</div>
                         <div class="research-row__subtitle">Economics &middot; Analysis</div>
@@ -571,7 +596,7 @@
                 </a>
 
                 <!-- Crypto vs Stock Timing -->
-                <a href="research/crypto-stock-timing.html" class="research-row">
+                <a href="research/crypto-stock-timing.html" class="research-row" data-research-item="10">
                     <div>
                         <div class="research-row__title">Crypto vs Stock Timing</div>
                         <div class="research-row__subtitle">Finance &middot; Analysis</div>
@@ -587,7 +612,7 @@
                 </a>
 
                 <!-- Bitcoin Portfolio Allocation -->
-                <a href="research/bitcoin-portfolio-allocation.html" class="research-row">
+                <a href="research/bitcoin-portfolio-allocation.html" class="research-row" data-research-item="11">
                     <div>
                         <div class="research-row__title">Bitcoin Portfolio Allocation</div>
                         <div class="research-row__subtitle">Finance &middot; Analysis</div>
@@ -601,6 +626,19 @@
                         <span class="research-row__link" aria-hidden="true">View Analysis &rarr;</span>
                     </div>
                 </a>
+            </div>
+
+            <!-- Research Pagination -->
+            <div class="research-pagination" id="researchPagination" aria-label="Research pagination">
+                <button class="research-pagination__btn" id="researchPrev" aria-label="Previous page" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    Prev
+                </button>
+                <span class="research-pagination__indicator" id="researchPageIndicator">1 / 2</span>
+                <button class="research-pagination__btn" id="researchNext" aria-label="Next page">
+                    Next
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -742,5 +780,87 @@
     <!-- Load JavaScript -->
     <script src="assets/js/main-theme.js?v=11" defer></script>
     <script type="module" src="assets/js/hero-scene.js?v=13"></script>
+
+    <style>
+        .research-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-4, 1rem);
+            margin-top: var(--space-8, 2rem);
+        }
+        .research-pagination__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(180, 160, 130, 0.35);
+            border-radius: var(--radius-full, 9999px);
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+        }
+        .research-pagination__btn:hover:not(:disabled) {
+            border-color: var(--color-accent-warm);
+            color: var(--color-accent-warm);
+        }
+        .research-pagination__btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .research-pagination__indicator {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--color-text-tertiary);
+            min-width: 3rem;
+            text-align: center;
+        }
+        .research-row[hidden] { display: none; }
+    </style>
+
+    <script>
+        (function () {
+            var PER_PAGE = 6;
+            var currentPage = 0;
+            var items = document.querySelectorAll('[data-research-item]');
+            var total = items.length;
+            var totalPages = Math.ceil(total / PER_PAGE);
+            var prevBtn = document.getElementById('researchPrev');
+            var nextBtn = document.getElementById('researchNext');
+            var indicator = document.getElementById('researchPageIndicator');
+
+            function render() {
+                var start = currentPage * PER_PAGE;
+                var end = start + PER_PAGE;
+                items.forEach(function (el, i) {
+                    el.hidden = i < start || i >= end;
+                });
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage >= totalPages - 1;
+                indicator.textContent = (currentPage + 1) + ' / ' + totalPages;
+            }
+
+            prevBtn.addEventListener('click', function () {
+                if (currentPage > 0) {
+                    currentPage--;
+                    render();
+                    document.getElementById('research').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+
+            nextBtn.addEventListener('click', function () {
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    render();
+                    document.getElementById('research').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+
+            render();
+        })();
+    </script>
 </body>
 </html>
