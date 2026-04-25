@@ -103,7 +103,8 @@
             <div class="rsb__inner">
                 <p class="rsb__title">Research Sections</p>
                 <nav>
-                    <a href="#introduction" class="rsb__link active">Introduction</a>
+                    <a href="#overview"      class="rsb__link active">Overview</a>
+                    <a href="#introduction" class="rsb__link">Introduction</a>
                     <a href="#methodology"  class="rsb__link">Methodology</a>
                     <a href="#results"      class="rsb__link">Results</a>
                     <a href="#discussion"   class="rsb__link">Discussion</a>
@@ -157,6 +158,14 @@
                 </section>
 
                 <!-- Introduction Section -->
+
+                <!-- Mind Map Overview -->
+                <section id="overview" class="mindmap-section research-section">
+                    <p class="mindmap-section__heading">Concept Overview</p>
+                    <div class="mindmap-container">
+                        <div id="mindmap-svg-container"></div>
+                    </div>
+                </section>
                 <section id="introduction" class="research-section">
                     <h2 class="research-section__title">Introduction</h2>
                     
@@ -683,6 +692,18 @@
     </footer>
 
     <!-- Load JavaScript with defer for better performance -->
+    <script>
+        window.MINDMAP_DATA = {
+  center: "Market Timing",
+  branches: [
+    { label: "Question", nodes: ["Lead or Lag?", "Crypto vs Equity", "5 Cycles"] },
+    { label: "Methods",  nodes: ["Cross-Correlation", "Granger Causality", "Recession Windows"] },
+    { label: "Assets",   nodes: ["Bitcoin", "S&P 500", "Macro Context"] },
+    { label: "Finding",  nodes: ["Timing Asymmetry", "Cycle Dependence", "Finance Analysis"] }
+  ]
+};
+    </script>
+    <script src="../assets/js/mindmap.js"></script>
     <script src="../assets/js/main-theme.js?v=11" defer></script>
     <script src="../assets/js/research-recommendations.js" defer></script>
     
