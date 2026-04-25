@@ -858,6 +858,39 @@
     document.head.appendChild(s);
   }
 
+  // Nav logo name scramble on hover
+  var logoTextEl = document.querySelector('.nav__logo-text');
+  if (logoTextEl) {
+    var originalName = logoTextEl.textContent;
+    var scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var scrambleTimer = null;
+
+    document.querySelector('.nav__logo').addEventListener('mouseenter', function () {
+      if (scrambleTimer) return;
+      var frame = 0;
+      var stagger = 3;
+      scrambleTimer = setInterval(function () {
+        var out = '';
+        for (var i = 0; i < originalName.length; i++) {
+          if (originalName[i] === ' ') {
+            out += ' ';
+          } else if (i <= Math.floor(frame / stagger)) {
+            out += originalName[i];
+          } else {
+            out += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          }
+        }
+        logoTextEl.textContent = out;
+        frame++;
+        if (frame > originalName.length * stagger) {
+          clearInterval(scrambleTimer);
+          scrambleTimer = null;
+          logoTextEl.textContent = originalName;
+        }
+      }, 30);
+    });
+  }
+
   // Console message
   console.log('%cWelcome to Evint\'s Portfolio!', 'color: #f43f7a; font-size: 20px; font-weight: bold; font-family: "Instrument Serif", Georgia, serif;');
 
