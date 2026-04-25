@@ -10,7 +10,11 @@
 
     function svgEl(tag, attrs) {
         var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
-        for (var k in attrs) { e.setAttribute(k, attrs[k]); }
+        for (var k in attrs) {
+            if (Object.prototype.hasOwnProperty.call(attrs, k)) {
+                e.setAttribute(k, attrs[k]);
+            }
+        }
         return e;
     }
 
@@ -82,6 +86,7 @@
             addText(svg, branch.label, bx, by, 8.5, '700', '#ffffff', delay);
             delay += 40;
 
+            if (!Array.isArray(branch.nodes)) { return; }
             var ln = branch.nodes.length;
             branch.nodes.forEach(function (node, j) {
                 var fanAngle = angle + (j - (ln - 1) / 2) * (Math.PI / 8);
@@ -121,6 +126,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         var c = document.getElementById('mindmap-svg-container');
-        if (c && window.MINDMAP_DATA) { render(window.MINDMAP_DATA, c); }
+        var d = window.MINDMAP_DATA;
+        if (c && d && Array.isArray(d.branches)) { render(d, c); }
     });
 })();
