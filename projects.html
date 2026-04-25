@@ -77,6 +77,12 @@
                 <h1 class="section__title" data-reveal>Things I've built</h1>
                 <p class="section__subtitle" data-reveal>Open-source tools, platforms, and applications</p>
 
+                <!-- Tag filter banner (shown when ?tag= param is present) -->
+                <div id="tagFilterBanner" class="tag-filter-banner" hidden>
+                    Filtering by: <strong id="tagFilterLabel"></strong>
+                    <button class="tag-filter-banner__clear" id="tagFilterClear" aria-label="Clear filter">&times;</button>
+                </div>
+
                 <article class="project-featured" data-reveal>
                     <div class="project-featured__body">
                         <div class="project-featured__eyebrow">
@@ -89,11 +95,11 @@
                             Open-source platform for running large language models locally &mdash; private, fast, and fully under your control. Custom training and production-ready inference at scale.
                         </p>
                         <div class="project-featured__tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">PyTorch</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">CUDA</span>
+                            <a href="projects.html?tag=python" class="tech-tag">Python</a>
+                            <a href="projects.html?tag=pytorch" class="tech-tag">PyTorch</a>
+                            <a href="projects.html?tag=fastapi" class="tech-tag">FastAPI</a>
+                            <a href="projects.html?tag=docker" class="tech-tag">Docker</a>
+                            <a href="projects.html?tag=cuda" class="tech-tag">CUDA</a>
                         </div>
                     </div>
                     <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">
@@ -111,10 +117,10 @@
                                 Production-ready inference with TensorRT acceleration. Handles batching, model versioning, and GPU memory management out of the box.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">PyTorch</span>
-                                <span class="tech-tag">TensorRT</span>
-                                <span class="tech-tag">FastAPI</span>
-                                <span class="tech-tag">Docker</span>
+                                <a href="projects.html?tag=pytorch" class="tech-tag">PyTorch</a>
+                                <a href="projects.html?tag=tensorrt" class="tech-tag">TensorRT</a>
+                                <a href="projects.html?tag=fastapi" class="tech-tag">FastAPI</a>
+                                <a href="projects.html?tag=docker" class="tech-tag">Docker</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/torch-inference.html" class="project-card__link">
@@ -136,10 +142,10 @@
                                 End-to-end AutoML with Gradio UI &mdash; from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one platform.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Gradio</span>
-                                <span class="tech-tag">MLflow</span>
-                                <span class="tech-tag">Optuna</span>
-                                <span class="tech-tag">FastAPI</span>
+                                <a href="projects.html?tag=gradio" class="tech-tag">Gradio</a>
+                                <a href="projects.html?tag=mlflow" class="tech-tag">MLflow</a>
+                                <a href="projects.html?tag=optuna" class="tech-tag">Optuna</a>
+                                <a href="projects.html?tag=fastapi" class="tech-tag">FastAPI</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/kolosal-automl.html" class="project-card__link">
@@ -161,10 +167,10 @@
                                 Industrial-grade Self-Organizing Map and clustering library for Rust &mdash; published to crates.io with CPU, CUDA, and Metal backends. Supports SOM classification, KMeans variants, and automatic model selection via silhouette scoring.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Rust</span>
-                                <span class="tech-tag">SOM</span>
-                                <span class="tech-tag">CUDA</span>
-                                <span class="tech-tag">Metal</span>
+                                <a href="projects.html?tag=rust" class="tech-tag">Rust</a>
+                                <a href="projects.html?tag=som" class="tech-tag">SOM</a>
+                                <a href="projects.html?tag=cuda" class="tech-tag">CUDA</a>
+                                <a href="projects.html?tag=metal" class="tech-tag">Metal</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/som-plus.html" class="project-card__link">
@@ -186,10 +192,10 @@
                                 Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">MediaPipe</span>
-                                <span class="tech-tag">Streamlit</span>
-                                <span class="tech-tag">OpenCV</span>
+                                <a href="projects.html?tag=python" class="tech-tag">Python</a>
+                                <a href="projects.html?tag=mediapipe" class="tech-tag">MediaPipe</a>
+                                <a href="projects.html?tag=streamlit" class="tech-tag">Streamlit</a>
+                                <a href="projects.html?tag=opencv" class="tech-tag">OpenCV</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/apt-fitness.html" class="project-card__link">
@@ -211,10 +217,10 @@
                                 High-performance nuclear chain reaction simulator in Rust &mdash; GPU-accelerated particle physics with real-time 3D visualization, 150+ isotope library from ENDF/B-VIII.0 nuclear data.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Rust</span>
-                                <span class="tech-tag">wgpu</span>
-                                <span class="tech-tag">GPU</span>
-                                <span class="tech-tag">Nuclear Physics</span>
+                                <a href="projects.html?tag=rust" class="tech-tag">Rust</a>
+                                <a href="projects.html?tag=wgpu" class="tech-tag">wgpu</a>
+                                <a href="projects.html?tag=gpu" class="tech-tag">GPU</a>
+                                <a href="projects.html?tag=nuclear-physics" class="tech-tag">Nuclear Physics</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/chain-reaction-simulation.html" class="project-card__link">
@@ -236,10 +242,10 @@
                                 Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM &mdash; fully offline, no cloud required.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Tauri</span>
-                                <span class="tech-tag">Rust</span>
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">LLM</span>
+                                <a href="projects.html?tag=tauri" class="tech-tag">Tauri</a>
+                                <a href="projects.html?tag=rust" class="tech-tag">Rust</a>
+                                <a href="projects.html?tag=react" class="tech-tag">React</a>
+                                <a href="projects.html?tag=llm" class="tech-tag">LLM</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/faction-app.html" class="project-card__link">
@@ -261,10 +267,10 @@
                                 High-performance Rust pipeline for limit order book microstructure research &mdash; OFI features, 87 technical indicators, synthetic LOB simulation, and walk-forward backtesting from a single binary.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Rust</span>
-                                <span class="tech-tag">LOB</span>
-                                <span class="tech-tag">OFI</span>
-                                <span class="tech-tag">Backtesting</span>
+                                <a href="projects.html?tag=rust" class="tech-tag">Rust</a>
+                                <a href="projects.html?tag=lob" class="tech-tag">LOB</a>
+                                <a href="projects.html?tag=ofi" class="tech-tag">OFI</a>
+                                <a href="projects.html?tag=backtesting" class="tech-tag">Backtesting</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/orderflow-rs.html" class="project-card__link">
@@ -286,10 +292,10 @@
                                 Interactive 3D brain visualization that predicts cortical activation across six regions in response to text, image, and audio stimuli &mdash; powered by LLaMA, CLIP, and Wav2Vec with a Rust backend.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Rust</span>
-                                <span class="tech-tag">Three.js</span>
-                                <span class="tech-tag">LLaMA</span>
-                                <span class="tech-tag">CLIP</span>
+                                <a href="projects.html?tag=rust" class="tech-tag">Rust</a>
+                                <a href="projects.html?tag=three-js" class="tech-tag">Three.js</a>
+                                <a href="projects.html?tag=llama" class="tech-tag">LLaMA</a>
+                                <a href="projects.html?tag=clip" class="tech-tag">CLIP</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/tribe-playground.html" class="project-card__link">
@@ -314,8 +320,8 @@
                                 Community-driven platform connecting learners and researchers through structured courses and peer mentorship programs.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Education</span>
-                                <span class="tech-tag">Community</span>
+                                <a href="projects.html?tag=education" class="tech-tag">Education</a>
+                                <a href="projects.html?tag=community" class="tech-tag">Community</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/rebirth.html" class="project-card__link">
@@ -334,9 +340,9 @@
                                 Building mental health awareness across Indonesia through accessible psychology content and peer-to-peer support networks.
                             </p>
                             <div class="project-card__tech">
-                                <span class="tech-tag">Psychology</span>
-                                <span class="tech-tag">Mental Health</span>
-                                <span class="tech-tag">Community</span>
+                                <a href="projects.html?tag=psychology" class="tech-tag">Psychology</a>
+                                <a href="projects.html?tag=mental-health" class="tech-tag">Mental Health</a>
+                                <a href="projects.html?tag=community" class="tech-tag">Community</a>
                             </div>
                             <div class="project-card__links">
                                 <a href="projects/psychidn.html" class="project-card__link">
@@ -370,5 +376,37 @@
 
     <script src="assets/js/main-theme.js?v=11" defer></script>
     <script type="module" src="assets/js/hero-scene.js?v=13"></script>
+    <script>
+        (function () {
+            function slugify(str) {
+                return str.toLowerCase().replace(/\s+/g, '-');
+            }
+
+            var params = new URLSearchParams(window.location.search);
+            var activeTag = params.get('tag');
+            if (!activeTag) return;
+
+            var banner = document.getElementById('tagFilterBanner');
+            var label = document.getElementById('tagFilterLabel');
+            var clearBtn = document.getElementById('tagFilterClear');
+
+            label.textContent = activeTag;
+            banner.hidden = false;
+
+            var cards = document.querySelectorAll('.project-card, .project-featured');
+            cards.forEach(function (card) {
+                var tags = card.querySelectorAll('a.tech-tag');
+                var match = false;
+                tags.forEach(function (tag) {
+                    if (slugify(tag.textContent) === activeTag) match = true;
+                });
+                if (!match) card.style.display = 'none';
+            });
+
+            clearBtn.addEventListener('click', function () {
+                window.location.href = 'projects.html';
+            });
+        })();
+    </script>
 </body>
 </html>
