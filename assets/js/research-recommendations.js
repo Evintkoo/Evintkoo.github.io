@@ -104,6 +104,14 @@
       tags: ['biology', 'cancer', 'dna', 'mutation', 'genomics'],
       url: '../research/p53-mutation.html',
     },
+    {
+      slug: 'neuron-activation-analysis',
+      title: 'What Does the Internet Do to the Brain?',
+      subtitle: 'Neuroscience · fMRI Analysis',
+      desc: 'Activation Cartography maps 3,008 stimuli across 13 content categories against TRIBE v2 predictions — a 177M-parameter fMRI encoder. Significant main effect F(12, 2995) = 13.51, p < 10⁻²⁶; ThreatSafety drives broadest cortical activation; dominant gradient accounts for 96.9% of between-category variance.',
+      tags: ['neuroscience', 'fmri', 'deep-learning', 'cortical-mapping', 'internet-content'],
+      url: '../research/neuron-activation-analysis.html',
+    },
   ];
 
   function currentSlug() {

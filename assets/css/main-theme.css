@@ -2334,7 +2334,7 @@ a.section-eyebrow__label:hover {
 }
 
 .tag-filter-banner strong {
-  color: var(--accent);
+  color: var(--accent-warm);
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
@@ -2362,7 +2362,7 @@ a.tech-tag {
 }
 
 a.tech-tag:hover {
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--bg-tertiary));
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border-primary));
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg-tertiary));
+  border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
 }
