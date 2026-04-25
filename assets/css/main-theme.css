@@ -918,12 +918,12 @@ body.no-scroll {
   text-transform: uppercase;
 }
 
-/* Diagram-node photo popup */
+/* Diagram-node photo popup — floats to the right of the pill */
 .hero__eyebrow-popup {
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease;
@@ -936,15 +936,15 @@ body.no-scroll {
 
 .hero__eyebrow-popup__inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  transform: translateY(16px) scale(0.92);
-  transform-origin: bottom center;
+  transform: translateX(-14px) scale(0.92);
+  transform-origin: left center;
   transition: transform 0.46s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .hero__eyebrow:hover .hero__eyebrow-popup__inner {
-  transform: translateY(0) scale(1);
+  transform: translateX(0) scale(1);
 }
 
 .hero__eyebrow-popup__card {
@@ -970,7 +970,7 @@ body.no-scroll {
 
 .hero__eyebrow-popup__stem {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -984,9 +984,9 @@ body.no-scroll {
 
 .hero__eyebrow-popup__line {
   display: block;
-  width: 0;
-  height: 20px;
-  border-left: 1.5px dashed rgba(244, 63, 122, 0.5);
+  height: 0;
+  width: 22px;
+  border-top: 1.5px dashed rgba(244, 63, 122, 0.5);
 }
 
 .hero__title {
