@@ -2318,3 +2318,51 @@ a.section-eyebrow__label:hover {
     animation: none !important;
   }
 }
+
+/* ── Tech-tag filter banner ─────────────────────────────────────────────── */
+.tag-filter-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-8);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.tag-filter-banner strong {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.tag-filter-banner__clear {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 var(--space-1);
+  transition: color var(--transition-fast);
+}
+
+.tag-filter-banner__clear:hover {
+  color: var(--text-primary);
+}
+
+/* ── Tech-tag as link ───────────────────────────────────────────────────── */
+a.tech-tag {
+  text-decoration: none;
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+a.tech-tag:hover {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg-tertiary));
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border-primary));
+}
