@@ -858,6 +858,51 @@
     document.head.appendChild(s);
   }
 
+  // Single-click → section on index, double-click → dedicated page
+  (function () {
+    var DELAY = 260;
+    var inSubdir = /\/(research|projects)\//.test(window.location.pathname);
+    var prefix = inSubdir ? '../' : '';
+
+    var MAP = {
+      'projects':     { sectionId: 'projects', page: 'projects.html' },
+      'research':     { sectionId: 'research', page: 'research.html' },
+      'about':        { sectionId: null,        page: 'about.html'    },
+      'get in touch': { sectionId: 'contact',   page: null            },
+    };
+
+    document.querySelectorAll('a.nav__link').forEach(function (link) {
+      var key = link.textContent.trim().toLowerCase();
+      var m = MAP[key];
+      if (!m) return;
+
+      var timer = null;
+
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+          if (m.page) window.location.href = prefix + m.page;
+        } else {
+          timer = setTimeout(function () {
+            timer = null;
+            if (m.sectionId) {
+              var el = document.getElementById(m.sectionId);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                window.location.href = prefix + 'index.html#' + m.sectionId;
+              }
+            } else if (m.page) {
+              window.location.href = prefix + m.page;
+            }
+          }, DELAY);
+        }
+      });
+    });
+  })();
+
   // Nav logo name scramble on hover
   var logoTextEl = document.querySelector('.nav__logo-text');
   if (logoTextEl) {
