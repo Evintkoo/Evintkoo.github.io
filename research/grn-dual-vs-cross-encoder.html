@@ -91,7 +91,8 @@
             <div class="rsb__inner">
                 <p class="rsb__title">Research Sections</p>
                 <nav>
-                    <a href="#abstract"     class="rsb__link active">Abstract</a>
+                    <a href="#overview"      class="rsb__link active">Overview</a>
+                    <a href="#abstract"     class="rsb__link">Abstract</a>
                     <a href="#introduction" class="rsb__link">Introduction</a>
                     <a href="#methods"      class="rsb__link">Methods</a>
                     <a href="#results"      class="rsb__link">Results</a>
@@ -221,6 +222,15 @@
                 </section>
 
                 <!-- Abstract -->
+                
+                <!-- Mind Map Overview -->
+                <section id="overview" class="mindmap-section research-section">
+                    <p class="mindmap-section__heading">Concept Overview</p>
+                    <div class="mindmap-container">
+                        <div id="mindmap-svg-container"></div>
+                    </div>
+                </section>
+
                 <section id="abstract" class="research-section">
                     <div class="section-header">
                         <div class="section-label">
@@ -505,6 +515,19 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        window.MINDMAP_DATA = {
+  center: "GRN Inference",
+  branches: [
+    { label: "Architectures", nodes: ["Dual Encoder", "Cross Encoder", "5.58M Params"] },
+    { label: "Finding",       nodes: ["10.84pt AUROC", "Joint Interaction", "Imbalance Gap"] },
+    { label: "Context",       nodes: ["Transductive", "IEEE TNNLS", "scRNA-seq"] },
+    { label: "Methods",       nodes: ["Param Matching", "AUROC", "Controlled Study"] }
+  ]
+};
+    </script>
+    <script src="../assets/js/mindmap.js"></script>
 
     <script src="../assets/js/main-theme.js?v=11"></script>
     <script src="../assets/js/research-recommendations.js"></script>

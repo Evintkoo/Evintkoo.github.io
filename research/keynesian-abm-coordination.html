@@ -73,7 +73,8 @@
             <div class="rsb__inner">
                 <p class="rsb__title">Research Sections</p>
                 <nav>
-                    <a href="#abstract"      class="rsb__link active">Abstract</a>
+                    <a href="#overview"      class="rsb__link active">Overview</a>
+                    <a href="#abstract"      class="rsb__link">Abstract</a>
                     <a href="#introduction"  class="rsb__link">Introduction</a>
                     <a href="#methods"       class="rsb__link">Methods</a>
                     <a href="#results"       class="rsb__link">Results</a>
@@ -199,6 +200,15 @@
                 </section>
 
                 <!-- Abstract -->
+                
+                <!-- Mind Map Overview -->
+                <section id="overview" class="mindmap-section research-section">
+                    <p class="mindmap-section__heading">Concept Overview</p>
+                    <div class="mindmap-container">
+                        <div id="mindmap-svg-container"></div>
+                    </div>
+                </section>
+
                 <section id="abstract" class="research-section">
                     <div class="section-header">
                         <div class="section-label">
@@ -474,6 +484,20 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        window.MINDMAP_DATA = {
+  center: "Coordination Fail",
+  branches: [
+    { label: "Core Question", nodes: ["Ind. vs Collective", "Rational Rules", "Aggregate Harm"] },
+    { label: "Grid Search",   nodes: ["All Agent Types", "Survival-Maximising", "Strategy Space"] },
+    { label: "Key Result",    nodes: ["GDP -65%", "17x Bankruptcies", "Neg. Profits"] },
+    { label: "Mechanism",     nodes: ["Demand Deficiency", "Credit Rationing", "Savings"] },
+    { label: "Insight",       nodes: ["Bounded Rationality", "Stabiliser", "History Valid."] }
+  ]
+};
+    </script>
+    <script src="../assets/js/mindmap.js"></script>
 
     <script src="../assets/js/main-theme.js?v=11"></script>
     <script src="../assets/js/research-recommendations.js"></script>
