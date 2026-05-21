@@ -3358,3 +3358,11 @@ tbody td strong {
 .mindmap-line {
   animation: mindmap-line-in 0.25s ease-out both;
 }
+
+/* ============================================
+   Caveman Mode — prose visibility toggle
+   See docs/superpowers/specs/2026-05-21-caveman-mode-design.md
+   ============================================ */
+.prose--caveman { display: none; }
+html.caveman .prose:not(.prose--caveman) { display: none; }
+html.caveman .prose--caveman { display: revert; }
