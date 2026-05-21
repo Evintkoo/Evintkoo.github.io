@@ -131,6 +131,22 @@
     });
   }
 
+  // Caveman Mode toggle — swaps research prose to caveman/brainrot register
+  const cavemanToggle = document.getElementById('cavemanToggle');
+  if (cavemanToggle) {
+    const syncCaveman = function () {
+      const on = html.classList.contains('caveman');
+      cavemanToggle.classList.toggle('is-active', on);
+      cavemanToggle.setAttribute('aria-pressed', String(on));
+    };
+    syncCaveman();
+    cavemanToggle.addEventListener('click', function () {
+      const on = html.classList.toggle('caveman');
+      try { localStorage.setItem('caveman', on ? '1' : '0'); } catch (e) { /* ignore quota / privacy errors */ }
+      syncCaveman();
+    });
+  }
+
   /**
    * Show the correct icon, optionally animating the transition.
    * @param {string}  theme    'dark' | 'light'
