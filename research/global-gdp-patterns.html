@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('caveman') === '1') {
+            document.documentElement.classList.add('caveman');
+          }
+        } catch (e) { /* ignore */ }
+      })();
+    </script>
     <title>Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko</title>
     <meta name="description" content="Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko">
     
@@ -62,6 +73,13 @@
             </div>
             
             <div class="nav__actions">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                    <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 20l6-6"/>
+                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
+                        <path d="M11 7l2 2"/>
+                    </svg>
+                </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <div class="theme-icon-stage" id="themeIconStage">
                         <svg class="theme-icon theme-icon--sun theme-icon--hidden" id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
