@@ -39,8 +39,8 @@
 
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
-    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
+    <link rel="stylesheet" href="../assets/css/research.css?v=14">
 </head>
 
 <body class="research-page">
@@ -148,7 +148,8 @@
                             </div>
 
                             <h1 class="circrna-title">Modular vs Monolithic Architectures for GRN Edge Prediction</h1>
-                            <p class="circrna-subtitle">Gradient Stability Analysis and a Controlled Cross-Architecture Comparison</p>
+                            <p class="circrna-subtitle prose">Gradient Stability Analysis and a Controlled Cross-Architecture Comparison</p>
+                            <p class="circrna-subtitle prose prose--caveman">Look hard at how learn-slope stay calm. Compare one big thinky-rock vs many small thinky-rock work together, fair.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference &mdash; diagnosing three critical gradient failures in the two-tower design and demonstrating that the cross-encoder outperforms it, especially under class imbalance.</p>
@@ -261,7 +262,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Introduction</h3>
-                                <p>This paper investigates the design trade-offs between modular two-tower models (using separate pathways and similarity scoring) and monolithic cross-encoders (processing pairs jointly through MLPs) for predicting transcription factor&ndash;gene interactions in gene regulatory networks.</p>
+                                <p class="prose">This paper investigates the design trade-offs between modular two-tower models (using separate pathways and similarity scoring) and monolithic cross-encoders (processing pairs jointly through MLPs) for predicting transcription factor&ndash;gene interactions in gene regulatory networks.</p>
+                                <p class="prose prose--caveman">Ugg look at shape trade between many small thinky-rock work together two-tower (split path, then check same-ness) and one big thinky-rock cross-encoder (chew pair together through MLP) for guess tiny-instruction starter&ndash;gene talk in tiny-instruction boss-web.</p>
                             </div>
                         </div>
 
@@ -269,7 +271,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
-                                <p>Three critical gradient failures in the original two-tower implementation are identified and corrected: double-sigmoid in the backward pass, unstable gradient estimators, and missing gradient clipping. Both architectures are then evaluated on balanced and 5:1 imbalanced training configurations using accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                                <p class="prose">Three critical gradient failures in the original two-tower implementation are identified and corrected: double-sigmoid in the backward pass, unstable gradient estimators, and missing gradient clipping. Both architectures are then evaluated on balanced and 5:1 imbalanced training configurations using accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                                <p class="prose prose--caveman">Ugg find and fix three big learn-slope sick in old two-tower code: double-sigmoid in backward path, shaky learn-slope guess, no learn-slope clip. Then Ugg test both shape on balanced and 5:1 lopsided teach setup with right-count, F1, and AUROC across five seed with bootstrap confidence wiggle.</p>
                             </div>
                         </div>
 
@@ -277,7 +280,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
-                                <p>After gradient correction, the cross-encoder achieves <strong>83.03% accuracy</strong> vs the two-tower's 80.90%, with AUROC <strong>0.904</strong> vs 0.810 under balanced training. Under 5:1 imbalance, the two-tower degrades &minus;6.87 pp while the cross-encoder degrades only &minus;1.56 pp. Each gradient failure alone collapses training accuracy to ~50%.</p>
+                                <p class="prose">After gradient correction, the cross-encoder achieves <strong>83.03% accuracy</strong> vs the two-tower's 80.90%, with AUROC <strong>0.904</strong> vs 0.810 under balanced training. Under 5:1 imbalance, the two-tower degrades &minus;6.87 pp while the cross-encoder degrades only &minus;1.56 pp. Each gradient failure alone collapses training accuracy to ~50%.</p>
+                                <p class="prose prose--caveman">After Ugg fix learn-slope, one big thinky-rock cross-encoder hit <strong>83.03% right</strong> vs two-tower 80.90%, with AUROC <strong>0.904</strong> vs 0.810 in balanced teach. Under 5:1 lopsided, two-tower fall &minus;6.87 pp but cross-encoder fall only &minus;1.56 pp. Each learn-slope sick alone smash teach right-count down to ~50%.</p>
                             </div>
                         </div>
 
@@ -285,7 +289,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Discussion</h3>
-                                <p>The gradient failures explain a substantial portion of the two-tower's underperformance relative to the cross-encoder. Even after correction, the cross-encoder's joint processing of TF&ndash;gene pairs provides a fundamentally better inductive bias for interaction prediction than independent encoding followed by similarity scoring.</p>
+                                <p class="prose">The gradient failures explain a substantial portion of the two-tower's underperformance relative to the cross-encoder. Even after correction, the cross-encoder's joint processing of TF&ndash;gene pairs provides a fundamentally better inductive bias for interaction prediction than independent encoding followed by similarity scoring.</p>
+                                <p class="prose prose--caveman">Learn-slope sick tell big chunk of why two-tower weak next to cross-encoder. Even after fix, one big thinky-rock cross-encoder chew TF&ndash;gene pair together, and this give way better shape-lean for talk-guess than squish each side alone then check same-ness.</p>
                             </div>
                         </div>
 
@@ -293,7 +298,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Conclusion</h3>
-                                <p>For GRN link prediction, monolithic cross-encoders outperform modular two-tower models on both accuracy and imbalance robustness, particularly in realistic biological settings where negative examples far outnumber positives.</p>
+                                <p class="prose">For GRN link prediction, monolithic cross-encoders outperform modular two-tower models on both accuracy and imbalance robustness, particularly in realistic biological settings where negative examples far outnumber positives.</p>
+                                <p class="prose prose--caveman">For tiny-instruction boss-web link-guess, one big thinky-rock cross-encoder beat many small thinky-rock work together two-tower on right-count and lopsided-tough, mostly in real bio cave where no-talk pair way more than yes-talk pair.</p>
                             </div>
                         </div>
                     </div>
@@ -308,7 +314,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">Two-tower (dual-encoder) models are attractive for link prediction tasks because they can independently encode entities and support efficient nearest-neighbor retrieval at inference time. However, their modular design limits the model's ability to capture joint interactions between input pairs, which may be critical for biological link prediction.</p>
+                        <p class="lead-paragraph prose">Two-tower (dual-encoder) models are attractive for link prediction tasks because they can independently encode entities and support efficient nearest-neighbor retrieval at inference time. However, their modular design limits the model's ability to capture joint interactions between input pairs, which may be critical for biological link prediction.</p>
+                        <p class="prose prose--caveman">Two-tower thinky-rock look shiny for link-guess job. Each tower squish thing alone, then Ugg find near-neighbor fast at think-time. But many small thinky-rock work together design stop big thinky-rock from see how two thing dance as one. For bio link-guess, this bad.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -316,11 +323,13 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Question</h4>
-                                <p>Does the modular separation of a two-tower model fundamentally limit its expressivity for GRN inference, or can the gap be closed by correcting implementation-level gradient failures?</p>
+                                <p class="prose">Does the modular separation of a two-tower model fundamentally limit its expressivity for GRN inference, or can the gap be closed by correcting implementation-level gradient failures?</p>
+                                <p class="prose prose--caveman">Do many small thinky-rock work together split of two-tower thinky-rock hard-stop how much it can say for GRN guess? Or can Ugg close gap by fix bad gradient bug in code?</p>
                             </div>
                         </div>
 
-                        <p>This study diagnoses three previously unreported gradient failures in a state-of-the-art two-tower GRN model, corrects them, and then conducts a controlled comparison against a monolithic cross-encoder to isolate the effect of architecture from implementation bugs.</p>
+                        <p class="prose">This study diagnoses three previously unreported gradient failures in a state-of-the-art two-tower GRN model, corrects them, and then conducts a controlled comparison against a monolithic cross-encoder to isolate the effect of architecture from implementation bugs.</p>
+                        <p class="prose prose--caveman">Ugg look hard at fancy two-tower GRN thinky-rock. Find three gradient sick no other Ugg find before. Ugg fix all three. Then Ugg fight it against one big thinky-rock cross-encoder in fair way. This let Ugg see what shape do versus what bug do.</p>
                     </div>
                 </section>
 
@@ -339,7 +348,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Gradient Failure Diagnosis</h3>
-                                    <p class="method-description">Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy.</p>
+                                    <p class="method-description prose">Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy.</p>
+                                    <p class="prose prose--caveman">Ugg find three big sick in old two-tower backward path. One: double-sigmoid squish gradient to nothing. Two: gradient guess shake too much, not stable. Three: no clip, so update go BOOM. Each sick alone smash teach down to ~50% right, same as coin flip.</p>
                                     <div class="method-tags"><span class="method-tag">Gradient Analysis</span><span class="method-tag">Numerical Stability</span><span class="method-tag">Debugging</span></div>
                                 </div>
                             </div>
@@ -351,7 +361,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Architecture Definitions</h3>
-                                    <p class="method-description">The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics.</p>
+                                    <p class="method-description prose">The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics.</p>
+                                    <p class="prose prose--caveman">Fixed two-tower thinky-rock use separate squisher for thing and for express, then mash together with dot-product same-ness. One big thinky-rock cross-encoder glue TF and gene feature into one stick, push through shared MLP. Both use per-batch Adam with gradient clip (threshold: 5.0) and stable number math.</p>
                                     <div class="method-tags"><span class="method-tag">Two-Tower</span><span class="method-tag">Cross-Encoder</span><span class="method-tag">Adam</span></div>
                                 </div>
                             </div>
@@ -363,7 +374,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Controlled Evaluation</h3>
-                                    <p class="method-description">Both architectures are evaluated on human brain scRNA-seq data (47,388 TF&ndash;gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                                    <p class="method-description prose">Both architectures are evaluated on human brain scRNA-seq data (47,388 TF&ndash;gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
+                                    <p class="prose prose--caveman">Ugg test both shape on human brain scRNA-seq stuff (47,388 TF&ndash;gene pairs) under two teach way: balanced (1:1 yes:no) and imbalanced (5:1). Ugg measure right-count, F1, and AUROC across five seed with bootstrap confidence wiggle.</p>
                                     <div class="method-tags"><span class="method-tag">Bootstrap CI</span><span class="method-tag">Imbalance Testing</span><span class="method-tag">5 Seeds</span></div>
                                 </div>
                             </div>
@@ -380,7 +392,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">After gradient correction, the cross-encoder consistently outperforms the corrected two-tower across all metrics and both training regimes.</p>
+                        <p class="lead-paragraph prose">After gradient correction, the cross-encoder consistently outperforms the corrected two-tower across all metrics and both training regimes.</p>
+                        <p class="prose prose--caveman">After Ugg fix gradient, one big thinky-rock cross-encoder beat fixed two-tower every time, across every measure and both teach way.</p>
                     </div>
 
                     <div class="performance-comparison">
@@ -423,7 +436,8 @@
                         </div>
                         <div class="highlight-content">
                             <h4 class="highlight-title">Gradient Failure Impact</h4>
-                            <p>Each of the three gradient failures individually collapsed training to approximately <strong>50% accuracy</strong> &mdash; no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.</p>
+                            <p class="prose">Each of the three gradient failures individually collapsed training to approximately <strong>50% accuracy</strong> &mdash; no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.</p>
+                            <p class="prose prose--caveman">Each of three gradient sick alone smash teach down to about <strong>50% right</strong> &mdash; no better than coin flip in cave. Ugg must find and fix all three before fight between shape be fair.</p>
                         </div>
                     </div>
                 </section>
@@ -437,7 +451,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">The gradient stability analysis reveals that a substantial portion of the two-tower's apparent underperformance in prior work was attributable to implementation bugs rather than architectural limitations. After correction, the performance gap narrows but persists.</p>
+                        <p class="lead-paragraph prose">The gradient stability analysis reveals that a substantial portion of the two-tower's apparent underperformance in prior work was attributable to implementation bugs rather than architectural limitations. After correction, the performance gap narrows but persists.</p>
+                        <p class="prose prose--caveman">Gradient stable look-hard show big chunk of two-tower weak in old work come from code bug, not shape limit. After Ugg fix, gap get small but no go away.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -445,11 +460,13 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Imbalance as a Practical Concern</h4>
-                                <p>Real GRN datasets are highly imbalanced &mdash; regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's &minus;6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.</p>
+                                <p class="prose">Real GRN datasets are highly imbalanced &mdash; regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's &minus;6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.</p>
+                                <p class="prose prose--caveman">Real GRN stuff very lopsided &mdash; real talk-pair rare in big cave of pair that no talk. Two-tower lose &minus;6.87 pp at small 5:1 ratio. Tell Ugg it bad pick for real bio job unless Ugg change much.</p>
                             </div>
                         </div>
 
-                        <p>The cross-encoder's monolithic joint processing naturally captures TF&ndash;gene co-expression patterns that the two-tower's independence assumption prevents. This architectural difference, not implementation quality, ultimately drives the AUROC gap of 0.094.</p>
+                        <p class="prose">The cross-encoder's monolithic joint processing naturally captures TF&ndash;gene co-expression patterns that the two-tower's independence assumption prevents. This architectural difference, not implementation quality, ultimately drives the AUROC gap of 0.094.</p>
+                        <p class="prose prose--caveman">One big thinky-rock cross-encoder chew TF and gene together. It catch how they dance same-time, which two-tower miss because it think each side alone. This shape diff, not code clean, make AUROC gap of 0.094.</p>
                     </div>
                 </section>
 
@@ -462,11 +479,14 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">This study provides two contributions: a gradient failure diagnosis applicable to any two-tower model implemented without automatic differentiation, and a controlled architectural comparison showing that monolithic cross-encoders outperform modular two-tower models for GRN link prediction.</p>
+                        <p class="lead-paragraph prose">This study provides two contributions: a gradient failure diagnosis applicable to any two-tower model implemented without automatic differentiation, and a controlled architectural comparison showing that monolithic cross-encoders outperform modular two-tower models for GRN link prediction.</p>
+                        <p class="prose prose--caveman">This work give Ugg two gift. One: gradient sick find-list good for any two-tower thinky-rock built without auto-diff magic. Two: fair shape fight show one big thinky-rock cross-encoder beat many small thinky-rock work together two-tower for GRN link guess.</p>
 
-                        <p>For practitioners, the gradient failure checklist (double-sigmoid, unstable estimator, missing clipping) is directly applicable to other Rust or custom-framework implementations. For researchers designing GRN inference architectures, the results favor joint encoding over independent encoding followed by similarity scoring.</p>
+                        <p class="prose">For practitioners, the gradient failure checklist (double-sigmoid, unstable estimator, missing clipping) is directly applicable to other Rust or custom-framework implementations. For researchers designing GRN inference architectures, the results favor joint encoding over independent encoding followed by similarity scoring.</p>
+                        <p class="prose prose--caveman">For Ugg who build thing: gradient sick check-list (double-sigmoid, shaky guess, no clip) work straight on other Rust or custom-tool build. For Ugg who plan GRN shape: result say squish together better than squish alone then check same-ness.</p>
 
-                        <p>Future work should examine whether the two-tower's efficiency advantages (precomputed entity representations) can be retained while closing the AUROC gap through architectural modifications such as late interaction or cross-attention scoring.</p>
+                        <p class="prose">Future work should examine whether the two-tower's efficiency advantages (precomputed entity representations) can be retained while closing the AUROC gap through architectural modifications such as late interaction or cross-attention scoring.</p>
+                        <p class="prose prose--caveman">Next-time work should test if Ugg can keep two-tower fast-think win (pre-made thing-shape) while close AUROC gap with shape tweak like late-meet or cross-attention score.</p>
                     </div>
                 </section>
 
@@ -521,7 +541,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=11"></script>
+    <script src="../assets/js/main-theme.js?v=12"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

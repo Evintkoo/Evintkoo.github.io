@@ -39,8 +39,8 @@
 
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=12">
-    <link rel="stylesheet" href="../assets/css/research.css?v=13">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
+    <link rel="stylesheet" href="../assets/css/research.css?v=14">
 </head>
 
 <body class="research-page">
@@ -148,7 +148,8 @@
                             </div>
 
                             <h1 class="circrna-title">Dual-Encoder vs Cross-Encoder for Transductive GRN Link Prediction</h1>
-                            <p class="circrna-subtitle">An Empirical Comparison Under Parameter-Matched Conditions</p>
+                            <p class="circrna-subtitle prose">An Empirical Comparison Under Parameter-Matched Conditions</p>
+                            <p class="circrna-subtitle prose prose--caveman">Look hard with eye. Both thinky-rock have same number of setting, fair fight.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction &mdash; including ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation.</p>
@@ -261,7 +262,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Introduction</h3>
-                                <p>This paper presents a rigorous, parameter-matched comparison of dual-encoder (two-tower) and cross-encoder neural architectures for predicting transcription factor&ndash;gene regulatory relationships from single-cell RNA-seq data. Both models contain exactly 5.58M parameters but differ fundamentally in how they process input pairs.</p>
+                                <p class="prose">This paper presents a rigorous, parameter-matched comparison of dual-encoder (two-tower) and cross-encoder neural architectures for predicting transcription factor&ndash;gene regulatory relationships from single-cell RNA-seq data. Both models contain exactly 5.58M parameters but differ fundamentally in how they process input pairs.</p>
+                                <p class="prose prose--caveman">Ugg make fair fight. Two-squisher (each work alone) vs smush-together squisher. Job: guess tiny-instruction starter&ndash;gene link from single-cell scroll. Both thinky-rock pack exact <strong>5.58M</strong> thinky-rock setting. Same brain-size! But chew pair very different way.</p>
                             </div>
                         </div>
 
@@ -269,7 +271,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
-                                <p>Both architectures are evaluated across four negative sampling regimes (1:1, 5:1, 10:1, 50:1), with ablation studies isolating individual architectural components, structured neuron pruning experiments testing sparsity tolerance, effective rank analysis measuring representational efficiency, and cold-start evaluation probing inductive generalization.</p>
+                                <p class="prose">Both architectures are evaluated across four negative sampling regimes (1:1, 5:1, 10:1, 50:1), with ablation studies isolating individual architectural components, structured neuron pruning experiments testing sparsity tolerance, effective rank analysis measuring representational efficiency, and cold-start evaluation probing inductive generalization.</p>
+                                <p class="prose prose--caveman">Ugg test both thinky-rock at four no-pair ratio: <strong>1:1, 5:1, 10:1, 50:1</strong>. Then chop-test single parts, shave neurons to check skinny-tolerance, look hard at effective rank for thought-blob shape, and run cold-start to probe new-gene smarts. Big stress test, yes!</p>
                             </div>
                         </div>
 
@@ -277,7 +280,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
-                                <p>The cross-encoder achieves AUROC <strong>0.9025</strong> vs 0.7941 for the dual-encoder under balanced training &mdash; a 10.84-point gap. The dual-encoder degrades severely with imbalance (AUROC &minus;13.6 pp at 10:1, complete collapse at 50:1) while the cross-encoder remains stable (&asymp;0.911 at 10:1). Ablation reveals 95% of the gap stems from joint encoding itself, with only 5% from the element-wise product interaction term.</p>
+                                <p class="prose">The cross-encoder achieves AUROC <strong>0.9025</strong> vs 0.7941 for the dual-encoder under balanced training &mdash; a 10.84-point gap. The dual-encoder degrades severely with imbalance (AUROC &minus;13.6 pp at 10:1, complete collapse at 50:1) while the cross-encoder remains stable (&asymp;0.911 at 10:1). Ablation reveals 95% of the gap stems from joint encoding itself, with only 5% from the element-wise product interaction term.</p>
+                                <p class="prose prose--caveman">Smush-together squisher score AUROC <strong>0.9025</strong>. Two-squisher (each work alone) only 0.7941. Gap 10.84 point, big! Tip ratio out of balance and two-squisher fall apart: <strong>&minus;13.6 pp</strong> at 10:1, total collapse at 50:1. Smush-together squisher stand strong, &asymp;0.911 at 10:1. Chop-test say <strong>95%</strong> of gap come from squish-together itself. Element-wise product only <strong>5%</strong>. Joint chew decide all!</p>
                             </div>
                         </div>
 
@@ -285,7 +289,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Discussion</h3>
-                                <p>Pruning experiments show both architectures tolerate &ge;60% neuron removal without post-hoc performance loss, suggesting substantial over-parameterization. Cold-start evaluation reveals that the dual-encoder's independent representations provide slightly better generalization to unseen entities, while the cross-encoder's joint processing is inherently transductive.</p>
+                                <p class="prose">Pruning experiments show both architectures tolerate &ge;60% neuron removal without post-hoc performance loss, suggesting substantial over-parameterization. Cold-start evaluation reveals that the dual-encoder's independent representations provide slightly better generalization to unseen entities, while the cross-encoder's joint processing is inherently transductive.</p>
+                                <p class="prose prose--caveman">Ugg shave both thinky-rock: chop <strong>&ge;60%</strong> neuron and no score drop! Mean too many thinky-rock setting, fat brain. Cold-start say two-squisher (each work alone) thought-blob made alone bend better for stranger gene. Smush-together squisher chew pair as one, so stuck on known ground, no stretch.</p>
                             </div>
                         </div>
 
@@ -293,7 +298,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Conclusion</h3>
-                                <p>Under parameter-matched conditions, the cross-encoder dominates on transductive GRN link prediction. The dual-encoder's only advantage is modest cold-start generalization, which is insufficient to overcome its 10.84-point AUROC deficit on the primary task. Joint encoding is the decisive architectural factor.</p>
+                                <p class="prose">Under parameter-matched conditions, the cross-encoder dominates on transductive GRN link prediction. The dual-encoder's only advantage is modest cold-start generalization, which is insufficient to overcome its 10.84-point AUROC deficit on the primary task. Joint encoding is the decisive architectural factor.</p>
+                                <p class="prose prose--caveman">Same thinky-rock setting count? Smush-together squisher crush two-squisher (each work alone) on tiny-instruction boss-web link guess. Two-squisher win only small at cold-start. Not enough! <strong>10.84-point</strong> AUROC hole too deep. Joint chew is the boss move, no cap.</p>
                             </div>
                         </div>
                     </div>
@@ -308,7 +314,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">Dual-encoder models score interactions by computing a similarity function over independently encoded representations, enabling efficient large-scale retrieval. Cross-encoders process pairs jointly, allowing direct feature interaction at the cost of linear inference complexity. For GRN link prediction, the choice between these paradigms has significant implications for both accuracy and scalability.</p>
+                        <p class="lead-paragraph prose">Dual-encoder models score interactions by computing a similarity function over independently encoded representations, enabling efficient large-scale retrieval. Cross-encoders process pairs jointly, allowing direct feature interaction at the cost of linear inference complexity. For GRN link prediction, the choice between these paradigms has significant implications for both accuracy and scalability.</p>
+                        <p class="prose prose--caveman">Two-squisher (each work alone) score pair by match-score over thought-blob made alone. Big pile fetch from pile go fast. Smush-together squisher chew pair as one. Direct feature touch, but Ugg-bot think slow like line. For GRN link guess, this choice hit how often right AND big-scale, hard!</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -316,11 +323,13 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Novelty of this Study</h4>
-                                <p>Prior comparisons between dual-encoder and cross-encoder architectures for biological link prediction have not controlled for parameter count, leaving open the question of whether performance gaps reflect architectural differences or capacity differences. This paper closes that gap.</p>
+                                <p class="prose">Prior comparisons between dual-encoder and cross-encoder architectures for biological link prediction have not controlled for parameter count, leaving open the question of whether performance gaps reflect architectural differences or capacity differences. This paper closes that gap.</p>
+                                <p class="prose prose--caveman">Before-tribes match two-squisher (each work alone) vs smush-together squisher for gene link guess. Nobody hold knob-count same! So gap maybe shape, maybe brain-size. Who know! This scroll plug hole.</p>
                             </div>
                         </div>
 
-                        <p>This study enforces strict parameter matching at 5.58M parameters across both architectures and performs the most comprehensive evaluation of dual-encoder vs cross-encoder trade-offs for GRN inference to date, including ablation, pruning, effective rank analysis, and cold-start evaluation.</p>
+                        <p class="prose">This study enforces strict parameter matching at 5.58M parameters across both architectures and performs the most comprehensive evaluation of dual-encoder vs cross-encoder trade-offs for GRN inference to date, including ablation, pruning, effective rank analysis, and cold-start evaluation.</p>
+                        <p class="prose prose--caveman">Ugg lock knob-count at 5.58M for both thinky-rock. Same size, fair fight! Then Ugg do biggest test ever: chop parts, shave neurons, look hard at rank, try cold-start. Two-squisher vs smush-together squisher for GRN Ugg-bot think. Nobody do this much before!</p>
                     </div>
                 </section>
 
@@ -339,7 +348,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Parameter-Matched Architectures</h3>
-                                    <p class="method-description">Both models are sized to exactly 5.58M parameters. The dual-encoder scores interactions via cosine similarity of independent encodings; the cross-encoder processes concatenated TF&ndash;gene features through shared layers before scoring.</p>
+                                    <p class="method-description prose">Both models are sized to exactly 5.58M parameters. The dual-encoder scores interactions via cosine similarity of independent encodings; the cross-encoder processes concatenated TF&ndash;gene features through shared layers before scoring.</p>
+                                    <p class="prose prose--caveman">Both thinky-rock exact 5.58M knob. Two-squisher (each work alone) score by cosine match of alone thought-blob. Smush-together squisher glue TF&ndash;gene feature, push through shared layer, then score. Same size!</p>
                                     <div class="method-tags"><span class="method-tag">5.58M Parameters</span><span class="method-tag">Dual-Encoder</span><span class="method-tag">Cross-Encoder</span></div>
                                 </div>
                             </div>
@@ -351,7 +361,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Imbalance Robustness Testing</h3>
-                                    <p class="method-description">Four negative sampling ratios are evaluated: 1:1, 5:1, 10:1, and 50:1. This range spans from artificially balanced training to highly realistic biological conditions where regulatory interactions are sparse.</p>
+                                    <p class="method-description prose">Four negative sampling ratios are evaluated: 1:1, 5:1, 10:1, and 50:1. This range spans from artificially balanced training to highly realistic biological conditions where regulatory interactions are sparse.</p>
+                                    <p class="prose prose--caveman">Ugg try four no-pair ratio: 1:1, 5:1, 10:1, 50:1. Start fake-balanced, end true cave-life where real gene link very rare. Stress test, yes!</p>
                                     <div class="method-tags"><span class="method-tag">1:1 Ratio</span><span class="method-tag">5:1 Ratio</span><span class="method-tag">10:1 Ratio</span><span class="method-tag">50:1 Ratio</span></div>
                                 </div>
                             </div>
@@ -363,7 +374,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Ablation &amp; Pruning Studies</h3>
-                                    <p class="method-description">Ablation systematically removes architectural components to isolate their contributions. Structured neuron pruning removes low-importance neurons across sparsity levels (10&ndash;90%) to identify each model's redundancy budget. Effective rank analysis measures intrinsic dimensionality of learned representations.</p>
+                                    <p class="method-description prose">Ablation systematically removes architectural components to isolate their contributions. Structured neuron pruning removes low-importance neurons across sparsity levels (10&ndash;90%) to identify each model's redundancy budget. Effective rank analysis measures intrinsic dimensionality of learned representations.</p>
+                                    <p class="prose prose--caveman">Chop-test pull parts off thinky-rock one by one. See what each part do. Neuron shave kill lazy neurons at 10&ndash;90% sparsity, find extra-fat budget. Effective rank look hard at true thought-blob shape. Ugg learn what matter!</p>
                                     <div class="method-tags"><span class="method-tag">Ablation</span><span class="method-tag">Neuron Pruning</span><span class="method-tag">Effective Rank</span></div>
                                 </div>
                             </div>
@@ -375,7 +387,8 @@
                                 <div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
                                 <div class="method-text">
                                     <h3 class="method-title">Cold-Start &amp; Classical Baselines</h3>
-                                    <p class="method-description">Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching.</p>
+                                    <p class="method-description prose">Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching.</p>
+                                    <p class="prose prose--caveman">Cold-start hide new gene from train-time. Then ask thinky-rock: handle stranger? Plain expression baseline (no learned thought-blob) sit next to it for compare. Show how much fancy brain really help over dumb match.</p>
                                     <div class="method-tags"><span class="method-tag">Cold-Start</span><span class="method-tag">Inductive</span><span class="method-tag">Expression-Only Baseline</span></div>
                                 </div>
                             </div>
@@ -392,7 +405,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">Under parameter-matched conditions, the cross-encoder outperforms the dual-encoder across every evaluation setting except cold-start generalization.</p>
+                        <p class="lead-paragraph prose">Under parameter-matched conditions, the cross-encoder outperforms the dual-encoder across every evaluation setting except cold-start generalization.</p>
+                        <p class="prose prose--caveman">Same knob-count? Smush-together squisher beat two-squisher (each work alone) every test. Only cold-start two-squisher win. Big news!</p>
                     </div>
 
                     <div class="performance-comparison">
@@ -447,7 +461,8 @@
                         </div>
                         <div class="highlight-content">
                             <h4 class="highlight-title">Ablation: What Drives the Gap?</h4>
-                            <p>Ablation reveals that <strong>95% of the AUROC gap</strong> stems from joint encoding itself. The element-wise product interaction term within the cross-encoder accounts for only 5% &mdash; the decisive factor is whether inputs are processed jointly or independently.</p>
+                            <p class="prose">Ablation reveals that <strong>95% of the AUROC gap</strong> stems from joint encoding itself. The element-wise product interaction term within the cross-encoder accounts for only 5% &mdash; the decisive factor is whether inputs are processed jointly or independently.</p>
+                            <p class="prose prose--caveman">Chop-test Ugg see with eye: <strong>95% of AUROC gap</strong> come from squish together! Element-wise product touch only 5%. Big thing: do you chew pair as one, or chew alone? That decide all!</p>
                         </div>
                     </div>
                 </section>
@@ -461,7 +476,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">By matching parameters exactly at 5.58M, this study eliminates capacity as a confounding variable. The 10.84-point AUROC gap at balanced training &mdash; growing to >25 points at severe imbalance &mdash; is attributable to architectural choice alone.</p>
+                        <p class="lead-paragraph prose">By matching parameters exactly at 5.58M, this study eliminates capacity as a confounding variable. The 10.84-point AUROC gap at balanced training &mdash; growing to >25 points at severe imbalance &mdash; is attributable to architectural choice alone.</p>
+                        <p class="prose prose--caveman">Lock knob at 5.58M, brain-size cannot trick Ugg. 10.84-point AUROC gap at balanced train &mdash; gap go big to >25 points when imbalance mean &mdash; all blame shape, not size!</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -469,13 +485,16 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Pruning Tolerance</h4>
-                                <p>Both architectures tolerate &ge;60% structured neuron pruning without post-hoc performance loss, suggesting both are substantially over-parameterized at 5.58M for the dataset size. Leaner models deserve investigation.</p>
+                                <p class="prose">Both architectures tolerate &ge;60% structured neuron pruning without post-hoc performance loss, suggesting both are substantially over-parameterized at 5.58M for the dataset size. Leaner models deserve investigation.</p>
+                                <p class="prose prose--caveman">Shave &ge;60% neurons off both thinky-rock &mdash; how often right stay same! Mean both too fat at 5.58M for data pile. Skinny thinky-rock worth try next!</p>
                             </div>
                         </div>
 
-                        <p>The dual-encoder's only advantage is a modest improvement in cold-start generalization to unseen entities, a consequence of its independent representations. However, this advantage is practically limited by the transductive nature of GRN inference &mdash; in most scenarios, TF and gene identities are known at training time, making the cross-encoder's inductive limitation irrelevant.</p>
+                        <p class="prose">The dual-encoder's only advantage is a modest improvement in cold-start generalization to unseen entities, a consequence of its independent representations. However, this advantage is practically limited by the transductive nature of GRN inference &mdash; in most scenarios, TF and gene identities are known at training time, making the cross-encoder's inductive limitation irrelevant.</p>
+                        <p class="prose prose--caveman">Two-squisher (each work alone) only win small at cold-start for new gene. Because alone thought-blob travel better. But GRN Ugg-bot think mostly transductive &mdash; Ugg already know TF and gene at train time! So smush-together squisher cannot do inductive? No matter. Most cave-life it not needed.</p>
 
-                        <p>The 50:1 collapse of the dual-encoder is a critical practical concern. Real regulatory databases have far more non-interacting TF&ndash;gene pairs than interacting ones, making the dual-encoder unsuitable for production GRN inference without significant modifications.</p>
+                        <p class="prose">The 50:1 collapse of the dual-encoder is a critical practical concern. Real regulatory databases have far more non-interacting TF&ndash;gene pairs than interacting ones, making the dual-encoder unsuitable for production GRN inference without significant modifications.</p>
+                        <p class="prose prose--caveman">Two-squisher (each work alone) fall over at 50:1. Big problem! Real gene scrolls full of no-pair, very few yes-pair. So two-squisher not ready for real cave-life GRN Ugg-bot think. Need big fix first.</p>
                     </div>
                 </section>
 
@@ -488,11 +507,14 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph">This paper provides the first parameter-matched empirical comparison of dual-encoder and cross-encoder architectures for transductive GRN link prediction, submitted to IEEE Transactions on Neural Networks and Learning Systems (TNNLS).</p>
+                        <p class="lead-paragraph prose">This paper provides the first parameter-matched empirical comparison of dual-encoder and cross-encoder architectures for transductive GRN link prediction, submitted to IEEE Transactions on Neural Networks and Learning Systems (TNNLS).</p>
+                        <p class="prose prose--caveman">This scroll first ever lock knob-count same and pit two-squisher vs smush-together squisher for transductive GRN link guess. Ugg send to IEEE TNNLS. Big moment!</p>
 
-                        <p>The results are unambiguous: for transductive GRN link prediction from single-cell RNA-seq data, cross-encoders outperform dual-encoders by a large margin (10.84 pp AUROC at balanced training, growing catastrophically under imbalance). The decisive factor is joint encoding, not any secondary architectural feature.</p>
+                        <p class="prose">The results are unambiguous: for transductive GRN link prediction from single-cell RNA-seq data, cross-encoders outperform dual-encoders by a large margin (10.84 pp AUROC at balanced training, growing catastrophically under imbalance). The decisive factor is joint encoding, not any secondary architectural feature.</p>
+                        <p class="prose prose--caveman">Ugg see with eye clear: for transductive GRN link guess from scRNA-seq, smush-together squisher smash two-squisher (each work alone) by big margin (10.84 pp AUROC at balanced train, gap go big BAD when imbalance). The boss thing is chew pair together &mdash; not any side trick!</p>
 
-                        <p>Future directions include investigating whether dual-encoders can be augmented with late interaction mechanisms to recover the AUROC gap while retaining their retrieval efficiency, and exploring whether the 60% pruning tolerance enables significant model compression without accuracy loss.</p>
+                        <p class="prose">Future directions include investigating whether dual-encoders can be augmented with late interaction mechanisms to recover the AUROC gap while retaining their retrieval efficiency, and exploring whether the 60% pruning tolerance enables significant model compression without accuracy loss.</p>
+                        <p class="prose prose--caveman">Next, Ugg try late-touch trick on two-squisher (each work alone) &mdash; maybe close AUROC gap AND keep fetch from pile fast. Also poke 60% pruning tolerance: maybe Ugg can squash thinky-rock small without lose how often right. Exciting tomorrow!</p>
                     </div>
                 </section>
 
@@ -547,7 +569,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=11"></script>
+    <script src="../assets/js/main-theme.js?v=12"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
