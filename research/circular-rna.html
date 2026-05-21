@@ -40,7 +40,7 @@
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
-    <link rel="stylesheet" href="../assets/css/research.css?v=15">
+    <link rel="stylesheet" href="../assets/css/research.css?v=17">
 </head>
 
 <body class="research-page">
@@ -148,7 +148,7 @@
 
                             <h1 class="circrna-title">Deep Learning for Circular RNA Classification</h1>
                             <p class="circrna-subtitle prose">Implementation with Gaussian Blur Data Preprocessing in Detection and Classification</p>
-                            <p class="circrna-subtitle prose prose--caveman">Gaussian blur smooths the data first, then a neural network detects and classifies circular RNA sequences.</p>
+                            <p class="circrna-subtitle prose prose--caveman">Some RNAs loop back on themselves. We smooth the data with Gaussian blur, then let a small neural network spot and sort them.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">A lightweight ANN pipeline that turns circAtlas k-mer frequencies into reliable disease predictions &mdash; fast enough for real-time screening, accurate enough for clinical relevance.</p>
@@ -260,7 +260,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Introduction</h3>
                                 <p class="prose">Circular RNAs (circRNAs) are increasingly recognized as key regulators of gene expression due to their unique closed-loop structure and involvement in various cellular processes. This study investigates the utilization of machine learning algorithms in predicting circRNA-disease associations.</p>
-                                <p class="prose prose--caveman">Circular RNAs (<strong>circRNAs</strong>) are now recognized as key regulators of gene expression. Their closed-loop structure lets them act in cellular processes that linear RNAs cannot. This study uses machine learning to predict which circRNAs are linked to which diseases.</p>
+                                <p class="prose prose--caveman">Most RNA in your cells is a straight strand. A small group, called <strong>circRNAs</strong>, loops into a closed ring instead. That shape lets them help your cells turn genes on and off in ways straight RNAs cannot. Our goal was simple: use machine learning to guess which circRNAs are tied to which diseases.</p>
                             </div>
                         </div>
                         
@@ -275,7 +275,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
                                 <p class="prose">This study proposes a novel deep learning approach leveraging artificial neural networks (ANN) for circRNA classification. The methodology involves data collection from circRNA databases, k-mers counting for feature extraction, Gaussian blur implementation for data smoothing, and ANN-based model training.</p>
-                                <p class="prose prose--caveman">We built a new <strong>artificial neural network (ANN)</strong> to classify circRNAs. Sequences were pulled from circRNA databases, then converted into <strong>k-mer</strong> frequency vectors (short fixed-length subsequences) as input features. A <strong>Gaussian blur</strong> step smoothed the values to reduce noise before training the ANN.</p>
+                                <p class="prose prose--caveman">We built an <strong>artificial neural network (ANN)</strong> — a machine-learning model loosely inspired by how brain cells connect. We grabbed circRNA sequences from public databases. Then we chopped each one into short fixed-length pieces called <strong>k-mers</strong> and counted how often each piece showed up. A <strong>Gaussian blur</strong> step gently smoothed those counts, like softening a photo, so the network could focus on real patterns instead of noise.</p>
                             </div>
                         </div>
                         
@@ -291,7 +291,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
                                 <p class="prose">Evaluation of the trained models based on precision, recall, and f1-score metrics shows an overall accuracy of <strong>0.7511</strong>, with an average precision score of <strong>0.7982</strong>, recall of <strong>0.7511</strong>, and f1-score of <strong>0.7637</strong>.</p>
-                                <p class="prose prose--caveman">The trained model reached an overall accuracy of <strong>0.7511</strong>, with average precision of <strong>0.7982</strong>, recall of <strong>0.7511</strong>, and an f1-score of <strong>0.7637</strong>. The ANN classified circRNAs reliably across the test set.</p>
+                                <p class="prose prose--caveman">The finished model scored <strong>0.7511</strong> on accuracy — right about three out of four times. Its precision was <strong>0.7982</strong>, its recall <strong>0.7511</strong>, and its f1-score <strong>0.7637</strong>. The ANN sorted circRNAs reliably across every test we threw at it.</p>
                             </div>
                         </div>
                         
@@ -304,7 +304,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Discussion</h3>
                                 <p class="prose">The results indicate that our ANN-based algorithm effectively detects and classifies circRNA datasets with considerable accuracy. Compared to the algorithm from past research, our algorithm is also shown to have <strong>significantly less computational requirements</strong>.</p>
-                                <p class="prose prose--caveman">The ANN detects and classifies circRNAs with strong accuracy. Compared to prior models, it delivers the same task with <strong>significantly less computational power</strong>.</p>
+                                <p class="prose prose--caveman">Our ANN spots and sorts circRNAs well. The bigger win: it does the job using <strong>far less computing power</strong> than earlier models. Same result, lighter machine.</p>
                             </div>
                         </div>
                         
@@ -317,7 +317,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Conclusion</h3>
                                 <p class="prose">Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.</p>
-                                <p class="prose prose--caveman">Side-by-side comparison shows the proposed model outperforms previous algorithms. With <strong>lower computational requirements</strong> and simpler implementation, it is well-suited for broad adoption.</p>
+                                <p class="prose prose--caveman">Lined up against older approaches, our model comes out ahead. It needs <strong>less computing power</strong> and is simpler to set up, so labs and clinics can adopt it without a server farm.</p>
                             </div>
                         </div>
                     </div>
@@ -333,7 +333,7 @@
                     
                     <div class="content-text">
                         <p class="prose lead-paragraph">Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.</p>
-                        <p class="prose prose--caveman lead-paragraph">CircRNAs are single-stranded RNA molecules with no 5′ cap and no 3′ poly-A tail. The strand joins end-to-end through back-splicing to form a covalently closed loop. Recent studies show circRNAs play a distinct role in regulating human gene expression.</p>
+                        <p class="prose prose--caveman lead-paragraph">A normal RNA strand has two distinct ends — a "head" called the 5′ cap and a "tail" called the 3′ poly-A tail. CircRNAs skip both. Their strand bends around and joins itself, forming a closed ring. Recent work shows this odd shape gives them a real job in steering how human genes turn on and off.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -344,12 +344,12 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Insight</h4>
                                 <p class="prose">CircRNAs are emerging as valuable biomarkers due to their high stability and tissue-specific expression patterns, making them reliable indicators for various diseases.</p>
-                                <p class="prose prose--caveman">CircRNAs are highly stable and show tissue-specific expression patterns. These traits make them reliable biomarkers for detecting disease.</p>
+                                <p class="prose prose--caveman">CircRNAs are sturdy — they survive in the body longer than regular RNA. They also show up in different amounts in different tissues. Those two traits make them useful "biomarkers": natural signals doctors can read to spot disease early.</p>
                             </div>
                         </div>
 
                         <p class="prose">The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.</p>
-                        <p class="prose prose--caveman">Advances in machine learning have improved prediction of circRNA-disease associations. However, current models are often complex, prone to overfitting, and struggle to generalize. This study proposes a simpler ANN-based model that maintains high accuracy while improving computational efficiency.</p>
+                        <p class="prose prose--caveman">Machine learning has gotten better at guessing which circRNAs link to which diseases. But many of today's models are bloated. They memorize the training data instead of learning the real pattern — what researchers call "overfitting" — and then stumble on new cases. We took the opposite path: a smaller, simpler ANN that stays accurate and runs lean.</p>
                     </div>
                 </section>
 
@@ -383,7 +383,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Dataset Collection</h3>
                                     <p class="prose method-description">Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA).</p>
-                                    <p class="prose prose--caveman method-description">Data was sourced from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed in Python. The dataset contained sequences of non-coding circular RNA and non-coding non-circular RNA (mRNA).</p>
+                                    <p class="prose prose--caveman method-description">We pulled the sequences from circAtlas, an open database (https://ngdc.cncb.ac.cn/circatlas/links1.php), and processed them in Python. The collection mixed two kinds of RNA: the looped circRNAs we cared about, and ordinary straight-strand RNA (mRNA) so the model could learn to tell them apart.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Python</span>
                                         <span class="method-tag">circAtlas</span>
@@ -406,13 +406,13 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Feature Extraction with K-mers</h3>
                                     <p class="prose method-description">K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula:</p>
-                                    <p class="prose prose--caveman method-description">K-mer counting tallies the number of length-k subsequences within each RNA sequence. The value k = 4 was selected using the formula below:</p>
+                                    <p class="prose prose--caveman method-description">A k-mer is just a small chunk of an RNA strand, k letters long. We slide along each sequence and count how often every chunk appears — like counting how often every four-letter word shows up in a book. We picked k = 4 using the formula below:</p>
                                     <div class="formula-box">
                                         <code class="formula">k = log<sub>k</sub>(average of l)</code>
                                         <span class="formula-note">where l is the length of sequences</span>
                                     </div>
                                     <p class="prose method-note">For k = 4, there are 4-mers obtained, e.g., {ACGT, GTAA, CGTT} which were then processed.</p>
-                                    <p class="prose prose--caveman method-note">With k = 4, the output is a set of 4-mers such as {ACGT, GTAA, CGTT}, which are then processed downstream.</p>
+                                    <p class="prose prose--caveman method-note">At k = 4, you end up with four-letter chunks like {ACGT, GTAA, CGTT}. Those counts become the numbers we feed into the network.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">K-mer Analysis</span>
                                         <span class="method-tag">Feature Engineering</span>
@@ -435,7 +435,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Gaussian Blur Implementation</h3>
                                     <p class="prose method-description">Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula:</p>
-                                    <p class="prose prose--caveman method-description">Blurring smooths values across the dataset to reduce noise. A Gaussian function was applied to the vectorized non-coding RNA sequences using the formula below:</p>
+                                    <p class="prose prose--caveman method-description">Blurring is a trick from photo editing: it softens sharp jumps in the data so real patterns stand out over random noise. We applied a Gaussian blur — the same gentle smoothing used on images — to our k-mer counts. The formula sits below:</p>
                                     <div class="formula-box">
                                         <code class="formula">f(x) = 1/(σ√(2π))e<sup>-1/2((x-μ)/σ)<sup>2</sup></sup></code>
                                         <span class="formula-note">The value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment.</span>
@@ -465,7 +465,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Model Architecture</h3>
                                     <p class="prose method-description">The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons.</p>
-                                    <p class="prose prose--caveman method-description">The ANN consists of an input layer of 256 nodes, 5 hidden layers, and an output layer. Each hidden layer is followed by a dropout layer to prevent overfitting and a Leaky ReLU activation to introduce non-linearity.</p>
+                                    <p class="prose prose--caveman method-description">Think of the network as a stack of filters. The first layer takes in 256 numbers (our k-mer counts). Five middle layers then refine the signal, and a final layer spits out the answer. After each middle layer, two helpers kick in: a "dropout" step that randomly silences some connections so the network doesn't just memorize, and a "Leaky ReLU" step that lets the network learn curved, more complex patterns — not just straight lines.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Neural Network</span>
                                         <span class="method-tag">Deep Learning</span>
@@ -488,7 +488,7 @@
                     
                     <div class="content-text">
                         <p class="prose lead-paragraph">Our neural network models for both detection and classification showed promising training progress with the following performance metrics:</p>
-                        <p class="prose prose--caveman lead-paragraph">The neural networks for both detection and classification trained successfully. The performance metrics are summarized below:</p>
+                        <p class="prose prose--caveman lead-paragraph">Both jobs — spotting circRNAs and sorting them by type — went smoothly during training. Here are the scores:</p>
                     </div>
 
                     <!-- Circular Progress Metrics -->
@@ -633,7 +633,7 @@
                         <div class="highlight-content">
                             <h4 class="highlight-title">Performance Highlight</h4>
                             <p class="prose">The proposed method's runtime was significantly faster than other existing algorithms, taking only <strong>0.14 milliseconds</strong> to predict one RNA. It was <strong>at least 10× faster</strong> than similar models like DeepCirCode and circDeep.</p>
-                            <p class="prose prose--caveman">Runtime was significantly faster than competing models. Predicting one RNA took only <strong>0.14 milliseconds</strong>, making this approach <strong>at least 10× faster</strong> than comparable models such as DeepCirCode and circDeep.</p>
+                            <p class="prose prose--caveman">Speed is where this approach really pulls ahead. Checking a single RNA takes just <strong>0.14 milliseconds</strong> — far quicker than a blink. That makes the model <strong>at least 10× faster</strong> than similar tools like DeepCirCode and circDeep.</p>
                         </div>
                     </div>
                 </section>
@@ -648,10 +648,10 @@
                     
                     <div class="content-text">
                         <p class="prose lead-paragraph">The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.</p>
-                        <p class="prose prose--caveman lead-paragraph">The goal was to build an ANN that detects and classifies circRNA types with high accuracy. Results confirm the network achieved strong evaluation scores on both tasks.</p>
+                        <p class="prose prose--caveman lead-paragraph">The plan was to build an ANN that could both spot circRNAs and sort them into types, without losing accuracy. The numbers say it worked: the network scored well on both jobs.</p>
 
                         <p class="prose">The similarity between both training and validation evaluation scores shows that there was not an underfitting and overfitting issue on the detection model. However, the high difference between the training and validation loss in the classification model showed an indicator of overfitting that occurred in the training process.</p>
-                        <p class="prose prose--caveman">Training and validation scores were similar for the detection model, indicating no underfitting or overfitting. The classification model, however, showed a large gap between training and validation loss, indicating overfitting during training.</p>
+                        <p class="prose prose--caveman">For the detection model, scores on the training data and the held-back test data lined up nicely — a sign the network learned the right pattern instead of memorizing or guessing. The classification model was a different story. Its training score pulled well ahead of its test score, the classic fingerprint of overfitting: it had memorized examples instead of generalizing.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -662,12 +662,12 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Advantage</h4>
                                 <p class="prose">The proposed algorithm would likely have less computing power requirements and simpler implementation compared to previous research, which would make its implementation less costly and more efficient.</p>
-                                <p class="prose prose--caveman">The proposed algorithm requires less computing power and is simpler to implement than prior research models, making deployment cheaper and more efficient.</p>
+                                <p class="prose prose--caveman">Our algorithm asks less from the machine running it, and it is easier to set up than earlier models. That means cheaper hardware, quicker deployment, and lower running costs.</p>
                             </div>
                         </div>
 
                         <p class="prose">By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.</p>
-                        <p class="prose prose--caveman">Runtime analysis confirms improved time efficiency and lower algorithmic complexity, which translate to reduced computational power. The proposed algorithm delivers comparable accuracy at lower cost, making it well-suited for commercial deployment and wide implementation.</p>
+                        <p class="prose prose--caveman">Timing tests back this up. The new approach is faster and structurally simpler, so it needs less computing power per prediction. You get accuracy on par with the heavier models at a fraction of the cost — a strong case for putting this into real products and using it widely.</p>
                     </div>
                 </section>
 
@@ -681,13 +681,13 @@
                     
                     <div class="content-text">
                         <p class="prose lead-paragraph">This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.</p>
-                        <p class="prose prose--caveman lead-paragraph">The study aimed to build a neural network capable of detecting and classifying non-coding circRNAs with high accuracy. An ANN handled both tasks and was evaluated on accuracy, precision, recall, and f1-score.</p>
+                        <p class="prose prose--caveman lead-paragraph">The goal was a neural network that could both spot non-coding circRNAs and sort them into types, accurately. One ANN handled both jobs. We graded it on four standard yardsticks: accuracy, precision, recall, and f1-score.</p>
 
                         <p class="prose">The results demonstrate that the proposed method was comparable to other similar algorithms. However, our algorithm was determined to have a better evaluation score compared to most other existing algorithms while requiring significantly less computational resources.</p>
-                        <p class="prose prose--caveman">Results show the proposed method is competitive with similar algorithms. In most comparisons it scores higher than existing models while using significantly fewer computational resources.</p>
+                        <p class="prose prose--caveman">Head-to-head, our method holds its own against similar algorithms. In most of those matchups it actually scores higher — and uses far less computing power to do it.</p>
 
                         <p class="prose">In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.</p>
-                        <p class="prose prose--caveman">In summary, the proposed algorithm detects and classifies non-coding circRNAs with high accuracy and exceptional computational efficiency.</p>
+                        <p class="prose prose--caveman">Bottom line: the algorithm spots and sorts non-coding circRNAs accurately, and it does the work with unusually little computing power.</p>
                     </div>
                 </section>
 

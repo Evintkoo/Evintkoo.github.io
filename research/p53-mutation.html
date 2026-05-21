@@ -40,7 +40,7 @@
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
-    <link rel="stylesheet" href="../assets/css/research.css?v=15">
+    <link rel="stylesheet" href="../assets/css/research.css?v=17">
 </head>
 
 <body class="research-page">
@@ -148,7 +148,7 @@
                             Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 &mdash; the "guardian of the genome" &mdash; before malignant cascades take hold. Award-winning research bridging evolutionary computation and cancer genomics.
                         </p>
                         <p class="hero__subtitle prose prose--caveman">
-                            Closed-loop genetic algorithms detect the earliest mutations that destabilise <strong>p53</strong>, a tumor-suppressor gene that triggers apoptosis when DNA is damaged, before malignancy develops. Award-winning research linking evolutionary computation with cancer genomics.
+                            About half of all cancers carry a broken copy of a single gene called <strong>p53</strong> &mdash; the cell's built-in safety switch that tells damaged cells to shut down. This project uses evolution-inspired algorithms to spot the very first signs that p53 is breaking, long before cancer takes hold. The work won Best Research Project at UBC Vantage.
                         </p>
                         
                         <div class="paper-meta-box">
@@ -189,7 +189,7 @@
                             P-53 operates as the "guardian of the genome," halting cell division when DNA damage is detected. Mutations in this gene contribute to over 50% of all human cancers, making it a critical target for early detection strategies.
                         </p>
                         <p class="prose prose--caveman">
-                            P-53 functions as the genome's guardian, halting cell division when DNA damage is detected. Mutations in P-53 are implicated in over 50% of all human cancers, making the gene a priority target for early detection.
+                            Think of P-53 as the cell's quality inspector. When it spots damaged DNA, it stops the cell from dividing so the damage cannot spread. When P-53 itself breaks, that safety check fails. A broken P-53 shows up in more than 50% of all human cancers, which is why catching the break early matters so much.
                         </p>
                         
                         <div class="research-highlight">
@@ -204,7 +204,7 @@
                                     Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Existing approaches analyse sequences that are already malignant. This study examines mutation patterns in the pre-malignant phase, identifying predictive signatures that could enable intervention before cancer develops.
+                                    Most cancer studies look at DNA that is already cancerous &mdash; like inspecting a fire after the house has burned. This study looks earlier, at the DNA just before it turns cancerous, hunting for warning patterns that could let doctors step in before the disease takes hold.
                                 </p>
                             </div>
                         </div>
@@ -213,7 +213,7 @@
                             Combining genetic algorithms with self-organizing maps to trace deterministic pathways from healthy to malignant P-53 sequences, revealing early-warning biomarkers for clinical application.
                         </p>
                         <p class="prose prose--caveman">
-                            The study combines genetic algorithms with self-organizing maps to trace the deterministic progression from wild-type P-53 to malignant sequences, exposing early-warning biomarkers for clinical use.
+                            The project pairs two tools. Genetic algorithms simulate how DNA changes step by step over many cell divisions. Self-organizing maps then sort those changes into groups, so we can see which tiny DNA edits show up just before a healthy P-53 turns into a cancer-driving one. Those edits become the early warning signs.
                         </p>
                     </div>
                 </section>
@@ -292,7 +292,7 @@
                                         Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Assembled 25 wild-type and cancerous P-53 DNA sequences from the NCBI repository, each 2,509 bases long. Non-nucleotide characters were removed and pathological sequences aligned to their parental counterparts.
+                                        First, we needed examples to study. We pulled 25 P-53 DNA sequences from the public NCBI database &mdash; some healthy, some cancerous. Each one is 2,509 letters long. We cleaned up stray characters and lined up each cancerous sequence next to the healthy version it came from, so we could compare them directly.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">NCBI Database</span>
@@ -311,7 +311,7 @@
                                         Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        A binary tree models mitotic bifurcation: each cell division produces two daughter nodes. Every node records its generation index, DNA composition, and malignancy state. Recursion runs to generation 14 to emulate tumour initiation depth.
+                                        Cells grow by splitting in two, again and again. We modelled that as a tree: one cell becomes two, two become four, and so on. Each branch remembers which generation it belongs to, what its DNA looks like, and whether it has turned cancerous. We let the tree grow 14 generations deep &mdash; roughly the depth where a tumour usually gets started.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Binary Tree</span>
@@ -330,7 +330,7 @@
                                         Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Depth-first traversal extracts each generational path. Mismatch rates are scored via Levenshtein similarity, and the highest-drift ancestor branches preceding malignant nodes are flagged as candidate precursors.
+                                        Next we walked each branch of the tree from root to tip. For every step, we measured how much the DNA had drifted away from its parent using Levenshtein similarity &mdash; a score that counts how many letters changed. The branches that drifted the most just before turning cancerous are the ones we flagged as suspects.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Levenshtein Distance</span>
@@ -349,7 +349,7 @@
                                         Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Using log₄(L) to set k = 4, each strand is encoded as a 1×1024 feature vector of k-mer frequencies. The final length-adjusted dataset contains 73,475 rows.
+                                        DNA is a long string of just four letters. To turn that into something a computer can compare, we chopped each sequence into overlapping 4-letter chunks (k = 4, chosen with log₄(L)) and counted how often each chunk appeared. That gives every sequence a 1,024-number fingerprint. In total we had 73,475 fingerprints to compare.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">k-mer Analysis</span>
@@ -368,7 +368,7 @@
                                         Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        SOM grids from 1×2 to 1×11 were evaluated. Correlation analysis removed redundant dimensions, and a 1×6 lattice was selected for delivering maximum cluster separation with minimal distortion.
+                                        Finally we used a self-organizing map &mdash; a method that groups similar fingerprints together, like sorting socks by colour. We tried sorting them into anywhere from 2 to 11 groups. Six groups turned out to give the cleanest split: each pile was tight and clearly different from its neighbours.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Self-Organizing Maps</span>
@@ -512,7 +512,7 @@
                             Genetic algorithms plus SOM clustering expose deterministic shifts toward malignancy. Six pentamer motifs consistently precede malignant conversion, providing high-clarity monitoring targets.
                         </p>
                         <p class="prose prose--caveman">
-                            Genetic algorithms combined with SOM clustering reveal that progression toward malignancy is deterministic rather than random. Six pentamer motifs consistently appear before malignant conversion, providing clear monitoring targets.
+                            The big takeaway is that cancer is not pure bad luck at the DNA level. Cells seem to follow a predictable path on the way to going rogue. Six short DNA patterns &mdash; each five letters long &mdash; keep showing up just before that switch flips. That gives doctors and researchers a clear list of things to watch for.
                         </p>
                         
                         <div class="research-highlight">
@@ -527,7 +527,7 @@
                                     Encoded feature space remains interpretable, enabling rapid clinician dialogue. The motif shortlist now feeds wet-lab validation and computational monitoring pipelines.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    The encoded feature space remains interpretable, supporting rapid dialogue with clinicians. The motif shortlist now feeds both wet-lab validation and computational monitoring pipelines.
+                                    A nice bonus: the maths stays readable. A clinician can look at the groups and understand what each one means, instead of trusting a black box. The shortlist of suspect DNA patterns is already being passed on for lab testing and for software that scans patient samples.
                                 </p>
                             </div>
                         </div>
@@ -536,7 +536,7 @@
                             Future work will expand datasets with longitudinal patient samples and fuse expression-level data to link mutational motifs with phenotypic impact.
                         </p>
                         <p class="prose prose--caveman">
-                            Next steps will expand the dataset with longitudinal patient samples and integrate gene expression data to link mutational motifs with phenotypic impact.
+                            What comes next: track real patients over time instead of simulated cells, and add data on which genes are actually switched on or off. That way we can connect each DNA pattern to what it actually does to a person's health.
                         </p>
                     </div>
                 </section>

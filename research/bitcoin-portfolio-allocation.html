@@ -47,7 +47,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
-    <link rel="stylesheet" href="../assets/css/research.css?v=15">
+    <link rel="stylesheet" href="../assets/css/research.css?v=17">
 
     <!-- Prefetch PDF for faster loading when clicked -->
     <link rel="prefetch" href="../files/bitcoin_analysis.pdf">
@@ -148,7 +148,7 @@
                     <div class="hero__content">
                         <h1 class="hero__title">Bitcoin Portfolio <span class="hero__title--accent">Allocation Analysis</span></h1>
                         <p class="prose hero__subtitle">Optimal BTC sizing via Risk-Budget Framework &mdash; Component Risk Contribution analysis across five portfolio profiles. The answer is always between 0% and 16%.</p>
-                        <p class="prose prose--caveman hero__subtitle">Optimal BTC sizing is derived from a risk-budget framework &mdash; Component Risk Contribution (CRC) analysis across five portfolio profiles. The answer always lands between 0% and 16%.</p>
+                        <p class="prose prose--caveman hero__subtitle">How much Bitcoin should you actually hold? We answer that by looking at how much risk BTC adds to your portfolio, not just how many dollars you put in. Across five different portfolio styles, the right answer always lands between 0% and 16%.</p>
 
                         <div class="paper-meta-box">
                             <div class="paper-meta-content">
@@ -200,7 +200,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>The optimal Bitcoin allocation is 10&ndash;12% by capital weight, producing 17&ndash;20% risk contribution.</strong> This range maximizes diversification benefit while keeping tail risk manageable.</p>
-                                <p class="prose prose--caveman"><strong>The optimal Bitcoin allocation is 10&ndash;12% by capital weight, producing 17&ndash;20% of total portfolio risk.</strong> This range delivers the best diversification benefit while keeping tail risk contained.</p>
+                                <p class="prose prose--caveman"><strong>Put about 10&ndash;12% of your money into Bitcoin</strong> &mdash; roughly $1,000 of every $10,000. That sounds small, but BTC swings so much harder than stocks or bonds that it ends up driving 17&ndash;20% of your portfolio's total ups and downs. Below that and you barely feel the benefit; above it and one bad year for BTC can sink the whole portfolio.</p>
                             </div>
                         </div>
 
@@ -238,17 +238,17 @@
 
                         <ul>
                             <li class="prose"><strong>BTC is a risk diversifier, not a return maximizer</strong> &mdash; include it for structural balance via Component Risk Contribution, not for alpha.</li>
-                            <li class="prose prose--caveman"><strong>BTC is a risk diversifier, not a return engine</strong> &mdash; include it for structural balance via Component Risk Contribution, not to chase alpha.</li>
+                            <li class="prose prose--caveman"><strong>Hold BTC to spread your risk, not to make a fortune</strong> &mdash; you add it because it moves differently from stocks and bonds, not because it will outperform them.</li>
                             <li class="prose"><strong>Risk Parity naturally constrains BTC to 10&ndash;12%</strong> across all profiles tested; this range consistently produces robustness scores &ge;71/100.</li>
-                            <li class="prose prose--caveman"><strong>Risk Parity naturally constrains BTC to 10&ndash;12%</strong> in every profile tested; this range consistently delivers robustness scores &ge;71/100.</li>
+                            <li class="prose prose--caveman"><strong>A balanced approach lands on 10&ndash;12% Bitcoin every time.</strong> No matter which type of portfolio you start with, the math keeps pointing at the same range &mdash; and these portfolios score 71 or higher out of 100 on our overall health check.</li>
                             <li class="prose"><strong>Above 16% weight, BTC becomes destructive</strong> &mdash; scores drop below 64, worst stress exceeds &minus;30%, and P(Loss) rises above 10%.</li>
-                            <li class="prose prose--caveman"><strong>Above 16% weight, BTC turns destructive</strong> &mdash; robustness scores fall below 64, worst-case stress losses exceed &minus;30%, and probability of loss climbs above 10%.</li>
+                            <li class="prose prose--caveman"><strong>Once you go past 16%, BTC starts hurting you.</strong> Your portfolio's health score drops below 64, a bad year could cost you more than 30%, and your chance of finishing in the red rises above 10%.</li>
                             <li class="prose"><strong>Equal-weight BTC (50%) is catastrophic</strong> &mdash; BTC contributes 99.5% of all portfolio risk, Sharpe collapses to 0.08.</li>
-                            <li class="prose prose--caveman"><strong>Equal-weight BTC (50%) is catastrophic</strong> &mdash; BTC contributes 99.5% of total portfolio risk and Sharpe ratio (risk-adjusted return) collapses to 0.08.</li>
+                            <li class="prose prose--caveman"><strong>Splitting your money 50/50 with Bitcoin is a disaster.</strong> BTC ends up driving 99.5% of every move your portfolio makes &mdash; you might call it diversified, but really you just own Bitcoin. The Sharpe ratio (return per unit of risk) collapses to 0.08, meaning you take on huge swings for almost no extra reward.</li>
                             <li class="prose"><strong>Max Sharpe optimizers allocate 0% to BTC</strong> in most profiles &mdash; the volatility drag outweighs the diversification benefit for pure Sharpe maximization.</li>
-                            <li class="prose prose--caveman"><strong>Max Sharpe optimizers allocate 0% to BTC</strong> in most profiles &mdash; the volatility drag outweighs the diversification benefit when the goal is pure Sharpe maximization.</li>
+                            <li class="prose prose--caveman"><strong>If your only goal is the best return per unit of risk, the math says hold 0% BTC.</strong> Bitcoin's wild swings cost you more than its diversification adds back &mdash; so a pure return-chasing approach leaves it out entirely.</li>
                             <li class="prose"><strong>Recommendation:</strong> use the Risk Parity framework to size BTC; set a hard FRC ceiling of 20%; rebalance quarterly.</li>
-                            <li class="prose prose--caveman"><strong>Recommendation:</strong> use the Risk Parity framework to size BTC, set a hard FRC ceiling at 20%, and rebalance quarterly.</li>
+                            <li class="prose prose--caveman"><strong>The playbook:</strong> size your BTC position so it contributes no more than 20% of your portfolio's total risk, and check in every three months to bring it back to target.</li>
                         </ul>
                     </div>
                 </section>
@@ -266,44 +266,44 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">Allocate Bitcoin by risk contribution ceiling (CRC<sub>BTC</sub> &le; c), not by capital weight. A small BTC position generates outsized risk.</p>
-                                <p class="prose prose--caveman">Allocate Bitcoin by a risk-contribution ceiling (CRC<sub>BTC</sub> &le; c), not by capital weight. Even a small BTC position generates outsized portfolio risk.</p>
+                                <p class="prose prose--caveman">Decide how much Bitcoin to hold by capping the risk it adds (CRC<sub>BTC</sub> &le; c), not the dollars you put in. Because BTC moves so much, even a tiny position can dominate how your whole portfolio feels.</p>
                             </div>
                         </div>
 
                         <h3>Component Risk Contribution (CRC)</h3>
                         <p class="prose">CRC measures how much each asset contributes to total portfolio volatility:</p>
-                        <p class="prose prose--caveman">CRC measures how much each asset contributes to total portfolio volatility:</p>
+                        <p class="prose prose--caveman">CRC (Component Risk Contribution) tells you how much each holding adds to your portfolio's overall bumpiness:</p>
                         <p><em>CRC<sub>i</sub> = w<sub>i</sub> &times; (&Sigma;w)<sub>i</sub> / &sigma;<sub>p</sub></em></p>
                         <p class="prose">where w<sub>i</sub> = asset weight, &Sigma; = covariance matrix, &sigma;<sub>p</sub> = portfolio volatility.</p>
-                        <p class="prose prose--caveman">where w<sub>i</sub> = asset weight, &Sigma; = covariance matrix, and &sigma;<sub>p</sub> = portfolio volatility.</p>
+                        <p class="prose prose--caveman">In plain terms: w<sub>i</sub> is how much money is in each asset, &Sigma; is how the assets move together, and &sigma;<sub>p</sub> is how much your portfolio bounces around overall.</p>
                         <ul>
                             <li class="prose"><strong>Fractional Risk Contribution (FRC)</strong> normalizes to percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRCs sum to 100%.</li>
-                            <li class="prose prose--caveman"><strong>Fractional Risk Contribution (FRC)</strong> normalizes CRC into percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRCs sum to 100%.</li>
+                            <li class="prose prose--caveman"><strong>Fractional Risk Contribution (FRC)</strong> turns those numbers into clean percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. Add them all up and you get 100% &mdash; that's your portfolio's full risk pie.</li>
                             <li class="prose"><strong>Risk Parity</strong> targets equal FRC: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
-                            <li class="prose prose--caveman"><strong>Risk Parity</strong> targets equal FRC across all assets: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
+                            <li class="prose prose--caveman"><strong>Risk Parity</strong> is the idea of giving every holding an equal slice of that risk pie: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n. Nobody is allowed to dominate.</li>
                         </ul>
 
                         <h3>Why This Matters for Bitcoin</h3>
                         <p class="prose">BTC&rsquo;s annualized volatility of 60&ndash;80% is 4&ndash;5&times; that of equities, so even a small capital weight dominates the risk decomposition.</p>
-                        <p class="prose prose--caveman">BTC's annualized volatility of 60&ndash;80% is 4&ndash;5&times; that of equities, so even a small capital weight dominates the portfolio's risk decomposition.</p>
+                        <p class="prose prose--caveman">In any given year, Bitcoin swings around 60&ndash;80% &mdash; four to five times as much as the stock market. So even a tiny BTC position takes up a giant share of your portfolio's total risk.</p>
                         <ul>
                             <li class="prose">&sigma;<sub>BTC</sub> &asymp; 65% annualized vs &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5%.</li>
-                            <li class="prose prose--caveman">&sigma;<sub>BTC</sub> &asymp; 65% annualized, versus &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5% &mdash; BTC volatility is materially higher.</li>
+                            <li class="prose prose--caveman">Bitcoin swings about &sigma;<sub>BTC</sub> &asymp; 65% per year. The S&amp;P 500 stock market (SPY) swings about &sigma;<sub>SPY</sub> &asymp; 15%, and high-quality bonds (BND) only &sigma;<sub>BND</sub> &asymp; 5%. BTC is in a different league.</li>
                             <li class="prose">A 10% BTC capital weight produces ~17% risk contribution in a 6-sleeve portfolio.</li>
-                            <li class="prose prose--caveman">A 10% BTC capital weight produces ~17% of total risk in a 6-sleeve portfolio.</li>
+                            <li class="prose prose--caveman">Put just 10% of your money into BTC in a 6-asset portfolio and it still drives about 17% of how the portfolio moves &mdash; small position, big footprint.</li>
                             <li class="prose">A 50% BTC capital weight produces ~99.5% risk contribution &mdash; the portfolio becomes a BTC proxy.</li>
-                            <li class="prose prose--caveman">A 50% BTC capital weight produces ~99.5% of total risk &mdash; the portfolio becomes a de facto BTC proxy.</li>
+                            <li class="prose prose--caveman">Bump that up to 50% of your money in BTC and it drives 99.5% of the action. At that point, you don't really own a portfolio &mdash; you own Bitcoin with a few decorations.</li>
                         </ul>
 
                         <div class="hypothesis-box">
                             <h4>The Ceiling Rule</h4>
                             <p class="prose">Set FRC<sub>BTC</sub> &le; c where: c = 1/n for full risk parity (16.7% in a 6-sleeve portfolio), c = 0.20 as a moderate maximum, c = 0.25 as an aggressive maximum. Compute weight from FRC target: w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
-                            <p class="prose prose--caveman">Set FRC<sub>BTC</sub> &le; c where c = 1/n for full Risk Parity (16.7% in a 6-sleeve portfolio), c = 0.20 as a moderate maximum, or c = 0.25 as an aggressive maximum. Derive the weight from the FRC target: w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
+                            <p class="prose prose--caveman">Pick a cap on how much of your portfolio's risk BTC is allowed to drive (FRC<sub>BTC</sub> &le; c). A balanced choice is one equal slice of the pie (16.7% in a 6-asset portfolio). A moderate ceiling is 20%, and 25% is the most an aggressive investor should accept. Then work backward to figure out the dollar weight using w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
                         </div>
 
                         <h3>Performance Hierarchy</h3>
                         <p class="prose">The analysis uses a 5-level metric hierarchy: CRC first, then Sharpe, Sortino, MDD, CVaR.</p>
-                        <p class="prose prose--caveman">The analysis applies a 5-level metric hierarchy: CRC first, then Sharpe, Sortino, MDD, and CVaR.</p>
+                        <p class="prose prose--caveman">We rank a portfolio on five things, in order: how risk is shared (CRC), return per unit of risk (Sharpe), return per unit of downside (Sortino), the worst losing streak (Max Drawdown), and how bad the truly awful days look (CVaR).</p>
 
                         <div class="methods-timeline">
                             <div class="method-card">
@@ -313,7 +313,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Ensures no single asset dominates portfolio risk. This is the primary constraint that must be satisfied before all others.</p>
-                                    <p class="prose prose--caveman">Ensures no single asset dominates portfolio risk. This is the primary constraint, satisfied before all others.</p>
+                                    <p class="prose prose--caveman">Makes sure no single asset is running the whole show. This is the most important rule &mdash; we check it before anything else.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Measures risk-adjusted return after CRC constraints are satisfied.</p>
-                                    <p class="prose prose--caveman">Measures risk-adjusted return, applied only after CRC constraints are satisfied.</p>
+                                    <p class="prose prose--caveman">Tells you how much return you're earning for the bumpiness you tolerate. We look at this only after the risk-sharing rule passes.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -333,7 +333,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Captures downside-specific risk; important for asymmetric assets like BTC.</p>
-                                    <p class="prose prose--caveman">Captures downside-only risk; particularly important for asymmetric return distributions like BTC.</p>
+                                    <p class="prose prose--caveman">Like Sharpe, but it only counts the downside. That matters a lot for BTC, where the bad surprises are much bigger than the good ones.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -343,7 +343,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">The worst peak-to-trough loss; a behavioral threshold for investors.</p>
-                                    <p class="prose prose--caveman">The worst peak-to-trough loss; a key behavioral threshold for investors.</p>
+                                    <p class="prose prose--caveman">The biggest drop from a high point to a low point. This is the number that actually makes investors panic and sell at the wrong time.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -353,7 +353,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">The average loss in the worst 5% of scenarios; the tail risk measure. BTC&rsquo;s impact propagates through all 5 levels.</p>
-                                    <p class="prose prose--caveman">The average loss across the worst 5% of scenarios &mdash; the tail risk measure. BTC's impact propagates through all 5 levels of the hierarchy.</p>
+                                    <p class="prose prose--caveman">If we look only at the worst 5% of possible years, this is the average loss you'd suffer. It captures the truly bad days. Bitcoin shows up in all five measures &mdash; you can't hide it anywhere.</p>
                                 </div>
                             </div>
                         </div>
@@ -366,7 +366,7 @@
 
                     <div class="content-text">
                         <p class="prose">Five profiles include BTC. Risk Parity consistently constrains it to 10&ndash;16% weight; this range produces the best robustness scores among BTC-containing portfolios.</p>
-                        <p class="prose prose--caveman">Five profiles include BTC. Risk Parity consistently constrains the allocation to 10&ndash;16% weight; this range produces the best robustness scores among BTC-containing portfolios.</p>
+                        <p class="prose prose--caveman">We tested five different portfolios that hold Bitcoin. Every time we let the equal-risk approach decide, it pushed BTC into the 10&ndash;16% range &mdash; and portfolios in that window earned the best overall health scores.</p>
 
                         <div class="results-table">
                             <h4>Cross-Profile BTC Allocation Comparison</h4>
@@ -438,20 +438,20 @@
 
                         <ul>
                             <li class="prose">The top 3 rows (BTC 10&ndash;12%) all score &ge;71 with Sharpe &ge;2.51 &mdash; these are deployment-grade portfolios.</li>
-                            <li class="prose prose--caveman">The top 3 rows (BTC 10&ndash;12%) all score &ge;71 with Sharpe ratios &ge;2.51 &mdash; these are deployment-grade portfolios.</li>
+                            <li class="prose prose--caveman">The top 3 rows (10&ndash;12% BTC) all score 71 or higher and earn solid Sharpe ratios above 2.51 &mdash; these are portfolios you can actually live with.</li>
                             <li class="prose">Row 4 (15.8% BTC): score drops to 55.8, Sharpe to 0.88 &mdash; the BTC weight has crossed the optimal threshold.</li>
-                            <li class="prose prose--caveman">Row 4 (15.8% BTC): robustness score drops to 55.8 and Sharpe falls to 0.88 &mdash; the BTC weight has crossed the optimal threshold.</li>
+                            <li class="prose prose--caveman">Push BTC to 15.8% (row 4) and the health score drops to 55.8 while Sharpe falls to 0.88. You've quietly crossed the line where extra BTC stops helping.</li>
                             <li class="prose">Row 5 (18.4% BTC): FRC hits 50%, meaning BTC contributes half of all portfolio risk despite only 18% of capital.</li>
-                            <li class="prose prose--caveman">Row 5 (18.4% BTC): FRC hits 50%, meaning BTC contributes half of all portfolio risk despite only 18% of capital.</li>
+                            <li class="prose prose--caveman">Row 5 has 18.4% of money in BTC, but BTC is now driving 50% of the portfolio's moves. Less than a fifth of your cash is producing half of your daily swings.</li>
                             <li class="prose">Row 6 (50% BTC): catastrophic &mdash; 99.5% FRC, Sharpe 0.08, P(Loss) = 27.1%.</li>
-                            <li class="prose prose--caveman">Row 6 (50% BTC): catastrophic outcome &mdash; 99.5% FRC, Sharpe 0.08, and P(Loss) = 27.1%.</li>
+                            <li class="prose prose--caveman">Row 6 puts half the money in BTC and the result is a disaster &mdash; Bitcoin drives 99.5% of the action, Sharpe collapses to 0.08, and you have a 27.1% chance of finishing the year in the red.</li>
                             <li class="prose"><strong>Pattern:</strong> every 5pp increase in BTC weight above 12% costs ~5&ndash;8 points of robustness score.</li>
-                            <li class="prose prose--caveman"><strong>Pattern:</strong> every 5pp increase in BTC weight above 12% costs ~5&ndash;8 points of robustness score.</li>
+                            <li class="prose prose--caveman"><strong>The pattern:</strong> every 5 extra percentage points of BTC above 12% costs you roughly 5&ndash;8 points of overall portfolio quality. The damage adds up quickly.</li>
                         </ul>
 
                         <h3>Asset Return Profile</h3>
                         <p class="prose">Bitcoin&rsquo;s standalone metrics are the weakest in the asset universe, yet its portfolio-level contribution remains positive &mdash; a result driven entirely by correlation structure.</p>
-                        <p class="prose prose--caveman">Bitcoin's standalone metrics are the weakest in the asset universe, yet its portfolio-level contribution remains positive &mdash; a result driven entirely by its correlation structure with other assets.</p>
+                        <p class="prose prose--caveman">Look at Bitcoin alone and it's the worst asset in the line-up. But drop it into a portfolio and somehow the portfolio gets better. The reason is simple: BTC doesn't move in sync with stocks or bonds, so it cushions the ride.</p>
 
                         <div class="results-table">
                             <h4>Asset Class Performance (2024&ndash;2026 Analysis Window)</h4>
@@ -515,11 +515,11 @@
                         </div>
 
                         <p class="prose">Bitcoin&rsquo;s negative annualized return of &minus;8.97% over the analysis period, combined with the highest volatility (35.30%) and deepest drawdown (42.12%) in the universe, makes it the worst standalone asset by every conventional metric. Yet a 10&ndash;12% Bitcoin allocation <em>improves</em> portfolio-level Sharpe ratios and robustness scores. This paradox is explained by Bitcoin&rsquo;s low-to-moderate correlation with traditional asset classes: the covariance terms that enter the risk-parity optimizer are small enough that BTC&rsquo;s marginal risk contribution remains contained, while its return distribution adds a structurally independent risk premium that diversifies the portfolio&rsquo;s loss scenarios.</p>
-                        <p class="prose prose--caveman">Bitcoin's annualized return of &minus;8.97% over the analysis period, combined with the highest volatility (35.30%) and deepest drawdown (42.12%) in the universe, makes it the worst standalone asset by every conventional metric. Yet a 10&ndash;12% BTC allocation <em>improves</em> portfolio-level Sharpe ratios and robustness scores. The paradox is explained by Bitcoin's low-to-moderate correlation with traditional assets: the covariance terms entering the risk-parity optimizer are small enough that BTC's marginal risk contribution stays contained, while its return distribution adds a structurally independent risk premium that diversifies loss scenarios.</p>
+                        <p class="prose prose--caveman">Over the study window, Bitcoin actually lost money &mdash; a return of &minus;8.97% per year &mdash; while swinging the hardest (35.30%) and dropping the furthest from peak to trough (42.12%) of anything we looked at. On its own, it's the worst pick on the menu. And yet, a 10&ndash;12% BTC allocation makes the whole portfolio <em>better</em>. The trick is that Bitcoin marches to its own drum: when stocks zig, BTC often does its own thing. Because it doesn't follow the crowd, a small slice of it adds a fresh source of return without taking over the risk profile.</p>
 
                         <h3>Best BTC Portfolio: Global Diversified (Score 71.2)</h3>
                         <p class="prose">Global Diversified / Risk Parity is the best BTC-containing portfolio, with BTC at 10.2% weight contributing exactly 16.7% of risk across 6 sleeves.</p>
-                        <p class="prose prose--caveman">Global Diversified / Risk Parity is the best BTC-containing portfolio, with BTC at 10.2% weight contributing exactly 16.7% of risk across 6 sleeves.</p>
+                        <p class="prose prose--caveman">The strongest BTC-containing portfolio we found is a globally diversified one. It puts 10.2% of your money into BTC and that slice contributes exactly 16.7% of total risk &mdash; an even share across six asset buckets.</p>
 
                         <div class="results-table">
                             <h4>Global Diversified Risk Parity &mdash; Sleeve Breakdown</h4>
@@ -547,18 +547,18 @@
 
                         <ul>
                             <li class="prose">All 6 sleeves contribute exactly 16.7% of risk &mdash; perfect risk parity.</li>
-                            <li class="prose prose--caveman">All 6 sleeves contribute exactly 16.7% of risk &mdash; perfect risk parity.</li>
+                            <li class="prose prose--caveman">Each of the 6 buckets contributes exactly 16.7% of the risk &mdash; an even, balanced split.</li>
                             <li class="prose">BTC gets only 10.2% capital despite being equal in risk contribution, because its volatility is ~4&times; higher.</li>
-                            <li class="prose prose--caveman">BTC receives only 10.2% capital despite an equal risk contribution, because its volatility is ~4&times; higher than the other sleeves.</li>
+                            <li class="prose prose--caveman">BTC only gets 10.2% of the money even though it pulls equal weight on risk &mdash; that's because it moves about 4 times harder than the other holdings.</li>
                             <li class="prose">Fixed Income needs 38.4% capital to produce 16.7% risk &mdash; the inverse of BTC&rsquo;s dynamic.</li>
-                            <li class="prose prose--caveman">Fixed Income requires 38.4% capital to produce 16.7% risk &mdash; the inverse of BTC's dynamic.</li>
+                            <li class="prose prose--caveman">Bonds are the opposite story: you need 38.4% of your money in them to add up to the same 16.7% slice of risk &mdash; because bonds barely budge.</li>
                             <li class="prose">This is the most diversified BTC-containing portfolio in the study: 6 distinct risk premia, none dominating.</li>
-                            <li class="prose prose--caveman">This is the most diversified BTC-containing portfolio in the study: 6 distinct risk premia, none dominating.</li>
+                            <li class="prose prose--caveman">This is the most truly spread-out BTC portfolio we tested: 6 different sources of return, with none of them running the show.</li>
                         </ul>
 
                         <h3>RP All-Weather (Score 71.2): Bridgewater-Style Construction</h3>
                         <p class="prose">The All-Weather profile assigns BTC 11.6% weight with 20% FRC across 5 macro risk premia &mdash; each representing a distinct macro factor: growth, duration, inflation, commodities, and digital scarcity.</p>
-                        <p class="prose prose--caveman">The All-Weather profile assigns BTC 11.6% weight with 20% FRC across 5 macro risk premia &mdash; each representing a distinct macro factor: growth, duration, inflation, commodities, and digital scarcity.</p>
+                        <p class="prose prose--caveman">The All-Weather setup &mdash; built to handle any economic environment &mdash; lands on 11.6% BTC, contributing 20% of total risk. It spreads the rest across five different bets on the economy: growth (stocks), interest rates (long bonds), inflation (gold), commodities, and digital scarcity (Bitcoin).</p>
 
                         <div class="results-table">
                             <h4>RP All-Weather &mdash; Sleeve Breakdown</h4>
@@ -598,37 +598,37 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">At 50% capital weight, Bitcoin contributes <strong>99.5% of portfolio risk</strong>, turning a &ldquo;diversified&rdquo; portfolio into a leveraged BTC position with Sharpe 0.08 and 27.1% probability of loss.</p>
-                                <p class="prose prose--caveman">At 50% capital weight, Bitcoin contributes <strong>99.5% of portfolio risk</strong>, converting a &ldquo;diversified&rdquo; portfolio into a leveraged BTC position with Sharpe 0.08 and a 27.1% probability of loss.</p>
+                                <p class="prose prose--caveman">Once you put half your money in Bitcoin, it ends up driving <strong>99.5% of your portfolio's risk</strong>. You can call it diversified all you like &mdash; in reality, you're holding a leveraged bet on BTC. The Sharpe drops to 0.08 and there's a 27.1% chance you finish the year down.</p>
                             </div>
                         </div>
 
                         <ul>
                             <li class="prose">Core-Satellite / Equal Weight splits capital 50/50 between traditional assets and Bitcoin.</li>
-                            <li class="prose prose--caveman">Core-Satellite / Equal Weight splits capital 50/50 between traditional assets and Bitcoin.</li>
+                            <li class="prose prose--caveman">In this version, the investor splits their money down the middle &mdash; 50% in traditional assets, 50% in Bitcoin. On paper it looks fair.</li>
                             <li class="prose">BTC volatility (65% annualized) is ~4&times; the combined traditional sleeve (15%).</li>
-                            <li class="prose prose--caveman">BTC volatility (65% annualized) is ~4&times; that of the combined traditional sleeve (15%).</li>
+                            <li class="prose prose--caveman">But BTC swings around 65% a year while the traditional half only swings about 15% &mdash; BTC moves four times as much.</li>
                             <li class="prose">CRC decomposition: FRC<sub>BTC</sub> = 99.5% &mdash; the traditional sleeve contributes essentially zero risk.</li>
-                            <li class="prose prose--caveman">CRC decomposition: FRC<sub>BTC</sub> = 99.5% &mdash; the traditional sleeve contributes essentially zero risk.</li>
+                            <li class="prose prose--caveman">When you break the risk down, FRC<sub>BTC</sub> = 99.5%. The stocks and bonds half barely registers &mdash; you might as well not own them.</li>
                             <li class="prose">Result: P(Loss) = 27.1%, Monte Carlo median Sharpe 0.10, worst stress &minus;37.5%.</li>
-                            <li class="prose prose--caveman">Result: P(Loss) = 27.1%, Monte Carlo median Sharpe of 0.10, and worst-case stress of &minus;37.5%.</li>
+                            <li class="prose prose--caveman">The result: a 27.1% chance of losing money over the year, a Sharpe of just 0.10 in typical scenarios, and a worst-case loss of &minus;37.5%.</li>
                             <li class="prose"><strong>Core lesson:</strong> equal capital weight &ne; equal risk contribution; high-volatility assets must be sized by risk, not capital.</li>
-                            <li class="prose prose--caveman"><strong>Core lesson:</strong> equal capital weight does not mean equal risk contribution; high-volatility assets must be sized by risk, not capital.</li>
+                            <li class="prose prose--caveman"><strong>The big lesson:</strong> equal dollars does not mean equal risk. Wild-moving assets like BTC need to be sized by how much risk they bring, not by how much cash you happen to put in.</li>
                         </ul>
 
                         <h3>Why Max Sharpe Allocates 0% to BTC</h3>
                         <p class="prose">The Sharpe optimizer finds that BTC&rsquo;s excess return does not compensate for its volatility and correlation profile. Every marginal dollar in BTC increases &sigma;<sub>p</sub> faster than &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
-                        <p class="prose prose--caveman">The Sharpe optimizer determines that BTC's excess return does not compensate for its volatility and correlation profile. Every marginal dollar allocated to BTC raises portfolio volatility &sigma;<sub>p</sub> faster than excess return &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
+                        <p class="prose prose--caveman">A pure return-chasing approach decides that BTC's extra return is not worth its wild swings or its ties to the rest of the market. Every dollar you add to BTC raises your portfolio's bumpiness &sigma;<sub>p</sub> faster than it raises your reward &mu;<sub>p</sub> &minus; r<sub>f</sub>. The math just doesn't pay off.</p>
                         <ul>
                             <li class="prose">BTC&rsquo;s monthly return variance is ~16&times; that of a diversified equity sleeve.</li>
-                            <li class="prose prose--caveman">BTC's monthly return variance is ~16&times; that of a diversified equity sleeve.</li>
+                            <li class="prose prose--caveman">From month to month, BTC bounces around roughly 16 times more than a diversified basket of stocks.</li>
                             <li class="prose">BTC&rsquo;s standalone Sharpe: excess return (~50% p.a.) / volatility (~65%) &asymp; 0.77.</li>
-                            <li class="prose prose--caveman">BTC's standalone Sharpe: excess return (~50% annualized) / volatility (~65%) &asymp; 0.77.</li>
+                            <li class="prose prose--caveman">On its own, BTC earns roughly 50% above the safe rate but swings around 65% in the process &mdash; a Sharpe of about 0.77. That's not great when stocks can do better with far less drama.</li>
                             <li class="prose">Moderate positive correlation with equities (0.3&ndash;0.5) reduces the diversification benefit.</li>
-                            <li class="prose prose--caveman">Moderate positive correlation with equities (0.3&ndash;0.5) reduces the diversification benefit.</li>
+                            <li class="prose prose--caveman">BTC moves somewhat in step with stocks (0.3&ndash;0.5), so it doesn't spread the risk as much as you might hope.</li>
                             <li class="prose"><strong>This does NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; it means BTC&rsquo;s role is risk diversification, not return maximization.</li>
-                            <li class="prose prose--caveman"><strong>This does NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; it means BTC's role is risk diversification, not return maximization.</li>
+                            <li class="prose prose--caveman"><strong>This does NOT mean Bitcoin is &ldquo;bad.&rdquo;</strong> It just means BTC's job in your portfolio is to spread risk around &mdash; not to be your biggest moneymaker.</li>
                             <li class="prose">Risk Parity includes BTC for structural balance; Max Sharpe excludes it for efficiency &mdash; both are correct within their frameworks.</li>
-                            <li class="prose prose--caveman">Risk Parity includes BTC for structural balance; Max Sharpe excludes it for efficiency &mdash; both are correct within their respective frameworks.</li>
+                            <li class="prose prose--caveman">A balanced approach holds BTC for balance; a return-chaser drops it for efficiency. Both are right &mdash; they just have different goals.</li>
                         </ul>
                     </div>
                 </section>
@@ -639,7 +639,7 @@
 
                     <div class="content-text">
                         <p class="prose">BTC-containing portfolios face 5&ndash;15pp worse stress losses than BTC-free equivalents. Crypto Winter and Black Swan are the dominant scenarios.</p>
-                        <p class="prose prose--caveman">BTC-containing portfolios face 5&ndash;15pp worse stress losses than BTC-free equivalents. Crypto Winter and Black Swan are the dominant scenarios.</p>
+                        <p class="prose prose--caveman">When markets go wrong, portfolios that hold BTC lose 5&ndash;15 percentage points more than those that don't. The two scariest situations to watch for are a long crypto bust and a sudden market shock.</p>
 
                         <div class="results-table">
                             <h4>Scenario Impact by BTC Weight</h4>
@@ -697,13 +697,13 @@
 
                         <ul>
                             <li class="prose"><strong>Crypto Winter:</strong> the BTC-specific scenario; 0% BTC = slight gain, 10% = manageable &minus;3.4%, 50% = devastating &minus;31.5%.</li>
-                            <li class="prose prose--caveman"><strong>Crypto Winter:</strong> the BTC-specific scenario; 0% BTC delivers a slight gain, 10% BTC produces a manageable &minus;3.4%, and 50% BTC results in a devastating &minus;31.5%.</li>
+                            <li class="prose prose--caveman"><strong>Crypto Winter:</strong> when Bitcoin tanks and stays down for a long stretch. Holding zero BTC actually nets you a tiny gain. With 10% BTC, you're down a tolerable 3.4%. With 50% BTC, you lose a devastating 31.5%.</li>
                             <li class="prose"><strong>Black Swan:</strong> the universal worst case; each 10pp of BTC weight adds ~5pp of stress loss.</li>
-                            <li class="prose prose--caveman"><strong>Black Swan:</strong> the universal worst case; each 10pp increase in BTC weight adds ~5pp of additional stress loss.</li>
+                            <li class="prose prose--caveman"><strong>Black Swan:</strong> a rare, market-wide shock that hits everything at once. As a rough rule, every extra 10% you put into BTC adds another 5% to how much you lose in this scenario.</li>
                             <li class="prose"><strong>Correlation Spike:</strong> BTC&rsquo;s correlation with equities rises in sell-offs, amplifying losses &mdash; the &ldquo;diversification fails when you need it&rdquo; problem.</li>
-                            <li class="prose prose--caveman"><strong>Correlation Spike:</strong> BTC's correlation with equities rises during sell-offs, amplifying losses &mdash; the &ldquo;diversification fails when you need it most&rdquo; problem.</li>
+                            <li class="prose prose--caveman"><strong>Correlation Spike:</strong> in a panic, BTC tends to fall in lockstep with stocks instead of cushioning them. It's the classic problem of diversification failing right when you need it most.</li>
                             <li class="prose"><strong>Key pattern:</strong> stress losses scale roughly linearly with BTC weight up to 20%, then convex beyond.</li>
-                            <li class="prose prose--caveman"><strong>Key pattern:</strong> stress losses scale roughly linearly with BTC weight up to 20%, then become convex beyond that point.</li>
+                            <li class="prose prose--caveman"><strong>The pattern to remember:</strong> losses in bad scenarios grow at a steady pace up to about 20% BTC. Past that, the damage starts accelerating fast.</li>
                         </ul>
                     </div>
                 </section>
@@ -714,7 +714,7 @@
 
                     <div class="content-text">
                         <p class="prose">Monte Carlo simulation confirms that 10% BTC maintains near-zero P(Loss) and stable Sharpe, while 50% BTC produces 27.1% P(Loss) and marginal expected Sharpe (0.10).</p>
-                        <p class="prose prose--caveman">Monte Carlo simulation confirms that 10% BTC keeps P(Loss) near zero and Sharpe stable, while 50% BTC produces a 27.1% P(Loss) and a marginal expected Sharpe of 0.10.</p>
+                        <p class="prose prose--caveman">We ran thousands of make-believe futures to see how each portfolio would hold up. Holding 10% BTC keeps your chance of losing money near zero and your reward-per-risk score steady. Going up to 50% BTC pushes your chance of finishing in the red to 27.1% and crushes your reward-per-risk to a measly 0.10.</p>
 
                         <div class="results-table">
                             <h4>Monte Carlo Simulation Results</h4>
@@ -775,13 +775,13 @@
 
                         <ul>
                             <li class="prose"><strong>10&ndash;12% BTC:</strong> P(Loss) = 0%, P(Beat RF) &gt;89%, median Sharpe &gt;2.5 &mdash; excellent risk-reward.</li>
-                            <li class="prose prose--caveman"><strong>10&ndash;12% BTC:</strong> P(Loss) = 0%, P(Beat RF) &gt;89%, and median Sharpe &gt;2.5 &mdash; an excellent risk-reward profile.</li>
+                            <li class="prose prose--caveman"><strong>10&ndash;12% BTC:</strong> 0% chance of losing money, over 89% chance of beating safe cash, and a strong Sharpe above 2.5 &mdash; an excellent trade-off.</li>
                             <li class="prose"><strong>18% BTC:</strong> P(Loss) = 0%, P5 = 1.634 (well above capital preservation), median Sharpe 1.69 &mdash; a viable portfolio.</li>
-                            <li class="prose prose--caveman"><strong>18% BTC:</strong> P(Loss) = 0%, P5 = 1.634 (well above capital preservation), and median Sharpe of 1.69 &mdash; still a viable portfolio.</li>
+                            <li class="prose prose--caveman"><strong>18% BTC:</strong> still no real chance of losing money, and even the bottom 5% of outcomes leave you up 63% (P5 = 1.634). Sharpe is 1.69 &mdash; lower than 10% but still livable.</li>
                             <li class="prose"><strong>50% BTC:</strong> P(Loss) = 27.1% &mdash; significant chance of loss; P5 = 0.699 means losing 30% of capital in the worst 5% of scenarios.</li>
-                            <li class="prose prose--caveman"><strong>50% BTC:</strong> P(Loss) = 27.1% &mdash; a significant chance of loss; P5 = 0.699 means losing 30% of capital in the worst 5% of scenarios.</li>
+                            <li class="prose prose--caveman"><strong>50% BTC:</strong> a real 27.1% chance of finishing the year down. And in the worst 5% of scenarios, you've lost about 30% of your money (P5 = 0.699). That's a hard place to come back from.</li>
                             <li class="prose"><strong>Spread widens:</strong> P95&ndash;P5 range goes from 0.28 (10%) to 1.51 (50%) &mdash; BTC weight directly controls outcome uncertainty.</li>
-                            <li class="prose prose--caveman"><strong>Spread widens:</strong> the P95&ndash;P5 range expands from 0.28 (10% BTC) to 1.51 (50% BTC) &mdash; BTC weight directly controls outcome uncertainty.</li>
+                            <li class="prose prose--caveman"><strong>The range of outcomes balloons:</strong> at 10% BTC, the gap between a great year and a bad year is 0.28. At 50% BTC, it widens to 1.51. More BTC simply means more uncertainty about how the year ends.</li>
                         </ul>
                     </div>
                 </section>
@@ -799,7 +799,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">BTC improves returns in bull/range-bound regimes but amplifies losses in bear/high-vol regimes. Risk Parity dampens this asymmetry.</p>
-                                <p class="prose prose--caveman">BTC improves returns in bull and range-bound regimes but amplifies losses in bear and high-volatility regimes. Risk Parity dampens this asymmetry.</p>
+                                <p class="prose prose--caveman">BTC pads your returns when markets are rising or quiet, but it makes losses worse during sell-offs or chaotic periods. A balanced risk-sharing approach smooths out that lopsided ride.</p>
                             </div>
                         </div>
 
@@ -849,16 +849,16 @@
 
                         <ul>
                             <li class="prose">Risk Parity&rsquo;s worst-month loss (&minus;2.33%) is far smaller than Equal Weight&rsquo;s (&minus;8.19%) across all regimes.</li>
-                            <li class="prose prose--caveman">Risk Parity's worst-month loss (&minus;2.33%) is far smaller than Equal Weight's (&minus;8.19%) across all regimes.</li>
+                            <li class="prose prose--caveman">Across every type of market, the balanced approach's worst month is a 2.33% loss. The equal-weight approach's worst month is a much rougher 8.19%.</li>
                             <li class="prose">Low Vol months are the worst for Equal Weight (Sharpe &minus;4.15) &mdash; BTC drag is most visible when markets are quiet.</li>
-                            <li class="prose prose--caveman">Low Vol months are the worst for Equal Weight (Sharpe &minus;4.15) &mdash; BTC drag becomes most visible when markets are quiet.</li>
+                            <li class="prose prose--caveman">Quiet, low-drama months are oddly the worst for equal-weight (Sharpe of &minus;4.15). When the rest of the market is calm, BTC's bad behavior really stands out.</li>
                             <li class="prose">The return benefit of BTC is regime-dependent but the volatility cost is constant; Risk Parity manages this trade-off by capping BTC&rsquo;s risk contribution.</li>
-                            <li class="prose prose--caveman">BTC's return benefit is regime-dependent but its volatility cost is constant; Risk Parity manages this trade-off by capping BTC's risk contribution.</li>
+                            <li class="prose prose--caveman">Bitcoin's upside comes and goes depending on the market mood, but its wild swings are always there. The balanced approach handles that by simply capping how much risk BTC is allowed to bring.</li>
                         </ul>
 
                         <h3>Walk-Forward Backtest Results</h3>
                         <p class="prose">Walk-forward backtesting with 36-month lookback and quarterly rebalancing confirms that Min Variance and Max Sharpe outperform in out-of-sample testing, while Equal Weight and Momentum Tilt produce deeply negative returns.</p>
-                        <p class="prose prose--caveman">Walk-forward backtesting with a 36-month lookback and quarterly rebalancing confirms that Min Variance and Max Sharpe outperform in out-of-sample testing, while Equal Weight and Momentum Tilt produce deeply negative returns.</p>
+                        <p class="prose prose--caveman">We tested every strategy out in the real world, using only what would have been known at the time and rebalancing every three months. The strategies that aim to keep volatility low or chase risk-adjusted returns held up well. Equal weight and chasing recent winners both lost a lot of money.</p>
 
                         <div class="results-table">
                             <h4>Out-of-Sample Backtest Performance</h4>
@@ -930,11 +930,11 @@
 
                         <ul>
                             <li class="prose"><strong>Min Variance is the best out-of-sample strategy</strong> (Sharpe 0.90, return 13.13%) with the lowest turnover among optimized strategies (4.6%).</li>
-                            <li class="prose prose--caveman"><strong>Min Variance is the best out-of-sample strategy</strong> (Sharpe 0.90, annualized return 13.13%) with the lowest turnover among optimized strategies (4.6%).</li>
+                            <li class="prose prose--caveman"><strong>The keep-volatility-low strategy wins in the real world</strong> (Sharpe 0.90, 13.13% return per year), and it does it with the least trading activity (4.6% turnover). Low fuss, good results.</li>
                             <li class="prose"><strong>Equal Weight is catastrophic</strong> in out-of-sample (&minus;30.34% annualized return, Sharpe &minus;2.97) &mdash; confirming the static analysis conclusions.</li>
-                            <li class="prose prose--caveman"><strong>Equal Weight is catastrophic</strong> out-of-sample (&minus;30.34% annualized return, Sharpe &minus;2.97) &mdash; confirming the static analysis conclusions.</li>
+                            <li class="prose prose--caveman"><strong>Equal weight is a disaster</strong> in the real-world test &mdash; a 30.34% loss per year and a Sharpe of &minus;2.97. The theory said this would be bad; the live test confirms it.</li>
                             <li class="prose"><strong>In-sample vs out-of-sample gap:</strong> Risk Parity in-sample Sharpe = 3.61 vs out-of-sample &minus;0.55 &mdash; a significant overfitting warning.</li>
-                            <li class="prose prose--caveman"><strong>In-sample vs out-of-sample gap:</strong> Risk Parity in-sample Sharpe of 3.61 vs out-of-sample of &minus;0.55 &mdash; a significant overfitting warning.</li>
+                            <li class="prose prose--caveman"><strong>A reality check:</strong> the risk-sharing approach scored Sharpe 3.61 on paper but only &minus;0.55 in the real world. A big gap like this is a warning &mdash; what looks great in backtests may not survive contact with the market.</li>
                         </ul>
                     </div>
                 </section>
@@ -945,7 +945,7 @@
 
                     <div class="content-text">
                         <p class="prose">Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
-                        <p class="prose prose--caveman">Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
+                        <p class="prose prose--caveman">Use this quick guide to find your Bitcoin allocation based on how much risk you can handle. No matter who you are, the answer always sits somewhere between 0% and 16%.</p>
 
                         <div class="results-table">
                             <h4>Allocation by Risk Tolerance</h4>
@@ -997,15 +997,15 @@
                         <h3>Hard Bounds</h3>
                         <ul>
                             <li class="prose"><strong>Minimum useful allocation: 5%</strong> &mdash; below this, BTC&rsquo;s impact on both risk and return is negligible (FRC &lt;8%).</li>
-                            <li class="prose prose--caveman"><strong>Minimum useful allocation: 5%</strong> &mdash; below this level, BTC's impact on both risk and return is negligible (FRC &lt;8%).</li>
+                            <li class="prose prose--caveman"><strong>Floor: 5%</strong> &mdash; hold less than this and BTC's effect on your portfolio is so small you might as well not own it (under 8% of total risk).</li>
                             <li class="prose"><strong>Optimal range: 10&ndash;12%</strong> &mdash; achieves meaningful diversification while keeping FRC &le;20%; robustness score &ge;71.</li>
-                            <li class="prose prose--caveman"><strong>Optimal range: 10&ndash;12%</strong> &mdash; delivers meaningful diversification while keeping FRC &le;20%; robustness score &ge;71.</li>
+                            <li class="prose prose--caveman"><strong>Sweet spot: 10&ndash;12%</strong> &mdash; you get real diversification benefit, BTC's share of total risk stays under 20%, and the overall portfolio health score lands at 71 or above.</li>
                             <li class="prose"><strong>Maximum recommended: 16%</strong> &mdash; beyond this, FRC exceeds 25%, stress losses exceed &minus;25%, score drops below 64.</li>
-                            <li class="prose prose--caveman"><strong>Maximum recommended: 16%</strong> &mdash; beyond this level, FRC exceeds 25%, stress losses exceed &minus;25%, and the robustness score falls below 64.</li>
+                            <li class="prose prose--caveman"><strong>Stretch maximum: 16%</strong> &mdash; cross this line and BTC drives more than 25% of your risk, bad scenarios cost you over 25%, and the portfolio score dips below 64.</li>
                             <li class="prose"><strong>Hard ceiling: 20%</strong> &mdash; at this weight, FRC approaches 40&ndash;50%; the portfolio becomes structurally fragile.</li>
-                            <li class="prose prose--caveman"><strong>Hard ceiling: 20%</strong> &mdash; at this weight, FRC approaches 40&ndash;50% and the portfolio becomes structurally fragile.</li>
+                            <li class="prose prose--caveman"><strong>Hard ceiling: 20%</strong> &mdash; at this point, Bitcoin drives 40&ndash;50% of your portfolio's behavior. The whole structure becomes fragile and one BTC slump can take you down with it.</li>
                             <li class="prose"><strong>Never equal-weight (50%):</strong> this is a leveraged crypto bet, not a diversified portfolio; P(Loss) = 27.1%.</li>
-                            <li class="prose prose--caveman"><strong>Never equal-weight (50%):</strong> this is a leveraged crypto bet, not a diversified portfolio; P(Loss) = 27.1%.</li>
+                            <li class="prose prose--caveman"><strong>Never 50/50:</strong> if you split your money equally with BTC, you are not diversified &mdash; you're making a leveraged crypto bet, with a 27.1% chance of losing money in any given year.</li>
                         </ul>
 
                         <h3>Implementation Checklist</h3>
@@ -1017,7 +1017,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Recommended: &le;20%. This is the primary constraint that drives everything else.</p>
-                                    <p class="prose prose--caveman">Recommended: &le;20%. This is the primary constraint that drives every subsequent decision.</p>
+                                    <p class="prose prose--caveman">Pick a cap on how much of your portfolio's total risk BTC is allowed to take. Aim for 20% or less &mdash; this one decision drives everything else.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1036,7 +1036,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Rebalance if BTC weight drifts &gt;3% from target. BTC&rsquo;s high vol causes fast drift.</p>
-                                    <p class="prose prose--caveman">Rebalance whenever BTC weight drifts more than 3% from its target. BTC's high volatility causes fast drift.</p>
+                                    <p class="prose prose--caveman">Once BTC moves more than 3 percentage points from your target, trim or top up to bring it back. Bitcoin's wild swings mean it drifts away from target quickly.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1046,7 +1046,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">If &sigma;<sub>BTC</sub> spikes above 100% annualized, temporarily reduce weight by 30%.</p>
-                                    <p class="prose prose--caveman">If &sigma;<sub>BTC</sub> spikes above 100% annualized, temporarily reduce the BTC weight by 30%.</p>
+                                    <p class="prose prose--caveman">If BTC's swings get extreme &mdash; over 100% on an annual basis &mdash; cut your BTC position by about 30% until things calm down.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1056,7 +1056,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">BTC &minus;50% from ATH: do NOT increase allocation. Maintain target weight via regular rebalance only.</p>
-                                    <p class="prose prose--caveman">When BTC is down &minus;50% from its all-time high, do NOT increase the allocation. Maintain the target weight via regular rebalancing only.</p>
+                                    <p class="prose prose--caveman">If Bitcoin is down 50% from its peak and looks &ldquo;cheap,&rdquo; resist the urge to load up. Just stick to your target weight through normal rebalancing &mdash; don't try to time the bottom.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1066,7 +1066,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">If correlation with equities exceeds 0.6 sustained for 2+ quarters, consider reducing allocation by 20%.</p>
-                                    <p class="prose prose--caveman">If BTC's correlation with equities exceeds 0.6 for 2+ quarters, consider reducing the allocation by 20%.</p>
+                                    <p class="prose prose--caveman">If BTC starts moving in lockstep with the stock market (correlation above 0.6) for two quarters running, cut your BTC allocation by 20%. It's no longer giving you the diversification you signed up for.</p>
                                 </div>
                             </div>
                         </div>
@@ -1079,7 +1079,7 @@
 
                     <div class="content-text">
                         <p class="prose">The entire case for BTC rests on its low/negative correlation with traditional assets. What happens when correlations shift?</p>
-                        <p class="prose prose--caveman">The entire case for BTC rests on its low or negative correlation with traditional assets. What happens when those correlations shift?</p>
+                        <p class="prose prose--caveman">The whole reason to hold Bitcoin in a portfolio is that it tends to move differently from stocks and bonds. But what if that changes? What if BTC suddenly starts dancing to the same beat as everything else?</p>
 
                         <div class="results-table">
                             <h4>Historical BTC&ndash;Equity Correlation by Regime</h4>
@@ -1126,27 +1126,27 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>Critical finding:</strong> The 2022 rate-hiking cycle showed BTC can behave as a <em>correlated risk asset</em>, not a diversifier. During this period, a 10% BTC allocation would have <em>increased</em> portfolio volatility rather than reducing it.</p>
-                                <p class="prose prose--caveman"><strong>Critical finding:</strong> The 2022 rate-hiking cycle demonstrated that BTC can behave as a <em>correlated risk asset</em>, not a diversifier. During that period, a 10% BTC allocation would have <em>increased</em> portfolio volatility rather than reducing it.</p>
+                                <p class="prose prose--caveman"><strong>The big warning:</strong> In 2022, when the Fed was raising rates, BTC suddenly started moving in step with stocks instead of cushioning them. During that stretch, holding 10% in Bitcoin actually <em>added</em> to your portfolio's bumpiness rather than smoothing it.</p>
                             </div>
                         </div>
 
                         <h3>Monitoring Framework</h3>
                         <ul>
                             <li class="prose"><strong>Rolling 90-day BTC&ndash;S&amp;P 500 correlation:</strong> primary signal. Track weekly.</li>
-                            <li class="prose prose--caveman"><strong>Rolling 90-day BTC&ndash;S&amp;P 500 correlation:</strong> the primary signal. Track weekly.</li>
+                            <li class="prose prose--caveman"><strong>The dashboard number to watch:</strong> the 90-day correlation between BTC and the S&amp;P 500. Check it every week.</li>
                             <li class="prose"><strong>Yellow flag (&rho; &gt; 0.20 for 3 months):</strong> reduce BTC allocation by 30% (e.g., 10% &rarr; 7%), redistribute to commodities.</li>
-                            <li class="prose prose--caveman"><strong>Yellow flag (&rho; &gt; 0.20 for 3 months):</strong> reduce the BTC allocation by 30% (e.g., 10% &rarr; 7%) and redistribute to commodities.</li>
+                            <li class="prose prose--caveman"><strong>Yellow flag (correlation &gt; 0.20 for 3 months):</strong> trim your BTC by 30% (so 10% becomes 7%) and put the freed-up cash into commodities.</li>
                             <li class="prose"><strong>Red flag (&rho; &gt; 0.50 for 2 months):</strong> reduce BTC to 5% minimum or exit entirely; the diversification thesis is broken.</li>
-                            <li class="prose prose--caveman"><strong>Red flag (&rho; &gt; 0.50 for 2 months):</strong> reduce BTC to the 5% minimum or exit entirely; the diversification thesis is broken.</li>
+                            <li class="prose prose--caveman"><strong>Red flag (correlation &gt; 0.50 for 2 months):</strong> drop BTC to the 5% floor or sell out completely. The whole reason you owned it has stopped working.</li>
                             <li class="prose"><strong>Green flag (&rho; &lt; 0.00 for 3 months):</strong> restore full target allocation; diversification thesis confirmed.</li>
-                            <li class="prose prose--caveman"><strong>Green flag (&rho; &lt; 0.00 for 3 months):</strong> restore the full target allocation; the diversification thesis is confirmed.</li>
+                            <li class="prose prose--caveman"><strong>Green flag (correlation &lt; 0.00 for 3 months):</strong> BTC is moving against stocks again, doing exactly what you wanted. Restore your full target allocation.</li>
                             <li class="prose"><strong>After major BTC draw-down (&gt;50% from ATH):</strong> do NOT increase allocation. Rebalance to target weight only &mdash; avoid catching falling knives.</li>
-                            <li class="prose prose--caveman"><strong>After a major BTC drawdown (&gt;50% from ATH):</strong> do NOT increase the allocation. Rebalance only to the target weight &mdash; avoid catching falling knives.</li>
+                            <li class="prose prose--caveman"><strong>After a big Bitcoin crash (down more than 50% from its peak):</strong> do NOT buy more just because it looks cheap. Stick to your target weight &mdash; don't try to catch the falling knife.</li>
                         </ul>
 
                         <h3>BTC Cost &amp; Execution (Indonesia)</h3>
                         <p class="prose">BTC is the most expensive sleeve to implement in Indonesia. Execution costs can eat 1&ndash;2% annually.</p>
-                        <p class="prose prose--caveman">BTC is the most expensive sleeve to implement in Indonesia. Execution costs can consume 1&ndash;2% annually.</p>
+                        <p class="prose prose--caveman">For Indonesian investors, Bitcoin is the most expensive part of the portfolio to actually buy and sell. The fees and spreads can quietly eat 1&ndash;2% of your money every year.</p>
 
                         <div class="results-table">
                             <h4>Transaction Cost Breakdown</h4>
@@ -1191,7 +1191,7 @@
                         </div>
 
                         <p class="prose">Even after execution costs, BTC improves the portfolio&rsquo;s Sharpe ratio by 0.4&ndash;0.6 &mdash; the diversification benefit survives the cost drag, but by a thinner margin. Investors must control execution costs to preserve the alpha.</p>
-                        <p class="prose prose--caveman">Even after execution costs, BTC improves the portfolio's Sharpe ratio by 0.4&ndash;0.6 &mdash; the diversification benefit survives the cost drag, but the margin is thinner. Investors must control execution costs carefully to preserve the alpha.</p>
+                        <p class="prose prose--caveman">Even after you pay all those costs, holding BTC still pushes your reward-per-risk score up by 0.4&ndash;0.6 &mdash; the diversification benefit survives, just with less of a cushion. Keep a sharp eye on your trading costs, or they'll quietly eat the upside.</p>
                     </div>
                 </section>
 
@@ -1208,38 +1208,38 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">The biggest risk to any BTC allocation is not mathematical &mdash; it is behavioral.</p>
-                                <p class="prose prose--caveman">The biggest risk to any BTC allocation is not mathematical &mdash; it is behavioral.</p>
+                                <p class="prose prose--caveman">The biggest threat to your Bitcoin allocation isn't the math. It's you &mdash; your nerves, your impulses, your reactions when prices move.</p>
                             </div>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Volatility Tolerance</h4>
                             <p class="prose">BTC routinely experiences 30&ndash;50% drawdowns within a calendar year. Even at 10% portfolio weight, this translates to 3&ndash;5% portfolio contribution to drawdown. Investors who cannot tolerate seeing a red number on their BTC position should allocate 0%.</p>
-                            <p class="prose prose--caveman">BTC routinely experiences 30&ndash;50% drawdowns within a calendar year. Even at a 10% portfolio weight, that translates to a 3&ndash;5% portfolio drawdown contribution. Investors who cannot tolerate seeing a red number on their BTC position should allocate 0%.</p>
+                            <p class="prose prose--caveman">Bitcoin commonly drops 30&ndash;50% inside a single year. With BTC at 10% of your portfolio, that pulls the whole portfolio down by 3&ndash;5%. If watching a chunk of your money turn red would make you sell at the worst possible moment, the right BTC allocation for you is 0%.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Rebalancing Discipline</h4>
                             <p class="prose">Risk Parity requires <em>buying</em> BTC after it crashes and <em>selling</em> after it rallies. This is psychologically difficult. Automate rebalancing rules or use a discretionary advisor.</p>
-                            <p class="prose prose--caveman">Risk Parity requires <em>buying</em> BTC after crashes and <em>selling</em> after rallies. This is psychologically difficult. Automate the rebalancing rules or work with a discretionary advisor.</p>
+                            <p class="prose prose--caveman">The balanced approach asks you to <em>buy</em> Bitcoin after it has crashed and <em>sell</em> it after it has soared &mdash; which is the opposite of what most people instinctively want to do. Either automate the rule, or hire someone to pull the trigger for you.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>FOMO During Rallies</h4>
                             <p class="prose">When BTC doubles in 3 months, the temptation to increase allocation beyond the 10&ndash;12% target is extreme. <em>Do not.</em> The risk contribution math does not care about recent returns.</p>
-                            <p class="prose prose--caveman">When BTC doubles in 3 months, the temptation to push the allocation beyond the 10&ndash;12% target becomes extreme. <em>Do not.</em> The risk contribution math is indifferent to recent returns.</p>
+                            <p class="prose prose--caveman">When Bitcoin doubles in three months, you'll feel a strong pull to load up beyond your 10&ndash;12% target. <em>Don't.</em> The risk math doesn't care what BTC did last quarter &mdash; the swings underneath are still the same.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Anchor to FRC, Not Weight</h4>
                             <p class="prose">When communicating with stakeholders, frame BTC exposure as &ldquo;16.7% of portfolio risk&rdquo; rather than &ldquo;10% of portfolio weight.&rdquo; This reframes the conversation from &ldquo;too little crypto&rdquo; to &ldquo;appropriate risk budget.&rdquo;</p>
-                            <p class="prose prose--caveman">When communicating with stakeholders, frame BTC exposure as &ldquo;16.7% of portfolio risk&rdquo; rather than &ldquo;10% of portfolio weight.&rdquo; This reframes the conversation from &ldquo;too little crypto&rdquo; to &ldquo;appropriate risk budget.&rdquo;</p>
+                            <p class="prose prose--caveman">When you talk about BTC with partners, family, or your team, describe it as &ldquo;16.7% of our portfolio's risk&rdquo; rather than &ldquo;10% of our money.&rdquo; That little shift moves the conversation from &ldquo;why so little crypto?&rdquo; to &ldquo;a sensible share of the risk we can afford to take.&rdquo;</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Regret Minimization</h4>
                             <p class="prose">If BTC goes to zero, a 10% allocation means a 10% portfolio loss &mdash; recoverable in ~8 months at historical return rates. If BTC triples and you have 0%, the forgone return is only ~3pp of Sharpe. Frame both scenarios for peace of mind.</p>
-                            <p class="prose prose--caveman">If BTC goes to zero, a 10% allocation means a 10% portfolio loss &mdash; recoverable in roughly 8 months at historical return rates. If BTC triples and you held 0%, the forgone return is only ~3pp of Sharpe. Frame both scenarios for peace of mind.</p>
+                            <p class="prose prose--caveman">Imagine the worst case: BTC goes to zero. With a 10% allocation, that's a 10% portfolio loss &mdash; painful, but recoverable in about 8 months at historical returns. Now imagine the other side: BTC triples and you held none. The missed upside is only about 3 points of Sharpe. Seeing both pictures side by side makes either outcome easier to live with.</p>
                         </div>
                     </div>
                 </section>

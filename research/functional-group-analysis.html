@@ -40,7 +40,7 @@
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
-    <link rel="stylesheet" href="../assets/css/research.css?v=15">
+    <link rel="stylesheet" href="../assets/css/research.css?v=17">
 </head>
 
 <body class="research-page">
@@ -151,7 +151,7 @@
 
                             <h1 class="circrna-title">Functional Group Analysis of Drug-Like Chemical Space</h1>
                             <p class="circrna-subtitle prose">Using Graph-Level Variational Graph Encoding and Self-Organising Maps</p>
-                            <p class="circrna-subtitle prose prose--caveman">A graph-based encoder and Self-Organising Maps (SOM) used to analyse molecular structure.</p>
+                            <p class="circrna-subtitle prose prose--caveman">Reading molecules like little maps to see which chemical pieces make a drug feel drug-like.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">Graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing map how functional group composition varies across 249,455 ZINC15 drug-like molecules &mdash; with counterfactual QED analysis decomposing scoring artefacts from genuine chemical signals.</p>
@@ -267,7 +267,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Context</h3>
                                 <p class="prose">This study combines graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing to map how functional group composition varies across drug-like chemical space. Analysis of 249,455 ZINC15 molecules encoded via GAT-VGAE, stratified by QED, and clustered with autotuned SOMs.</p>
-                                <p class="prose prose--caveman">This study combines three methods: variational graph encoding, stratified unsupervised clustering, and formal enrichment testing. The aim is to map how functional group composition varies across drug-like chemical space. We analysed 249,455 ZINC15 molecules, encoded them with GAT-VGAE, stratified by QED (Quantitative Estimate of Drug-likeness), and clustered each stratum with an autotuned SOM (Self-Organising Map).</p>
+                                <p class="prose prose--caveman">Drug hunters sift through millions of molecules to find ones that could become medicines. We wanted a map showing which chemical building blocks tend to live where on that landscape. So we took 249,455 ZINC15 molecules, turned each one into a tiny graph with GAT-VGAE (a neural network that reads molecules), sorted them by QED &mdash; a 0-to-1 score for how drug-like a molecule looks &mdash; and grouped them using an auto-tuned SOM (Self-Organising Map &mdash; an algorithm that lays similar items near each other on a grid).</p>
                             </div>
                         </div>
 
@@ -280,7 +280,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Finding 1: Counterfactual QED Decomposition</h3>
                                 <p class="prose">Counterfactual QED analysis decomposes the &gt;22-fold nitro prevalence gradient into 78% entailed (attributable to QED&rsquo;s structural alert penalty) and 22% empirical (genuine physicochemical disfavour from elevated MW and LogP).</p>
-                                <p class="prose prose--caveman">Counterfactual QED analysis breaks down the &gt;22-fold nitro prevalence gradient into two parts. 78% is entailed by QED itself, because the score already penalises nitro via its structural alert term. The remaining 22% is empirical: nitro-bearing molecules genuinely have higher MW and LogP, making them physicochemically disfavoured.</p>
+                                <p class="prose prose--caveman">Molecules with a nitro group (a common chemical flag) are 22 times rarer among drug-like molecules than you'd expect by chance. We asked: is that real, or just because QED already punishes nitro on purpose? The answer splits cleanly: 78% comes from QED's built-in nitro penalty, and 22% is genuinely the molecule's fault &mdash; nitro-bearing molecules tend to be heavier (higher MW) and oilier (higher LogP), which the body doesn't love.</p>
                             </div>
                         </div>
 
@@ -293,7 +293,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Finding 2: Phenyl-Depleted Drug-Likeness</h3>
                                 <p class="prose">A high-QED cluster (n=1,615) shows 7.2-fold phenyl depletion with enrichment for saturated groups &mdash; thioethers, tertiary amines, ethers &mdash; demonstrating drug-likeness without aromatic dominance, though representing only 2% of high-QED space.</p>
-                                <p class="prose prose--caveman">One high-QED cluster (n=1,615) shows a 7.2-fold depletion of phenyl groups. Instead, it is enriched for saturated functional groups: thioethers, tertiary amines, and ethers. This demonstrates that drug-likeness does not require aromatic dominance. However, the cluster accounts for only 2% of high-QED space, so the route is real but uncommon.</p>
+                                <p class="prose prose--caveman">Most drug-like molecules lean on flat benzene rings (phenyl groups). But we found one cluster of 1,615 highly drug-like molecules with 7.2 times fewer of them. Instead, they're full of curvier, three-dimensional pieces &mdash; thioethers, tertiary amines, and ethers. The takeaway: you don't need flat aromatic rings to look drug-like. The catch: this cluster is only 2% of the high-QED pool, so the route works but few molecules take it.</p>
                             </div>
                         </div>
 
@@ -306,7 +306,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Finding 3: Pharmacophore Signatures</h3>
                                 <p class="prose">Sulfonamide&ndash;heterocycle&ndash;nitrile pharmacophore signatures recur across all five QED strata with non-random co-occurrence (p&laquo;0.001, &chi;&sup2;). Comparison with Morgan fingerprint baselines confirms 72% top-10 enrichment agreement, while VGAE provides 18% lower quantization error.</p>
-                                <p class="prose prose--caveman">A sulfonamide&ndash;heterocycle&ndash;nitrile pharmacophore signature recurs across all five QED strata, with co-occurrence that is significantly non-random (p&laquo;0.001, &chi;&sup2;). Compared with Morgan fingerprint baselines, the VGAE pipeline agrees on 72% of top-10 enrichments and delivers 18% lower quantization error.</p>
+                                <p class="prose prose--caveman">A three-piece recipe &mdash; sulfonamide, heterocycle, and nitrile &mdash; keeps showing up together across every drug-likeness band, far more often than chance allows (p&laquo;0.001). To check our work, we re-ran the analysis with Morgan fingerprints (a classic, simpler molecule descriptor). They agreed on 72% of the top-10 results, while our graph-based pipeline drew a sharper map (18% lower quantization error &mdash; meaning molecules sit closer to where they belong).</p>
                             </div>
                         </div>
 
@@ -319,7 +319,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Validation</h3>
                                 <p class="prose">Functional groups identified via substructure matching (22 types, 96.3% agreement with RDKit), not learned by encoder. Bootstrap resampling (1,000 iterations) yields mean cluster stability of ARI = 0.68. Six ablation experiments confirm each pipeline component contributes to final resolution.</p>
-                                <p class="prose prose--caveman">Functional groups were identified by substructure matching, not learned by the encoder (22 types, 96.3% agreement with RDKit). Bootstrap resampling over 1,000 iterations gives mean cluster stability of ARI (Adjusted Rand Index) = 0.68. Six ablation experiments confirm that each pipeline component contributes to the final resolution.</p>
+                                <p class="prose prose--caveman">We spotted functional groups by direct pattern matching, not by trusting the neural network to learn them (22 types, agreeing with the standard tool RDKit 96.3% of the time). To check the clusters were stable, we re-shuffled the data 1,000 times: the clusters held together with ARI (Adjusted Rand Index &mdash; a 0-to-1 agreement score) = 0.68. Six knock-out experiments confirmed every part of the pipeline pulls its weight.</p>
                             </div>
                         </div>
                     </div>
@@ -334,14 +334,14 @@
                             Functional groups &mdash; hydroxyl, carbonyl, amine, sulfonyl, and hundreds more &mdash; are the primary carriers of chemical reactivity, physicochemical properties, and biological activity. Each imparts characteristic properties: carboxylic acids introduce ionisability at physiological pH, amide bonds provide hydrogen bonding, aromatic rings contribute hydrophobicity, halogens modulate lipophilicity and metabolic resistance.
                         </p>
                         <p class="prose prose--caveman">
-                            Functional groups &mdash; hydroxyl, carbonyl, amine, sulfonyl, and many more &mdash; drive a molecule's chemical reactivity, physicochemical properties, and biological activity. Each contributes characteristic behaviour: carboxylic acids ionise at physiological pH, amides form hydrogen bonds, aromatic rings add hydrophobicity, and halogens adjust lipophilicity and resistance to metabolism.
+                            Think of a molecule as a body and functional groups as its working parts &mdash; hydroxyl, carbonyl, amine, sulfonyl, and many more. Each part does a specific job. Carboxylic acids carry a charge in the body. Amides stick to water and proteins. Aromatic rings repel water. Halogens (chlorine, fluorine and friends) tweak how oily a molecule is and how fast the body breaks it down. Swap one part and the whole molecule behaves differently.
                         </p>
 
                         <p class="prose">
                             Drug-likeness &mdash; the degree to which a molecule&rsquo;s properties are consistent with oral bioavailability &mdash; serves as a key filtering criterion in early-stage drug discovery. Lipinski&rsquo;s Rule of Five provides binary pass/fail filtering (MW &le;500, LogP &le;5, HBD &le;5, HBA &le;10), but cannot quantify <em>degree</em> of drug-likeness. The Quantitative Estimate of Drug-likeness (QED) addresses this gap as a continuous 0&ndash;1 score integrating eight molecular descriptors, calibrated against 771 FDA-approved oral drugs.
                         </p>
                         <p class="prose prose--caveman">
-                            Drug-likeness measures how well a molecule's properties match oral bioavailability and is a key filter in early drug discovery. Lipinski's Rule of Five offers binary pass/fail filtering (MW &le;500, LogP &le;5, HBD &le;5, HBA &le;10) but cannot quantify <em>degree</em> of drug-likeness. QED fills that gap with a continuous 0&ndash;1 score combining eight molecular descriptors, calibrated against 771 FDA-approved oral drugs.
+                            "Drug-likeness" asks a simple question: could this molecule survive being swallowed as a pill? It's an early filter in drug discovery, before anyone spends months in a lab. The classic test is Lipinski's Rule of Five (MW &le;500, LogP &le;5, HBD &le;5, HBA &le;10), but it only gives a yes or no. QED upgrades that to a smooth 0&ndash;1 score, blending eight molecular features and tuned against 771 FDA-approved oral drugs &mdash; so you can ask <em>how</em> drug-like, not just <em>whether</em>.
                         </p>
 
                         <div class="research-highlight">
@@ -356,7 +356,7 @@
                                     Despite the recognised importance of functional groups, systematic large-scale analyses relating functional group composition to quantitative drug-likeness scores remain sparse. Traditional fingerprint methods flatten molecular topology into fixed-length bit vectors, losing the structural context that makes chemistry meaningful.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    The importance of functional groups is well established, yet systematic large-scale analyses linking functional group composition to quantitative drug-likeness scores remain rare. Traditional fingerprint methods flatten molecular topology into fixed-length bit vectors and discard the structural context that gives chemistry its meaning.
+                                    Everyone agrees functional groups matter, but few studies have linked them, at scale, to drug-likeness scores. Older methods compress a molecule into a row of bits, like turning a building into a barcode. Useful for fast lookup, but the shape and connections that give chemistry its meaning get thrown away.
                                 </p>
                             </div>
                         </div>
@@ -365,14 +365,14 @@
                             This study extends a prior analysis by the present authors applying a feed-forward autoencoder and Deep SOM to the same 249,455 molecules. That study found sp&sup2; hybridisation correlated negatively with drug-likeness (r = &minus;0.45) while Fsp&sup3; correlated positively (r = +0.26), but was limited by a flat feature vector, deterministic autoencoder, and aggregate atomic statistics rather than functional group analysis.
                         </p>
                         <p class="prose prose--caveman">
-                            A prior analysis by the same authors applied a feed-forward autoencoder and Deep SOM to the same 249,455 molecules. It found sp&sup2; hybridisation correlated negatively with drug-likeness (r = &minus;0.45) and Fsp&sup3; correlated positively (r = +0.26). That study was limited by a flat feature vector, a deterministic autoencoder, and aggregate atomic counts rather than functional group analysis.
+                            We've looked at this same set of 249,455 molecules before, with a simpler neural network. That earlier work spotted a pattern: flat, aromatic-style atoms (sp&sup2;) hurt drug-likeness (r = &minus;0.45), while 3D, saturated atoms (Fsp&sup3;) helped (r = +0.26). But it counted atoms in bulk, not by functional group, and used a flatter representation &mdash; so it could see the trend but not say which chemical pieces were driving it.
                         </p>
 
                         <p class="prose">
                             The present work advances to full molecular graph representations, graph attention network encoding, variational inference for smooth latent manifolds, and a 22-type functional group vocabulary with formal enrichment testing. The primary methodological contribution is <strong>counterfactual QED analysis</strong>, which disentangles scoring-function artefacts from genuine chemical signals.
                         </p>
                         <p class="prose prose--caveman">
-                            This work moves to full molecular graph representations, graph attention network encoding, variational inference for smooth latent manifolds, a 22-type functional group vocabulary, and formal enrichment testing. The primary methodological contribution is <strong>counterfactual QED analysis</strong>, which separates scoring-function artefacts from genuine chemical signals.
+                            This time we treat each molecule as a full graph (atoms as dots, bonds as lines) and use a graph attention network that pays attention to how parts connect. We add a small dose of randomness during training so the model learns a smooth, navigable map. We track 22 specific functional groups and run proper statistical tests on which ones cluster together. The headline new trick is <strong>counterfactual QED analysis</strong>, which tells you when a pattern is real chemistry versus a quirk of how QED is calculated.
                         </p>
                     </div>
 
@@ -452,7 +452,7 @@
                                         249,455 drug-like molecules from ZINC15 (Lipinski-compliant, commercially available), deduplicated by canonical SMILES. Each molecule represented as undirected graph G = (V, E) with <strong>29-dimensional node features</strong> (atom type one-hot, degree, charge, hybridisation, aromaticity, ring membership, atomic mass, chirality) and <strong>9-dimensional edge features</strong> (bond type, conjugation, ring membership, stereochemistry). Mean graph size: 23.2 atoms, 24.9 bonds; totalling 5.78M atoms and 6.21M bonds.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        249,455 drug-like molecules from ZINC15 (Lipinski-compliant, commercially available) were deduplicated by canonical SMILES. Each molecule is represented as an undirected graph G = (V, E) with <strong>29-dimensional node features</strong> (atom type one-hot, degree, charge, hybridisation, aromaticity, ring membership, mass, chirality) and <strong>9-dimensional edge features</strong> (bond type, conjugation, ring membership, stereochemistry). Mean graph size: 23.2 atoms and 24.9 bonds, totalling 5.78M atoms and 6.21M bonds.
+                                        We pulled 249,455 drug-like molecules from ZINC15, a public catalogue of compounds you can actually buy. Duplicates were removed. Each molecule becomes a graph: dots for atoms, lines for bonds. Every dot carries <strong>29 facts about that atom</strong> (what element it is, how many neighbours it has, charge, shape, whether it's in a ring, mass, and chirality). Every line carries <strong>9 facts about the bond</strong> (type, conjugation, ring membership, stereochemistry). The average molecule has 23.2 atoms and 24.9 bonds &mdash; 5.78M atoms and 6.21M bonds across the dataset.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">ZINC15</span>
@@ -472,7 +472,7 @@
                                         Substructure pattern matching identifies <strong>22 functional group types</strong> across six categories: oxygen-containing (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-containing (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-containing (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). Priority-based two-pass algorithm resolves overlapping substructures. <strong>Validated at 96.3% agreement with RDKit</strong> (range: 91.8% ketone to 99.7% nitro).
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Substructure pattern matching identifies <strong>22 functional group types</strong> across six categories: oxygen-containing (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-containing (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-containing (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). A priority-based two-pass algorithm resolves overlapping substructures. <strong>Validated at 96.3% agreement with RDKit</strong> (range: 91.8% ketone to 99.7% nitro).
+                                        We hunt for <strong>22 functional group types</strong> by pattern-matching atoms and bonds, sorted into six families: oxygen-based (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-based (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-based (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). A two-pass priority algorithm decides who wins when patterns overlap. We checked our hit list against RDKit (the standard cheminformatics tool) and <strong>agreed 96.3% of the time</strong> &mdash; 91.8% on ketones, 99.7% on nitros.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">22 FG Types</span>
@@ -491,7 +491,7 @@
                                         Encoder: input projection (29&rarr;64) followed by <strong>three GAT layers</strong> with edge-aware attention, residual connections, and ReLU. Global attention pooling produces graph-level embeddings. Two parallel heads project to mean &mu; and log-variance (both &isin; &Ropf;&sup1;&sup6;). Sampling via reparameterisation trick. Decoder reconstructs node features via three linear layers (16&rarr;64&rarr;128&rarr;29). Loss: MSE + &beta;KL with <strong>&beta; = 0.001</strong> (selected via grid search to prevent posterior collapse). Trained 100 epochs with Adam, cosine annealing, batch size 128. <strong>Validation MSE = 0.0512</strong> (training: 0.0505, &Delta; = 1.4%).
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        The encoder projects inputs from 29 to 64 dimensions, then applies <strong>three GAT layers</strong> with edge-aware attention, residual connections, and ReLU activations. Global attention pooling produces a graph-level embedding per molecule. Two parallel heads project to mean &mu; and log-variance (both &isin; &Ropf;&sup1;&sup6;), sampled via the reparameterisation trick. The decoder reconstructs node features through three linear layers (16&rarr;64&rarr;128&rarr;29). Loss = MSE + &beta;KL with <strong>&beta; = 0.001</strong>, selected by grid search to prevent posterior collapse. Trained for 100 epochs with Adam, cosine annealing, batch size 128. <strong>Validation MSE = 0.0512</strong> (training: 0.0505, &Delta; = 1.4%).
+                                        The model is a neural network that reads a molecule's graph and squeezes it into a short summary. First, atom info is widened from 29 numbers to 64. Then <strong>three GAT layers</strong> let each atom "look around" at its neighbours and decide which ones matter, with edge information mixed in. A pooling step compresses the whole molecule into one summary, which is then expressed as a mean and a spread (both 16-dimensional). A small decoder tries to rebuild the atoms from that summary &mdash; if it can, the summary is good. Loss = MSE + &beta;KL with <strong>&beta; = 0.001</strong>, picked by grid search to keep the model from collapsing. Trained for 100 epochs with Adam and cosine annealing, batch size 128. <strong>Validation MSE = 0.0512</strong> versus 0.0505 on training (&Delta; = 1.4% &mdash; barely any overfitting).
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">3-Layer GAT</span>
@@ -511,7 +511,7 @@
                                         Molecules divided into <strong>five strata</strong> via automated valley detection on QED distribution (breakpoints at 0.399, 0.520, 0.694, 0.814). Per-stratum SOM trained on 16-dim latent embeddings with <strong>autotuned grid size</strong> (10&times;10 to 30&times;30, composite score of QE + TE + ActiveRatio). Training: 128 epochs, Gaussian neighbourhood, K-Means++ init. Clusters characterised by functional group census, enrichment ratios with 95% CIs, Fisher&rsquo;s exact test with <strong>Benjamini&ndash;Hochberg FDR correction</strong> (&alpha; = 0.05). Total: 68,836 enrichment tests with three safeguards.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Molecules are divided into <strong>five strata</strong> using automated valley detection on the QED distribution (breakpoints at 0.399, 0.520, 0.694, 0.814). Each stratum gets its own SOM trained on 16-dim latent embeddings with <strong>autotuned grid size</strong> (10&times;10 to 30&times;30, composite score of QE + TE + ActiveRatio). Training runs 128 epochs with Gaussian neighbourhood and K-Means++ initialisation. Clusters are characterised by functional group census, enrichment ratios with 95% CIs, and Fisher's exact test with <strong>Benjamini&ndash;Hochberg FDR correction</strong> (&alpha; = 0.05). Total: 68,836 enrichment tests with three statistical safeguards.
+                                        We split the molecules into <strong>five drug-likeness bands</strong> using natural dips in the QED distribution as cut-offs (at 0.399, 0.520, 0.694, 0.814). Each band gets its own SOM, a 2D grid where similar molecules sit close together. Grid size auto-tunes between 10&times;10 and 30&times;30 to fit each band best. Training: 128 passes through the data, with K-Means++ for a good start. Inside each cluster, we count functional groups, calculate how much more common each one is than expected (with 95% confidence intervals), and run Fisher's exact test &mdash; the gold standard for "is this real?". <strong>Benjamini&ndash;Hochberg FDR correction</strong> (&alpha; = 0.05) keeps false positives in check across 68,836 tests.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">5 QED Strata</span>
@@ -531,7 +531,7 @@
                                         QED recomputed with the structural alert component removed (QED<sub>no-alert</sub>), using geometric mean of seven non-alert desirability functions. Each molecule re-stratified using same valley-detection algorithm. Decomposes observed gradients into <strong>entailed components</strong> (attributable to QED&rsquo;s construction) and <strong>empirical components</strong> (genuine chemical signals). Primary methodological contribution of the study.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        QED is recomputed with the structural alert component removed (QED<sub>no-alert</sub>), using the geometric mean of seven non-alert desirability functions. Each molecule is re-stratified using the same valley-detection algorithm. This decomposes observed gradients into <strong>entailed components</strong> (attributable to QED's construction) and <strong>empirical components</strong> (genuine chemical signals). This is the study's primary methodological contribution.
+                                        Here's the twist that drives our main finding. QED's recipe includes a penalty for "structural alerts" &mdash; chemical groups already known to be trouble. So if nitro looks rare in high-QED molecules, is that real, or just because QED was told to dislike nitro? We rebuild QED <em>without</em> that alert penalty (QED<sub>no-alert</sub>), re-sort the molecules, and see what stays. What survives is <strong>empirical</strong> &mdash; real chemical signal. What disappears was <strong>entailed</strong> &mdash; baked in by QED itself. This is the study's main methodological contribution.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Counterfactual Scoring</span>
@@ -550,7 +550,7 @@
                                         Full pipeline in <strong>Rust (2021 edition)</strong> using Burn 0.16 (wgpu/Metal GPU backend), petgraph 0.7, rayon for parallelism. Training on Apple M2 Ultra (76-core GPU) completed in ~45 minutes. Throughput: <strong>5,496 molecules/second</strong>. Visualisation via UMAP-rs with plotters SVG output in colorblind-safe palettes. Fixed random seed (42) for primary run; metrics reported as mean &plusmn; std over 5 seeds.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        The full pipeline is implemented in <strong>Rust (2021 edition)</strong> using Burn 0.16 (wgpu/Metal GPU backend), petgraph 0.7, and rayon for parallelism. Training on an Apple M2 Ultra (76-core GPU) completes in about 45 minutes at a throughput of <strong>5,496 molecules/second</strong>. Visualisation uses UMAP-rs with plotters SVG output in colourblind-safe palettes. A fixed random seed (42) is used for the primary run; metrics are reported as mean &plusmn; std over 5 seeds.
+                                        The whole pipeline is written in <strong>Rust</strong> (a fast, memory-safe language) with Burn 0.16 for neural networks (running on Apple's Metal GPU), petgraph for the graph code, and rayon to spread work across CPU cores. On an Apple M2 Ultra, training finishes in about 45 minutes &mdash; chewing through <strong>5,496 molecules every second</strong>. Plots use UMAP-rs and a colourblind-safe palette. We fix the random seed (42) for the headline run and report mean &plusmn; std across 5 seeds.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Rust + Burn 0.16</span>
@@ -573,7 +573,7 @@
                             The dataset comprises 249,455 molecules with mean QED = 0.728 &plusmn; 0.140, mean LogP = 2.457 &plusmn; 1.434, and mean SAS = 3.053 &plusmn; 0.835. All 22 functional group types were detected. Prevalence is highly skewed: phenyl (83.0%), amide (68.0%), and heterocycle (58.0%) dominate, while nitro (4.3%), carboxyl (3.8%), and phosphate (0.1%) are rare.
                         </p>
                         <p class="prose prose--caveman">
-                            The dataset contains 249,455 molecules with mean QED = 0.728 &plusmn; 0.140, mean LogP = 2.457 &plusmn; 1.434, and mean SAS (Synthetic Accessibility Score) = 3.053 &plusmn; 0.835. All 22 functional group types are detected. Prevalence is highly skewed: phenyl (83.0%), amide (68.0%), and heterocycle (58.0%) dominate, while nitro (4.3%), carboxyl (3.8%), and phosphate (0.1%) are rare.
+                            The dataset has 249,455 molecules. Average QED is 0.728 &plusmn; 0.140 (most are reasonably drug-like). Average LogP is 2.457 &plusmn; 1.434 (a measure of oiliness &mdash; balanced, not too greasy). Average SAS (Synthetic Accessibility Score &mdash; how hard a molecule is to make in a lab, 1 easy to 10 hard) is 3.053 &plusmn; 0.835. All 22 functional groups appear, but very unevenly: phenyl rings (83.0%), amides (68.0%), and heterocycles (58.0%) are everywhere, while nitros (4.3%), carboxyls (3.8%), and phosphates (0.1%) are rare.
                         </p>
                     </div>
 
@@ -751,7 +751,7 @@
                             The functional group census reveals a striking aromatic bias: 83.0% of 249,455 ZINC15 molecules contain at least one phenyl ring, with a mean of 2.42 aromatic rings per molecule. This dominance reflects the well-documented bias toward flat, sp&sup2;-rich scaffolds in commercial chemical libraries.
                         </p>
                         <p class="prose prose--caveman">
-                            The functional group census shows a strong aromatic bias: 83.0% of the 249,455 ZINC15 molecules contain at least one phenyl ring, with a mean of 2.42 aromatic rings per molecule. This dominance reflects the well-documented bias toward flat, sp&sup2;-rich scaffolds in commercial chemical libraries.
+                            The headcount shows a strong tilt toward flat, ring-shaped chemistry: 83.0% of the 249,455 ZINC15 molecules carry at least one benzene-style ring, with an average of 2.42 such rings each. That's not a surprise &mdash; commercial chemical libraries lean heavily on these flat scaffolds because they're cheap and easy to make.
                         </p>
 
                         <h3>The Aromatic Dominance Problem</h3>
@@ -760,14 +760,14 @@
                             Excessive aromaticity impairs drug-likeness through three interconnected mechanisms: each additional aromatic ring increases LogP ~0.5 units, reducing aqueous solubility; electron-rich &pi;-systems are preferential substrates for CYP-mediated oxidative metabolism (particularly CYP1A2, CYP3A4), reducing oral bioavailability; and flat aromatic surfaces promote crystal packing and &pi;-stacking, reducing dissolution rates and increasing plasma protein binding.
                         </p>
                         <p class="prose prose--caveman">
-                            Excessive aromaticity hurts drug-likeness through three connected mechanisms. First, each additional aromatic ring raises LogP by about 0.5 units, lowering aqueous solubility. Second, electron-rich &pi;-systems are preferred substrates for CYP-mediated oxidative metabolism (especially CYP1A2 and CYP3A4), reducing oral bioavailability. Third, flat aromatic surfaces favour crystal packing and &pi;-stacking, which slow dissolution and increase plasma protein binding.
+                            Too many flat rings hurt a drug in three ways. First, each extra aromatic ring nudges LogP up by about 0.5, making the molecule oilier and harder to dissolve in water. Second, liver enzymes (especially CYP1A2 and CYP3A4) love to chew through aromatic rings, so the drug gets broken down before it can act. Third, flat surfaces stack like pancakes, making the molecule slow to dissolve and quicker to get stuck to blood proteins.
                         </p>
 
                         <p class="prose">
                             Stratum 4&rsquo;s Cluster 0 provides granular evidence for the &ldquo;escape from flatland&rdquo; hypothesis: 7.2-fold phenyl depletion with enrichment for saturated groups indicates piperidine, morpholine, and tetrahydropyran scaffolds. However, this cluster represents only 2.0% of Stratum 4 (n=1,615 of 80,903), so phenyl-depleted drug-likeness remains uncommon &mdash; likely reflecting synthetic accessibility bias, as flat aromatic scaffolds dominate vendor catalogues via well-established cross-coupling reactions.
                         </p>
                         <p class="prose prose--caveman">
-                            Stratum 4's Cluster 0 provides granular evidence for the &ldquo;escape from flatland&rdquo; hypothesis: 7.2-fold phenyl depletion combined with enrichment for saturated groups points to piperidine, morpholine, and tetrahydropyran scaffolds. However, this cluster is only 2.0% of Stratum 4 (n=1,615 of 80,903), so phenyl-depleted drug-likeness remains uncommon &mdash; likely because flat aromatic scaffolds dominate vendor catalogues via established cross-coupling reactions.
+                            Cluster 0 in the highest-QED band is direct evidence for the &ldquo;escape from flatland&rdquo; idea: 7.2&times; fewer phenyl rings, more saturated 3D groups, pointing to piperidines, morpholines, and tetrahydropyrans (curvy, chair-shaped rings). But this cluster is only 2.0% of the top band (1,615 of 80,903 molecules), so this route to drug-likeness exists but is rare &mdash; mostly because suppliers stock flat aromatic scaffolds, which are easy to assemble with well-known cross-coupling reactions.
                         </p>
 
                         <div class="research-highlight">
@@ -782,7 +782,7 @@
                                     LogP decreases with increasing QED (S0 mean = 3.21 &rarr; S4 mean = 1.97; &Delta; = &minus;1.24, p &lt; 10<sup>&minus;10</sup>). Conversely, SAS increases with QED (S0 mean = 2.52 &rarr; S4 mean = 3.48; &Delta; = +0.96). Molecule-level correlation is moderate (r = +0.31, R&sup2; = 0.096) &mdash; substantial within-stratum variance implies &ldquo;Pareto-efficient&rdquo; molecules achieving high QED without proportionate SAS penalties.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    LogP decreases as QED rises (S0 mean = 3.21 &rarr; S4 mean = 1.97; &Delta; = &minus;1.24, p &lt; 10<sup>&minus;10</sup>), while SAS increases (S0 mean = 2.52 &rarr; S4 mean = 3.48; &Delta; = +0.96). The molecule-level correlation is moderate (r = +0.31, R&sup2; = 0.096). Substantial within-stratum variance indicates &ldquo;Pareto-efficient&rdquo; molecules can reach high QED without proportionate SAS penalties.
+                                    There's a price tag on being drug-like. As QED climbs, molecules get less oily (LogP drops from 3.21 to 1.97; &Delta; = &minus;1.24, p &lt; 10<sup>&minus;10</sup>) but harder to make in the lab (SAS rises from 2.52 to 3.48; &Delta; = +0.96). The link is moderate (r = +0.31), and there's wide variation within each band &mdash; so some molecules manage to be very drug-like without being painfully hard to synthesise. Those are the sweet spots worth chasing.
                                 </p>
                             </div>
                         </div>
@@ -793,7 +793,7 @@
                             Quantization error decreases monotonically from Stratum 0 (QE = 1.10) to Stratum 4 (QE = 0.74) &mdash; a 33% reduction. Topographic error drops 44%, and U-matrix maxima decrease 33%. Together, these metrics indicate drug-like molecules occupy a progressively more compact latent space region with smoother inter-cluster transitions. Stratum 4 has the smoothest internal topology (U-max = 0.074), suggesting the high-QED latent surface can serve as a navigation tool for scaffold hopping via centroid interpolation.
                         </p>
                         <p class="prose prose--caveman">
-                            Quantization error decreases monotonically from Stratum 0 (QE = 1.10) to Stratum 4 (QE = 0.74) &mdash; a 33% reduction. Topographic error drops 44% and U-matrix maxima fall 33%. Together, these metrics indicate that drug-like molecules occupy a progressively more compact latent space with smoother inter-cluster transitions. Stratum 4 shows the smoothest internal topology (U-max = 0.074), suggesting the high-QED latent surface can guide scaffold hopping through centroid interpolation.
+                            Drug-like molecules sit closer together on our map than non-drug-like ones, and the gaps between groups are gentler. Quantization error (how far molecules sit from their nearest cluster centre) drops 33% from the lowest QED band to the highest (1.10 down to 0.74). Topographic error falls 44%; U-matrix peaks (sharp ridges between clusters) drop 33%. The top band has the smoothest map (U-max = 0.074), so it's a good playground for &ldquo;scaffold hopping&rdquo; &mdash; gliding between related drug-like ideas by moving across the map.
                         </p>
                     </div>
 
@@ -873,7 +873,7 @@
                             This work contributes an integrated analysis pipeline &mdash; graph-level variational encoding, stratified SOM clustering, formal enrichment testing &mdash; and applies it to 249,455 ZINC15 molecules. The primary methodological contribution is counterfactual QED decomposition, disentangling scoring-function artefacts from genuine chemical patterns: the &gt;22-fold nitro prevalence gradient decomposes into 78% entailed by QED&rsquo;s alert penalty and 22% empirical.
                         </p>
                         <p class="prose prose--caveman">
-                            This work delivers an integrated analysis pipeline &mdash; graph-level variational encoding, stratified SOM clustering, and formal enrichment testing &mdash; applied to 249,455 ZINC15 molecules. Its primary methodological contribution is counterfactual QED decomposition, which separates scoring-function artefacts from genuine chemical patterns: the &gt;22-fold nitro prevalence gradient decomposes into 78% entailed by QED's structural alert penalty and 22% empirical.
+                            We built a three-step pipeline &mdash; read each molecule as a graph, sort them into drug-likeness bands and group similar ones, then test which chemical pieces cluster together &mdash; and ran it on 249,455 ZINC15 molecules. The main new idea is counterfactual QED: a way to tell when a chemical pattern is real versus when QED's own rules created it. The classic example: nitro groups are 22&times; rarer in drug-like molecules; 78% of that is QED's built-in nitro penalty, and 22% is genuine chemistry pushing back.
                         </p>
 
                         <div class="research-highlight">
@@ -888,7 +888,7 @@
                                     Phenyl-depleted drug-likeness (n=1,615, 2% of high-QED space) and recurring sulfonamide pharmacophore co-occurrence quantitatively confirm established observations with effect sizes, confidence intervals, and FDR-controlled significance. Broad patterns robust to embedding method (72% top-10 agreement with Morgan fingerprints), while VGAE provides finer resolution (18% lower QE). Cluster stability moderate (ARI = 0.68, 1,000 bootstrap iterations).
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Phenyl-depleted drug-likeness (n=1,615, 2% of high-QED space) and recurring sulfonamide pharmacophore co-occurrence quantitatively confirm established observations, with effect sizes, confidence intervals, and FDR-controlled significance. Broad patterns are robust to embedding method (72% top-10 agreement with Morgan fingerprints), while VGAE delivers finer resolution (18% lower QE). Cluster stability is moderate (ARI = 0.68 across 1,000 bootstrap iterations).
+                                    Two patterns chemists have suspected for years now have hard numbers behind them. You <em>can</em> be drug-like without flat aromatic rings (1,615 molecules show it, though that's only 2% of the high-QED pool). And the sulfonamide&ndash;heterocycle&ndash;nitrile combo really does recur with proper statistical backing (effect sizes, confidence intervals, FDR-controlled significance). The big patterns hold up no matter which method you use (72% top-10 agreement with classic Morgan fingerprints), and our graph approach draws a sharper map (18% lower QE). Cluster stability is moderate (ARI = 0.68 over 1,000 reshuffles).
                                 </p>
                             </div>
                         </div>
@@ -897,7 +897,7 @@
                             The study is descriptive; no bioactivity validation was performed. The critical next step is overlaying ChEMBL bioactivity data to test whether the structural organisation identified here predicts shared pharmacological activity. Additional priorities include extending to the COCONUT natural product database, incorporating 3D conformer generation, and using stratified SOM centroids as conditioning variables for constrained molecular generation.
                         </p>
                         <p class="prose prose--caveman">
-                            This study is descriptive; no bioactivity validation has been performed. The critical next step is overlaying ChEMBL bioactivity data to test whether the structural organisation identified here predicts shared pharmacological activity. Additional priorities include extending to the COCONUT natural product database, adding 3D conformer generation, and using stratified SOM centroids as conditioning variables for constrained molecular generation.
+                            One important caveat: this study only describes structure. We haven't shown that any of these molecules actually <em>do</em> anything in a cell. The big next step is bringing in ChEMBL data &mdash; a public record of which molecules hit which biological targets &mdash; to test whether molecules sitting near each other on our map share real drug activity. After that: extend to natural products (COCONUT database), add 3D shape information, and use the cluster centres as guides to generate brand-new drug-like molecules.
                         </p>
                     </div>
                 </section>
