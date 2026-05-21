@@ -80,9 +80,21 @@
         });
     }
 
+    // Returns accent if bright enough for dark bg, else falls back to textTertiary
+    function visibleStroke(accent, fallback) {
+        var hex = accent.replace(/^#/, '');
+        if (hex.length !== 6) { return fallback; }
+        var r = parseInt(hex.slice(0, 2), 16) / 255;
+        var g = parseInt(hex.slice(2, 4), 16) / 255;
+        var b = parseInt(hex.slice(4, 6), 16) / 255;
+        var lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        return lum < 0.18 ? fallback : accent;
+    }
+
     function render(data, container) {
         var textPrimary   = css('--text-primary');
         var textSecondary = css('--text-secondary');
+        var textTertiary  = css('--text-tertiary');
         var bgSecondary   = css('--bg-secondary');
         var border        = css('--border-primary');
         var n = data.branches.length;
@@ -113,12 +125,12 @@
             var by     = CY + BDIST * Math.sin(angle);
             var accent = css(ACCENTS[i % ACCENTS.length]);
 
-            // Center → branch: subtle bezier spine
+            // Center → branch: always-visible spine (border-primary ≈ bg so use text-tertiary)
             var cp1x = CX + (bx - CX) * 0.35, cp1y = CY + (by - CY) * 0.05;
             var cp2x = CX + (bx - CX) * 0.65, cp2y = CY + (by - CY) * 0.95;
             lineLayer.appendChild(svgEl('path', {
                 d: 'M'+CX+','+CY+' C'+cp1x+','+cp1y+' '+cp2x+','+cp2y+' '+bx+','+by,
-                stroke: border, 'stroke-width': '1.5', fill: 'none',
+                stroke: textTertiary, 'stroke-width': '2', fill: 'none', opacity: '0.55',
                 'stroke-linecap': 'round',
                 class: 'mindmap-line',
                 style: 'animation-delay:' + lDelay + 'ms'
@@ -132,21 +144,23 @@
                 var lx = bx + LDIST * Math.cos(fa);
                 var ly = by + LDIST * Math.sin(fa);
 
-                // Branch → leaf: accent-tinted line
+                // Branch → leaf: fall back to textTertiary if accent is too dark to see
+                var lineColor = visibleStroke(accent, textTertiary);
                 lineLayer.appendChild(svgEl('line', {
                     x1: bx, y1: by, x2: lx, y2: ly,
-                    stroke: accent, 'stroke-width': '1.5', opacity: '0.4',
+                    stroke: lineColor, 'stroke-width': '1.5', opacity: '0.6',
                     'stroke-linecap': 'round',
                     class: 'mindmap-line',
                     style: 'animation-delay:' + (lDelay + j * 18) + 'ms'
                 }));
 
                 var nd = nOffset + i * 50 + j * 28;
-                // Leaf dot
+                // Leaf dot — use visible stroke fallback for dark accents
+                var dotColor = visibleStroke(accent, textTertiary);
                 leafLayer.appendChild(svgEl('circle', {
                     cx: lx, cy: ly, r: LR,
-                    fill: accent, opacity: '0.25',
-                    stroke: accent, 'stroke-width': '1.5',
+                    fill: dotColor, opacity: '0.3',
+                    stroke: dotColor, 'stroke-width': '1.5',
                     class: 'mindmap-node',
                     style: 'animation-delay:' + nd + 'ms'
                 }));
@@ -169,7 +183,7 @@
         // Center node — always on top
         centerLayer.appendChild(svgEl('circle', {
             cx: CX, cy: CY, r: CR,
-            fill: bgSecondary, stroke: border, 'stroke-width': '2',
+            fill: bgSecondary, stroke: textTertiary, 'stroke-width': '1.5', opacity: '0.5',
             class: 'mindmap-node',
             style: 'animation-delay:0ms'
         }));
