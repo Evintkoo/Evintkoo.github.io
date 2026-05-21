@@ -1,6 +1,6 @@
 (function () {
     var ACCENTS = ['--accent-warm', '--accent-sage', '--accent-secondary', '--accent-tertiary'];
-    var W = 900, H = 520, CX = 450, CY = 255;
+    var W = 900, H = 600, CX = 450, CY = 300;
     var CR = 50, BR = 28, LR = 14;
     var BDIST = 170, LDIST = 110;
 
