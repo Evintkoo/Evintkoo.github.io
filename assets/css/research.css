@@ -3333,6 +3333,9 @@ tbody td strong {
   overflow: hidden;
 }
 
+/* Use #id to beat .research-content svg:not([width]):not([height]) (specificity 0,3,1)
+   which otherwise collapses the mindmap SVG to 20×20. */
+#mindmap-svg-container svg,
 .mindmap-container svg {
   width: 100%;
   height: auto;
