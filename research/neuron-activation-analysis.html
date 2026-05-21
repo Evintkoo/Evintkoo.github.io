@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -29,8 +29,8 @@
 
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 </head>
 
 <body class="research-page">
@@ -56,11 +56,10 @@
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -126,7 +125,7 @@
 
                             <h1 class="circrna-title">What Does the Internet Do to the Brain?</h1>
                             <p class="circrna-subtitle prose">Mapping Cortical Activation Fingerprints Across Digital Content Modalities Using a Deep fMRI Encoder</p>
-                            <p class="circrna-subtitle prose prose--caveman">Map head-rock fire prints when Ugg see different glowy-rock stuff. Big deep head-squisher thinky-rock do the looking.</p>
+                            <p class="circrna-subtitle prose prose--caveman">Mapping cortical activation fingerprints across digital content types. A deep neural fMRI encoder generates the predictions.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">Activation Cartography maps 3,008 natural language stimuli across 13 internet content categories against predictions from TRIBE v2 &mdash; a 177M-parameter deep neural encoder trained on real fMRI recordings &mdash; revealing statistically significant, category-level differences in predicted cortical recruitment.</p>
@@ -244,7 +243,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Background</h3>
                                 <p class="prose">Despite extensive single-stimulus neuroscience on emotional, narrative, and threatening media, no large-scale comparative study exists of how distinct categories of internet content differentially engage the cortex at scale.</p>
-                                <p class="prose prose--caveman">Old head-doctor tribes poke one scary thing, one sad-story thing, one mad thing. Look at head outer-layer. Nobody line up many kinds of stuff Ugg see on screen-rock side by side. Big map missing. Ugg make map.</p>
+                                <p class="prose prose--caveman">Prior neuroscience has examined single stimulus types in isolation: a threatening clip, a narrative passage, an emotional cue. No study has compared multiple internet content categories at scale. This work fills that gap with a comparative cortical map.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="methods">
@@ -258,7 +257,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
                                 <p class="prose">Activation Cartography maps 3,008 natural language stimuli across 13 internet content categories against predictions from TRIBE v2 &mdash; a 177M-parameter deep neural encoder trained on real fMRI recordings that predicts whole-cortex haemodynamic responses. Each stimulus yielded a predicted activation profile across 20,484 cortical surface points, summarised into six anatomical regions.</p>
-                                <p class="prose prose--caveman">Head-rock Fire Map take 3,008 word-poke across 13 kinds of stuff Ugg see. Feed each one to TRIBE v2 &mdash; big-shape-thinky-rock squisher with 177M knobs, trained on real glow-head-machine watching. It guess blood-rush all over head outer-layer. Each poke give head-rock fire picture on 20,484 head outer-layer dot. Ugg squish dots into six head chunk.</p>
+                                <p class="prose prose--caveman">Activation Cartography pairs 3,008 natural language stimuli across 13 content categories with TRIBE v2, a 177M-parameter deep neural encoder trained on real fMRI recordings. The encoder predicts whole-cortex haemodynamic responses. Each stimulus yields an activation profile across 20,484 cortical surface points, summarised into six anatomical regions.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="results">
@@ -271,7 +270,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
                                 <p class="prose">A one-way ANOVA revealed a significant main effect of content type (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). ThreatSafety content ranked highest and Narrative lowest (Cohen&rsquo;s d = &minus;0.82). A dominant cortical gradient (PC1 = 96.9% variance) contrasts sensory-language against executive-motor cortex across all categories.</p>
-                                <p class="prose prose--caveman">Big number-test say: kind of stuff Ugg see really matter (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). ThreatSafety stuff make head outer-layer burn most. Story stuff burn least (Cohen&rsquo;s d = &minus;0.82). One big slope across head outer-layer (PC1 = 96.9% variance) push ear-eye-mouth side against do-stuff-move side. Same slope in every kind of stuff Ugg see.</p>
+                                <p class="prose prose--caveman">A one-way ANOVA confirms content type has a significant effect (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). ThreatSafety drives the highest predicted cortical activation; Narrative drives the lowest (Cohen&rsquo;s d = &minus;0.82). A dominant cortical gradient (PC1 = 96.9% variance) contrasts sensory-language cortex with executive-motor cortex, and this gradient is consistent across every category.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="conclusion">
@@ -283,7 +282,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Implications</h3>
                                 <p class="prose">Different internet content categories engage distinct brain circuits with statistically significant differences in predicted intensity. GWT&rsquo;s prediction that threat-laden content drives broad cortical activation received the strongest support. The analysis pipeline and registered hypotheses are released with the project.</p>
-                                <p class="prose prose--caveman">Different kinds of stuff Ugg see light up different head wire-paths. Difference real, not luck. GWT idea say scary stuff make head outer-layer fire wide &mdash; that idea win biggest. Ugg share whole work-pipe and Ugg guess-papers with tribe.</p>
+                                <p class="prose prose--caveman">Different internet content categories recruit distinct cortical circuits, with statistically significant differences in predicted intensity. GWT&rsquo;s prediction that threat-laden content drives broad cortical activation receives the strongest support. The analysis pipeline and registered hypotheses are released with the project.</p>
                             </div>
                         </div>
                     </div>
@@ -298,7 +297,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">Digital media consumption has become a defining feature of contemporary cognitive life. Recent estimates indicate the average adult consumes six to eight hours of digital content per day &mdash; a duration that exceeds sleep for many subpopulations. A fundamental empirical question follows: whether distinct categories of internet content engage the cerebral cortex equivalently, or whether systematic, category-level differences in predicted neural recruitment can be identified at scale.</p>
-                        <p class="lead-paragraph prose prose--caveman">Ugg stare at glowy-rectangle all day. Big brain count say grown human eat six to eight hours of glowy-content each sun &mdash; more than sleep for many tribe. Now Ugg ask big question fr fr: do different glowy-content kinds wake up brain-meat same way, or do brain fire different for different content? Ugg want look hard at this.</p>
+                        <p class="lead-paragraph prose prose--caveman">Digital media consumption now dominates daily cognitive life. Estimates put average adult use at six to eight hours of digital content per day, exceeding sleep duration for many subpopulations. The core empirical question is whether different content categories engage the cortex equivalently, or whether systematic, category-level differences in neural recruitment can be measured at scale.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -309,15 +308,15 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Activation Cartography</h4>
                                 <p class="prose">Rather than running a single-category fMRI study, Activation Cartography uses a validated deep neural encoder (TRIBE v2) to predict whole-brain responses at scale &mdash; enabling a 13-category comparative study with 3,008 stimuli that would be logistically impossible with real scanner time.</p>
-                                <p class="prose prose--caveman">Ugg no want run tiny scan study with one kind only. Ugg use trained deep thinky-rock (TRIBE v2) to guess whole brain-meat head-rock fire at big scale &mdash; let Ugg compare 13 kinds with 3,008 word-bits. Real scanner take too many moons, this way work fast.</p>
+                                <p class="prose prose--caveman">Rather than running a single-category fMRI study, Activation Cartography uses a validated deep neural encoder (TRIBE v2) to predict whole-brain responses at scale. This enables a 13-category comparison across 3,008 stimuli, which would be logistically infeasible with real scanner time.</p>
                             </div>
                         </div>
 
                         <p class="prose">The neuroscience of media consumption has historically been constrained by the throughput of fMRI acquisition: each participant yields a few hundred trials per session, making large comparative studies prohibitively expensive. TRIBE v2 breaks this barrier by predicting whole-cortex haemodynamic responses from text inputs, enabling population-scale analysis of content-type effects on predicted brain activation.</p>
-                        <p class="prose prose--caveman">Old brain-meat study slow. Big loud scanner only give few hundred try per human per sit. Big compare study cost too many shiny rocks. TRIBE v2 smash wall &mdash; it guess whole brain-meat blood-flow from word input, so Ugg look hard at many many humans worth of head-rock fire from glowy-content kinds.</p>
+                        <p class="prose prose--caveman">The neuroscience of media consumption has been constrained by fMRI throughput. Each participant yields only a few hundred trials per session, making large comparative studies prohibitively expensive. TRIBE v2 breaks this barrier by predicting whole-cortex haemodynamic responses from text input, enabling population-scale analysis of content-type effects on predicted activation.</p>
 
                         <p class="prose">Four neuroscientific frameworks are evaluated against the activation patterns: Global Workspace Theory (GWT), Free Energy Principle (FEP), Default-mode Circuit Theory (DCT), and Integrated Information Theory (IIT). Each makes distinct predictions about which content types should drive the broadest or most intense cortical recruitment.</p>
-                        <p class="prose prose--caveman">Four big brain-story tested against head-rock fire pattern: Global Workspace Theory (GWT), Free Energy Principle (FEP), Default-mode Circuit Theory (DCT), and Integrated Information Theory (IIT). Each story Ugg think maybe different glowy-content kind make brain-meat light up big or wide.</p>
+                        <p class="prose prose--caveman">Four neuroscientific frameworks are evaluated against the activation patterns: Global Workspace Theory (GWT), Free Energy Principle (FEP), Default-mode Circuit Theory (DCT), and Integrated Information Theory (IIT). Each makes distinct predictions about which content types should drive the broadest or most intense cortical recruitment.</p>
                     </div>
                 </section>
 
@@ -342,7 +341,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stimulus Construction</h3>
                                     <p class="method-description prose">3,008 stimuli drawn from established NLP benchmarks and live internet sources, distributed across 13 content categories: ThreatSafety, News, Social, Scientific, Narrative, Emotional, AudioText, ImageVisual, Educational, Persuasive, Humour, Instructional, and Commerce. Each stimulus is a short natural language passage (1&ndash;3 sentences).</p>
-                                    <p class="method-description prose prose--caveman">Ugg grab 3,008 word-piece bundles from known word-test pile and live glowy-net. Split into 13 kinds: ThreatSafety, News, Social, Scientific, Narrative, Emotional, AudioText, ImageVisual, Educational, Persuasive, Humour, Instructional, and Commerce. Each bundle short, just 1&ndash;3 sentence. Smol bites only.</p>
+                                    <p class="method-description prose prose--caveman">3,008 stimuli were drawn from established NLP benchmarks and live internet sources and distributed across 13 content categories: ThreatSafety, News, Social, Scientific, Narrative, Emotional, AudioText, ImageVisual, Educational, Persuasive, Humour, Instructional, and Commerce. Each stimulus is a short natural language passage of 1&ndash;3 sentences.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">3,008 Stimuli</span>
                                         <span class="method-tag">13 Categories</span>
@@ -365,7 +364,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">TRIBE v2 Encoder</h3>
                                     <p class="method-description prose">TRIBE v2 is a 177-million-parameter deep neural encoder trained on real functional MRI recordings. Given a text input, it predicts a whole-cortex haemodynamic response across 20,484 cortical surface points. Two encoding modes are used: hash-mode (fast, token-level) and semantic-mode (LLaMA-3.2-3B embeddings, N = 390 replication sample).</p>
-                                    <p class="method-description prose prose--caveman">TRIBE v2 is big deep thinky-rock with 177-million tune-knob. Trained on real brain-meat scan blood-flow stuff. Feed it words, it guess brain-meat fire across 20,484 brain surface dot. Two way Ugg use: hash-mode (fast, look at word piece) and semantic-mode (use LLaMA-3.2-3B word-vec, N = 390 do-again pile).</p>
+                                    <p class="method-description prose prose--caveman">TRIBE v2 is a 177-million-parameter deep neural encoder trained on real functional MRI recordings. Given a text input, it predicts whole-cortex haemodynamic responses across 20,484 cortical surface points. Two encoding modes are used: hash-mode (fast, token-level) and semantic-mode (LLaMA-3.2-3B embeddings, N = 390 replication sample).</p>
                                     <div class="method-tags">
                                         <span class="method-tag">177M Parameters</span>
                                         <span class="method-tag">20,484 Cortical Points</span>
@@ -386,7 +385,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Statistical Analysis</h3>
                                     <p class="method-description prose">Each stimulus&rsquo;s 20,484-point activation profile is summarised into six anatomical regions. A one-way ANOVA tests the main effect of content type on mean global activation. Effect sizes reported as &eta;&sup2; and Cohen&rsquo;s d. Principal component analysis across category mean profiles identifies dominant cortical gradients.</p>
-                                    <p class="method-description prose prose--caveman">Each word-bundle make 20,484-dot head-rock fire map, Ugg squish to six brain-meat region. One-way ANOVA check if glowy-content kind change average whole-brain fire. Effect-big number reported as &eta;&sup2; and Cohen&rsquo;s d. Look hard with PCA across kind-mean to find big brain-meat slope.</p>
+                                    <p class="method-description prose prose--caveman">Each stimulus&rsquo;s 20,484-point activation profile is summarised into six anatomical regions. A one-way ANOVA tests the main effect of content type on mean global activation. Effect sizes are reported as &eta;&sup2; and Cohen&rsquo;s d. Principal component analysis across category mean profiles identifies the dominant cortical gradient.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">One-way ANOVA</span>
                                         <span class="method-tag">Cohen&rsquo;s d</span>
@@ -407,7 +406,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">A one-way ANOVA on predicted global activation revealed a statistically significant main effect of content type across all 13 categories.</p>
-                        <p class="lead-paragraph prose prose--caveman">One-way ANOVA on guessed whole-brain head-rock fire show real big effect of glowy-content kind across all 13 kinds. No accident, true real.</p>
+                        <p class="lead-paragraph prose prose--caveman">A one-way ANOVA on predicted global activation revealed a statistically significant main effect of content type across all 13 categories.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -418,15 +417,15 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">ANOVA: F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;</h4>
                                 <p class="prose">Under hash-mode encoding, ThreatSafety content ranked highest and Narrative lowest (Cohen&rsquo;s d = &minus;0.82). The semantic replication (N = 390, LLaMA-3.2-3B) produced a 4&times; wider activation spread, with AudioText, ImageVisual, and Emotional leading &mdash; a ranking essentially uncorrelated with hash-mode ordering (r = 0.09).</p>
-                                <p class="prose prose--caveman">In hash-mode, ThreatSafety word stuff make brain-meat fire most, Narrative least (Cohen&rsquo;s d = &minus;0.82). Semantic do-again (N = 390, LLaMA-3.2-3B) give 4&times; wider head-rock fire spread, AudioText, ImageVisual, Emotional lead pack &mdash; this order basically not match hash-mode order (r = 0.09). Two way see different thing fr.</p>
+                                <p class="prose prose--caveman">Under hash-mode encoding, ThreatSafety content ranked highest and Narrative lowest (Cohen&rsquo;s d = &minus;0.82). The semantic replication (N = 390, LLaMA-3.2-3B) produced a 4&times; wider activation spread, with AudioText, ImageVisual, and Emotional leading. This ranking is essentially uncorrelated with the hash-mode ordering (r = 0.09), indicating the two encoding modes capture different signals.</p>
                             </div>
                         </div>
 
                         <p class="prose"><strong>Dominant cortical gradient (PC1 = 96.9% variance)</strong> contrasts sensory-language cortex (high loading: auditory, visual, language network) against executive-motor cortex (low loading: prefrontal, motor) across all 13 categories. This gradient is consistent across encoding modes despite the different category rankings.</p>
-                        <p class="prose prose--caveman"><strong>Big brain-meat slope (PC1 = 96.9% variance)</strong> push sense-and-word brain part (high load: ear, eye, word network) against boss-and-move brain part (low load: front-head, move) across all 13 kinds. Same slope hold across both ways even when kind order change.</p>
+                        <p class="prose prose--caveman"><strong>The dominant cortical gradient (PC1 = 96.9% variance)</strong> contrasts sensory-language cortex (high loading: auditory, visual, language network) against executive-motor cortex (low loading: prefrontal, motor) across all 13 categories. This gradient is consistent across both encoding modes despite their different category rankings.</p>
 
                         <p class="prose"><strong>Regional breakdown</strong> shows that ThreatSafety content activates the language network and prefrontal cortex most strongly under hash-mode, while AudioText and ImageVisual content drives the largest visual and auditory cortex responses under semantic encoding &mdash; suggesting hash-mode captures surface lexical features while semantic-mode captures deeper representational content.</p>
-                        <p class="prose prose--caveman"><strong>Region break-down</strong> show ThreatSafety wake up word network and front-head brain-meat most in hash-mode, while AudioText and ImageVisual make eye and ear brain-meat fire biggest in semantic mode &mdash; Ugg think maybe hash-mode catch surface word-shape thing-bot-notice, semantic-mode catch deep meaning stuff.</p>
+                        <p class="prose prose--caveman"><strong>Regional breakdown</strong> shows ThreatSafety activates the language network and prefrontal cortex most strongly under hash-mode, while AudioText and ImageVisual drive the largest visual and auditory cortex responses under semantic encoding. This suggests hash-mode captures surface lexical features while semantic-mode captures deeper representational content.</p>
                     </div>
                 </section>
 
@@ -439,7 +438,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">Four neuroscientific frameworks were assessed against predicted activation patterns, each making distinct testable predictions about which content types should drive the broadest cortical recruitment.</p>
-                        <p class="lead-paragraph prose prose--caveman">Four brain-story tested against guessed head-rock fire pattern. Each story make own guess about which glowy-content kind wake up most wide brain-meat.</p>
+                        <p class="lead-paragraph prose prose--caveman">Four neuroscientific frameworks were assessed against predicted activation patterns. Each makes a distinct testable prediction about which content types should drive the broadest cortical recruitment.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -450,18 +449,18 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Global Workspace Theory — Strongest Support</h4>
                                 <p class="prose">GWT predicts that threat-laden content should trigger a global broadcast, driving widespread cortical ignition. ThreatSafety content ranking highest under hash-mode (d = &minus;0.82) directly supports this. The finding that a single dominant gradient accounts for 96.9% of between-category variance is also consistent with GWT&rsquo;s single-workspace model.</p>
-                                <p class="prose prose--caveman">GWT Ugg think maybe scary content trigger big shout-everywhere, light up wide brain-meat. ThreatSafety win in hash-mode (d = &minus;0.82) back this up direct. One big slope explain 96.9% of between-kind spread, also fit GWT one-workspace story. No cap, strongest support here.</p>
+                                <p class="prose prose--caveman">GWT predicts that threat-laden content triggers a global broadcast and drives widespread cortical ignition. ThreatSafety ranking highest under hash-mode (d = &minus;0.82) supports this directly. The finding that a single dominant gradient accounts for 96.9% of between-category variance is also consistent with GWT&rsquo;s single-workspace model. This framework receives the strongest support.</p>
                             </div>
                         </div>
 
                         <p class="prose"><strong>Free Energy Principle</strong> predicts prediction-error-rich content (novel, surprising, uncertain stimuli) should drive higher activation. The moderate support observed is consistent: ThreatSafety and News content (high surprise value) rank highly, but the correlation with uncertainty proxies is weak (r &asymp; 0.3).</p>
-                        <p class="prose prose--caveman"><strong>Free Energy Principle</strong> Ugg think maybe word-bundle full of surprise (new, weird, not-sure stuff) make head-rock fire go big. So-so support seen: ThreatSafety and News (lots of surprise) rank high, but link with not-sure proxy thing is weak (r &asymp; 0.3).</p>
+                        <p class="prose prose--caveman"><strong>Free Energy Principle</strong> predicts that prediction-error-rich content (novel, surprising, uncertain stimuli) drives higher activation. Support is moderate: ThreatSafety and News rank high in surprise value, but the correlation with uncertainty proxies is weak (r &asymp; 0.3).</p>
 
                         <p class="prose"><strong>Default-mode Circuit Theory</strong> predicts narrative and self-referential content should activate default mode network most strongly. This receives mixed evidence: Narrative ranked lowest under hash-mode, but higher under semantic encoding &mdash; suggesting encoding mode mediates the narrative-DMN link.</p>
-                        <p class="prose prose--caveman"><strong>Default-mode Circuit Theory</strong> Ugg think maybe story and me-myself word stuff wake up default mode Ugg-wire path strongest. Mixed Ugg see with eye: Narrative ranked lowest in hash-mode, but higher in semantic mode &mdash; Ugg think maybe which way Ugg encode change story-to-DMN link.</p>
+                        <p class="prose prose--caveman"><strong>Default-mode Circuit Theory</strong> predicts narrative and self-referential content should most strongly activate the default mode network. Evidence is mixed: Narrative ranked lowest under hash-mode but higher under semantic encoding, suggesting that encoding mode mediates the narrative-DMN link.</p>
 
                         <p class="prose"><strong>Integrated Information Theory</strong> predicts content with higher integrated information (&Phi;) should drive more cortical activation. IIT receives mixed evidence: there is no reliable proxy for &Phi; in natural language stimuli, making this prediction untestable at current resolution.</p>
-                        <p class="prose prose--caveman"><strong>Integrated Information Theory</strong> Ugg think maybe word stuff with more mixed-info (&Phi;) make brain-meat fire more. IIT get mixed Ugg see with eye: no trusty stand-in for &Phi; in plain word-bundles, so this guess Ugg cannot test at now-resolution. Bruh.</p>
+                        <p class="prose prose--caveman"><strong>Integrated Information Theory</strong> predicts content with higher integrated information (&Phi;) should drive more cortical activation. Evidence is mixed: there is no reliable proxy for &Phi; in natural language stimuli, making this prediction untestable at current resolution.</p>
                     </div>
                 </section>
 
@@ -474,13 +473,13 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">Activation Cartography demonstrates that different internet content categories engage distinct brain circuits with statistically significant differences in predicted intensity (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). The dominant cortical gradient &mdash; sensory-language vs executive-motor &mdash; is stable across encoding modes and accounts for 96.9% of between-category variance.</p>
-                        <p class="lead-paragraph prose prose--caveman">Activation Cartography show different glowy-content kinds wake up different brain-meat Ugg-wire path with real big intensity difference (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). Big brain-meat slope &mdash; sense-and-word vs boss-and-move &mdash; stay same across both ways and explain 96.9% of between-kind spread.</p>
+                        <p class="lead-paragraph prose prose--caveman">Activation Cartography demonstrates that different internet content categories engage distinct brain circuits with statistically significant differences in predicted intensity (F(12, 2995) = 13.51, p &lt; 10&sup2;&sup6;, &eta;&sup2; = 0.051). The dominant cortical gradient &mdash; sensory-language vs executive-motor &mdash; is stable across encoding modes and accounts for 96.9% of between-category variance.</p>
 
                         <p class="prose">The encoding-mode dependence of category rankings (r = 0.09 between hash-mode and semantic-mode) is the study&rsquo;s most important methodological finding: surface lexical features (hash-mode) and deep semantic representations (semantic-mode) produce systematically different activation predictions, suggesting that fMRI encoding models are sensitive to which level of linguistic representation is used as input.</p>
-                        <p class="prose prose--caveman">Way Ugg encode change kind order (r = 0.09 between hash-mode and semantic-mode) is biggest method finding of study fr fr: surface word-shape thing-bot-notice (hash-mode) and deep meaning thing (semantic-mode) make different head-rock fire guess in regular way. Ugg think maybe brain-scan thinky-rocks sensitive to which kind of word-level Ugg feed in.</p>
+                        <p class="prose prose--caveman">The encoding-mode dependence of category rankings (r = 0.09 between hash-mode and semantic-mode) is the study&rsquo;s most important methodological finding. Surface lexical features (hash-mode) and deep semantic representations (semantic-mode) produce systematically different activation predictions, indicating that fMRI encoding models are sensitive to which level of linguistic representation is used as input.</p>
 
                         <p class="prose">Future directions include higher-powered semantic replication (N &ge; 150 per category) to resolve the hash/semantic discrepancy, extension to multimodal stimuli (images, audio) using TRIBE v2&rsquo;s full multimodal encoder, and pre-registration of the category-ranking hypothesis for confirmatory testing.</p>
-                        <p class="prose prose--caveman">Next Ugg want: bigger semantic do-again (N &ge; 150 per kind) to settle hash/semantic mismatch, stretch to many-kind word-bundle (eye picture, ear sound) using TRIBE v2 full many-kind encoder, and lock-in kind-order Ugg think maybe ahead-of-time for confirm test.</p>
+                        <p class="prose prose--caveman">Future directions include a higher-powered semantic replication (N &ge; 150 per category) to resolve the hash/semantic discrepancy, extension to multimodal stimuli (images, audio) using TRIBE v2&rsquo;s full multimodal encoder, and pre-registration of the category-ranking hypothesis for confirmatory testing.</p>
                     </div>
                 </section>
 
@@ -538,7 +537,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=12"></script>
+    <script src="../assets/js/main-theme.js?v=13"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

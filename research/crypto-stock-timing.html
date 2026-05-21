@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -46,8 +46,8 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
     
     <!-- Prefetch PDF for faster loading when clicked -->
     <link rel="prefetch" href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf">
@@ -84,11 +84,10 @@
             </div>
             
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -145,7 +144,7 @@
                     <div class="hero__content">
                         <h1 class="hero__title">Leading or Lagging? <span class="hero__title--accent">Equity and Crypto Timing Analysis</span></h1>
                         <p class="prose hero__subtitle">Do equity markets still lead recessions &mdash; or has crypto changed the playbook? Empirical analysis of cross-asset dynamics across five business cycles.</p>
-                        <p class="prose prose--caveman hero__subtitle">Company rock still see bad weather first? Or magic internet rock change game now? Ugg look hard at five big weather cycles to find out.</p>
+                        <p class="prose prose--caveman hero__subtitle">Do stocks still spot recessions first, or has crypto rewritten the rules? An empirical look at five business cycles to settle the question.</p>
                         
                         <div class="paper-meta-box">
                             <div class="paper-meta-content">
@@ -190,10 +189,10 @@
                     
                     <div class="content-text">
                         <p class="prose">The timely and accurate identification of business cycle turning points remains a foundational challenge in macroeconomic analysis, given the substantial economic and social costs associated with recessions (Burns &amp; Mitchell, 1946). Early-warning indicators provide invaluable insights that enable policymakers to deploy counter-cyclical measures more effectively and allow investors to adjust asset allocations to mitigate risk (Romer &amp; Romer, 2004).</p>
-                        <p class="prose prose--caveman">Spotting when weather turn bad early is hard but big deal (Burns &amp; Mitchell, 1946). Recession hurt tribe lots. Early Ugg signs help chief make smart rules and let rock-pile keepers move shiny coins to safe spot (Romer &amp; Romer, 2004).</p>
+                        <p class="prose prose--caveman">Identifying business cycle turning points accurately and on time remains a core macroeconomic challenge given the economic and social cost of recessions (Burns &amp; Mitchell, 1946). Early-warning indicators help policymakers deploy counter-cyclical measures and let investors reposition portfolios to manage risk (Romer &amp; Romer, 2004).</p>
 
                         <p class="prose">Historically, equity markets have been regarded as a premier leading indicator of economic activity, with the underlying logic that stock prices, representing the discounted present value of future corporate earnings, should rapidly incorporate aggregate economic expectations (Fama, 1981; Estrella &amp; Mishkin, 1998). Consequently, declines in broad market indices are often observed to precede the onset of recessions as determined by official dating committees such as the National Bureau of Economic Research (NBER).</p>
-                        <p class="prose prose--caveman">Long time, company rock seen as best early Ugg sign for weather. Price of company rock show what tribe think future shiny coin look like (Fama, 1981; Estrella &amp; Mishkin, 1998). When big rock index go small, recession come soon after, just like NBER wise ones say.</p>
+                        <p class="prose prose--caveman">Equity markets have long been treated as a premier leading indicator of economic activity. Stock prices reflect the discounted value of future corporate earnings, so they tend to absorb macroeconomic expectations quickly (Fama, 1981; Estrella &amp; Mishkin, 1998). Declines in broad indices typically precede recessions as dated by official bodies such as the NBER.</p>
                         
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -203,39 +202,39 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">The 21st-century financial landscape has been fundamentally transformed by the emergence and rapid institutionalization of crypto-assets, evolving from a niche technological experiment to a multi-trillion-dollar market capitalization phenomenon.</p>
-                                <p class="prose prose--caveman">New time money world change big. Magic internet rock start as small Ugg play-thing, now worth trillions. Crazy big!</p>
+                                <p class="prose prose--caveman">The 21st-century financial landscape has been reshaped by the rise and institutionalization of crypto-assets. What began as a niche technical experiment now represents a multi-trillion-dollar market.</p>
                             </div>
                         </div>
 
                         <p class="prose">However, the 21st-century financial landscape has been fundamentally transformed by the emergence and rapid institutionalization of crypto-assets. Since the inception of Bitcoin in 2009, the digital asset class has evolved from a niche technological experiment to a multi-trillion-dollar market capitalization phenomenon, attracting significant interest from both retail and institutional participants (Harvey et al., 2020).</p>
-                        <p class="prose prose--caveman">But money world change lots in new time. BTC born 2009, start tiny, now trillion-coin big. Small Ugg and big tribe both want piece (Harvey et al., 2020).</p>
+                        <p class="prose prose--caveman">Financial markets have shifted considerably in recent decades. Since Bitcoin's launch in 2009, digital assets have grown from a niche experiment into a multi-trillion-dollar asset class drawing both retail and institutional capital (Harvey et al., 2020).</p>
 
                         <p class="prose">This remarkable growth has ignited a vigorous academic debate regarding the economic role and informational content of cryptocurrencies. One perspective posits that crypto-assets are predominantly speculative instruments, driven by sentiment and largely detached from macroeconomic fundamentals (Shiller, 2019; Baur et al., 2018). An alternative and increasingly influential view suggests that, as these markets mature and achieve greater integration with the broader financial system, they may contain unique forward-looking information about economic activity, liquidity conditions, and global risk appetite (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
-                        <p class="prose prose--caveman">Big grow make wise ones argue lots. Some say crypto just gamble rock, feelings only, no real tribe value (Shiller, 2019; Baur et al., 2018). Other say magic internet rock grow up now, talk to big money world, maybe hold secret Ugg signs about tribe future, water flow, and who brave (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
+                        <p class="prose prose--caveman">This growth has sparked active academic debate. One view holds that crypto-assets are largely speculative, driven by sentiment and disconnected from macro fundamentals (Shiller, 2019; Baur et al., 2018). Another argues that, as these markets mature and integrate with traditional finance, they may carry forward-looking signals about economic activity, liquidity, and global risk appetite (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
                         
                         <h3>Research Question and Hypotheses</h3>
                         <p class="prose">This study directly addresses a critical research gap by investigating a precise empirical question: <strong>"Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?"</strong></p>
-                        <p class="prose prose--caveman">Ugg study answer one big question: <strong>"Between company rock and magic internet rock, who move ahead and who move behind when bad weather come and good weather come back?"</strong></p>
+                        <p class="prose prose--caveman">This study addresses one precise question: <strong>"Between equity-market and crypto-asset price movements, which leads and which lags the onset of recession and the recovery that follows?"</strong></p>
 
                         <p class="prose">To structure our inquiry systematically, we formulate and test three competing, non-mutually exclusive hypotheses:</p>
-                        <p class="prose prose--caveman">Ugg make three Ugg-think-maybes to test, can all be true together:</p>
+                        <p class="prose prose--caveman">We test three competing hypotheses that are not mutually exclusive:</p>
 
                         <div class="hypothesis-box">
                             <h4>H₁ (Equity Recession Lead)</h4>
                             <p class="prose">The equity market, as the more established and institutionally dominated asset class with deeper liquidity and more sophisticated information processing mechanisms, incorporates adverse macroeconomic signals more rapidly than the crypto market, thus leading crypto-assets into recessions.</p>
-                            <p class="prose prose--caveman">Company rock is old wise tribe with deep water and smart brain. It catch bad Ugg signs fast, drag magic internet rock down into bad weather behind it.</p>
+                            <p class="prose prose--caveman">Equity markets, with deeper liquidity, dominant institutional participation, and more sophisticated information processing, absorb negative macroeconomic signals faster than crypto and therefore lead crypto-assets into recessions.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>H₂ (Crypto Recovery Lead)</h4>
                             <p class="prose">The crypto market, characterized by higher retail participation, greater sensitivity to liquidity flows, and potentially serving as a risk-seeking asset class, leads the equity market in pricing the transition from recession to recovery phases.</p>
-                            <p class="prose prose--caveman">Magic internet rock full of small Ugg, feel water flow first, brave-brave risk lover. So crypto move ahead when bad weather turn good again.</p>
+                            <p class="prose prose--caveman">Crypto markets, with heavier retail participation, greater sensitivity to liquidity flows, and a risk-seeking profile, lead equities in pricing the shift from recession to recovery.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>H₃ (Regime Dependence)</h4>
                             <p class="prose">The lead-lag relationship between equity and crypto markets is not static but exhibits regime-dependent behavior, varying systematically across different market states such as bull versus bear markets, periods of high versus low volatility, or different phases of the business cycle.</p>
-                            <p class="prose prose--caveman">Who ahead, who behind not always same. Change with weather. Sky-go-up days different from sky-go-down days. Big shake different from small shake. Always shift.</p>
+                            <p class="prose prose--caveman">The equity-crypto lead-lag relationship is not static. It varies systematically by market regime: bull versus bear, high versus low volatility, and across different phases of the business cycle.</p>
                         </div>
                     </div>
                 </section>
@@ -246,7 +245,7 @@
                     
                     <div class="content-text">
                         <p class="prose">This study employs a multi-method, multi-scale methodological framework to provide a robust answer to the research question. The approach is designed to move from simple correlational timing to causal inference and predictive classification, thereby triangulating evidence for the lead-lag relationship between equity and crypto-asset markets around U.S. business cycles.</p>
-                        <p class="prose prose--caveman">Ugg use many ways look hard, big and small. Start with how things move same, then ask who cause who, then guess future. Get strong Ugg see with eye about who ahead and who behind during U.S. weather cycles.</p>
+                        <p class="prose prose--caveman">The study uses a multi-method, multi-scale framework. It moves from correlation-based timing to causal inference to predictive classification, triangulating evidence on the equity-crypto lead-lag relationship across U.S. business cycles.</p>
                     </div>
                     
                     <div class="methods-timeline">
@@ -257,9 +256,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">To test our hypotheses, we first transform the NBER business-cycle dates into machine-readable formats. We construct a binary recession indicator R₂, which takes a value of 1 for all trading days falling within an officially defined NBER recession period (from peak to trough) and 0 otherwise.</p>
-                                <p class="prose prose--caveman">First, Ugg turn NBER weather dates into thinky-rock food. Make Ugg sign R₂: it say 1 on days inside NBER bad weather (top to bottom), 0 on all other days.</p>
+                                <p class="prose prose--caveman">First, NBER business-cycle dates are converted into machine-readable form. A binary recession indicator R₂ is constructed: 1 on trading days inside an NBER recession (peak to trough), and 0 otherwise.</p>
                                 <p class="prose">To specifically investigate recovery dynamics (H₂), we define a distinct recovery window as the first six months (approximately 126 trading days) immediately following an NBER-declared trough. Furthermore, to formalize the concept of an early-warning signal, we operationalize a pre-recession hazard window as the 30 days immediately preceding an NBER-defined peak.</p>
-                                <p class="prose prose--caveman">For look at good weather coming back (H₂), Ugg pick first six moons (about 126 trade days) right after NBER bottom. Also, for catch danger early, Ugg make hazard window: 30 days right before NBER top.</p>
+                                <p class="prose prose--caveman">To study recovery dynamics (H₂), a recovery window is defined as the first six months (about 126 trading days) immediately after an NBER trough. To formalize an early-warning signal, a pre-recession hazard window is defined as the 30 days immediately before an NBER peak.</p>
                             </div>
                         </div>
 
@@ -271,15 +270,15 @@
                             <div class="method-content">
                                 <h4>Cross-Correlation Function (CCF)</h4>
                                 <p class="prose">We compute the CCF between the equity and crypto-asset return series for lags [-60, +60] trading days. The lag max at which the correlation is maximized provides an initial estimate of the lead time.</p>
-                                <p class="prose prose--caveman">Ugg check how company rock and crypto shiny coin move same across [-60, +60] trade days. Day where match biggest tell Ugg first guess how far ahead one go.</p>
+                                <p class="prose prose--caveman">We compute the CCF between equity and crypto return series for lags [-60, +60] trading days. The lag with the largest correlation gives an initial estimate of the lead time.</p>
 
                                 <h4>Time-domain Causality</h4>
                                 <p class="prose">We employ the vector autoregression (VAR) framework to conduct Granger causality tests. The test assesses whether lagged values of one time series have statistically significant power in predicting the current value of another time series.</p>
-                                <p class="prose prose--caveman">Ugg use VAR thinky-rock to run Granger cause test. Test ask: does behind values of one rock-line help guess what other rock-line do now? Big number mean yes.</p>
+                                <p class="prose prose--caveman">We apply a vector autoregression (VAR) framework to run Granger causality tests. The test asks whether lagged values of one series have statistically significant predictive power for the current value of another.</p>
 
                                 <h4>Information-theoretic Analysis</h4>
                                 <p class="prose">To capture potentially non-linear relationships missed by linear Granger tests, we calculate transfer entropy to quantify the reduction in uncertainty about a system's future state from knowing the past state of another system.</p>
-                                <p class="prose prose--caveman">Granger only see straight-line links. So Ugg also use transfer entropy. Measure how much knowing one rock past make Ugg less confused about other rock future.</p>
+                                <p class="prose prose--caveman">To capture non-linear links that linear Granger tests miss, we calculate transfer entropy. It quantifies the reduction in uncertainty about a system's future state given the past state of another system.</p>
                             </div>
                         </div>
 
@@ -290,9 +289,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">Recognizing that lead-lag relationships may be frequency-dependent, we use wavelet coherence analysis. This technique decomposes time series into time-frequency space, allowing for the identification of transient or frequency-specific correlations.</p>
-                                <p class="prose prose--caveman">Who ahead, who behind may change with how fast wave move. So Ugg use wavelet look-hard. Break rock-line into time-and-wave space. See quick or wave-special matches.</p>
+                                <p class="prose prose--caveman">Because lead-lag relationships can be frequency-dependent, we apply wavelet coherence analysis. The technique decomposes time series into time-frequency space, exposing transient or frequency-specific correlations.</p>
                                 <p class="prose">The key output is the wavelet phase difference, which indicates the lead-lag relationship at each point in time and for specific frequency bands (e.g., 2–8 days, 8–32 days).</p>
-                                <p class="prose prose--caveman">Big answer is wavelet phase gap. Show who ahead and who behind at each moment for each wave-speed (like 2–8 days, 8–32 days).</p>
+                                <p class="prose prose--caveman">The key output is the wavelet phase difference, which indicates the lead-lag relationship at each point in time and for specific frequency bands (for example 2–8 days and 8–32 days).</p>
                             </div>
                         </div>
 
@@ -303,9 +302,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">We reframe the problem as a classification task: predicting the onset of a recession. We build and compare several binary classification models, including a benchmark logistic regression and a Long Short-Term Memory (LSTM) neural network.</p>
-                                <p class="prose prose--caveman">Ugg flip problem to guess-game: will bad weather start? Make many yes-or-no thinky-rocks, including basic logistic regression and big LSTM brain-net.</p>
+                                <p class="prose prose--caveman">We reframe the problem as a classification task: predicting recession onset. Several binary classification models are built and compared, including a benchmark logistic regression and a Long Short-Term Memory (LSTM) neural network.</p>
                                 <p class="prose">The performance of models using equity-only, crypto-only, and combined feature sets is compared using the Area Under the Receiver Operating Characteristic Curve (AUROC) and Precision-Recall Curves (PRC).</p>
-                                <p class="prose prose--caveman">Ugg compare thinky-rocks using only company rock, only crypto, or both mixed. Score with AUROC and PRC curves, see which best.</p>
+                                <p class="prose prose--caveman">Models using equity-only, crypto-only, and combined feature sets are compared using Area Under the Receiver Operating Characteristic Curve (AUROC) and Precision-Recall Curves (PRC).</p>
                             </div>
                         </div>
 
@@ -316,9 +315,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">All time-series models are estimated using both expanding and 5-year (1260-day) sliding windows to account for the evolving nature of financial markets. We compute robust standard errors using the Newey and West (1987) procedure.</p>
-                                <p class="prose prose--caveman">Money world keep change, so Ugg fit thinky-rocks with growing window and also 5-year (1260-day) sliding window. Use Newey and West (1987) trick for strong error bars.</p>
+                                <p class="prose prose--caveman">To account for the evolving nature of financial markets, all time-series models are estimated using both expanding and 5-year (1260-day) sliding windows. Robust standard errors are computed via the Newey and West (1987) procedure.</p>
                                 <p class="prose">Given the large number of hypotheses tested, we control the false discovery rate (FDR) using the Benjamini and Hochberg (1995) procedure. The period from January 1, 2021, to June 30, 2025, is designated as the final out-of-sample test period.</p>
-                                <p class="prose prose--caveman">Many Ugg-think-maybes tested, so Ugg keep fake findings small using Benjamini and Hochberg (1995). From January 1, 2021, to June 30, 2025, set aside as final unseen test time.</p>
+                                <p class="prose prose--caveman">Because many hypotheses are tested, the false discovery rate (FDR) is controlled using the Benjamini and Hochberg (1995) procedure. The period from January 1, 2021 to June 30, 2025 is reserved as the final out-of-sample test window.</p>
                             </div>
                         </div>
                     </div>
@@ -373,7 +372,7 @@
                     <h3>Cross-Asset Correlation</h3>
                     <div class="content-text">
                         <p class="prose">The static Pearson correlation coefficient between daily stock and cryptocurrency returns was measured at <strong>0.4199</strong>, indicating a moderate positive relationship. Rank-based correlations were consistent with this finding (Spearman ρ = 0.3894; Kendall τ = 0.2724).</p>
-                        <p class="prose prose--caveman">How company rock and magic internet rock move same each day come out <strong>0.4199</strong>. Middle-strong same-way link. Rank tricks agree (Spearman ρ = 0.3894; Kendall τ = 0.2724).</p>
+                        <p class="prose prose--caveman">The static Pearson correlation between daily equity and crypto returns is <strong>0.4199</strong>, indicating a moderate positive relationship. Rank-based measures agree (Spearman ρ = 0.3894; Kendall τ = 0.2724).</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -383,7 +382,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">A rolling 60-day analysis revealed substantial temporal variation in co-movement, with correlation values ranging from as low as -0.19 to as high as 0.98, especially pronounced during periods of macroeconomic turbulence.</p>
-                                <p class="prose prose--caveman">Sliding 60-day look show how things move same change big. Numbers swing low as -0.19, high as 0.98. Swing biggest when tribe weather shaky.</p>
+                                <p class="prose prose--caveman">A rolling 60-day analysis shows substantial variation in co-movement over time, with correlations ranging from -0.19 to 0.98. The swings are most pronounced during periods of macroeconomic turbulence.</p>
                             </div>
                         </div>
                     </div>
@@ -391,7 +390,7 @@
                     <h3>Lead-Lag Relationship</h3>
                     <div class="content-text">
                         <p class="prose">The cross-correlation analysis over a ±30-day trading period indicates that <strong>the equity market leads the cryptocurrency market by approximately 27 trading days</strong>, as evidenced by a maximum cross-correlation value of 0.4215 at lag −27.</p>
-                        <p class="prose prose--caveman">Cross-match look over ±30 trade days say <strong>company rock go ahead of magic internet rock by about 27 trade days</strong>. Biggest match number 0.4215 at lag −27. Big find!</p>
+                        <p class="prose prose--caveman">Cross-correlation analysis over a ±30 trading-day window shows that <strong>the equity market leads the cryptocurrency market by approximately 27 trading days</strong>, with a maximum cross-correlation of 0.4215 at lag −27.</p>
                     </div>
                     
                     <div class="results-table">
@@ -427,7 +426,7 @@
                     <h3>Regime-Switching Behavior</h3>
                     <div class="content-text">
                         <p class="prose">Using a Gaussian Mixture Model, we identified four statistically distinct regimes characterizing the joint behavior of the equity and cryptocurrency markets:</p>
-                        <p class="prose prose--caveman">Ugg use Gaussian Mixture thinky-rock, find four different weathers that company rock and magic internet rock live in together:</p>
+                        <p class="prose prose--caveman">Using a Gaussian Mixture Model, we identify four statistically distinct regimes describing the joint behavior of equity and crypto markets:</p>
                     </div>
                     
                     <div class="results-table">
@@ -475,7 +474,7 @@
                     <h3>Machine Learning Predictive Analysis</h3>
                     <div class="content-text">
                         <p class="prose">To explore potential nonlinear dependencies, we implemented supervised machine learning models to predict crypto returns based on lagged stock market indicators.</p>
-                        <p class="prose prose--caveman">To find bendy links, Ugg teach thinky-rocks to guess crypto shiny coin using behind company rock Ugg signs.</p>
+                        <p class="prose prose--caveman">To probe potential non-linear dependencies, we implement supervised machine learning models that predict crypto returns from lagged equity-market indicators.</p>
                     </div>
                     
                     <div class="results-table">
@@ -522,7 +521,7 @@
                     <div class="content-text">
                         <h3>Theoretical Implications</h3>
                         <p class="prose">The academic literature provides robust theoretical explanations for why equity markets systematically lead cryptocurrency markets by approximately 27 days. Information processing theory and market efficiency gaps form the primary theoretical foundation, with recent research demonstrating that cryptocurrency uncertainty indices lead crypto returns across multiple time horizons using wavelet coherence analysis.</p>
-                        <p class="prose prose--caveman">Wise-ones books explain why company rock go ahead of magic internet rock by about 27 days. Big tribe brain chew Ugg signs faster than crypto tribe. Also, fresh wavelet look-hard show crypto-scared numbers go ahead of crypto shiny coin at many wave-speeds.</p>
+                        <p class="prose prose--caveman">The academic literature offers solid theoretical explanations for why equity markets systematically lead crypto markets by about 27 days. Information processing theory and market efficiency gaps form the core framework, supported by recent wavelet coherence work showing that cryptocurrency uncertainty indices lead crypto returns across multiple time horizons.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -532,45 +531,45 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">The 27-day period represents the average time from the generation of an equity market signal to the full adjustment of the cryptocurrency market price, encompassing weekly information processing cycles, monthly institutional rebalancing periods, and regulatory compliance delays.</p>
-                                <p class="prose prose--caveman">27 days is how long from when company rock make Ugg sign until magic internet rock price catch up. Cover weekly news chew, monthly big tribe shuffle of rock pile, and law-Ugg wait time.</p>
+                                <p class="prose prose--caveman">The 27-day window represents the average time from an equity-market signal to full adjustment in crypto prices. It spans weekly information processing cycles, monthly institutional rebalancing periods, and regulatory compliance delays.</p>
                             </div>
                         </div>
 
                         <h3>Behavioral Finance Framework</h3>
                         <p class="prose">Behavioral finance theories offer compelling explanations for the specific timing pattern. Limited attention theory suggests that retail investors, who dominate cryptocurrency markets, have finite cognitive resources and process information more slowly than institutional investors who control equity markets.</p>
-                        <p class="prose prose--caveman">Feeling-money ideas explain timing well. Small Ugg only got small brain power. Crypto tribe full of small Ugg, so they chew news slow. Big tribe rule company rock, chew news fast.</p>
+                        <p class="prose prose--caveman">Behavioral finance frameworks fit the timing pattern well. Limited attention theory holds that retail investors, who dominate crypto markets, have finite cognitive bandwidth and process information more slowly than the institutional investors who dominate equity markets.</p>
 
                         <p class="prose">This creates an "attention cascade" where crypto investors gradually process equity market signals over approximately four weeks. The theoretical mechanism follows a cascade model:</p>
-                        <p class="prose prose--caveman">Make "look-down waterfall": crypto Ugg slowly chew company rock Ugg signs across about four weeks. Waterfall go like this:</p>
+                        <p class="prose prose--caveman">This produces an "attention cascade" in which crypto investors gradually digest equity-market signals over roughly four weeks. The mechanism unfolds as follows:</p>
 
                         <ul>
                             <li class="prose"><strong>Weeks 1-2:</strong> Institutional processing of equity signals</li>
-                            <li class="prose prose--caveman"><strong>Weeks 1-2:</strong> Big tribe chew company rock Ugg signs first</li>
+                            <li class="prose prose--caveman"><strong>Weeks 1-2:</strong> Institutional investors process equity-market signals first</li>
                             <li class="prose"><strong>Weeks 2-3:</strong> Information filtered through financial media to retail investors</li>
-                            <li class="prose prose--caveman"><strong>Weeks 2-3:</strong> News-shouter Ugg pass story to small Ugg</li>
+                            <li class="prose prose--caveman"><strong>Weeks 2-3:</strong> Financial media filter information out to retail investors</li>
                             <li class="prose"><strong>Weeks 3-4:</strong> Adjustments to retail positions</li>
-                            <li class="prose prose--caveman"><strong>Weeks 3-4:</strong> Small Ugg move their rock piles</li>
+                            <li class="prose prose--caveman"><strong>Weeks 3-4:</strong> Retail investors adjust their positions</li>
                             <li class="prose"><strong>Week 4:</strong> Full price adjustment in cryptocurrency markets</li>
-                            <li class="prose prose--caveman"><strong>Week 4:</strong> Magic internet rock price all caught up</li>
+                            <li class="prose prose--caveman"><strong>Week 4:</strong> Cryptocurrency prices fully adjust</li>
                         </ul>
 
                         <h3>Empirical Evolution</h3>
                         <p class="prose">The empirical literature reveals a dramatic evolution in the relationships between stocks and cryptocurrencies, with correlation coefficients increasing 17-fold during the COVID-19 period. Bitcoin-S&amp;P 500 correlations jumped from 0.01 (2017-2019) to 0.36 (2020-2021), while Bitcoin-NASDAQ correlations reached 0.50 during the same period.</p>
-                        <p class="prose prose--caveman">Ugg see with eye that link between company rock and crypto grow huge — 17 times bigger during COVID-19 sick-time. BTC-S&amp;P 500 jump from 0.01 (2017-2019) to 0.36 (2020-2021). BTC-NASDAQ hit 0.50 same time.</p>
+                        <p class="prose prose--caveman">The empirical record shows the stock-crypto relationship has changed dramatically, with correlations rising 17-fold during the COVID-19 period. Bitcoin-S&amp;P 500 correlation moved from 0.01 (2017-2019) to 0.36 (2020-2021), and Bitcoin-NASDAQ correlation reached 0.50 in the same window.</p>
 
                         <h3>Practical Applications</h3>
                         <p class="prose">The academic literature provides extensive evidence for practical applications of lead-lag dynamics in portfolio management. Quantitative trading strategies utilizing lead-lag relationships have generated impressive returns, with research achieving annualized returns over 20% spanning multiple decades.</p>
-                        <p class="prose prose--caveman">Wise-ones books show ahead-and-behind ideas help rock-pile keepers a lot. Number-tricks using ahead-and-behind make shiny coin over 20% per year for many decade.</p>
+                        <p class="prose prose--caveman">The literature documents extensive practical use of lead-lag dynamics in portfolio management. Quantitative strategies built on lead-lag relationships have produced annualized returns above 20% over multiple decades.</p>
 
                         <p class="prose">Dynamic hedging applications have evolved significantly, with studies showing that futures markets lead spot markets by 0-5 minutes, providing real-time hedging opportunities. However, implementation challenges are substantial, including capacity constraints, regime changes during market stress, estimation errors, and execution risks.</p>
-                        <p class="prose prose--caveman">Shield-trick ways also grow. Future-rock go ahead of now-rock by 0-5 minutes, give live shield chance. But hard to do for real: too many Ugg crowd in, weather flip in stress, guess wrong, slow trade hand.</p>
+                        <p class="prose prose--caveman">Dynamic hedging applications have also evolved. Studies show futures markets lead spot markets by 0-5 minutes, creating real-time hedging opportunities. Implementation is hard in practice, however: capacity constraints, regime shifts during market stress, estimation error, and execution risk all bind.</p>
 
                         <h3>Information Transmission Mechanisms</h3>
                         <p class="prose">Research on information transmission reveals complex, multi-channel mechanisms connecting traditional and digital asset markets. Price discovery analysis shows that Bitcoin spot markets lead exchange-traded products in incorporating new information, though mixed evidence exists regarding futures versus spot market leadership.</p>
-                        <p class="prose prose--caveman">Look at how news flow show many paths link old money and digital rock world. Price-finding study say BTC now-rock go ahead of paper-wrap products when chewing news. But future vs now leadership story mixed up.</p>
+                        <p class="prose prose--caveman">Research on information transmission reveals complex, multi-channel links between traditional and digital asset markets. Price discovery work shows Bitcoin spot markets lead exchange-traded products in incorporating new information, though evidence is mixed on futures-versus-spot leadership.</p>
 
                         <p class="prose">Network effects and contagion models demonstrate that COVID-19 significantly altered network structures and intensified information flows. Research reveals asymmetric contagion effects, with stronger transmission during market downturns and changing correlation structures during crisis periods.</p>
-                        <p class="prose prose--caveman">Web-link thinky-rocks show COVID-19 change web shape and push news flow harder. Sickness spread uneven: stronger when rocks fall, link shapes change during scary times.</p>
+                        <p class="prose prose--caveman">Network effects and contagion models show COVID-19 reshaped network structures and intensified information flows. Contagion effects are asymmetric, with stronger transmission during market downturns and shifting correlation structures during crisis periods.</p>
                     </div>
                 </section>
 
@@ -581,7 +580,7 @@
                     <div class="content-text">
                         <h3>Primary Research Findings</h3>
                         <p class="prose">This study provides the first comprehensive empirical analysis addressing the fundamental question: "Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?" Through a multi-methodological framework, we present robust evidence that fundamentally answers this research question.</p>
-                        <p class="prose prose--caveman">Ugg study first big look-hard at: "Between company rock and crypto, who go ahead and who go behind when bad weather come and good weather come back?" Many ways used. Strong Ugg see with eye gives clear answer.</p>
+                        <p class="prose prose--caveman">This study provides the first comprehensive empirical analysis of the core question: "Between equity-market and crypto-asset price movements, which leads and which lags recession onset and recovery?" Using a multi-method framework, it delivers robust evidence that resolves the question.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -591,45 +590,45 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>Key Finding:</strong> The equity market systematically leads the cryptocurrency market by approximately 27 trading days around business cycle turning points, with a maximum correlation coefficient of 0.4215 at lag -27.</p>
-                                <p class="prose prose--caveman"><strong>Big Find:</strong> Company rock go ahead of magic internet rock by about 27 trade days when weather turn. Biggest match number 0.4215 at lag -27.</p>
+                                <p class="prose prose--caveman"><strong>Key Finding:</strong> The equity market systematically leads the cryptocurrency market by approximately 27 trading days around business cycle turning points, with a maximum correlation coefficient of 0.4215 at lag -27.</p>
                             </div>
                         </div>
 
                         <h3>Hypothesis Validation</h3>
                         <p class="prose">Our three competing hypotheses receive mixed empirical support:</p>
-                        <p class="prose prose--caveman">Three Ugg-think-maybes get mix-up Ugg see with eye:</p>
+                        <p class="prose prose--caveman">The three competing hypotheses receive mixed empirical support:</p>
 
                         <ul>
                             <li class="prose"><strong>H₁ (Equity Recession Lead):</strong> Strongly supported - equity markets lead cryptocurrency markets into recessionary periods through superior information processing capabilities.</li>
-                            <li class="prose prose--caveman"><strong>H₁ (Company Rock Lead Bad Weather):</strong> Strong yes — company rock drag magic internet rock down into bad weather because big tribe chew news better.</li>
+                            <li class="prose prose--caveman"><strong>H₁ (Equity Recession Lead):</strong> Strongly supported — equity markets lead cryptocurrency markets into recessions thanks to superior information processing.</li>
                             <li class="prose"><strong>H₂ (Crypto Recovery Lead):</strong> Not supported - no systematic pattern of cryptocurrency markets leading equity markets during recovery phases.</li>
-                            <li class="prose prose--caveman"><strong>H₂ (Crypto Lead Recovery):</strong> No — Ugg find no clear pattern of magic internet rock going ahead when good weather come back.</li>
+                            <li class="prose prose--caveman"><strong>H₂ (Crypto Recovery Lead):</strong> Not supported — no systematic pattern of cryptocurrency markets leading equities during recovery phases.</li>
                             <li class="prose"><strong>H₃ (Regime Dependence):</strong> Strongly validated - four distinct market regimes with dramatically different correlation structures (ranging from 0.018 to 0.968).</li>
-                            <li class="prose prose--caveman"><strong>H₃ (Weather Depend):</strong> Strong yes — four different weathers found, each with very different how-things-move-same numbers (0.018 to 0.968).</li>
+                            <li class="prose prose--caveman"><strong>H₃ (Regime Dependence):</strong> Strongly validated — four distinct market regimes are identified with very different correlation structures (ranging from 0.018 to 0.968).</li>
                         </ul>
 
                         <h3>Theoretical Contributions</h3>
                         <p class="prose">The documented 27-day lead-lag relationship provides strong empirical validation for information processing theory and behavioral finance frameworks. The timing pattern reflects the systematic cascade of information transmission from institutionally dominated equity markets to retail-dominated cryptocurrency markets.</p>
-                        <p class="prose prose--caveman">The 27-day ahead-behind link prove news-chew ideas and feeling-money ideas right. Timing show news waterfall flow from big tribe company rock down to small Ugg crypto.</p>
+                        <p class="prose prose--caveman">The documented 27-day lead-lag relationship offers strong empirical support for information processing theory and behavioral finance frameworks. The timing reflects the systematic cascade of information from institutionally dominated equity markets to retail-dominated crypto markets.</p>
 
                         <h3>Practical Implications</h3>
                         <p class="prose">For institutional investors, our findings provide actionable insights for dynamic hedging strategies and asset allocation decisions. The documented lead-lag relationship enables more sophisticated risk management approaches, particularly during volatile market periods when traditional diversification benefits erode.</p>
-                        <p class="prose prose--caveman">For big tribe rock-pile keepers, Ugg finds help pick shield-tricks and rock-pile shape. Knowing ahead-behind let chief manage danger smart, mostly when shake big and old spread-out trick stop working.</p>
+                        <p class="prose prose--caveman">For institutional investors, the findings inform dynamic hedging strategies and asset allocation decisions. The documented lead-lag relationship enables more sophisticated risk management, particularly during volatile periods when traditional diversification benefits erode.</p>
 
                         <h3>Policy and Regulatory Implications</h3>
                         <p class="prose">Our findings carry important implications for financial regulators and policymakers. The documented integration between equity and cryptocurrency markets, particularly during crisis periods, suggests that cryptocurrency markets can no longer be viewed as isolated from the broader financial system.</p>
-                        <p class="prose prose--caveman">Ugg finds matter for law-Ugg and chief. Company rock and crypto now glued together, mostly in scary times. So magic internet rock no can be treated like own little island anymore.</p>
+                        <p class="prose prose--caveman">The findings carry important implications for financial regulators and policymakers. The documented integration of equity and crypto markets, particularly during crisis periods, means crypto markets can no longer be treated as isolated from the broader financial system.</p>
 
                         <h3>Future Research Directions</h3>
                         <p class="prose">Emerging research directions include the integration of alternative data sources (social media sentiment, regulatory announcements, institutional adoption metrics) into lead-lag models, the development of real-time monitoring systems for relationship stability, and the investigation of lead-lag patterns across different frequency scales.</p>
-                        <p class="prose prose--caveman">Next look-hards: pull in new data (tribe-shout-board feelings, law-Ugg announcements, big tribe joining numbers) into ahead-behind thinky-rocks, build live-watcher tools for link health, and check ahead-behind at many wave-speeds.</p>
+                        <p class="prose prose--caveman">Emerging research directions include incorporating alternative data sources (social media sentiment, regulatory announcements, institutional adoption metrics) into lead-lag models, building real-time monitoring systems for relationship stability, and examining lead-lag patterns across different frequency scales.</p>
 
                         <h3>Final Synthesis</h3>
                         <p class="prose">This research definitively answers the central question of whether equity or cryptocurrency markets serve as leading indicators around business cycle turning points. The 27-day lead-lag relationship represents more than a statistical curiosity—it reflects the fundamental information processing differences between institutionally sophisticated equity markets and retail-dominated cryptocurrency markets.</p>
-                        <p class="prose prose--caveman">Ugg study finally answer: at weather-turn moments, company rock go ahead. 27-day ahead-behind link more than fun number — it show real news-chew gap between smart big tribe company rock and small Ugg magic internet rock.</p>
+                        <p class="prose prose--caveman">This research provides a definitive answer to whether equity or cryptocurrency markets act as leading indicators around business cycle turning points: equities lead. The 27-day lead-lag relationship is more than a statistical curiosity — it reflects fundamental differences in information processing between institutionally sophisticated equity markets and retail-dominated cryptocurrency markets.</p>
 
                         <p class="prose">As cryptocurrency markets continue to mature and integrate with traditional financial systems, understanding these lead-lag dynamics becomes increasingly crucial for investors, regulators, and policymakers navigating the evolving financial landscape.</p>
-                        <p class="prose prose--caveman">Magic internet rock keep grow up and stick more to old money world. So knowing ahead-behind become big-big important for rock-pile keepers, law-Ugg, and chiefs walking through new money land.</p>
+                        <p class="prose prose--caveman">As cryptocurrency markets continue to mature and integrate with traditional financial systems, understanding these lead-lag dynamics becomes increasingly important for investors, regulators, and policymakers navigating the evolving financial landscape.</p>
                     </div>
                 </section>
 
@@ -775,7 +774,7 @@
 };
     </script>
     <script src="../assets/js/mindmap.js"></script>
-    <script src="../assets/js/main-theme.js?v=12" defer></script>
+    <script src="../assets/js/main-theme.js?v=13" defer></script>
     <script src="../assets/js/research-recommendations.js" defer></script>
     
     <!-- Schema.org structured data for better SEO -->

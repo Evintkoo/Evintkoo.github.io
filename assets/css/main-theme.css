@@ -708,7 +708,9 @@ button {
 }
 
 /* ========================================================
-   CAVEMAN MODE TOGGLE — sits next to .theme-toggle in nav
+   SIMPLE MODE TOGGLE — sits next to .theme-toggle in nav.
+   Internal class name keeps `caveman-` prefix for legacy reasons;
+   user-facing label is "Simple mode".
    ======================================================== */
 
 .caveman-toggle {

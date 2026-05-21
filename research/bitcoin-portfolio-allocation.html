@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -46,8 +46,8 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 
     <!-- Prefetch PDF for faster loading when clicked -->
     <link rel="prefetch" href="../files/bitcoin_analysis.pdf">
@@ -84,11 +84,10 @@
             </div>
 
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -149,7 +148,7 @@
                     <div class="hero__content">
                         <h1 class="hero__title">Bitcoin Portfolio <span class="hero__title--accent">Allocation Analysis</span></h1>
                         <p class="prose hero__subtitle">Optimal BTC sizing via Risk-Budget Framework &mdash; Component Risk Contribution analysis across five portfolio profiles. The answer is always between 0% and 16%.</p>
-                        <p class="prose prose--caveman hero__subtitle">Best BTC chunk via danger pile big plan &mdash; CRC look hard across five rock pile types. Answer always between 0% and 16%. No cap.</p>
+                        <p class="prose prose--caveman hero__subtitle">Optimal BTC sizing is derived from a risk-budget framework &mdash; Component Risk Contribution (CRC) analysis across five portfolio profiles. The answer always lands between 0% and 16%.</p>
 
                         <div class="paper-meta-box">
                             <div class="paper-meta-content">
@@ -201,7 +200,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>The optimal Bitcoin allocation is 10&ndash;12% by capital weight, producing 17&ndash;20% risk contribution.</strong> This range maximizes diversification benefit while keeping tail risk manageable.</p>
-                                <p class="prose prose--caveman"><strong>Best BTC chunk is 10&ndash;12% of rock pile, which make 17&ndash;20% of all shake.</strong> Sweet spot. Most spread-out, but tail ouch still small.</p>
+                                <p class="prose prose--caveman"><strong>The optimal Bitcoin allocation is 10&ndash;12% by capital weight, producing 17&ndash;20% of total portfolio risk.</strong> This range delivers the best diversification benefit while keeping tail risk contained.</p>
                             </div>
                         </div>
 
@@ -239,17 +238,17 @@
 
                         <ul>
                             <li class="prose"><strong>BTC is a risk diversifier, not a return maximizer</strong> &mdash; include it for structural balance via Component Risk Contribution, not for alpha.</li>
-                            <li class="prose prose--caveman"><strong>BTC spread shake, not make more shiny coin</strong> &mdash; put in for balance using CRC, not for fat alpha.</li>
+                            <li class="prose prose--caveman"><strong>BTC is a risk diversifier, not a return engine</strong> &mdash; include it for structural balance via Component Risk Contribution, not to chase alpha.</li>
                             <li class="prose"><strong>Risk Parity naturally constrains BTC to 10&ndash;12%</strong> across all profiles tested; this range consistently produces robustness scores &ge;71/100.</li>
-                            <li class="prose prose--caveman"><strong>Risk Parity squeeze BTC to 10&ndash;12%</strong> in every rock pile Ugg test; this range always score &ge;71/100. Strong.</li>
+                            <li class="prose prose--caveman"><strong>Risk Parity naturally constrains BTC to 10&ndash;12%</strong> in every profile tested; this range consistently delivers robustness scores &ge;71/100.</li>
                             <li class="prose"><strong>Above 16% weight, BTC becomes destructive</strong> &mdash; scores drop below 64, worst stress exceeds &minus;30%, and P(Loss) rises above 10%.</li>
-                            <li class="prose prose--caveman"><strong>Above 16% BTC, rock pile break</strong> &mdash; score drop under 64, worst poke worse than &minus;30%, chance of ouch jump over 10%.</li>
+                            <li class="prose prose--caveman"><strong>Above 16% weight, BTC turns destructive</strong> &mdash; robustness scores fall below 64, worst-case stress losses exceed &minus;30%, and probability of loss climbs above 10%.</li>
                             <li class="prose"><strong>Equal-weight BTC (50%) is catastrophic</strong> &mdash; BTC contributes 99.5% of all portfolio risk, Sharpe collapses to 0.08.</li>
-                            <li class="prose prose--caveman"><strong>Even-pile BTC (50%) is full ouch</strong> &mdash; BTC make 99.5% of all rock pile shake, shiny-coin-per-shake number crash to 0.08.</li>
+                            <li class="prose prose--caveman"><strong>Equal-weight BTC (50%) is catastrophic</strong> &mdash; BTC contributes 99.5% of total portfolio risk and Sharpe ratio (risk-adjusted return) collapses to 0.08.</li>
                             <li class="prose"><strong>Max Sharpe optimizers allocate 0% to BTC</strong> in most profiles &mdash; the volatility drag outweighs the diversification benefit for pure Sharpe maximization.</li>
-                            <li class="prose prose--caveman"><strong>Big shiny-coin-per-shake thinky-rock give 0% to BTC</strong> in most rock piles &mdash; shake drag too heavy, spread bonus not enough for pure shiny-coin max.</li>
+                            <li class="prose prose--caveman"><strong>Max Sharpe optimizers allocate 0% to BTC</strong> in most profiles &mdash; the volatility drag outweighs the diversification benefit when the goal is pure Sharpe maximization.</li>
                             <li class="prose"><strong>Recommendation:</strong> use the Risk Parity framework to size BTC; set a hard FRC ceiling of 20%; rebalance quarterly.</li>
-                            <li class="prose prose--caveman"><strong>Ugg say:</strong> use Risk Parity big plan to size BTC; set hard FRC roof at 20%; fix rock pile every season.</li>
+                            <li class="prose prose--caveman"><strong>Recommendation:</strong> use the Risk Parity framework to size BTC, set a hard FRC ceiling at 20%, and rebalance quarterly.</li>
                         </ul>
                     </div>
                 </section>
@@ -267,44 +266,44 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">Allocate Bitcoin by risk contribution ceiling (CRC<sub>BTC</sub> &le; c), not by capital weight. A small BTC position generates outsized risk.</p>
-                                <p class="prose prose--caveman">Give BTC by shake roof (CRC<sub>BTC</sub> &le; c), not by capital chunk. Small BTC pile make big shake.</p>
+                                <p class="prose prose--caveman">Allocate Bitcoin by a risk-contribution ceiling (CRC<sub>BTC</sub> &le; c), not by capital weight. Even a small BTC position generates outsized portfolio risk.</p>
                             </div>
                         </div>
 
                         <h3>Component Risk Contribution (CRC)</h3>
                         <p class="prose">CRC measures how much each asset contributes to total portfolio volatility:</p>
-                        <p class="prose prose--caveman">CRC count how much each rock add to whole rock pile shake.</p>
+                        <p class="prose prose--caveman">CRC measures how much each asset contributes to total portfolio volatility:</p>
                         <p><em>CRC<sub>i</sub> = w<sub>i</sub> &times; (&Sigma;w)<sub>i</sub> / &sigma;<sub>p</sub></em></p>
                         <p class="prose">where w<sub>i</sub> = asset weight, &Sigma; = covariance matrix, &sigma;<sub>p</sub> = portfolio volatility.</p>
-                        <p class="prose prose--caveman">where w<sub>i</sub> = rock chunk, &Sigma; = together-shake box, &sigma;<sub>p</sub> = rock pile shake.</p>
+                        <p class="prose prose--caveman">where w<sub>i</sub> = asset weight, &Sigma; = covariance matrix, and &sigma;<sub>p</sub> = portfolio volatility.</p>
                         <ul>
                             <li class="prose"><strong>Fractional Risk Contribution (FRC)</strong> normalizes to percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRCs sum to 100%.</li>
-                            <li class="prose prose--caveman"><strong>FRC</strong> turn CRC into share: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRC add to 100%.</li>
+                            <li class="prose prose--caveman"><strong>Fractional Risk Contribution (FRC)</strong> normalizes CRC into percentages: FRC<sub>i</sub> = CRC<sub>i</sub> / &sigma;<sub>p</sub>. All FRCs sum to 100%.</li>
                             <li class="prose"><strong>Risk Parity</strong> targets equal FRC: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
-                            <li class="prose prose--caveman"><strong>Risk Parity</strong> want every rock give same FRC: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
+                            <li class="prose prose--caveman"><strong>Risk Parity</strong> targets equal FRC across all assets: FRC<sub>1</sub> &asymp; FRC<sub>2</sub> &asymp; &hellip; &asymp; FRC<sub>n</sub> = 1/n.</li>
                         </ul>
 
                         <h3>Why This Matters for Bitcoin</h3>
                         <p class="prose">BTC&rsquo;s annualized volatility of 60&ndash;80% is 4&ndash;5&times; that of equities, so even a small capital weight dominates the risk decomposition.</p>
-                        <p class="prose prose--caveman">BTC year-shake of 60&ndash;80% is 4&ndash;5&times; bigger than stock shake, so even tiny BTC chunk rule the shake split.</p>
+                        <p class="prose prose--caveman">BTC's annualized volatility of 60&ndash;80% is 4&ndash;5&times; that of equities, so even a small capital weight dominates the portfolio's risk decomposition.</p>
                         <ul>
                             <li class="prose">&sigma;<sub>BTC</sub> &asymp; 65% annualized vs &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5%.</li>
-                            <li class="prose prose--caveman">&sigma;<sub>BTC</sub> &asymp; 65% year-shake vs &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5%. BTC shake much more.</li>
+                            <li class="prose prose--caveman">&sigma;<sub>BTC</sub> &asymp; 65% annualized, versus &sigma;<sub>SPY</sub> &asymp; 15% and &sigma;<sub>BND</sub> &asymp; 5% &mdash; BTC volatility is materially higher.</li>
                             <li class="prose">A 10% BTC capital weight produces ~17% risk contribution in a 6-sleeve portfolio.</li>
-                            <li class="prose prose--caveman">10% BTC chunk make ~17% of shake in 6-rock pile.</li>
+                            <li class="prose prose--caveman">A 10% BTC capital weight produces ~17% of total risk in a 6-sleeve portfolio.</li>
                             <li class="prose">A 50% BTC capital weight produces ~99.5% risk contribution &mdash; the portfolio becomes a BTC proxy.</li>
-                            <li class="prose prose--caveman">50% BTC chunk make ~99.5% of shake &mdash; rock pile become BTC twin.</li>
+                            <li class="prose prose--caveman">A 50% BTC capital weight produces ~99.5% of total risk &mdash; the portfolio becomes a de facto BTC proxy.</li>
                         </ul>
 
                         <div class="hypothesis-box">
                             <h4>The Ceiling Rule</h4>
                             <p class="prose">Set FRC<sub>BTC</sub> &le; c where: c = 1/n for full risk parity (16.7% in a 6-sleeve portfolio), c = 0.20 as a moderate maximum, c = 0.25 as an aggressive maximum. Compute weight from FRC target: w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
-                            <p class="prose prose--caveman">Set FRC<sub>BTC</sub> &le; c where: c = 1/n for full Risk Parity (16.7% in 6-rock pile), c = 0.20 for soft max, c = 0.25 for bold max. Find chunk from FRC goal: w<sub>BTC</sub> &asymp; FRC goal &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
+                            <p class="prose prose--caveman">Set FRC<sub>BTC</sub> &le; c where c = 1/n for full Risk Parity (16.7% in a 6-sleeve portfolio), c = 0.20 as a moderate maximum, or c = 0.25 as an aggressive maximum. Derive the weight from the FRC target: w<sub>BTC</sub> &asymp; FRC target &times; &sigma;<sub>p</sub> / &sigma;<sub>BTC</sub>.</p>
                         </div>
 
                         <h3>Performance Hierarchy</h3>
                         <p class="prose">The analysis uses a 5-level metric hierarchy: CRC first, then Sharpe, Sortino, MDD, CVaR.</p>
-                        <p class="prose prose--caveman">Look hard use 5-step ladder: CRC first, then Sharpe, Sortino, MDD, CVaR.</p>
+                        <p class="prose prose--caveman">The analysis applies a 5-level metric hierarchy: CRC first, then Sharpe, Sortino, MDD, and CVaR.</p>
 
                         <div class="methods-timeline">
                             <div class="method-card">
@@ -314,7 +313,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Ensures no single asset dominates portfolio risk. This is the primary constraint that must be satisfied before all others.</p>
-                                    <p class="prose prose--caveman">Make sure no one rock rule shake. This rule come first, before all other rules.</p>
+                                    <p class="prose prose--caveman">Ensures no single asset dominates portfolio risk. This is the primary constraint, satisfied before all others.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -324,7 +323,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Measures risk-adjusted return after CRC constraints are satisfied.</p>
-                                    <p class="prose prose--caveman">Count shiny coin per shake, but only after CRC rule kept.</p>
+                                    <p class="prose prose--caveman">Measures risk-adjusted return, applied only after CRC constraints are satisfied.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -334,7 +333,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Captures downside-specific risk; important for asymmetric assets like BTC.</p>
-                                    <p class="prose prose--caveman">Catch down-side ouch only; very big deal for lopsided rocks like BTC.</p>
+                                    <p class="prose prose--caveman">Captures downside-only risk; particularly important for asymmetric return distributions like BTC.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -344,7 +343,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">The worst peak-to-trough loss; a behavioral threshold for investors.</p>
-                                    <p class="prose prose--caveman">Biggest ouch from top of hill to bottom of hole; where Ugg start to panic.</p>
+                                    <p class="prose prose--caveman">The worst peak-to-trough loss; a key behavioral threshold for investors.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -354,7 +353,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">The average loss in the worst 5% of scenarios; the tail risk measure. BTC&rsquo;s impact propagates through all 5 levels.</p>
-                                    <p class="prose prose--caveman">Mean ouch in worst 5% of futures; tail ouch number. BTC reach through all 5 steps.</p>
+                                    <p class="prose prose--caveman">The average loss across the worst 5% of scenarios &mdash; the tail risk measure. BTC's impact propagates through all 5 levels of the hierarchy.</p>
                                 </div>
                             </div>
                         </div>
@@ -367,7 +366,7 @@
 
                     <div class="content-text">
                         <p class="prose">Five profiles include BTC. Risk Parity consistently constrains it to 10&ndash;16% weight; this range produces the best robustness scores among BTC-containing portfolios.</p>
-                        <p class="prose prose--caveman">Five rock pile types hold BTC. Risk Parity always squeeze it to 10&ndash;16% chunk; this range give best strong-score among BTC piles.</p>
+                        <p class="prose prose--caveman">Five profiles include BTC. Risk Parity consistently constrains the allocation to 10&ndash;16% weight; this range produces the best robustness scores among BTC-containing portfolios.</p>
 
                         <div class="results-table">
                             <h4>Cross-Profile BTC Allocation Comparison</h4>
@@ -439,20 +438,20 @@
 
                         <ul>
                             <li class="prose">The top 3 rows (BTC 10&ndash;12%) all score &ge;71 with Sharpe &ge;2.51 &mdash; these are deployment-grade portfolios.</li>
-                            <li class="prose prose--caveman">Top 3 rows (BTC 10&ndash;12%) all score &ge;71 with shiny-coin-per-shake &ge;2.51 &mdash; these rock piles ready to ride.</li>
+                            <li class="prose prose--caveman">The top 3 rows (BTC 10&ndash;12%) all score &ge;71 with Sharpe ratios &ge;2.51 &mdash; these are deployment-grade portfolios.</li>
                             <li class="prose">Row 4 (15.8% BTC): score drops to 55.8, Sharpe to 0.88 &mdash; the BTC weight has crossed the optimal threshold.</li>
-                            <li class="prose prose--caveman">Row 4 (15.8% BTC): score fall to 55.8, shiny-coin-per-shake to 0.88 &mdash; BTC chunk step past best line.</li>
+                            <li class="prose prose--caveman">Row 4 (15.8% BTC): robustness score drops to 55.8 and Sharpe falls to 0.88 &mdash; the BTC weight has crossed the optimal threshold.</li>
                             <li class="prose">Row 5 (18.4% BTC): FRC hits 50%, meaning BTC contributes half of all portfolio risk despite only 18% of capital.</li>
-                            <li class="prose prose--caveman">Row 5 (18.4% BTC): FRC hit 50%, BTC make half all shake even though only 18% of chunk.</li>
+                            <li class="prose prose--caveman">Row 5 (18.4% BTC): FRC hits 50%, meaning BTC contributes half of all portfolio risk despite only 18% of capital.</li>
                             <li class="prose">Row 6 (50% BTC): catastrophic &mdash; 99.5% FRC, Sharpe 0.08, P(Loss) = 27.1%.</li>
-                            <li class="prose prose--caveman">Row 6 (50% BTC): full ouch &mdash; 99.5% FRC, shiny-coin-per-shake 0.08, chance of ouch = 27.1%.</li>
+                            <li class="prose prose--caveman">Row 6 (50% BTC): catastrophic outcome &mdash; 99.5% FRC, Sharpe 0.08, and P(Loss) = 27.1%.</li>
                             <li class="prose"><strong>Pattern:</strong> every 5pp increase in BTC weight above 12% costs ~5&ndash;8 points of robustness score.</li>
-                            <li class="prose prose--caveman"><strong>Shape:</strong> each 5pp more BTC chunk past 12% cost ~5&ndash;8 strong-score points.</li>
+                            <li class="prose prose--caveman"><strong>Pattern:</strong> every 5pp increase in BTC weight above 12% costs ~5&ndash;8 points of robustness score.</li>
                         </ul>
 
                         <h3>Asset Return Profile</h3>
                         <p class="prose">Bitcoin&rsquo;s standalone metrics are the weakest in the asset universe, yet its portfolio-level contribution remains positive &mdash; a result driven entirely by correlation structure.</p>
-                        <p class="prose prose--caveman">BTC alone got worst numbers in whole rock world, but its help to rock pile still good &mdash; all because of how it move with other rocks.</p>
+                        <p class="prose prose--caveman">Bitcoin's standalone metrics are the weakest in the asset universe, yet its portfolio-level contribution remains positive &mdash; a result driven entirely by its correlation structure with other assets.</p>
 
                         <div class="results-table">
                             <h4>Asset Class Performance (2024&ndash;2026 Analysis Window)</h4>
@@ -516,11 +515,11 @@
                         </div>
 
                         <p class="prose">Bitcoin&rsquo;s negative annualized return of &minus;8.97% over the analysis period, combined with the highest volatility (35.30%) and deepest drawdown (42.12%) in the universe, makes it the worst standalone asset by every conventional metric. Yet a 10&ndash;12% Bitcoin allocation <em>improves</em> portfolio-level Sharpe ratios and robustness scores. This paradox is explained by Bitcoin&rsquo;s low-to-moderate correlation with traditional asset classes: the covariance terms that enter the risk-parity optimizer are small enough that BTC&rsquo;s marginal risk contribution remains contained, while its return distribution adds a structurally independent risk premium that diversifies the portfolio&rsquo;s loss scenarios.</p>
-                        <p class="prose prose--caveman">BTC give &minus;8.97% shiny coin per year over look-hard window, plus biggest shake (35.30%) and deepest big ouch (42.12%) in rock world &mdash; worst rock alone by every old number. But 10&ndash;12% BTC chunk <em>make rock pile better</em> shiny-coin-per-shake number and strong-score. Weird, yes? Reason: BTC move-with-others stay small, so its extra shake stay tame, but its shiny coin shape come from own corner &mdash; spread out rock pile ouch futures.</p>
+                        <p class="prose prose--caveman">Bitcoin's annualized return of &minus;8.97% over the analysis period, combined with the highest volatility (35.30%) and deepest drawdown (42.12%) in the universe, makes it the worst standalone asset by every conventional metric. Yet a 10&ndash;12% BTC allocation <em>improves</em> portfolio-level Sharpe ratios and robustness scores. The paradox is explained by Bitcoin's low-to-moderate correlation with traditional assets: the covariance terms entering the risk-parity optimizer are small enough that BTC's marginal risk contribution stays contained, while its return distribution adds a structurally independent risk premium that diversifies loss scenarios.</p>
 
                         <h3>Best BTC Portfolio: Global Diversified (Score 71.2)</h3>
                         <p class="prose">Global Diversified / Risk Parity is the best BTC-containing portfolio, with BTC at 10.2% weight contributing exactly 16.7% of risk across 6 sleeves.</p>
-                        <p class="prose prose--caveman">Global Diversified / Risk Parity is best BTC rock pile, with BTC at 10.2% chunk giving exact 16.7% of shake across 6 rocks.</p>
+                        <p class="prose prose--caveman">Global Diversified / Risk Parity is the best BTC-containing portfolio, with BTC at 10.2% weight contributing exactly 16.7% of risk across 6 sleeves.</p>
 
                         <div class="results-table">
                             <h4>Global Diversified Risk Parity &mdash; Sleeve Breakdown</h4>
@@ -548,18 +547,18 @@
 
                         <ul>
                             <li class="prose">All 6 sleeves contribute exactly 16.7% of risk &mdash; perfect risk parity.</li>
-                            <li class="prose prose--caveman">All 6 rocks give exact 16.7% shake &mdash; perfect Risk Parity.</li>
+                            <li class="prose prose--caveman">All 6 sleeves contribute exactly 16.7% of risk &mdash; perfect risk parity.</li>
                             <li class="prose">BTC gets only 10.2% capital despite being equal in risk contribution, because its volatility is ~4&times; higher.</li>
-                            <li class="prose prose--caveman">BTC get only 10.2% chunk even with same shake share, because its shake ~4&times; bigger.</li>
+                            <li class="prose prose--caveman">BTC receives only 10.2% capital despite an equal risk contribution, because its volatility is ~4&times; higher than the other sleeves.</li>
                             <li class="prose">Fixed Income needs 38.4% capital to produce 16.7% risk &mdash; the inverse of BTC&rsquo;s dynamic.</li>
-                            <li class="prose prose--caveman">Bonds need 38.4% chunk to make 16.7% shake &mdash; opposite of BTC.</li>
+                            <li class="prose prose--caveman">Fixed Income requires 38.4% capital to produce 16.7% risk &mdash; the inverse of BTC's dynamic.</li>
                             <li class="prose">This is the most diversified BTC-containing portfolio in the study: 6 distinct risk premia, none dominating.</li>
-                            <li class="prose prose--caveman">This rock pile most spread of all BTC piles: 6 different shake kinds, none rule.</li>
+                            <li class="prose prose--caveman">This is the most diversified BTC-containing portfolio in the study: 6 distinct risk premia, none dominating.</li>
                         </ul>
 
                         <h3>RP All-Weather (Score 71.2): Bridgewater-Style Construction</h3>
                         <p class="prose">The All-Weather profile assigns BTC 11.6% weight with 20% FRC across 5 macro risk premia &mdash; each representing a distinct macro factor: growth, duration, inflation, commodities, and digital scarcity.</p>
-                        <p class="prose prose--caveman">All-Weather pile give BTC 11.6% chunk with 20% FRC across 5 big-world shake kinds &mdash; each one own big-world thing: growth, time, fire-price, dirt-stuff, digital-few.</p>
+                        <p class="prose prose--caveman">The All-Weather profile assigns BTC 11.6% weight with 20% FRC across 5 macro risk premia &mdash; each representing a distinct macro factor: growth, duration, inflation, commodities, and digital scarcity.</p>
 
                         <div class="results-table">
                             <h4>RP All-Weather &mdash; Sleeve Breakdown</h4>
@@ -599,37 +598,37 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">At 50% capital weight, Bitcoin contributes <strong>99.5% of portfolio risk</strong>, turning a &ldquo;diversified&rdquo; portfolio into a leveraged BTC position with Sharpe 0.08 and 27.1% probability of loss.</p>
-                                <p class="prose prose--caveman">At 50% chunk, BTC make <strong>99.5% of rock pile shake</strong>, turn &ldquo;spread&rdquo; pile into pumped-up BTC bet with shiny-coin-per-shake 0.08 and 27.1% chance of ouch.</p>
+                                <p class="prose prose--caveman">At 50% capital weight, Bitcoin contributes <strong>99.5% of portfolio risk</strong>, converting a &ldquo;diversified&rdquo; portfolio into a leveraged BTC position with Sharpe 0.08 and a 27.1% probability of loss.</p>
                             </div>
                         </div>
 
                         <ul>
                             <li class="prose">Core-Satellite / Equal Weight splits capital 50/50 between traditional assets and Bitcoin.</li>
-                            <li class="prose prose--caveman">Core-Satellite / Equal Weight cut chunk 50/50 between old rocks and BTC.</li>
+                            <li class="prose prose--caveman">Core-Satellite / Equal Weight splits capital 50/50 between traditional assets and Bitcoin.</li>
                             <li class="prose">BTC volatility (65% annualized) is ~4&times; the combined traditional sleeve (15%).</li>
-                            <li class="prose prose--caveman">BTC shake (65% year) is ~4&times; the mixed old rocks (15%).</li>
+                            <li class="prose prose--caveman">BTC volatility (65% annualized) is ~4&times; that of the combined traditional sleeve (15%).</li>
                             <li class="prose">CRC decomposition: FRC<sub>BTC</sub> = 99.5% &mdash; the traditional sleeve contributes essentially zero risk.</li>
-                            <li class="prose prose--caveman">CRC split: FRC<sub>BTC</sub> = 99.5% &mdash; old rocks add basically zero shake.</li>
+                            <li class="prose prose--caveman">CRC decomposition: FRC<sub>BTC</sub> = 99.5% &mdash; the traditional sleeve contributes essentially zero risk.</li>
                             <li class="prose">Result: P(Loss) = 27.1%, Monte Carlo median Sharpe 0.10, worst stress &minus;37.5%.</li>
-                            <li class="prose prose--caveman">End: chance of ouch = 27.1%, throw-bones middle shiny-coin-per-shake 0.10, worst poke &minus;37.5%.</li>
+                            <li class="prose prose--caveman">Result: P(Loss) = 27.1%, Monte Carlo median Sharpe of 0.10, and worst-case stress of &minus;37.5%.</li>
                             <li class="prose"><strong>Core lesson:</strong> equal capital weight &ne; equal risk contribution; high-volatility assets must be sized by risk, not capital.</li>
-                            <li class="prose prose--caveman"><strong>Big lesson:</strong> same chunk &ne; same shake share; big-shake rocks must be sized by shake, not chunk.</li>
+                            <li class="prose prose--caveman"><strong>Core lesson:</strong> equal capital weight does not mean equal risk contribution; high-volatility assets must be sized by risk, not capital.</li>
                         </ul>
 
                         <h3>Why Max Sharpe Allocates 0% to BTC</h3>
                         <p class="prose">The Sharpe optimizer finds that BTC&rsquo;s excess return does not compensate for its volatility and correlation profile. Every marginal dollar in BTC increases &sigma;<sub>p</sub> faster than &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
-                        <p class="prose prose--caveman">Shiny-coin-per-shake thinky-rock see BTC extra shiny coin not pay back its shake and move-with-others. Each extra coin in BTC grow &sigma;<sub>p</sub> faster than &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
+                        <p class="prose prose--caveman">The Sharpe optimizer determines that BTC's excess return does not compensate for its volatility and correlation profile. Every marginal dollar allocated to BTC raises portfolio volatility &sigma;<sub>p</sub> faster than excess return &mu;<sub>p</sub> &minus; r<sub>f</sub>.</p>
                         <ul>
                             <li class="prose">BTC&rsquo;s monthly return variance is ~16&times; that of a diversified equity sleeve.</li>
-                            <li class="prose prose--caveman">BTC moon-cycle shiny coin spread is ~16&times; that of spread stock rock.</li>
+                            <li class="prose prose--caveman">BTC's monthly return variance is ~16&times; that of a diversified equity sleeve.</li>
                             <li class="prose">BTC&rsquo;s standalone Sharpe: excess return (~50% p.a.) / volatility (~65%) &asymp; 0.77.</li>
-                            <li class="prose prose--caveman">BTC alone shiny-coin-per-shake: extra coin (~50% year) / shake (~65%) &asymp; 0.77.</li>
+                            <li class="prose prose--caveman">BTC's standalone Sharpe: excess return (~50% annualized) / volatility (~65%) &asymp; 0.77.</li>
                             <li class="prose">Moderate positive correlation with equities (0.3&ndash;0.5) reduces the diversification benefit.</li>
-                            <li class="prose prose--caveman">Soft same-way move with stocks (0.3&ndash;0.5) cut the spread bonus.</li>
+                            <li class="prose prose--caveman">Moderate positive correlation with equities (0.3&ndash;0.5) reduces the diversification benefit.</li>
                             <li class="prose"><strong>This does NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; it means BTC&rsquo;s role is risk diversification, not return maximization.</li>
-                            <li class="prose prose--caveman"><strong>This NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; mean BTC job is shake spreader, not shiny coin pumper.</li>
+                            <li class="prose prose--caveman"><strong>This does NOT mean BTC is &ldquo;bad&rdquo;</strong> &mdash; it means BTC's role is risk diversification, not return maximization.</li>
                             <li class="prose">Risk Parity includes BTC for structural balance; Max Sharpe excludes it for efficiency &mdash; both are correct within their frameworks.</li>
-                            <li class="prose prose--caveman">Risk Parity keep BTC for balance; Max Sharpe drop it for lean &mdash; both right in own big plan.</li>
+                            <li class="prose prose--caveman">Risk Parity includes BTC for structural balance; Max Sharpe excludes it for efficiency &mdash; both are correct within their respective frameworks.</li>
                         </ul>
                     </div>
                 </section>
@@ -640,7 +639,7 @@
 
                     <div class="content-text">
                         <p class="prose">BTC-containing portfolios face 5&ndash;15pp worse stress losses than BTC-free equivalents. Crypto Winter and Black Swan are the dominant scenarios.</p>
-                        <p class="prose prose--caveman">Rock piles with BTC eat 5&ndash;15pp more poke ouch than BTC-free same piles. Crypto Winter and Black Swan are the boss futures.</p>
+                        <p class="prose prose--caveman">BTC-containing portfolios face 5&ndash;15pp worse stress losses than BTC-free equivalents. Crypto Winter and Black Swan are the dominant scenarios.</p>
 
                         <div class="results-table">
                             <h4>Scenario Impact by BTC Weight</h4>
@@ -698,13 +697,13 @@
 
                         <ul>
                             <li class="prose"><strong>Crypto Winter:</strong> the BTC-specific scenario; 0% BTC = slight gain, 10% = manageable &minus;3.4%, 50% = devastating &minus;31.5%.</li>
-                            <li class="prose prose--caveman"><strong>Crypto Winter:</strong> the BTC-only future; 0% BTC = small win, 10% = ok ouch &minus;3.4%, 50% = full ouch &minus;31.5%.</li>
+                            <li class="prose prose--caveman"><strong>Crypto Winter:</strong> the BTC-specific scenario; 0% BTC delivers a slight gain, 10% BTC produces a manageable &minus;3.4%, and 50% BTC results in a devastating &minus;31.5%.</li>
                             <li class="prose"><strong>Black Swan:</strong> the universal worst case; each 10pp of BTC weight adds ~5pp of stress loss.</li>
-                            <li class="prose prose--caveman"><strong>Black Swan:</strong> the all-rocks worst future; each 10pp more BTC chunk add ~5pp more poke ouch.</li>
+                            <li class="prose prose--caveman"><strong>Black Swan:</strong> the universal worst case; each 10pp increase in BTC weight adds ~5pp of additional stress loss.</li>
                             <li class="prose"><strong>Correlation Spike:</strong> BTC&rsquo;s correlation with equities rises in sell-offs, amplifying losses &mdash; the &ldquo;diversification fails when you need it&rdquo; problem.</li>
-                            <li class="prose prose--caveman"><strong>Correlation Spike:</strong> BTC move-with-stocks go big when stocks fall, blow up ouch &mdash; the &ldquo;spread fail when Ugg need it&rdquo; problem.</li>
+                            <li class="prose prose--caveman"><strong>Correlation Spike:</strong> BTC's correlation with equities rises during sell-offs, amplifying losses &mdash; the &ldquo;diversification fails when you need it most&rdquo; problem.</li>
                             <li class="prose"><strong>Key pattern:</strong> stress losses scale roughly linearly with BTC weight up to 20%, then convex beyond.</li>
-                            <li class="prose prose--caveman"><strong>Big shape:</strong> poke ouch grow straight with BTC chunk up to 20%, then curve up fast past that.</li>
+                            <li class="prose prose--caveman"><strong>Key pattern:</strong> stress losses scale roughly linearly with BTC weight up to 20%, then become convex beyond that point.</li>
                         </ul>
                     </div>
                 </section>
@@ -715,7 +714,7 @@
 
                     <div class="content-text">
                         <p class="prose">Monte Carlo simulation confirms that 10% BTC maintains near-zero P(Loss) and stable Sharpe, while 50% BTC produces 27.1% P(Loss) and marginal expected Sharpe (0.10).</p>
-                        <p class="prose prose--caveman">Monte Carlo (throw bones many times) say 10% BTC keep chance of ouch near zero and shiny-coin-per-shake steady, while 50% BTC give 27.1% chance of ouch and tiny shiny-coin-per-shake (0.10).</p>
+                        <p class="prose prose--caveman">Monte Carlo simulation confirms that 10% BTC keeps P(Loss) near zero and Sharpe stable, while 50% BTC produces a 27.1% P(Loss) and a marginal expected Sharpe of 0.10.</p>
 
                         <div class="results-table">
                             <h4>Monte Carlo Simulation Results</h4>
@@ -776,13 +775,13 @@
 
                         <ul>
                             <li class="prose"><strong>10&ndash;12% BTC:</strong> P(Loss) = 0%, P(Beat RF) &gt;89%, median Sharpe &gt;2.5 &mdash; excellent risk-reward.</li>
-                            <li class="prose prose--caveman"><strong>10&ndash;12% BTC:</strong> chance of ouch = 0%, chance beat safe rock &gt;89%, middle shiny-coin-per-shake &gt;2.5 &mdash; great deal.</li>
+                            <li class="prose prose--caveman"><strong>10&ndash;12% BTC:</strong> P(Loss) = 0%, P(Beat RF) &gt;89%, and median Sharpe &gt;2.5 &mdash; an excellent risk-reward profile.</li>
                             <li class="prose"><strong>18% BTC:</strong> P(Loss) = 0%, P5 = 1.634 (well above capital preservation), median Sharpe 1.69 &mdash; a viable portfolio.</li>
-                            <li class="prose prose--caveman"><strong>18% BTC:</strong> chance of ouch = 0%, P5 = 1.634 (way above keep-chunk line), middle shiny-coin-per-shake 1.69 &mdash; rock pile still ok.</li>
+                            <li class="prose prose--caveman"><strong>18% BTC:</strong> P(Loss) = 0%, P5 = 1.634 (well above capital preservation), and median Sharpe of 1.69 &mdash; still a viable portfolio.</li>
                             <li class="prose"><strong>50% BTC:</strong> P(Loss) = 27.1% &mdash; significant chance of loss; P5 = 0.699 means losing 30% of capital in the worst 5% of scenarios.</li>
-                            <li class="prose prose--caveman"><strong>50% BTC:</strong> chance of ouch = 27.1% &mdash; big risk of ouch; P5 = 0.699 mean lose 30% of chunk in worst 5% of futures.</li>
+                            <li class="prose prose--caveman"><strong>50% BTC:</strong> P(Loss) = 27.1% &mdash; a significant chance of loss; P5 = 0.699 means losing 30% of capital in the worst 5% of scenarios.</li>
                             <li class="prose"><strong>Spread widens:</strong> P95&ndash;P5 range goes from 0.28 (10%) to 1.51 (50%) &mdash; BTC weight directly controls outcome uncertainty.</li>
-                            <li class="prose prose--caveman"><strong>Fan grow:</strong> P95&ndash;P5 stretch from 0.28 (10%) to 1.51 (50%) &mdash; BTC chunk control how unknown end-pile.</li>
+                            <li class="prose prose--caveman"><strong>Spread widens:</strong> the P95&ndash;P5 range expands from 0.28 (10% BTC) to 1.51 (50% BTC) &mdash; BTC weight directly controls outcome uncertainty.</li>
                         </ul>
                     </div>
                 </section>
@@ -800,7 +799,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">BTC improves returns in bull/range-bound regimes but amplifies losses in bear/high-vol regimes. Risk Parity dampens this asymmetry.</p>
-                                <p class="prose prose--caveman">BTC pump shiny coin in sunny/flat weather but blow up ouch in dark/big-shake weather. Risk Parity calm this lopsided shape.</p>
+                                <p class="prose prose--caveman">BTC improves returns in bull and range-bound regimes but amplifies losses in bear and high-volatility regimes. Risk Parity dampens this asymmetry.</p>
                             </div>
                         </div>
 
@@ -850,16 +849,16 @@
 
                         <ul>
                             <li class="prose">Risk Parity&rsquo;s worst-month loss (&minus;2.33%) is far smaller than Equal Weight&rsquo;s (&minus;8.19%) across all regimes.</li>
-                            <li class="prose prose--caveman">Risk Parity worst moon ouch (&minus;2.33%) much smaller than Equal Weight (&minus;8.19%) in every weather.</li>
+                            <li class="prose prose--caveman">Risk Parity's worst-month loss (&minus;2.33%) is far smaller than Equal Weight's (&minus;8.19%) across all regimes.</li>
                             <li class="prose">Low Vol months are the worst for Equal Weight (Sharpe &minus;4.15) &mdash; BTC drag is most visible when markets are quiet.</li>
-                            <li class="prose prose--caveman">Quiet-shake moons worst for Equal Weight (shiny-coin-per-shake &minus;4.15) &mdash; BTC drag stick out when market sleep.</li>
+                            <li class="prose prose--caveman">Low Vol months are the worst for Equal Weight (Sharpe &minus;4.15) &mdash; BTC drag becomes most visible when markets are quiet.</li>
                             <li class="prose">The return benefit of BTC is regime-dependent but the volatility cost is constant; Risk Parity manages this trade-off by capping BTC&rsquo;s risk contribution.</li>
-                            <li class="prose prose--caveman">BTC shiny coin help change with weather but shake cost stay same; Risk Parity handle trade by put roof on BTC shake share.</li>
+                            <li class="prose prose--caveman">BTC's return benefit is regime-dependent but its volatility cost is constant; Risk Parity manages this trade-off by capping BTC's risk contribution.</li>
                         </ul>
 
                         <h3>Walk-Forward Backtest Results</h3>
                         <p class="prose">Walk-forward backtesting with 36-month lookback and quarterly rebalancing confirms that Min Variance and Max Sharpe outperform in out-of-sample testing, while Equal Weight and Momentum Tilt produce deeply negative returns.</p>
-                        <p class="prose prose--caveman">Walk-forward look-hard with 36-moon look-back and season rebalance show Min Variance and Max Sharpe win in fresh-future test, while Equal Weight and Momentum Tilt give deep ouch.</p>
+                        <p class="prose prose--caveman">Walk-forward backtesting with a 36-month lookback and quarterly rebalancing confirms that Min Variance and Max Sharpe outperform in out-of-sample testing, while Equal Weight and Momentum Tilt produce deeply negative returns.</p>
 
                         <div class="results-table">
                             <h4>Out-of-Sample Backtest Performance</h4>
@@ -931,11 +930,11 @@
 
                         <ul>
                             <li class="prose"><strong>Min Variance is the best out-of-sample strategy</strong> (Sharpe 0.90, return 13.13%) with the lowest turnover among optimized strategies (4.6%).</li>
-                            <li class="prose prose--caveman"><strong>Min Variance best in fresh future</strong> (shiny-coin-per-shake 0.90, shiny coin 13.13%) with least swap among tuned plans (4.6%).</li>
+                            <li class="prose prose--caveman"><strong>Min Variance is the best out-of-sample strategy</strong> (Sharpe 0.90, annualized return 13.13%) with the lowest turnover among optimized strategies (4.6%).</li>
                             <li class="prose"><strong>Equal Weight is catastrophic</strong> in out-of-sample (&minus;30.34% annualized return, Sharpe &minus;2.97) &mdash; confirming the static analysis conclusions.</li>
-                            <li class="prose prose--caveman"><strong>Equal Weight full ouch</strong> in fresh future (&minus;30.34% year shiny coin, shiny-coin-per-shake &minus;2.97) &mdash; back up still-look-hard end.</li>
+                            <li class="prose prose--caveman"><strong>Equal Weight is catastrophic</strong> out-of-sample (&minus;30.34% annualized return, Sharpe &minus;2.97) &mdash; confirming the static analysis conclusions.</li>
                             <li class="prose"><strong>In-sample vs out-of-sample gap:</strong> Risk Parity in-sample Sharpe = 3.61 vs out-of-sample &minus;0.55 &mdash; a significant overfitting warning.</li>
-                            <li class="prose prose--caveman"><strong>Old-window vs fresh-window gap:</strong> Risk Parity old-window shiny-coin-per-shake = 3.61 vs fresh &minus;0.55 &mdash; big over-tune warning.</li>
+                            <li class="prose prose--caveman"><strong>In-sample vs out-of-sample gap:</strong> Risk Parity in-sample Sharpe of 3.61 vs out-of-sample of &minus;0.55 &mdash; a significant overfitting warning.</li>
                         </ul>
                     </div>
                 </section>
@@ -946,7 +945,7 @@
 
                     <div class="content-text">
                         <p class="prose">Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
-                        <p class="prose prose--caveman">Use this big plan to pick how much BTC by Ugg shake-belly. Answer always between 0% and 16%.</p>
+                        <p class="prose prose--caveman">Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
 
                         <div class="results-table">
                             <h4>Allocation by Risk Tolerance</h4>
@@ -998,15 +997,15 @@
                         <h3>Hard Bounds</h3>
                         <ul>
                             <li class="prose"><strong>Minimum useful allocation: 5%</strong> &mdash; below this, BTC&rsquo;s impact on both risk and return is negligible (FRC &lt;8%).</li>
-                            <li class="prose prose--caveman"><strong>Smallest useful chunk: 5%</strong> &mdash; under this, BTC barely move shake or shiny coin (FRC &lt;8%).</li>
+                            <li class="prose prose--caveman"><strong>Minimum useful allocation: 5%</strong> &mdash; below this level, BTC's impact on both risk and return is negligible (FRC &lt;8%).</li>
                             <li class="prose"><strong>Optimal range: 10&ndash;12%</strong> &mdash; achieves meaningful diversification while keeping FRC &le;20%; robustness score &ge;71.</li>
-                            <li class="prose prose--caveman"><strong>Best range: 10&ndash;12%</strong> &mdash; real spread while FRC stay &le;20%; strong-score &ge;71.</li>
+                            <li class="prose prose--caveman"><strong>Optimal range: 10&ndash;12%</strong> &mdash; delivers meaningful diversification while keeping FRC &le;20%; robustness score &ge;71.</li>
                             <li class="prose"><strong>Maximum recommended: 16%</strong> &mdash; beyond this, FRC exceeds 25%, stress losses exceed &minus;25%, score drops below 64.</li>
-                            <li class="prose prose--caveman"><strong>Most Ugg say ok: 16%</strong> &mdash; past this, FRC jump over 25%, poke ouch past &minus;25%, score fall below 64.</li>
+                            <li class="prose prose--caveman"><strong>Maximum recommended: 16%</strong> &mdash; beyond this level, FRC exceeds 25%, stress losses exceed &minus;25%, and the robustness score falls below 64.</li>
                             <li class="prose"><strong>Hard ceiling: 20%</strong> &mdash; at this weight, FRC approaches 40&ndash;50%; the portfolio becomes structurally fragile.</li>
-                            <li class="prose prose--caveman"><strong>Hard roof: 20%</strong> &mdash; at this chunk, FRC creep to 40&ndash;50%; rock pile go brittle.</li>
+                            <li class="prose prose--caveman"><strong>Hard ceiling: 20%</strong> &mdash; at this weight, FRC approaches 40&ndash;50% and the portfolio becomes structurally fragile.</li>
                             <li class="prose"><strong>Never equal-weight (50%):</strong> this is a leveraged crypto bet, not a diversified portfolio; P(Loss) = 27.1%.</li>
-                            <li class="prose prose--caveman"><strong>Never even-pile (50%):</strong> this pumped-up crypto bet, not a spread rock pile; chance of ouch = 27.1%.</li>
+                            <li class="prose prose--caveman"><strong>Never equal-weight (50%):</strong> this is a leveraged crypto bet, not a diversified portfolio; P(Loss) = 27.1%.</li>
                         </ul>
 
                         <h3>Implementation Checklist</h3>
@@ -1018,7 +1017,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Recommended: &le;20%. This is the primary constraint that drives everything else.</p>
-                                    <p class="prose prose--caveman">Ugg say: &le;20%. This main rule push all other rules.</p>
+                                    <p class="prose prose--caveman">Recommended: &le;20%. This is the primary constraint that drives every subsequent decision.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1037,7 +1036,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">Rebalance if BTC weight drifts &gt;3% from target. BTC&rsquo;s high vol causes fast drift.</p>
-                                    <p class="prose prose--caveman">Fix rock pile if BTC chunk wander &gt;3% from goal. Big BTC shake make fast wander.</p>
+                                    <p class="prose prose--caveman">Rebalance whenever BTC weight drifts more than 3% from its target. BTC's high volatility causes fast drift.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1047,7 +1046,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">If &sigma;<sub>BTC</sub> spikes above 100% annualized, temporarily reduce weight by 30%.</p>
-                                    <p class="prose prose--caveman">If &sigma;<sub>BTC</sub> jump past 100% year shake, cut chunk by 30% for now.</p>
+                                    <p class="prose prose--caveman">If &sigma;<sub>BTC</sub> spikes above 100% annualized, temporarily reduce the BTC weight by 30%.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1057,7 +1056,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">BTC &minus;50% from ATH: do NOT increase allocation. Maintain target weight via regular rebalance only.</p>
-                                    <p class="prose prose--caveman">BTC &minus;50% from top: do NOT add more chunk. Keep goal chunk by normal rock pile fix only.</p>
+                                    <p class="prose prose--caveman">When BTC is down &minus;50% from its all-time high, do NOT increase the allocation. Maintain the target weight via regular rebalancing only.</p>
                                 </div>
                             </div>
                             <div class="method-card">
@@ -1067,7 +1066,7 @@
                                 </div>
                                 <div class="method-content">
                                     <p class="prose">If correlation with equities exceeds 0.6 sustained for 2+ quarters, consider reducing allocation by 20%.</p>
-                                    <p class="prose prose--caveman">If move-with-stocks stay over 0.6 for 2+ seasons, think about cut chunk by 20%.</p>
+                                    <p class="prose prose--caveman">If BTC's correlation with equities exceeds 0.6 for 2+ quarters, consider reducing the allocation by 20%.</p>
                                 </div>
                             </div>
                         </div>
@@ -1080,7 +1079,7 @@
 
                     <div class="content-text">
                         <p class="prose">The entire case for BTC rests on its low/negative correlation with traditional assets. What happens when correlations shift?</p>
-                        <p class="prose prose--caveman">Whole BTC story stand on its small/opposite move with old rocks. What happen when moves shift?</p>
+                        <p class="prose prose--caveman">The entire case for BTC rests on its low or negative correlation with traditional assets. What happens when those correlations shift?</p>
 
                         <div class="results-table">
                             <h4>Historical BTC&ndash;Equity Correlation by Regime</h4>
@@ -1127,27 +1126,27 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>Critical finding:</strong> The 2022 rate-hiking cycle showed BTC can behave as a <em>correlated risk asset</em>, not a diversifier. During this period, a 10% BTC allocation would have <em>increased</em> portfolio volatility rather than reducing it.</p>
-                                <p class="prose prose--caveman"><strong>Big find:</strong> 2022 rate-raise time show BTC can act like <em>same-way shake rock</em>, not spreader. In this time, 10% BTC chunk would <em>grow</em> rock pile shake, not cut it.</p>
+                                <p class="prose prose--caveman"><strong>Critical finding:</strong> The 2022 rate-hiking cycle demonstrated that BTC can behave as a <em>correlated risk asset</em>, not a diversifier. During that period, a 10% BTC allocation would have <em>increased</em> portfolio volatility rather than reducing it.</p>
                             </div>
                         </div>
 
                         <h3>Monitoring Framework</h3>
                         <ul>
                             <li class="prose"><strong>Rolling 90-day BTC&ndash;S&amp;P 500 correlation:</strong> primary signal. Track weekly.</li>
-                            <li class="prose prose--caveman"><strong>Rolling 90-sun BTC&ndash;S&amp;P 500 move-together:</strong> main sign. Watch every 7 suns.</li>
+                            <li class="prose prose--caveman"><strong>Rolling 90-day BTC&ndash;S&amp;P 500 correlation:</strong> the primary signal. Track weekly.</li>
                             <li class="prose"><strong>Yellow flag (&rho; &gt; 0.20 for 3 months):</strong> reduce BTC allocation by 30% (e.g., 10% &rarr; 7%), redistribute to commodities.</li>
-                            <li class="prose prose--caveman"><strong>Yellow flag (&rho; &gt; 0.20 for 3 moons):</strong> cut BTC chunk by 30% (e.g., 10% &rarr; 7%), spread to dirt-stuff rocks.</li>
+                            <li class="prose prose--caveman"><strong>Yellow flag (&rho; &gt; 0.20 for 3 months):</strong> reduce the BTC allocation by 30% (e.g., 10% &rarr; 7%) and redistribute to commodities.</li>
                             <li class="prose"><strong>Red flag (&rho; &gt; 0.50 for 2 months):</strong> reduce BTC to 5% minimum or exit entirely; the diversification thesis is broken.</li>
-                            <li class="prose prose--caveman"><strong>Red flag (&rho; &gt; 0.50 for 2 moons):</strong> cut BTC to 5% floor or leave whole way; spread story broken.</li>
+                            <li class="prose prose--caveman"><strong>Red flag (&rho; &gt; 0.50 for 2 months):</strong> reduce BTC to the 5% minimum or exit entirely; the diversification thesis is broken.</li>
                             <li class="prose"><strong>Green flag (&rho; &lt; 0.00 for 3 months):</strong> restore full target allocation; diversification thesis confirmed.</li>
-                            <li class="prose prose--caveman"><strong>Green flag (&rho; &lt; 0.00 for 3 moons):</strong> bring back full goal chunk; spread story confirmed.</li>
+                            <li class="prose prose--caveman"><strong>Green flag (&rho; &lt; 0.00 for 3 months):</strong> restore the full target allocation; the diversification thesis is confirmed.</li>
                             <li class="prose"><strong>After major BTC draw-down (&gt;50% from ATH):</strong> do NOT increase allocation. Rebalance to target weight only &mdash; avoid catching falling knives.</li>
-                            <li class="prose prose--caveman"><strong>After big BTC ouch (&gt;50% from top):</strong> do NOT add more chunk. Just fix to goal chunk &mdash; no catch falling knives.</li>
+                            <li class="prose prose--caveman"><strong>After a major BTC drawdown (&gt;50% from ATH):</strong> do NOT increase the allocation. Rebalance only to the target weight &mdash; avoid catching falling knives.</li>
                         </ul>
 
                         <h3>BTC Cost &amp; Execution (Indonesia)</h3>
                         <p class="prose">BTC is the most expensive sleeve to implement in Indonesia. Execution costs can eat 1&ndash;2% annually.</p>
-                        <p class="prose prose--caveman">BTC is most costly rock to buy in Indonesia. Trade cost eat 1&ndash;2% each year.</p>
+                        <p class="prose prose--caveman">BTC is the most expensive sleeve to implement in Indonesia. Execution costs can consume 1&ndash;2% annually.</p>
 
                         <div class="results-table">
                             <h4>Transaction Cost Breakdown</h4>
@@ -1192,7 +1191,7 @@
                         </div>
 
                         <p class="prose">Even after execution costs, BTC improves the portfolio&rsquo;s Sharpe ratio by 0.4&ndash;0.6 &mdash; the diversification benefit survives the cost drag, but by a thinner margin. Investors must control execution costs to preserve the alpha.</p>
-                        <p class="prose prose--caveman">Even after trade cost, BTC push up rock pile shiny-coin-per-shake by 0.4&ndash;0.6 &mdash; spread bonus live through cost drag, but thinner. Ugg must hold down trade cost to keep alpha.</p>
+                        <p class="prose prose--caveman">Even after execution costs, BTC improves the portfolio's Sharpe ratio by 0.4&ndash;0.6 &mdash; the diversification benefit survives the cost drag, but the margin is thinner. Investors must control execution costs carefully to preserve the alpha.</p>
                     </div>
                 </section>
 
@@ -1209,38 +1208,38 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose">The biggest risk to any BTC allocation is not mathematical &mdash; it is behavioral.</p>
-                                <p class="prose prose--caveman">Biggest danger to any BTC chunk not from number &mdash; it from Ugg head.</p>
+                                <p class="prose prose--caveman">The biggest risk to any BTC allocation is not mathematical &mdash; it is behavioral.</p>
                             </div>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Volatility Tolerance</h4>
                             <p class="prose">BTC routinely experiences 30&ndash;50% drawdowns within a calendar year. Even at 10% portfolio weight, this translates to 3&ndash;5% portfolio contribution to drawdown. Investors who cannot tolerate seeing a red number on their BTC position should allocate 0%.</p>
-                            <p class="prose prose--caveman">BTC normally have 30&ndash;50% big ouch in one sun-cycle. Even at 10% chunk, this make 3&ndash;5% rock pile ouch share. Ugg who hate see red on BTC should give 0%.</p>
+                            <p class="prose prose--caveman">BTC routinely experiences 30&ndash;50% drawdowns within a calendar year. Even at a 10% portfolio weight, that translates to a 3&ndash;5% portfolio drawdown contribution. Investors who cannot tolerate seeing a red number on their BTC position should allocate 0%.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Rebalancing Discipline</h4>
                             <p class="prose">Risk Parity requires <em>buying</em> BTC after it crashes and <em>selling</em> after it rallies. This is psychologically difficult. Automate rebalancing rules or use a discretionary advisor.</p>
-                            <p class="prose prose--caveman">Risk Parity need Ugg <em>buy</em> BTC after crash and <em>sell</em> after rip. This hard for Ugg head. Make robot rules or use guide Ugg.</p>
+                            <p class="prose prose--caveman">Risk Parity requires <em>buying</em> BTC after crashes and <em>selling</em> after rallies. This is psychologically difficult. Automate the rebalancing rules or work with a discretionary advisor.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>FOMO During Rallies</h4>
                             <p class="prose">When BTC doubles in 3 months, the temptation to increase allocation beyond the 10&ndash;12% target is extreme. <em>Do not.</em> The risk contribution math does not care about recent returns.</p>
-                            <p class="prose prose--caveman">When BTC 2x in 3 moons, urge to add more chunk past 10&ndash;12% goal go ohio extreme. <em>Do not.</em> Shake share math no care about recent shiny coin.</p>
+                            <p class="prose prose--caveman">When BTC doubles in 3 months, the temptation to push the allocation beyond the 10&ndash;12% target becomes extreme. <em>Do not.</em> The risk contribution math is indifferent to recent returns.</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Anchor to FRC, Not Weight</h4>
                             <p class="prose">When communicating with stakeholders, frame BTC exposure as &ldquo;16.7% of portfolio risk&rdquo; rather than &ldquo;10% of portfolio weight.&rdquo; This reframes the conversation from &ldquo;too little crypto&rdquo; to &ldquo;appropriate risk budget.&rdquo;</p>
-                            <p class="prose prose--caveman">When Ugg talk to other Ugg, say BTC as &ldquo;16.7% of rock pile shake&rdquo; not &ldquo;10% of rock pile chunk.&rdquo; This turn talk from &ldquo;too little crypto&rdquo; to &ldquo;right danger pile.&rdquo;</p>
+                            <p class="prose prose--caveman">When communicating with stakeholders, frame BTC exposure as &ldquo;16.7% of portfolio risk&rdquo; rather than &ldquo;10% of portfolio weight.&rdquo; This reframes the conversation from &ldquo;too little crypto&rdquo; to &ldquo;appropriate risk budget.&rdquo;</p>
                         </div>
 
                         <div class="hypothesis-box">
                             <h4>Regret Minimization</h4>
                             <p class="prose">If BTC goes to zero, a 10% allocation means a 10% portfolio loss &mdash; recoverable in ~8 months at historical return rates. If BTC triples and you have 0%, the forgone return is only ~3pp of Sharpe. Frame both scenarios for peace of mind.</p>
-                            <p class="prose prose--caveman">If BTC fall to zero, 10% chunk mean 10% rock pile ouch &mdash; back in ~8 moons at old shiny coin pace. If BTC 3x and Ugg have 0%, missed shiny coin only ~3pp shiny-coin-per-shake. Hold both futures in head for calm.</p>
+                            <p class="prose prose--caveman">If BTC goes to zero, a 10% allocation means a 10% portfolio loss &mdash; recoverable in roughly 8 months at historical return rates. If BTC triples and you held 0%, the forgone return is only ~3pp of Sharpe. Frame both scenarios for peace of mind.</p>
                         </div>
                     </div>
                 </section>
@@ -1300,7 +1299,7 @@
 };
     </script>
     <script src="../assets/js/mindmap.js"></script>
-    <script src="../assets/js/main-theme.js?v=12" defer></script>
+    <script src="../assets/js/main-theme.js?v=13" defer></script>
     <script src="../assets/js/research-recommendations.js" defer></script>
 
     <!-- Schema.org structured data for better SEO -->

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -39,8 +39,8 @@
     
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 </head>
 
 <body class="research-page">
@@ -74,11 +74,10 @@
             </div>
             
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -149,7 +148,7 @@
                             Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 &mdash; the "guardian of the genome" &mdash; before malignant cascades take hold. Award-winning research bridging evolutionary computation and cancer genomics.
                         </p>
                         <p class="hero__subtitle prose prose--caveman">
-                            Loop thinky-rock sniff first broke spots that shake p53 (boss tiny-instruction that stop bad lumps) before bad lump grow big. Shiny-prize research. Join evolve-thinky and lump-gene look hard.
+                            Closed-loop genetic algorithms detect the earliest mutations that destabilise <strong>p53</strong>, a tumor-suppressor gene that triggers apoptosis when DNA is damaged, before malignancy develops. Award-winning research linking evolutionary computation with cancer genomics.
                         </p>
                         
                         <div class="paper-meta-box">
@@ -190,7 +189,7 @@
                             P-53 operates as the "guardian of the genome," halting cell division when DNA damage is detected. Mutations in this gene contribute to over 50% of all human cancers, making it a critical target for early detection strategies.
                         </p>
                         <p class="prose prose--caveman">
-                            P-53 stand guard for whole instruction-scroll. Ugg-cell try split? P-53 see instruction-scroll torn, yell STOP. Broke spots in P-53 push over 50% of all human bad lumps. Big juicy target for catch lump early.
+                            P-53 functions as the genome's guardian, halting cell division when DNA damage is detected. Mutations in P-53 are implicated in over 50% of all human cancers, making the gene a priority target for early detection.
                         </p>
                         
                         <div class="research-highlight">
@@ -205,7 +204,7 @@
                                     Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Old way only sniff letter-strings already gone bad. Ugg study look hard at broke spots BEFORE lump come. Spot pattern early. Maybe poke lump with stick before lump wake. Save tribe.
+                                    Existing approaches analyse sequences that are already malignant. This study examines mutation patterns in the pre-malignant phase, identifying predictive signatures that could enable intervention before cancer develops.
                                 </p>
                             </div>
                         </div>
@@ -214,7 +213,7 @@
                             Combining genetic algorithms with self-organizing maps to trace deterministic pathways from healthy to malignant P-53 sequences, revealing early-warning biomarkers for clinical application.
                         </p>
                         <p class="prose prose--caveman">
-                            Ugg smush evolve-thinky-rock with self-sort map. Trace path from good P-53 to bad-lump P-53 step by step. Path same every time, not random. Find early warning signs for healer-Ugg to use.
+                            The study combines genetic algorithms with self-organizing maps to trace the deterministic progression from wild-type P-53 to malignant sequences, exposing early-warning biomarkers for clinical use.
                         </p>
                     </div>
                 </section>
@@ -293,7 +292,7 @@
                                         Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg grab 25 P-53 letter-strings from NCBI cave-pile. Some good, some bad-lump. Each string 2,509 letters long. Ugg scrub junk letters out, line up sick string next to parent string. Clean pile ready.
+                                        Assembled 25 wild-type and cancerous P-53 DNA sequences from the NCBI repository, each 2,509 bases long. Non-nucleotide characters were removed and pathological sequences aligned to their parental counterparts.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">NCBI Database</span>
@@ -312,7 +311,7 @@
                                         Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg grow tree-shape: one Ugg-cell split to two, two split to four, on and on. Each branch hold which round, which letters, lump or not. Tree go 14 rounds deep. Match how real bad lump start.
+                                        A binary tree models mitotic bifurcation: each cell division produces two daughter nodes. Every node records its generation index, DNA composition, and malignancy state. Recursion runs to generation 14 to emulate tumour initiation depth.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Binary Tree</span>
@@ -331,7 +330,7 @@
                                         Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg climb tree deep-first. Pull each path. Use Levenshtein-stick to count letter mismatch. Mark elder branches that drift big right before bad-lump branch show up. Those branches sus.
+                                        Depth-first traversal extracts each generational path. Mismatch rates are scored via Levenshtein similarity, and the highest-drift ancestor branches preceding malignant nodes are flagged as candidate precursors.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Levenshtein Distance</span>
@@ -350,7 +349,7 @@
                                         Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg do log₄(L) math, pick k = 4. Chop each string in chunks of 4 letters. Each string become 1×1024 number-row that count chunks. End pile: 73,475 rows, all same length. Lit fr fr.
+                                        Using log₄(L) to set k = 4, each strand is encoded as a 1×1024 feature vector of k-mer frequencies. The final length-adjusted dataset contains 73,475 rows.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">k-mer Analysis</span>
@@ -369,7 +368,7 @@
                                         Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg try SOM self-sort maps from 1×2 all way to 1×11. Look hard at how features twin each other, toss extra. Pick 1×6 grid. Best split between piles, least bend. Chef kiss.
+                                        SOM grids from 1×2 to 1×11 were evaluated. Correlation analysis removed redundant dimensions, and a 1×6 lattice was selected for delivering maximum cluster separation with minimal distortion.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Self-Organizing Maps</span>
@@ -513,7 +512,7 @@
                             Genetic algorithms plus SOM clustering expose deterministic shifts toward malignancy. Six pentamer motifs consistently precede malignant conversion, providing high-clarity monitoring targets.
                         </p>
                         <p class="prose prose--caveman">
-                            Evolve-thinky-rock plus SOM piles show: shift to bad lump not random, same path every time. Six 5-letter chunks always show up before Ugg-cell turn bad. Clear targets to watch. No cap.
+                            Genetic algorithms combined with SOM clustering reveal that progression toward malignancy is deterministic rather than random. Six pentamer motifs consistently appear before malignant conversion, providing clear monitoring targets.
                         </p>
                         
                         <div class="research-highlight">
@@ -528,7 +527,7 @@
                                     Encoded feature space remains interpretable, enabling rapid clinician dialogue. The motif shortlist now feeds wet-lab validation and computational monitoring pipelines.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Number-space still make sense to Ugg eye. Healer-Ugg can read, talk fast. Short list of broke spots now feed wet-cave test bench and thinky-rock watch pipe. Both sides eat well.
+                                    The encoded feature space remains interpretable, supporting rapid dialogue with clinicians. The motif shortlist now feeds both wet-lab validation and computational monitoring pipelines.
                                 </p>
                             </div>
                         </div>
@@ -537,7 +536,7 @@
                             Future work will expand datasets with longitudinal patient samples and fuse expression-level data to link mutational motifs with phenotypic impact.
                         </p>
                         <p class="prose prose--caveman">
-                            Next round Ugg grow pile big: track sick-Ugg over many moons. Smush in gene-loud data too. Then tie broke spots to how Ugg-body look and act. Big brain plan.
+                            Next steps will expand the dataset with longitudinal patient samples and integrate gene expression data to link mutational motifs with phenotypic impact.
                         </p>
                     </div>
                 </section>
@@ -634,7 +633,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=12"></script>
+    <script src="../assets/js/main-theme.js?v=13"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

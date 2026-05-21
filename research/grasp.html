@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -29,8 +29,8 @@
 
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 </head>
 
 <body class="research-page">
@@ -56,11 +56,10 @@
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -126,7 +125,7 @@
 
                             <h1 class="circrna-title">GRASP: Graph-Routed Adaptive Spectral Partitioning</h1>
                             <p class="circrna-subtitle prose">An Autonomous Topology-Aware Clustering System with Oracle-Guided Routing</p>
-                            <p class="circrna-subtitle prose prose--caveman">Ugg-bot make own blobs by shape. Wise guide tell path-picker where to go.</p>
+                            <p class="circrna-subtitle prose prose--caveman">A clustering system that detects dataset shape on its own and routes the work to the right specialist algorithm.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">GRASP is a parameter-free clustering pipeline that constructs a topological fingerprint of any dataset, estimates the natural cluster count automatically, and dispatches to the most suitable specialist algorithm &mdash; without requiring labels, validation data, or user-specified hyperparameters.</p>
@@ -244,7 +243,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Problem</h3>
                                 <p class="prose">No single clustering algorithm is universally optimal — the No Free Lunch Theorem formalises this. The optimal choice depends critically on the geometric and statistical properties of the dataset, which are precisely unknown in unsupervised settings. Existing approaches either require user-specified hyperparameters or rely on heuristic ensemble methods.</p>
-                                <p class="prose prose--caveman">No one make-blobs trick win every time. No Free Lunch Theorem say so. Best pick depend on shape of things and number-stuff of data pile. Ugg no know these when no labels. Old way make Ugg pick knobs by hand or smash many tricks together with hope. Bad.</p>
+                                <p class="prose prose--caveman">No single clustering algorithm wins on every dataset. The No Free Lunch Theorem proves this formally. The right choice depends on the geometry and statistics of the data, which are unknown without labels. Existing methods force users to tune hyperparameters manually or combine algorithms heuristically.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="methods">
@@ -258,7 +257,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Approach</h3>
                                 <p class="prose">GRASP presents a parameter-free autonomous pipeline that identifies the input distribution's geometric structure, estimates k via normalised spectral gap, and delegates the final assignment to one of six specialists &mdash; KMeans++, TopSOM, NnSom, WardAgglom, KnnSpectral, or RandNystrom &mdash; chosen by an oracle that maps topological and Euclidean diagnostic signals to the algorithm most likely to achieve Bayes-optimal partitioning.</p>
-                                <p class="prose prose--caveman">GRASP is no-knob pipeline. Run on own. First find shape of things in data. Then guess k from normalised spectral gap. Then hand job to one of six Uggs who only know one thing &mdash; KMeans++, TopSOM, NnSom, WardAgglom, KnnSpectral, or RandNystrom. Wise guide read shape-clue and Euclidean-clue, then path-pick the Ugg most likely to hit Bayes-best split. Slick.</p>
+                                <p class="prose prose--caveman">GRASP is a parameter-free pipeline that runs autonomously. It first identifies the data's geometric structure, then estimates k using the normalised spectral gap. It then delegates the final assignment to one of six specialist algorithms &mdash; KMeans++, TopSOM, NnSom, WardAgglom, KnnSpectral, or RandNystrom. A routing oracle reads the topological and Euclidean diagnostic signals and selects the specialist most likely to achieve Bayes-optimal partitioning.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="results">
@@ -271,7 +270,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
                                 <p class="prose">Evaluated on 26 benchmark datasets spanning non-convex shapes, SIPU S-sets and A-sets, UCI real-world data, and high-dimensional settings. GRASP achieves ARI 0.378 on interlocking rings against DBSCAN's ARI 0.000, passes all 49 unit tests, and processes 50,000 points within 140ms including full GNG training and Nystr&ouml;m embedding.</p>
-                                <p class="prose prose--caveman">Test on 26 bench data. Weird shapes, SIPU S-sets and A-sets, UCI real data, big-dim piles. GRASP hit ARI 0.378 on hook-rings while DBSCAN flop at ARI 0.000. Pass all 49 unit tests. Chew 50,000 points in 140ms, full GNG many-tries-to-learn and Nystr&ouml;m squish included. Zoom.</p>
+                                <p class="prose prose--caveman">Tested on 26 benchmark datasets covering non-convex shapes, SIPU S-sets and A-sets, UCI real-world data, and high-dimensional inputs. GRASP reached ARI 0.378 on interlocking rings while DBSCAN scored ARI 0.000. All 49 unit tests pass. It processes 50,000 points in 140ms, including full GNG training and Nystr&ouml;m embedding.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="conclusion">
@@ -283,7 +282,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Contribution</h3>
                                 <p class="prose">A topology-prior partitioning principle, geometry-adaptive oracle routing, and selective spectral deployment &mdash; three design principles that together produce an interpretable, parameter-free system whose oracle converges to the Bayes-optimal specialist as n &rarr; &infin;.</p>
-                                <p class="prose prose--caveman">Shape-of-things-first split rule, shape-aware wise guide path-picking, and spectral only when need &mdash; three big ideas. Together make system Ugg can read, no knobs, where wise guide drift to Bayes-best Ugg-who-only-know-one-thing as n &rarr; &infin;. Lowkey based.</p>
+                                <p class="prose prose--caveman">Three core design principles: topology-prior partitioning, geometry-adaptive oracle routing, and selective spectral deployment. Together they produce an interpretable, parameter-free system whose oracle converges to the Bayes-optimal specialist as n &rarr; &infin;.</p>
                             </div>
                         </div>
                     </div>
@@ -298,7 +297,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">The fundamental difficulty in clustering is that the optimal algorithm depends on geometric and statistical properties of the dataset that are precisely unknown in the unsupervised setting. In practice, practitioners execute several algorithms in succession, selecting among them via visual inspection or labelled validation data &mdash; neither of which is available in genuinely unsupervised analysis.</p>
-                        <p class="lead-paragraph prose prose--caveman">Big hard thing: best clustering trick depend on shape and number stuff of data pile. Ugg no know shape when no labels. Cave-folk run many algorithms one by one, pick winner with eye-look or with label data. Both gone in true no-label cave. Sad.</p>
+                        <p class="lead-paragraph prose prose--caveman">The core challenge in clustering is that the optimal algorithm depends on geometric and statistical properties of the dataset, which are unknown without labels. In practice, analysts run several algorithms in sequence and select among them through visual inspection or labelled validation data &mdash; neither of which exists in a genuinely unsupervised setting.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -309,15 +308,15 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">The Normalised Spectral Gap</h4>
                                 <p class="prose">A topology-faithful graph makes cluster structure computationally accessible. The normalised spectral gap &delta;<sub>k</sub> = &lambda;<sub>k+1</sub>/&lambda;<sub>k+2</sub> is large when the graph decomposes cleanly into well-separated subgraphs &mdash; and small when cluster boundaries are topologically entangled. GRASP uses this gap to both estimate k and calibrate the oracle's routing decisions.</p>
-                                <p class="prose prose--caveman">Shape-true graph make cluster easy see for rock. Gap number &delta;<sub>k</sub> = &lambda;<sub>k+1</sub>/&lambda;<sub>k+2</sub> go big when graph break clean into far-apart chunks. Go small when cluster edge all tangle. GRASP use gap to guess k and to fix oracle pick. Smart.</p>
+                                <p class="prose prose--caveman">A topology-faithful graph makes cluster structure computationally accessible. The normalised spectral gap &delta;<sub>k</sub> = &lambda;<sub>k+1</sub>/&lambda;<sub>k+2</sub> is large when the graph splits cleanly into well-separated subgraphs and small when cluster boundaries are topologically entangled. GRASP uses this gap both to estimate k and to calibrate the oracle's routing decisions.</p>
                             </div>
                         </div>
 
                         <p class="prose">GRASP's three design principles separate it from existing methods. First, topology-prior partitioning constructs a topology map before committing to any partitioning strategy, at cost O(nm) independent of k. Second, geometry-adaptive routing selects the specialist on the basis of diagnostics extracted from the topology map &mdash; not heuristics external to the pipeline. Third, selective spectral deployment applies full spectral computation only when topological evidence indicates Euclidean methods are insufficient, keeping the typical cost at O(nm).</p>
-                        <p class="prose prose--caveman">GRASP have three big idea, make different from old way. One: shape-first cut, build shape-map first, then pick cut plan, cost O(nm), no care about k. Two: shape-aware route, pick best helper from shape-map clues, no use outside guess. Three: spectral only when need, do full spectral work only when shape Ugg see with eye say Euclidean weak. Cost stay at O(nm). Good.</p>
+                        <p class="prose prose--caveman">Three design principles distinguish GRASP from prior methods. First, topology-prior partitioning builds a topology map before choosing a partitioning strategy, at cost O(nm) independent of k. Second, geometry-adaptive routing selects the specialist from diagnostics extracted from that topology map rather than external heuristics. Third, selective spectral deployment runs full spectral computation only when topological evidence shows Euclidean methods are inadequate, keeping the typical cost at O(nm).</p>
 
                         <p class="prose">Full spectral clustering incurs O(n&sup2;) memory for the kernel matrix and O(n&sup3;) for eigendecomposition &mdash; prohibitive at n &ge; 10,000. GRASP's Nystr&ouml;m extension with GNG landmarks reduces this to O(nmk) with data-proportional coverage, enabling spectral-quality clustering at linear cost.</p>
-                        <p class="prose prose--caveman">Full spectral clustering eat O(n&sup2;) memory for kernel rock and O(n&sup3;) for eigen-smash. Too much at n &ge; 10,000. GRASP use Nystr&ouml;m trick with GNG landmark to go small to O(nmk). Cover data good. Now spectral-good clustering at line-cost. Yay.</p>
+                        <p class="prose prose--caveman">Full spectral clustering requires O(n&sup2;) memory for the kernel matrix and O(n&sup3;) for eigendecomposition, which is impractical at n &ge; 10,000. GRASP's Nystr&ouml;m extension with GNG landmarks reduces this to O(nmk) with data-proportional coverage, delivering spectral-quality clustering at linear cost.</p>
                     </div>
                 </section>
 
@@ -341,7 +340,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 1 — Convex-Bypass Probe</h3>
                                     <p class="method-description prose">On a random subsample X&#770; of size n<sub>s</sub> = 800, GRASP runs r = 2 independent KMeans++ restarts with k = k<sub>hint</sub>, computes the best mean silhouette s&#770; on the best labelling. If s&#770; &gt; 0.55, all n points are assigned by nearest-centroid and the pipeline terminates at cost O(n<sub>s</sub>kd). This fast convex-bypass saves 16 of 26 benchmark datasets, completing in 2&ndash;22ms.</p>
-                                    <p class="method-description prose prose--caveman">Take small grab X&#770; of size n<sub>s</sub> = 800. GRASP run r = 2 KMeans++ tries with k = k<sub>hint</sub>. Make best mean silhouette s&#770; on best label. If s&#770; &gt; 0.55, all n point go to closest middle-rock and pipeline stop. Cost O(n<sub>s</sub>kd). Fast skip-path save 16 of 26 bench data. Finish in 2&ndash;22ms. Zoom zoom.</p>
+                                    <p class="method-description prose prose--caveman">On a random subsample X&#770; of size n<sub>s</sub> = 800, GRASP runs r = 2 KMeans++ restarts with k = k<sub>hint</sub> and computes the best mean silhouette s&#770; on the best labelling. If s&#770; &gt; 0.55, all n points are assigned to the nearest centroid and the pipeline stops, at cost O(n<sub>s</sub>kd). This fast convex-bypass resolves 16 of 26 benchmark datasets in 2&ndash;22ms.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Silhouette Probe</span>
                                         <span class="method-tag">O(n<sub>s</sub>kd)</span>
@@ -365,7 +364,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 2 — Growing Neural Gas Topology</h3>
                                     <p class="method-description prose">GRASP trains a GNG on X using min(n, 8000) points for T = 50 epochs. GNG inserts new neurons at locations of maximal quantisation error, yielding a topology map whose connectivity emerges from data. The Competitive Hebbian Learning theorem guarantees the GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions &mdash; providing a formal topological fidelity guarantee. Edges older than d<sub>max</sub> are pruned every &lambda; steps.</p>
-                                    <p class="method-description prose prose--caveman">GRASP do many tries to learn GNG on X with min(n, 8000) point for T = 50 epochs. GNG put new brain-blob where error big. Make shape-map from data on own. Competitive Hebbian Learning law promise GNG edge set sit inside Delaunay triangle of brain-blob spot. Shape stay true. Edge older than d<sub>max</sub> get cut every &lambda; step. Tidy.</p>
+                                    <p class="method-description prose prose--caveman">GRASP trains a Growing Neural Gas (GNG) network on X using min(n, 8000) points for T = 50 epochs. GNG inserts new neurons at locations of maximal quantisation error, producing a topology map whose connectivity emerges from the data. The Competitive Hebbian Learning theorem guarantees that the GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions, providing a formal topological fidelity guarantee. Edges older than d<sub>max</sub> are pruned every &lambda; steps.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Growing Neural Gas</span>
                                         <span class="method-tag">Delaunay Subgraph</span>
@@ -386,7 +385,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 3 &amp; 4 — Graph Laplacian &amp; Eigengap k*</h3>
                                     <p class="method-description prose">The bandwidth &sigma; = median({&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;}) is estimated from GNG edge lengths. The sparse affinity matrix A<sub>ij</sub> = exp(&minus;&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;&sup2;/2&sigma;&sup2;) is built, and the normalised Laplacian L = I&minus;D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup> is computed at constant cost in m. GRASP then estimates k* via the normalised gap &delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>)/max(&lambda;<sub>k+1</sub>, &epsilon;), setting k* = arg max &delta;<sub>i</sub>.</p>
-                                    <p class="method-description prose prose--caveman">Width &sigma; = median({&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;}) guess from GNG edge length. Build sparse like-rock A<sub>ij</sub> = exp(&minus;&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;&sup2;/2&sigma;&sup2;). Make normalised Laplacian L = I&minus;D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup> at flat cost in m. Then GRASP guess k* with normalised gap &delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>)/max(&lambda;<sub>k+1</sub>, &epsilon;). Set k* = arg max &delta;<sub>i</sub>. Bonk done.</p>
+                                    <p class="method-description prose prose--caveman">The bandwidth &sigma; = median({&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;}) is estimated from GNG edge lengths. GRASP builds the sparse affinity matrix A<sub>ij</sub> = exp(&minus;&Vert;w<sub>i</sub>&minus;w<sub>j</sub>&Vert;&sup2;/2&sigma;&sup2;) and the normalised Laplacian L = I&minus;D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup> at constant cost in m. It then estimates k* via the normalised gap &delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>)/max(&lambda;<sub>k+1</sub>, &epsilon;), setting k* = arg max &delta;<sub>i</sub>.</p>
                                     <div class="formula-box">
                                         <code class="formula">L = I &minus; D<sup>&minus;1/2</sup>AD<sup>&minus;1/2</sup>,&nbsp;&nbsp;&nbsp;&delta;<sub>i</sub> = (&lambda;<sub>i+1</sub>&minus;&lambda;<sub>i</sub>) / max(&lambda;<sub>k+1</sub>, &epsilon;)</code>
                                         <span class="formula-note">k* = arg max<sub>i</sub> &delta;<sub>i</sub> — robust to spectral scale by construction</span>
@@ -413,7 +412,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 5 — Nystr&ouml;m Embedding</h3>
                                     <p class="method-description prose">Given GNG eigenvectors U &isin; &#8477;<sup>m&times;k*</sup>, each data point x is embedded as &phi;(x) = &sum;<sub>i=1</sub><sup>m</sup> K(x, w<sub>i</sub>) / &radic;(D<sub>x</sub> &middot; d<sub>i</sub>) U<sub>ij</sub>. Each row of &phi;(x) is &ell;&sup2;-normalised. Because GNG neurons concentrate in proportion to data density, they systematically cover all cluster regions, whereas random landmarks may miss thin or low-density structures. The Rust implementation distributes the loop across all cores via Rayon.</p>
-                                    <p class="method-description prose prose--caveman">Got GNG eigenvectors U &isin; &#8477;<sup>m&times;k*</sup>. Each data point x get push into new space as &phi;(x) = &sum;<sub>i=1</sub><sup>m</sup> K(x, w<sub>i</sub>) / &radic;(D<sub>x</sub> &middot; d<sub>i</sub>) U<sub>ij</sub>. Each row of &phi;(x) get &ell;&sup2;-norm flatten. GNG brain-blob cluster where data thick, so cover all chunk-zone good. Random landmark miss thin spot. Rust code spread loop to all cores with Rayon. Big brain.</p>
+                                    <p class="method-description prose prose--caveman">Given GNG eigenvectors U &isin; &#8477;<sup>m&times;k*</sup>, each data point x is embedded as &phi;(x) = &sum;<sub>i=1</sub><sup>m</sup> K(x, w<sub>i</sub>) / &radic;(D<sub>x</sub> &middot; d<sub>i</sub>) U<sub>ij</sub>, with each row &ell;&sup2;-normalised. Because GNG neurons concentrate in proportion to data density, they cover every cluster region, while random landmarks may miss thin or low-density structures. The Rust implementation distributes the loop across all cores via Rayon.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Nystr&ouml;m Extension</span>
                                         <span class="method-tag">GNG Landmarks</span>
@@ -437,7 +436,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 6 — Six Specialist Sub-Algorithms</h3>
                                     <p class="method-description prose">GRASP instantiates six specialists, each targeting a different geometric regime:</p>
-                                    <p class="method-description prose prose--caveman">GRASP make six helpers. Each helper good at one shape kind:</p>
+                                    <p class="method-description prose prose--caveman">GRASP instantiates six specialist algorithms, each targeting a different geometric regime:</p>
                                     <ul class="method-list">
                                         <li><strong>KMeans++</strong> &mdash; O(nkd), on original features. Best for approximately Gaussian clusters.</li>
                                         <li><strong>TopSOM</strong> &mdash; O(nm&sup2;), Laplacian &rarr; Eigengap &rarr; Nystr&ouml;m &rarr; KMeans. Full spectral pipeline on GNG topology.</li>
@@ -467,7 +466,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Stage 7 — Routing Oracle</h3>
                                     <p class="method-description prose">The oracle maps three diagnostic signals to an algorithm choice: s<sub>ts</sub> (TopoSOM silhouette), s<sub>km</sub> (KMeans silhouette), and spectral advantage &Delta;. The routing logic encodes four cases: Case 2.5 (high-confidence Gaussian, &rho; &gt; 0.70 and s<sub>km</sub> &gt; 0.60 &rarr; KMeans); Case 2 (low ARI signals non-convex geometry &rarr; KnnSpectral/WardAgglom/TopoSOM); Cases 3a/3a&prime; (explicit spectral advantage &rarr; TopoSOM for large graphs); Case 3b (silhouette fallback &rarr; max(s<sub>ts</sub>, s<sub>km</sub>, s<sub>rn</sub>)).</p>
-                                    <p class="method-description prose prose--caveman">Oracle look at three signal-clue and pick helper: s<sub>ts</sub> (TopoSOM silhouette), s<sub>km</sub> (KMeans silhouette), and spectral plus &Delta;. Four case: Case 2.5 (sure-bell Gaussian, &rho; &gt; 0.70 and s<sub>km</sub> &gt; 0.60 &rarr; KMeans); Case 2 (low ARI scream weird shape &rarr; KnnSpectral/WardAgglom/TopoSOM); Cases 3a/3a&prime; (clear spectral plus &rarr; TopoSOM for big graph); Case 3b (silhouette back-up &rarr; max(s<sub>ts</sub>, s<sub>km</sub>, s<sub>rn</sub>)). Oracle bonk-pick winner.</p>
+                                    <p class="method-description prose prose--caveman">The oracle uses three diagnostic signals to select an algorithm: s<sub>ts</sub> (TopoSOM silhouette), s<sub>km</sub> (KMeans silhouette), and spectral advantage &Delta;. The routing logic covers four cases: Case 2.5 (high-confidence Gaussian, &rho; &gt; 0.70 and s<sub>km</sub> &gt; 0.60 &rarr; KMeans); Case 2 (low ARI indicates non-convex geometry &rarr; KnnSpectral/WardAgglom/TopoSOM); Cases 3a/3a&prime; (explicit spectral advantage &rarr; TopoSOM for large graphs); Case 3b (silhouette fallback &rarr; max(s<sub>ts</sub>, s<sub>km</sub>, s<sub>rn</sub>)).</p>
                                     <div class="formula-box">
                                         <code class="formula">&Delta; = s<sub>TopoSOM</sub> &minus; s<sub>KMeans</sub></code>
                                         <span class="formula-note">Spectral advantage &Delta; &gt; 0.20 with p &gt; 0.05 routes to TopoSOM</span>
@@ -492,7 +491,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">GRASP was evaluated on 26 benchmark datasets in six categories: non-convex shapes (moons, circles, spirals, interlocking rings, swiss_roll_2d, anisotropic, varied_density; n = 150&ndash;1000), SIPU S-sets s1&ndash;s4, A-sets a1&ndash;a3, UCI real-world (Iris, Wine, Breast Cancer, Digits), and scalability datasets at n = 50,000.</p>
-                        <p class="lead-paragraph prose prose--caveman">GRASP get test on 26 bench data in six group: weird shape (moons, circles, spirals, interlocking rings, swiss_roll_2d, anisotropic, varied_density; n = 150&ndash;1000), SIPU S-sets s1&ndash;s4, A-sets a1&ndash;a3, UCI real-world (Iris, Wine, Breast Cancer, Digits), and big-pile data at n = 50,000. Ugg test lots.</p>
+                        <p class="lead-paragraph prose prose--caveman">GRASP was evaluated on 26 benchmark datasets across six categories: non-convex shapes (moons, circles, spirals, interlocking rings, swiss_roll_2d, anisotropic, varied_density; n = 150&ndash;1000), SIPU S-sets s1&ndash;s4, A-sets a1&ndash;a3, UCI real-world data (Iris, Wine, Breast Cancer, Digits), and scalability datasets at n = 50,000.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -503,18 +502,18 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Interlocking Rings — GRASP ARI 0.378</h4>
                                 <p class="prose">On the interlocking rings benchmark where cluster boundaries are maximally topologically entangled: DBSCAN ARI 0.055, HDBSCAN ARI 0.055, KnnSpectral ARI 0.234 &mdash; GRASP achieves ARI 0.378 via TopoSOM routing, a 14&times; improvement over DBSCAN and 60% over KnnSpectral.</p>
-                                <p class="prose prose--caveman">On hook-ring bench where cluster edge tangle worst: DBSCAN ARI 0.055, HDBSCAN ARI 0.055, KnnSpectral ARI 0.234. GRASP get ARI 0.378 by route to TopoSOM. 14&times; better than DBSCAN and 60% better than KnnSpectral. GRASP smash.</p>
+                                <p class="prose prose--caveman">On the interlocking rings benchmark, where cluster boundaries are maximally entangled: DBSCAN ARI 0.055, HDBSCAN ARI 0.055, KnnSpectral ARI 0.234. GRASP reaches ARI 0.378 by routing to TopoSOM &mdash; a 14&times; improvement over DBSCAN and 60% over KnnSpectral.</p>
                             </div>
                         </div>
 
                         <p class="prose"><strong>Non-convex benchmarks</strong> show the clearest advantage: GNG correctly captures the ring and spiral topology, the Laplacian eigengap identifies k = 2 or k = 3, and the oracle routes to TopoSOM which recovers the true partition via spectral embedding. KMeans++ achieves mean ARI 0.188 on these datasets; GRASP achieves 0.376.</p>
-                        <p class="prose prose--caveman"><strong>Weird-shape bench</strong> show big win: GNG catch ring and spiral shape good. Laplacian eigengap point at k = 2 or k = 3. Oracle send job to TopoSOM. TopoSOM find true cut with spectral push. KMeans++ get mean ARI 0.188 on these. GRASP get 0.376. Skibidi numbers.</p>
+                        <p class="prose prose--caveman"><strong>Non-convex benchmarks</strong> show the largest advantage: GNG correctly captures ring and spiral topology, the Laplacian eigengap identifies k = 2 or k = 3, and the oracle routes to TopoSOM, which recovers the true partition via spectral embedding. KMeans++ achieves mean ARI 0.188 on these datasets; GRASP achieves 0.376.</p>
 
                         <p class="prose"><strong>A-sets and S-sets</strong> (overlapping Gaussian clusters): The convex-bypass probe correctly activates on S4 (tight clusters, silhouette &gt; 0.55) and routes to KMeans on A1 (ρ = 0.862). On A3 (heavily overlapping, k = 50), GRASP routes to KMeans++ and achieves ARI 0.216 vs KMeans++ at 0.188.</p>
-                        <p class="prose prose--caveman"><strong>A-sets and S-sets</strong> (blurry bell-blob clusters): Fast skip-probe turn on for S4 (tight clump, silhouette &gt; 0.55) and send to KMeans on A1 (ρ = 0.862). On A3 (much overlap, k = 50), GRASP send to KMeans++ and get ARI 0.216 vs KMeans++ at 0.188. Still beat.</p>
+                        <p class="prose prose--caveman"><strong>A-sets and S-sets</strong> (overlapping Gaussian clusters): The convex-bypass probe activates correctly on S4 (tight clusters, silhouette &gt; 0.55) and routes to KMeans on A1 (ρ = 0.862). On A3 (heavily overlapping, k = 50), GRASP routes to KMeans++ and achieves ARI 0.216 against KMeans++ at 0.188.</p>
 
                         <p class="prose"><strong>Scalability</strong>: GNG, Laplacian, and eigendecomposition stages collectively incur O(m&sup3;) operations, entirely independent of n. The sole n-dependent step is the Nystr&ouml;m extension O(nmk); at n = 50,000 this completes in ~140ms. Standard SC requires O(n&sup2;d) at n = 10,000 this is 10<sup>12</sup> operations &mdash; GRASP's O(nm) is a 500&times; reduction at comparable quality.</p>
-                        <p class="prose prose--caveman"><strong>Big-pile</strong>: GNG, Laplacian, and eigen-smash step eat O(m&sup3;) work, no care about n. Only n-step is Nystr&ouml;m extend O(nmk). At n = 50,000 this finish in ~140ms. Normal SC need O(n&sup2;d). At n = 10,000 that 10<sup>12</sup> work. GRASP O(nm) is 500&times; less work, same quality. Mega-bonk efficient.</p>
+                        <p class="prose prose--caveman"><strong>Scalability</strong>: The GNG, Laplacian, and eigendecomposition stages collectively cost O(m&sup3;), independent of n. The only n-dependent step is the Nystr&ouml;m extension at O(nmk); at n = 50,000 this completes in ~140ms. Standard spectral clustering requires O(n&sup2;d), which at n = 10,000 is 10<sup>12</sup> operations. GRASP's O(nm) is a 500&times; reduction at comparable quality.</p>
                     </div>
                 </section>
 
@@ -527,7 +526,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">GRASP's three main theoretical results establish conditions under which each component achieves its design goal.</p>
-                        <p class="lead-paragraph prose prose--caveman">GRASP have three big think-rock proof. They show when each piece hit goal. Ugg think maybe true.</p>
+                        <p class="lead-paragraph prose prose--caveman">GRASP's three main theoretical results establish the conditions under which each component achieves its design goal.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -538,18 +537,18 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Theorem 2 — Spectral Cluster Recovery</h4>
                                 <p class="prose">If X is drawn from k distributions with compact support satisfying min<sub>j&ne;l</sub> d(C<sub>j</sub>, C<sub>l</sub>) &ge; &Delta; &gt; 0, and the GNG mean edge length &sigma; &lt; &Delta;/2, then L has exactly k zero eigenvalues whose eigenvectors span a subspace in which the k cluster indicator vectors are mutually orthogonal.</p>
-                                <p class="prose prose--caveman">If X come from k tight-pile with min<sub>j&ne;l</sub> d(C<sub>j</sub>, C<sub>l</sub>) &ge; &Delta; &gt; 0, and GNG mean edge length &sigma; &lt; &Delta;/2, then L have just k zero eigenvalues. Their eigenvectors hold space where k cluster point-arrows all sit right-angle to each other. Clean separation. Rock-true.</p>
+                                <p class="prose prose--caveman">If X is drawn from k distributions with compact support satisfying min<sub>j&ne;l</sub> d(C<sub>j</sub>, C<sub>l</sub>) &ge; &Delta; &gt; 0, and the GNG mean edge length &sigma; &lt; &Delta;/2, then L has exactly k zero eigenvalues whose eigenvectors span a subspace in which the k cluster indicator vectors are mutually orthogonal.</p>
                             </div>
                         </div>
 
                         <p class="prose"><strong>Theorem 3 (Nystr&ouml;m error)</strong>: For rank-m Nystr&ouml;m approximation K&#771; with GNG landmarks, &Vert;K&minus;K&#771;&Vert;<sub>F</sub> &le; &lambda;<sub>m+1</sub>(K) &radic;(n&minus;m). The eigenvector error for the leading k components is O(&lambda;<sub>k+1</sub>/(&lambda;<sub>k</sub>&minus;&lambda;<sub>k+1</sub>)), which diminishes as the spectral gap increases &mdash; exactly the regime where GRASP routes to TopSOM.</p>
-                        <p class="prose prose--caveman"><strong>Theorem 3 (Nystr&ouml;m error)</strong>: For rank-m Nystr&ouml;m guess K&#771; with GNG landmark, &Vert;K&minus;K&#771;&Vert;<sub>F</sub> &le; &lambda;<sub>m+1</sub>(K) &radic;(n&minus;m). Eigenvector wrong for top k piece is O(&lambda;<sub>k+1</sub>/(&lambda;<sub>k</sub>&minus;&lambda;<sub>k+1</sub>)). Wrong go small when gap go big. That same time GRASP send to TopSOM. Match good.</p>
+                        <p class="prose prose--caveman"><strong>Theorem 3 (Nystr&ouml;m error)</strong>: For the rank-m Nystr&ouml;m approximation K&#771; with GNG landmarks, &Vert;K&minus;K&#771;&Vert;<sub>F</sub> &le; &lambda;<sub>m+1</sub>(K) &radic;(n&minus;m). Eigenvector error for the leading k components is O(&lambda;<sub>k+1</sub>/(&lambda;<sub>k</sub>&minus;&lambda;<sub>k+1</sub>)), which decreases as the spectral gap grows &mdash; exactly the regime where GRASP routes to TopSOM.</p>
 
                         <p class="prose"><strong>Theorem 4 (Delaunay subgraph, Frötzke 2009)</strong>: The GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions. Hence any topologically separable cluster boundary present in the data's Delaunay structure is also represented in the GNG graph, bounding the Nystr&ouml;m approximation quality from below.</p>
-                        <p class="prose prose--caveman"><strong>Theorem 4 (Delaunay subgraph, Frötzke 2009)</strong>: GNG edge set sit inside Delaunay triangle of brain-blob spot. So any shape-split cluster edge in Delaunay of data also live in GNG graph. This put floor under Nystr&ouml;m guess quality. Cannot fall under.</p>
+                        <p class="prose prose--caveman"><strong>Theorem 4 (Delaunay subgraph, Frötzke 2009)</strong>: The GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions. Therefore any topologically separable cluster boundary present in the data's Delaunay structure is also represented in the GNG graph, providing a lower bound on Nystr&ouml;m approximation quality.</p>
 
                         <p class="prose"><strong>Proposition 5 (Oracle consistency)</strong>: As n &rarr; &infin; with fixed cluster counts, the routing oracle selects the Bayes-optimal specialist with probability approaching 1. The oracle uses ARI estimate ρ, silhouette coefficients, and spectral advantage &Delta; &mdash; all of which converge by law of large numbers, and eigenvector stability of symmetric operators stabilises at a fixed label corresponding to the asymptotically optimal specialist.</p>
-                        <p class="prose prose--caveman"><strong>Proposition 5 (Oracle consistency)</strong>: When n &rarr; &infin; with cluster count fixed, oracle pick Bayes-best helper with chance going to 1. Oracle use ARI guess ρ, silhouette number, and spectral plus &Delta;. All settle by big-number law. Eigenvector of symmetric thing stay still on one label, which is the long-run best helper. Oracle never wrong in end. Bonk.</p>
+                        <p class="prose prose--caveman"><strong>Proposition 5 (Oracle consistency)</strong>: As n &rarr; &infin; with fixed cluster counts, the routing oracle selects the Bayes-optimal specialist with probability approaching 1. The oracle uses the ARI estimate ρ, silhouette coefficients, and spectral advantage &Delta;, all of which converge by the law of large numbers; eigenvector stability of symmetric operators settles on the fixed label corresponding to the asymptotically optimal specialist.</p>
                     </div>
                 </section>
 
@@ -562,13 +561,13 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">GRASP demonstrates that autonomous, parameter-free clustering is achievable through principled geometric diagnosis rather than heuristic ensemble voting. The three-principle architecture &mdash; topology prior, geometry-adaptive routing, selective spectral deployment &mdash; produces a system that is simultaneously faster than full spectral methods, more robust than density methods on complex topology, and more accurate than KMeans++ on non-convex structure.</p>
-                        <p class="lead-paragraph prose prose--caveman">GRASP show self-run no-knob clustering work with smart shape-check, not crowd-vote guess. Three-rule build &mdash; shape-first, shape-aware route, spectral only when need &mdash; make system fast more than full spectral, tough more than density way on tangle shape, and right more than KMeans++ on weird shape. Triple win.</p>
+                        <p class="lead-paragraph prose prose--caveman">GRASP demonstrates that autonomous, parameter-free clustering is achievable through principled geometric diagnosis rather than heuristic ensemble voting. The three-principle architecture &mdash; topology prior, geometry-adaptive routing, and selective spectral deployment &mdash; yields a system that is simultaneously faster than full spectral methods, more robust than density-based methods on complex topology, and more accurate than KMeans++ on non-convex structure.</p>
 
                         <p class="prose">The fast convex-bypass terminates 16 of 26 benchmarks in under 22ms. For the remaining 10, the full pipeline achieves state-of-the-art accuracy while processing 50,000 points within 140ms &mdash; scaling as O(nm) in n, independent of the O(m&sup3;) topology computation which depends only on the GNG size m.</p>
-                        <p class="prose prose--caveman">Fast skip-path finish 16 of 26 bench in under 22ms. For other 10, full pipe hit top-tier right-ness while chew 50,000 point in 140ms. Scale as O(nm) in n, no care about O(m&sup3;) shape work, which only depend on GNG size m. Sigma speed.</p>
+                        <p class="prose prose--caveman">The fast convex-bypass resolves 16 of 26 benchmarks in under 22ms. For the remaining 10, the full pipeline reaches state-of-the-art accuracy while processing 50,000 points in 140ms, scaling as O(nm) in n and independent of the O(m&sup3;) topology computation, which depends only on the GNG size m.</p>
 
                         <p class="prose">Future directions include extending GRASP's routing oracle with learned diagnostic features via a small neural classifier trained on the topology signals, integrating SOM-TSK's multi-start seeding as a replacement for KMeans++ in the KMeans specialist, and evaluating GRASP on single-cell RNA-seq datasets where cluster topology is biologically meaningful and ground truth is available via cell-type markers.</p>
-                        <p class="prose prose--caveman">Next plan: grow GRASP oracle with learned signal-clue from small brain-net taught on shape signal. Swap KMeans++ inside KMeans helper with SOM-TSK many-start seed. Test GRASP on single-cell RNA-seq pile, where cluster shape mean bio thing and truth-label live in cell-type mark. Big future. Ugg excited.</p>
+                        <p class="prose prose--caveman">Future directions include extending the routing oracle with learned diagnostic features from a small neural classifier trained on topology signals, swapping KMeans++ for SOM-TSK's multi-start seeding in the KMeans specialist, and evaluating GRASP on single-cell RNA-seq datasets where cluster topology carries biological meaning and ground truth is available via cell-type markers.</p>
                     </div>
                 </section>
 
@@ -626,7 +625,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=12"></script>
+    <script src="../assets/js/main-theme.js?v=13"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

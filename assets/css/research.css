@@ -3360,7 +3360,8 @@ tbody td strong {
 }
 
 /* ============================================
-   Caveman Mode — prose visibility toggle
+   Simple Mode — prose visibility toggle
+   (Class names keep the `caveman` prefix for legacy reasons.)
    See docs/superpowers/specs/2026-05-21-caveman-mode-design.md
    ============================================ */
 .prose--caveman { display: none; }

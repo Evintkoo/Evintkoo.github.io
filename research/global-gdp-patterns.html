@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -38,8 +38,8 @@
     
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 </head>
 
 <body class="research-page">
@@ -73,11 +73,10 @@
             </div>
             
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -139,7 +138,7 @@
                             190 countries, 45 years, four distinct development trajectories. Machine learning clustering reveals why some economies surge while others stagnate &mdash; and what policymakers can do about it.
                         </p>
                         <p class="hero__subtitle prose prose--caveman">
-                            190 tribes, 45 sun-cycles, four big paths. Thinky-rock grouping show why some tribe swole big and some tribe sleep &mdash; and what chief can do about it fr fr.
+                            190 countries, 45 years, four distinct development paths. Machine learning clustering shows why some economies grow rapidly while others stall &mdash; and what policymakers can do about it.
                         </p>
                         
                         <div class="paper-meta-box">
@@ -243,7 +242,7 @@
                             Countries have followed strikingly different economic paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries stagnated. This research clusters 190 countries by GDP trajectories to understand growth patterns and inform policy strategies.
                         </p>
                         <p class="prose prose--caveman">
-                            Tribes walk very different path since 1980. South Korea people 32-times more rich than 1950, Romania people 20-times, China people 16-times, but other tribe just sit. Ugg group 190 tribes by GDP path to see how tribe swole and tell chief what to do.
+                            Countries have taken very different paths since 1980. South Koreans are 32-times richer than in 1950, Romanians 20-times, and Chinese 16-times, while other countries have not advanced. This study groups 190 countries by their GDP trajectories to understand growth patterns and guide policy.
                         </p>
                         
                         <div class="research-highlight">
@@ -258,7 +257,7 @@
                                     Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years, with dramatic differences in economic outcomes - some nations achieved 16-32x income growth while others stagnated.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Look hard at 190 tribes show four big GDP paths over 45 sun-cycles. Big big difference - some tribe get 16-32x more shiny rocks, other tribe just sleep no move.
+                                    Analysis of 190 countries identifies four distinct GDP trajectory patterns over 45 years. Outcomes vary widely - some nations achieved 16-32x income growth while others stagnated.
                                 </p>
                             </div>
                         </div>
@@ -267,7 +266,7 @@
                             Understanding these divergent economic trajectories is crucial for policymakers, international institutions, and investors. This study applies advanced machine learning techniques to identify and characterize distinct patterns of economic development, providing insights into the factors that drive sustained growth versus stagnation.
                         </p>
                         <p class="prose prose--caveman">
-                            Chief and big tribe council and shiny-rock-throwers need know these different paths. Ugg use big thinky-rock magic to find and name the patterns of tribe swole, show what make tribe grow strong vs sleep.
+                            Policymakers, international institutions, and investors need to understand these divergent paths. This study applies machine learning to identify and characterize distinct development patterns, highlighting what drives sustained growth versus stagnation.
                         </p>
                     </div>
                 </section>
@@ -285,7 +284,7 @@
                                         World Bank & IMF GDP data (1980-2024, constant 2015 US$) for 190 countries, providing a comprehensive view of global economic development over four and a half decades.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        World Bank and IMF GDP numbers (1980-2024, same 2015 US$) for 190 tribes. Big view of how all tribes swole across four and half ten-cycles.
+                                        World Bank and IMF GDP data (1980-2024, constant 2015 US$) for 190 countries provides a comprehensive view of global economic development across four and a half decades.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">World Bank</span>
@@ -304,7 +303,7 @@
                                         UMAP (Uniform Manifold Approximation and Projection) was used to reduce the high-dimensional time series data while preserving the global structure of GDP trajectories.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg use UMAP magic to squish big tall pile of numbers down small, but keep shape of GDP paths the same. Smush smush, no lose meaning.
+                                        UMAP (Uniform Manifold Approximation and Projection) reduces the high-dimensional time series data to a lower-dimensional space while preserving the global structure of GDP trajectories.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">UMAP</span>
@@ -322,7 +321,7 @@
                                         Self-Organizing Map (SOM) clustering was applied to identify distinct patterns in the reduced dimensional space, resulting in four coherent economic trajectory clusters.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg put Self-Organizing Map (SOM) on smushed numbers to find patterns. Out come four big groups of tribe paths, all make sense.
+                                        Self-Organizing Map (SOM) clustering is applied to the reduced data to identify distinct patterns, producing four coherent economic trajectory clusters.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">SOM</span>
@@ -340,7 +339,7 @@
                                         Cluster stability was validated through bootstrap resampling and economic interpretation was verified against known historical patterns and policy frameworks.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Ugg shake groups with bootstrap trick to see they stay strong. Then Ugg check meaning against old stories of tribes and chief rules. All match. No cap.
+                                        Cluster stability is validated through bootstrap resampling, and the economic interpretation is checked against known historical patterns and policy frameworks. The results hold up.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Bootstrap</span>
@@ -437,7 +436,7 @@
                             Each cluster requires distinct policy approaches based on their unique economic characteristics and challenges. The following recommendations are tailored to help countries within each cluster optimize their growth strategies and avoid common pitfalls.
                         </p>
                         <p class="prose prose--caveman">
-                            Each group need own chief rule based on own tribe shape and own trouble. These tips help each tribe in group make best swole plan and dodge same old traps.
+                            Each cluster requires its own policy approach based on its economic profile and challenges. The recommendations below help countries in each cluster optimize their growth strategies and avoid common pitfalls.
                         </p>
                     </div>
                     
@@ -584,7 +583,7 @@
                             This clustering reveals that countries achieving sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Those experiencing boom-bust cycles relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, poor governance, or human capital deficits.
                         </p>
                         <p class="prose prose--caveman">
-                            This grouping show tribes that swole long time built strong chief rules, fed people brain, and swap stuff between tribes while watch danger careful. Tribes that boom then bust lean too hard on shiny rocks or borrow-bones with no safe pile. Sleepy tribes held back by fight, bad chief, or no smart people.
+                            The clustering shows that countries with sustained growth built strong policy foundations, invested in people, and integrated with the global economy while managing risks prudently. Boom-bust economies relied too narrowly on commodities or credit without building buffers. Stagnant economies were held back by conflict, weak governance, or human capital deficits.
                         </p>
                         
                         <div class="research-highlight">
@@ -599,7 +598,7 @@
                                     Countries can move between clusters with appropriate policies. The goal is progression: Cluster 2 → Cluster 3 → Cluster 1, while avoiding regression. Policy choices and institutional development can overcome historical disadvantages.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Tribes can hop group with right chief rule. Goal: Cluster 2 → Cluster 3 → Cluster 1, no slide back. Good chief picks and strong tribe-rules can beat old bad luck.
+                                    Countries can move between clusters with the right policies. The goal is upward progression: Cluster 2 → Cluster 3 → Cluster 1, while avoiding regression. Sound policy choices and strong institutions can overcome historical disadvantages.
                                 </p>
                             </div>
                         </div>
@@ -608,14 +607,14 @@
                             Understanding these patterns helps international institutions tailor strategies, investors assess sovereign risks, and policymakers learn from peer experiences. As the world faces new challenges like climate change and digital disruption, these historical patterns provide valuable guidance for achieving stable and inclusive economic growth.
                         </p>
                         <p class="prose prose--caveman">
-                            See these patterns help big tribe council pick smart plan, shiny-rock-throwers see tribe danger, and chief learn from other chief. World now face new big problem like sky get hot and shiny screen change everything &mdash; these old stories give good map to swole steady and bring all people along.
+                            Understanding these patterns helps international institutions design better strategies, investors assess sovereign risk, and policymakers learn from peer experience. As the world confronts new challenges such as climate change and digital disruption, these historical patterns offer useful guidance for achieving stable and inclusive economic growth.
                         </p>
 
                         <p class="prose">
                             The analysis demonstrates that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that successfully implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital were able to achieve remarkable transformations over the 45-year period studied.
                         </p>
                         <p class="prose prose--caveman">
-                            Look hard show: where tribe start matter, but chief picks and strong tribe-rules can beat old bad luck. Tribes that did big fix-up, kept big-picture steady, and fed brain to people pulled off huge glow-up over the 45 sun-cycles Ugg study.
+                            The analysis shows that while initial conditions matter, policy choices and institutional development can overcome historical disadvantages. Countries that implemented comprehensive reforms, maintained macroeconomic stability, and invested in human capital achieved remarkable transformations over the 45-year period studied.
                         </p>
                     </div>
                 </section>
@@ -675,7 +674,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=12"></script>
+    <script src="../assets/js/main-theme.js?v=13"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

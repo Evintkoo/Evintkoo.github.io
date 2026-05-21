@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Caveman Mode pre-paint: apply html.caveman before stylesheet matches to prevent flash -->
+    <!-- Simple Mode pre-paint: apply html.caveman class before stylesheet matches to prevent flash of formal text -->
     <script>
       (function () {
         try {
@@ -29,8 +29,8 @@
 
     <link rel="icon" type="image/png" href="../assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="../assets/css/main-theme.css?v=13">
-    <link rel="stylesheet" href="../assets/css/research.css?v=14">
+    <link rel="stylesheet" href="../assets/css/main-theme.css?v=14">
+    <link rel="stylesheet" href="../assets/css/research.css?v=15">
 </head>
 
 <body class="research-page">
@@ -56,11 +56,10 @@
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle caveman mode" aria-pressed="false" title="Caveman mode">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 20l6-6"/>
-                        <path d="M14 4c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z"/>
-                        <path d="M11 7l2 2"/>
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
+                        <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
                     </svg>
                 </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -126,7 +125,7 @@
 
                             <h1 class="circrna-title">Individual Optimality and Collective Failure: Survival-Maximising Strategies in a Keynesian Agent-Based Model</h1>
                             <p class="circrna-subtitle prose">Grid Search over Agent Decision Rules Reveals a Structural Coordination Failure Attractor</p>
-                            <p class="circrna-subtitle prose prose--caveman">Try many rule combo for tiny Ugg. See tribe-all-do-wrong-together hole that suck everyone in.</p>
+                            <p class="circrna-subtitle prose prose--caveman">Grid search over agent decision rules uncovers a structural coordination-failure attractor that pulls all agent types in.</p>
 
                             <div class="circrna-summary">
                                 <p class="summary-lead">Using a grid search over key decision parameters for households, firms, and banks, this paper identifies survival-maximising rules empirically &mdash; without imposing theoretical equilibrium conditions. When all agent types simultaneously follow their individually-optimal strategies, aggregate outcomes diverge sharply: GDP growth falls 65%, firm bankruptcies rise 17-fold, and mean firm profit turns negative.</p>
@@ -244,7 +243,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Question</h3>
                                 <p class="prose">This paper investigates what decision rules maximise the individual survivability and welfare of each agent type in a single-sector Keynesian agent-based model, and what aggregate outcome emerges when all agent types simultaneously follow their individually-optimal strategies. Using a grid search over key decision parameters for households, firms, and banks, survival-maximising rules are identified empirically &mdash; without imposing theoretical equilibrium conditions.</p>
-                                <p class="prose prose--caveman">Rock-scratch ask: what rule keep each Ugg type most alive in one-sector Keynes-tribe big think many tiny Ugg simulation? Then what happen to whole tribe when every Ugg type follow own best rule at same time? Ugg try many rule combo across Ugg family, Ugg make-stuff tribe, and bank-Ugg. Find best-for-self rule by trying many, no fancy stuff-stop-moving math forced on top.</p>
+                                <p class="prose prose--caveman">The paper asks two questions. First, which decision rules maximise individual survivability and welfare for each agent type in a single-sector Keynesian agent-based model. Second, what aggregate outcome emerges when households, firms, and banks all adopt their individually-optimal rules at once. A grid search over decision parameters identifies the optimal rules empirically, without imposing equilibrium conditions.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="methods">
@@ -258,7 +257,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Approach</h3>
                                 <p class="prose">For each agent type in isolation, a grid search identifies the parameter combination that maximises a composite survivability score &mdash; incorporating survival rate, wealth accumulation, profit, and financial stability &mdash; against the bounded-rational baseline economy. The survival-optimal rules for households, firms, and banks are then activated simultaneously to form the &ldquo;all-best economy&rdquo;, whose aggregate outcomes are compared to the baseline and to the coordination failure documented in the companion paper.</p>
-                                <p class="prose prose--caveman">Ugg take one type at a time. Try many rule combo to find rule that score best on stay-alive number &mdash; mix survival, wealth pile, profit, money-stability &mdash; against dumb-but-okay base tribe. Then flip switch: best rule for Ugg family, Ugg make-stuff tribe, and bank-Ugg all turn on same moment. Make &ldquo;all-best tribe&rdquo;. Compare whole-tribe number to base and to tribes-all-do-same-thing fail from sister rock-scratch.</p>
+                                <p class="prose prose--caveman">Each agent type is optimised in isolation. A grid search finds the parameter combination that maximises a composite survivability score &mdash; combining survival rate, wealth, profit, and financial stability &mdash; against the bounded-rational baseline. The survival-optimal rules for households, firms, and banks are then activated simultaneously to form the &ldquo;all-best economy&rdquo;. Aggregate outcomes are compared against the baseline and against the coordination failure documented in the companion paper.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="results">
@@ -271,7 +270,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Result</h3>
                                 <p class="prose">The all-best economy produces aggregate outcomes that diverge markedly from the bounded-rational baseline: GDP growth is lower (1.60% vs. 4.60%), unemployment is higher (1.29% vs. 0.24%), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20) despite each agent following individually-optimal rules. Paradoxically, zero lower bound frequency declines as credit demand collapses rather than as a result of improved monetary traction.</p>
-                                <p class="prose prose--caveman">All-best tribe spit out whole-tribe number very different from dumb-but-okay base: GDP grow slower (1.60% vs. 4.60%), no-job higher (1.29% vs. 0.24%), mean Ugg make-stuff tribe profit go negative (&minus;$9.21 vs. +$4.20) even though every Ugg follow best-for-self rule. Twist: zero lower bound hit less, but only because borrow-want collapse, not because money-magic finally work.</p>
+                                <p class="prose prose--caveman">Aggregate outcomes in the all-best economy diverge sharply from the baseline. GDP growth falls (1.60% vs. 4.60%), unemployment rises (1.29% vs. 0.24%), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20) even though every agent follows its individually-optimal rule. ZLB frequency declines, but only because credit demand collapses &mdash; not because monetary policy regains traction.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="conclusion">
@@ -283,7 +282,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Implication</h3>
                                 <p class="prose">The coordination failure identified in the companion paper does not depend on the theoretical-optimality assumption; it is a structural property of decentralised individual optimisation in a Keynesian economy. Bounded rationality acts not merely as a modelling convenience, but as a structural stabiliser maintaining the consumption and credit flows required for aggregate coherence. JEL codes: C63, E12, E32, C61.</p>
-                                <p class="prose prose--caveman">Tribes-all-do-same-thing fail from sister rock-scratch not need fancy best-math assume; it baked into bone of every-Ugg-go-own-way in Keynes-tribe big think cave. Dumb-but-okay rule no just modelling shortcut &mdash; it real glue holding eat-stuff flow and borrow flow together so whole tribe stay coherent. JEL codes: C63, E12, E32, C61.</p>
+                                <p class="prose prose--caveman">The coordination failure from the companion paper does not depend on rational-expectations assumptions; it is a structural property of decentralised individual optimisation in a Keynesian economy. Bounded rationality is not just a modelling shortcut &mdash; it is the structural stabiliser maintaining the consumption and credit flows required for aggregate coherence. JEL codes: C63, E12, E32, C61.</p>
                             </div>
                         </div>
                     </div>
@@ -298,7 +297,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">A central question in macroeconomics is whether individually rational behaviour aggregates to socially desirable outcomes. In Keynesian models with strategic complementarities, the answer is generically no &mdash; but the mechanism and severity of the failure depend critically on the decision rules agents actually use.</p>
-                        <p class="prose prose--caveman">Big Ugg question: when every Ugg do smart thing for self, does whole tribe win? Keynes-tribe big think say no, never. But how bad fail, and why fail, depend on what rule each Ugg follow.</p>
+                        <p class="prose prose--caveman">A core macroeconomic question is whether individually rational behaviour aggregates to socially desirable outcomes. In Keynesian models with strategic complementarities, the answer is generically no. The severity and mechanism of the failure depend on the decision rules agents actually use.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -309,15 +308,15 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Two Attractor States</h4>
                                 <p class="prose">The simulation identifies two stable attractor states: a <strong>coordinated equilibrium</strong> under bounded-rational rules (GDP 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20) and a <strong>decentralised equilibrium</strong> under survival-optimal rules (GDP 1.60%/yr, unemployment 1.29%, firm bankruptcy 4.73%/yr, mean profit &minus;$9.21). Both states are stable across 50 Monte Carlo seeds &mdash; the coordination failure is a genuine long-run attractor, not a transitional trajectory.</p>
-                                <p class="prose prose--caveman">Thinky-rock find two place where stuff stop moving. One: <strong>tribes all do same thing same time</strong> with dumb-but-okay rule (GDP 4.60%/yr, no-job 0.24%, Ugg make-stuff tribe go boom 0.27%/yr, profit +$4.20). Two: <strong>everybody go own way</strong> with smart-for-self rule (GDP 1.60%/yr, no-job 1.29%, Ugg make-stuff tribe go boom 4.73%/yr, profit &minus;$9.21). Both stay stuck across 50 Monte Carlo seeds. No temporary! Real long-time trap fr fr.</p>
+                                <p class="prose prose--caveman">The simulation identifies two stable attractor states. The first is a <strong>coordinated equilibrium</strong> under bounded-rational rules (GDP 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20). The second is a <strong>decentralised equilibrium</strong> under survival-optimal rules (GDP 1.60%/yr, unemployment 1.29%, firm bankruptcy 4.73%/yr, mean profit &minus;$9.21). Both states are stable across 50 Monte Carlo seeds, confirming the coordination failure is a long-run attractor, not a transitional trajectory.</p>
                             </div>
                         </div>
 
                         <p class="prose">This paper builds directly on the companion paper (<a href="keynesian-abm-fiscal.html">Paper 1</a>), which established the baseline model and documented the persistent ZLB result. The present paper asks a different question: what happens when, instead of bounded-rational heuristics, each agent type adopts the strategy that best serves its own survival? The grid search methodology identifies these strategies empirically, without imposing Nash equilibrium or rational-expectations conditions.</p>
-                        <p class="prose prose--caveman">This rock-scratch follow first rock-scratch (<a href="keynesian-abm-fiscal.html">Paper 1</a>), which build base thinky-rock and show ZLB stuck-stuck. Now Ugg ask new question: what if every Ugg drop dumb rule and pick rule that keep self most alive? Grid search find these rule by trying many many, no need impose fancy math equilibrium.</p>
+                        <p class="prose prose--caveman">This paper builds on the companion paper (<a href="keynesian-abm-fiscal.html">Paper 1</a>), which established the baseline model and documented persistent ZLB outcomes. The question here is different: what happens when each agent type adopts the strategy that maximises its own survival rather than a bounded-rational heuristic? Grid search identifies these strategies empirically, without imposing Nash equilibrium or rational-expectations conditions.</p>
 
                         <p class="prose">The result connects to three strands of literature: Diamond's (1982) multiplicity of equilibria in search economies, the coordination failure literature following Cooper and John (1988), and the recent macro-ABM literature documenting bounded rationality as a stabiliser (Dosi et al. 2010, 2013, 2015; Fagiolo and Roventini 2017).</p>
-                        <p class="prose prose--caveman">Result link three big idea-pile from old smart Ugg: Diamond (1982) say many place stuff stop moving in search-cave; Cooper and John (1988) write much about tribes-all-do-same-thing fail; new many-tiny-Ugg simulation crew (Dosi 2010, 2013, 2015; Fagiolo and Roventini 2017) say dumb-but-okay rule actually keep tribe stable.</p>
+                        <p class="prose prose--caveman">The result connects to three literatures: Diamond's (1982) multiplicity of equilibria in search economies, the coordination-failure tradition following Cooper and John (1988), and the recent macro-ABM literature documenting bounded rationality as a stabiliser (Dosi et al. 2010, 2013, 2015; Fagiolo and Roventini 2017).</p>
                     </div>
                 </section>
 
@@ -342,7 +341,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Composite Survivability Score</h3>
                                     <p class="method-description prose">Each agent type is evaluated by a composite score that aggregates multiple welfare dimensions: household score weights survival rate, median wealth, and consumption stability; firm score weights survival rate, mean profit, and employment; bank score weights survival rate, capital adequacy, and net interest income. All components are normalised to [0,1] and combined with equal weights. The composite score at the bounded-rational baseline is used as the reference (score = 0.61 for households, 0.58 for firms, 0.55 for banks).</p>
-                                    <p class="method-description prose prose--caveman">Each Ugg type get one big score made from many good-stuff measures. Ugg family score care about stay alive rate, middle wealth pile, and steady eat-buy. Ugg make-stuff tribe score care about stay alive, profit, and how many Ugg working. Bank-cave score care about stay alive, fat coin reserve, and money-from-loan minus money-paid. All piece squish to [0,1] and add equal weight. Dumb-but-okay base economy score is the line to beat (score = 0.61 for Ugg family, 0.58 for Ugg make-stuff tribe, 0.55 for bank-cave).</p>
+                                    <p class="method-description prose prose--caveman">Each agent type is scored on a composite welfare index. The household score weights survival rate, median wealth, and consumption stability. The firm score weights survival rate, mean profit, and employment. The bank score weights survival rate, capital adequacy, and net interest income. All components are normalised to [0,1] and combined with equal weights. The bounded-rational baseline sets the reference (score = 0.61 for households, 0.58 for firms, 0.55 for banks).</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Multi-objective Welfare</span>
                                         <span class="method-tag">Normalised Score</span>
@@ -367,7 +366,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Grid Search Protocol</h3>
                                     <p class="method-description prose">For each agent type, a discrete grid is constructed over the four most consequential decision parameters. For households: savings propensity &sigma; &isin; {0.05, 0.10, 0.15, 0.20}, risk aversion &rho; &isin; {0.20, 0.40, 0.60, 0.70}, habit &eta; &isin; {0.50, 0.70}, wage decay &delta;<sub>W</sub> &isin; {0.02, 0.05}. Each grid point is evaluated over a 10-year simulation run against the bounded-rational baseline economy. The grid point achieving the highest composite score is identified as the survival-optimal strategy.</p>
-                                    <p class="method-description prose prose--caveman">For each Ugg type, Ugg build grid over four biggest knob. For Ugg family: save-coin tendency &sigma; &isin; {0.05, 0.10, 0.15, 0.20}, scared-of-bad &rho; &isin; {0.20, 0.40, 0.60, 0.70}, habit &eta; &isin; {0.50, 0.70}, wage shrink &delta;<sub>W</sub> &isin; {0.02, 0.05}. Try every spot on grid for 10 winter run against dumb-but-okay base economy. Grid spot with biggest score is the stay-alive-best rule.</p>
+                                    <p class="method-description prose prose--caveman">For each agent type, a discrete grid covers the four most consequential decision parameters. For households: savings propensity &sigma; &isin; {0.05, 0.10, 0.15, 0.20}, risk aversion &rho; &isin; {0.20, 0.40, 0.60, 0.70}, habit &eta; &isin; {0.50, 0.70}, wage decay &delta;<sub>W</sub> &isin; {0.02, 0.05}. Each grid point is evaluated over a 10-year run against the bounded-rational baseline. The grid point with the highest composite score is the survival-optimal strategy.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">4-parameter Grid</span>
                                         <span class="method-tag">10-year Evaluation</span>
@@ -390,7 +389,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">The All-Best Economy</h3>
                                     <p class="method-description prose">After identifying survival-optimal rules for each agent type in isolation, all three agent types are simultaneously assigned their best-found parameter vectors. This &ldquo;all-best economy&rdquo; is then simulated for 10 years across 50 Halton-seed Monte Carlo draws, producing stable aggregate statistics that characterise the decentralised equilibrium. The result is compared to the bounded-rational baseline and to the theoretical-optimal coordination failure documented in Paper 1.</p>
-                                    <p class="method-description prose prose--caveman">After Ugg find stay-alive-best rule for each Ugg type alone, all three Ugg type get switch to best knob at same time. This &ldquo;everybody-best economy&rdquo; then run 10 winter across 50 Halton-seed Monte Carlo draw, give stable big-picture number for everybody-go-own-way stuff-stop-moving. Compare result to dumb-but-okay base and to fancy-math tribes-all-do-same-thing fail from Paper 1.</p>
+                                    <p class="method-description prose prose--caveman">Once the survival-optimal rules are identified for each agent type in isolation, all three types are simultaneously assigned their best-found parameter vectors. This &ldquo;all-best economy&rdquo; is simulated for 10 years across 50 Halton-seed Monte Carlo draws, producing stable aggregate statistics for the decentralised equilibrium. Outcomes are compared with the bounded-rational baseline and the theoretical-optimal coordination failure from Paper 1.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Simultaneous Optimisation</span>
                                         <span class="method-tag">50-seed Monte Carlo</span>
@@ -411,7 +410,7 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">The grid search identifies survival-maximising strategies for each agent type that are individually coherent but collectively destructive when activated simultaneously.</p>
-                        <p class="prose prose--caveman">Grid search find stay-alive-best rule for each Ugg type. Rule make sense for one Ugg alone, but smash whole tribe when all Ugg use rule same time.</p>
+                        <p class="prose prose--caveman">The grid search identifies survival-maximising strategies for each agent type that are individually coherent but collectively destructive when activated simultaneously.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -422,12 +421,12 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Per-Agent Best Strategies</h4>
                                 <p class="prose"><strong>Households</strong> raise savings propensity fourfold (&sigma; = 0.20 vs. 0.05), triple risk aversion (&rho; = 0.70 vs. 0.20), and halve reservation-wage decay (&delta;<sub>W</sub> = 0.02 vs. 0.05). <strong>Firms</strong> cut investment 70% (&chi; = 0.03 vs. 0.10), raise R&amp;D tenfold (&phi; = 0.05 vs. 0.005), and loosen hiring threshold. <strong>Banks</strong> cut risk premium 80% (&zeta;<sup>B</sup> = 0.10 vs. 0.50), contract lending appetite (0.50 vs. 0.80), and raise CAR floor to 12%.</p>
-                                <p class="prose prose--caveman"><strong>Ugg family</strong> save-coin go big four time (&sigma; = 0.20 vs. 0.05), scared-of-bad triple (&rho; = 0.70 vs. 0.20), and wage-want shrink go small by half (&delta;<sub>W</sub> = 0.02 vs. 0.05). <strong>Ugg make-stuff tribe</strong> chop new-stuff buying 70% (&chi; = 0.03 vs. 0.10), R&amp;D go big ten time (&phi; = 0.05 vs. 0.005), and easy-easy on hire-Ugg rule. <strong>Bank-cave</strong> cut scared-of-bad fee 80% (&zeta;<sup>B</sup> = 0.10 vs. 0.50), shrink lending want (0.50 vs. 0.80), and raise fat-coin floor to 12%.</p>
+                                <p class="prose prose--caveman"><strong>Households</strong> quadruple savings propensity (&sigma; = 0.20 vs. 0.05), triple risk aversion (&rho; = 0.70 vs. 0.20), and halve reservation-wage decay (&delta;<sub>W</sub> = 0.02 vs. 0.05). <strong>Firms</strong> cut investment by 70% (&chi; = 0.03 vs. 0.10), increase R&amp;D tenfold (&phi; = 0.05 vs. 0.005), and loosen the hiring threshold. <strong>Banks</strong> cut the risk premium by 80% (&zeta;<sup>B</sup> = 0.10 vs. 0.50), reduce lending appetite (0.50 vs. 0.80), and raise the CAR floor to 12%.</p>
                             </div>
                         </div>
 
                         <p class="prose"><strong>All-best aggregate outcomes:</strong> When all three agent types adopt survival-optimal rules simultaneously, GDP growth falls from 4.60%/yr to 1.60%/yr (&minus;65.2%), unemployment rises from 0.24% to 1.29%, firm bankruptcy rate surges from 0.27% to 4.73%/yr (a 17.5&times; increase), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20). The decentralised equilibrium is stable across all 50 Monte Carlo seeds.</p>
-                        <p class="prose prose--caveman"><strong>Everybody-best big-picture result:</strong> When all three Ugg type pick stay-alive-best rule same time, GDP grow go small from 4.60%/yr to 1.60%/yr (&minus;65.2%), no-job go big from 0.24% to 1.29%, Ugg make-stuff tribe go-boom rate jump from 0.27% to 4.73%/yr (17.5&times; bigger), and profit flip negative (&minus;$9.21 vs. +$4.20). Everybody-go-own-way stuff-stop-moving hold steady across all 50 Monte Carlo seeds. No cap.</p>
+                        <p class="prose prose--caveman"><strong>All-best aggregate outcomes:</strong> When all three agent types adopt survival-optimal rules simultaneously, GDP growth falls from 4.60%/yr to 1.60%/yr (&minus;65.2%), unemployment rises from 0.24% to 1.29%, the firm bankruptcy rate jumps from 0.27% to 4.73%/yr (a 17.5&times; increase), and mean firm profit turns negative (&minus;$9.21 vs. +$4.20). The decentralised equilibrium holds across all 50 Monte Carlo seeds.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -438,7 +437,7 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">The Paradox: Household Wealth Rises</h4>
                                 <p class="prose">Median household wealth rises 76% in the all-best economy (from $3,842 to $6,757), confirming that the failure is not one of individual welfare but of social welfare aggregated across all agent types. Households rationally defect from the coordinated consumption path; the cost is borne collectively by firms and, in the long run, by households themselves as the productive base that supports their income erodes. ZLB frequency paradoxically declines as credit demand collapses rather than as a result of improved monetary traction.</p>
-                                <p class="prose prose--caveman">Middle Ugg family coin-pile go big 76% in everybody-best economy (from $3,842 to $6,757). So fail not about one Ugg sad, fail about whole tribe sad when add up. Ugg family smart-pick step away from tribes-all-do-same-thing eat-buy path; cost fall on Ugg make-stuff tribe, and after long time fall back on Ugg family when stuff-make-base that feed income crumble away. ZLB count go small but trickery: loan-want collapse, not because money-medicine work better.</p>
+                                <p class="prose prose--caveman">Median household wealth rises 76% in the all-best economy (from $3,842 to $6,757). The failure is therefore not one of individual welfare but of social welfare aggregated across agent types. Households rationally defect from the coordinated consumption path; the cost is borne by firms and, in the long run, by households themselves as the productive base supporting their income erodes. ZLB frequency declines, but only because credit demand collapses &mdash; not because monetary policy gains traction.</p>
                             </div>
                         </div>
                     </div>
@@ -453,16 +452,16 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">Three historical episodes confirm that the demand-deficiency mechanism identified computationally is not a model artefact but a recurring structural feature of advanced economies.</p>
-                        <p class="prose prose--caveman">Three old-time story say not-enough-want-buy thing the thinky-rock find is real, not made-up by computer. Same broken pattern come back again and again in big modern tribe.</p>
+                        <p class="prose prose--caveman">Three historical episodes confirm that the demand-deficiency mechanism is not a model artefact but a recurring structural feature of advanced economies.</p>
 
                         <p class="prose"><strong>Japan&apos;s Lost Decades (1991&ndash;2003):</strong> Following the asset bubble collapse, Japanese households dramatically raised savings rates (precautionary motive), banks contracted credit despite near-zero interest rates, and firms slashed investment. Each decision was individually rational given the environment. The aggregate result was a decade of stagnation with GDP growth averaging 0.5%/yr and deflation despite the ZLB &mdash; matching the all-best attractor closely.</p>
-                        <p class="prose prose--caveman"><strong>Japan Lost Decade (1991&ndash;2003):</strong> Big stuff-price-pop go boom, Japan Ugg family save like crazy (just-in-case feeling), bank-cave shut loan even when rate touch zero, and Ugg make-stuff tribe slash new-stuff buy. Each choice smart for one Ugg given big surprise hit. Whole tribe stuck ten winter with GDP grow only 0.5%/yr and price-go-down even at ZLB &mdash; match everybody-best trap real close.</p>
+                        <p class="prose prose--caveman"><strong>Japan&apos;s Lost Decades (1991&ndash;2003):</strong> After the asset bubble collapse, Japanese households sharply raised savings rates on precautionary grounds, banks contracted credit despite near-zero interest rates, and firms slashed investment. Each choice was individually rational. The aggregate outcome was a decade of stagnation with GDP growth averaging 0.5%/yr and deflation despite the ZLB, closely matching the all-best attractor.</p>
 
                         <p class="prose"><strong>Euro-area periphery (2010&ndash;2015):</strong> Under fiscal austerity conditionality, households in Greece, Portugal, and Spain cut consumption simultaneously, banks tightened credit in response to sovereign risk, and firms reduced investment. Each decision was individually rational given sovereign risk premia. The aggregate result was a 6&ndash;26% cumulative GDP contraction, precisely the demand-deficiency mechanism the model isolates.</p>
-                        <p class="prose prose--caveman"><strong>Euro edge tribe (2010&ndash;2015):</strong> Under big-chief belt-tighten rule, Ugg family in Greece, Portugal, and Spain cut eat-buy same time, bank-cave tighten loan because king-risk, and Ugg make-stuff tribe pull back new-stuff buy. Each choice smart given king-risk fee. Whole tribe shrink GDP 6&ndash;26% add up &mdash; exactly the not-enough-want-buy thing the thinky-rock pull out.</p>
+                        <p class="prose prose--caveman"><strong>Euro-area periphery (2010&ndash;2015):</strong> Under fiscal austerity conditionality, households in Greece, Portugal, and Spain cut consumption simultaneously, banks tightened credit in response to sovereign risk, and firms reduced investment. Each decision was individually rational given sovereign risk premia. The aggregate result was a 6&ndash;26% cumulative GDP contraction &mdash; exactly the demand-deficiency mechanism the model isolates.</p>
 
                         <p class="prose"><strong>US balance-sheet recession (2008&ndash;2012):</strong> Following the housing collapse, US households deleveraged rapidly (individually rational given negative equity), banks contracted credit (individually rational given regulatory pressure and NPL uncertainty), and firms cut investment (individually rational given demand uncertainty). The aggregate result was the deepest post-war US recession, recovered only by large fiscal transfers &mdash; consistent with the model&apos;s prediction that the decentralised equilibrium requires external coordination to escape.</p>
-                        <p class="prose prose--caveman"><strong>US balance-sheet bad-time (2008&ndash;2012):</strong> Cave-house price go boom, US Ugg family dump debt fast (smart given underwater coin pile), bank-cave shut loan (smart given chief-rule pressure and bad-loan fog), and Ugg make-stuff tribe chop new-stuff buy (smart given fuzzy want-buy). Deepest post-war US shrinky, only fix by big chief throw lots coin &mdash; match thinky-rock prediction that everybody-go-own-way stuff-stop-moving need outside help to break free.</p>
+                        <p class="prose prose--caveman"><strong>US balance-sheet recession (2008&ndash;2012):</strong> After the housing collapse, US households deleveraged rapidly (individually rational given negative equity), banks contracted credit (individually rational given regulatory pressure and NPL uncertainty), and firms cut investment (individually rational given demand uncertainty). The aggregate result was the deepest post-war US recession, recovered only by large fiscal transfers &mdash; consistent with the model&apos;s prediction that the decentralised equilibrium requires external coordination to escape.</p>
                     </div>
                 </section>
 
@@ -475,13 +474,13 @@
                     </div>
                     <div class="content-text">
                         <p class="lead-paragraph prose">Three conclusions emerge from the analysis. First, coordination failure is structural: the all-best economy produces markedly worse aggregate outcomes than the bounded-rational baseline even though every agent type is following individually-optimal rules. Second, the failure mechanism here differs from the companion paper: rather than credit surge and ZLB lock-in, the channel is demand deficiency &mdash; conservative household savings and bank credit rationing suppress the consumption and investment flows that sustain firm viability. Third, bounded rationality is a structural stabiliser, not a modelling convenience.</p>
-                        <p class="prose prose--caveman">Three big take-away from look hard. One: tribes-all-do-same-thing fail is baked in &mdash; everybody-best economy give way worse big-picture than dumb-but-okay base even when each Ugg pick best rule for self. Two: how fail happen here different from first rock-scratch &mdash; not loan-flood and ZLB stuck, this time channel is not-enough-want-buy: scared-Ugg-family-save and bank-cave skinny loan choke off eat-buy and new-stuff flow that keep Ugg make-stuff tribe alive. Three: dumb-but-okay rule is real tribe-glue, not just lazy thinky-rock trick.</p>
+                        <p class="prose prose--caveman">Three conclusions emerge. First, the coordination failure is structural: the all-best economy produces markedly worse aggregate outcomes than the bounded-rational baseline even though every agent type follows individually-optimal rules. Second, the failure mechanism differs from the companion paper &mdash; rather than credit surge and ZLB lock-in, the channel here is demand deficiency: conservative household savings and bank credit rationing suppress the consumption and investment flows that sustain firm viability. Third, bounded rationality is a structural stabiliser, not a modelling convenience.</p>
 
                         <p class="prose">The result establishes that the bounded-rational behaviour documented in heterogeneous-agent macro models is not a modelling simplification but a stabilising feature. Replacing bounded rationality with survival-maximising rules &mdash; even without imposing theoretical equilibrium conditions &mdash; is sufficient to produce coordination failure. The economy possesses two stable attractor states: the coordinated equilibrium under bounded rationality and the decentralised equilibrium under survival-optimal rules.</p>
-                        <p class="prose prose--caveman">Result lock in this truth: dumb-but-okay Ugg behavior in many-different-Ugg big think is not lazy shortcut, it real tribe-glue. Swap dumb rule for stay-alive-best rule &mdash; even with no fancy stuff-stop-moving math forced on &mdash; is enough to make tribes-all-do-same-thing fail. Economy got two place where stuff stop moving: tribes-all-do-same-thing one under dumb rule, and everybody-go-own-way one under stay-alive-best rule.</p>
+                        <p class="prose prose--caveman">The result establishes that bounded-rational behaviour in heterogeneous-agent macro models is not a modelling simplification but a stabilising feature. Replacing bounded rationality with survival-maximising rules &mdash; even without imposing theoretical equilibrium conditions &mdash; is sufficient to produce coordination failure. The economy has two stable attractor states: the coordinated equilibrium under bounded rationality and the decentralised equilibrium under survival-optimal rules.</p>
 
                         <p class="prose">Future work should investigate whether an iterative best-response dynamic (each agent type updating its strategy in response to others&apos; strategies) converges to a stable Nash equilibrium or cycles, and whether the resulting equilibrium is closer to the bounded-rational baseline or to the all-best outcome documented here. See <a href="keynesian-abm-fiscal.html">Paper 1</a> for the companion study on the baseline model, ZLB dynamics, and Minsky dynamics.</p>
-                        <p class="prose prose--caveman">Next rock-scratch should poke at: if each Ugg type keep swap strategy in response to other Ugg strategy, do they settle to one Nash stuff-stop-moving place or just go round and round? And is the place they settle close to dumb-but-okay base or close to everybody-best trap shown here? See <a href="keynesian-abm-fiscal.html">Paper 1</a> for sister rock-scratch on base thinky-rock, ZLB dance, and Minsky dance.</p>
+                        <p class="prose prose--caveman">Future work should examine whether an iterative best-response dynamic, in which each agent type updates its strategy in response to others, converges to a stable Nash equilibrium or cycles &mdash; and whether the resulting equilibrium lies closer to the bounded-rational baseline or the all-best outcome documented here. See <a href="keynesian-abm-fiscal.html">Paper 1</a> for the companion study on the baseline model, ZLB dynamics, and Minsky dynamics.</p>
                     </div>
                 </section>
 
@@ -540,7 +539,7 @@
     </script>
     <script src="../assets/js/mindmap.js"></script>
 
-    <script src="../assets/js/main-theme.js?v=12"></script>
+    <script src="../assets/js/main-theme.js?v=13"></script>
     <script src="../assets/js/research-recommendations.js"></script>
     <script src="../assets/js/animations.js?v=13"></script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>

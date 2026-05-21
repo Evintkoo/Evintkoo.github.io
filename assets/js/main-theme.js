@@ -131,7 +131,7 @@
     });
   }
 
-  // Caveman Mode toggle — swaps research prose to caveman/brainrot register
+  // Simple Mode toggle — swaps research prose to a plain-English version
   const cavemanToggle = document.getElementById('cavemanToggle');
   if (cavemanToggle) {
     const syncCaveman = function () {
