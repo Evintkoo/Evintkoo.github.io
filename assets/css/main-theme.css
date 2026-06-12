@@ -544,7 +544,7 @@ button {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 700;
-  transition: all var(--transition-base);
+  transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .nav__link--cta::after {
@@ -776,7 +776,7 @@ button {
   height: 2px;
   background: var(--text-primary);
   border-radius: 1px;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
 .nav__toggle.active span:nth-child(1) {
@@ -1104,7 +1104,7 @@ body.no-scroll {
   font-weight: 600;
   border-radius: var(--radius-full);
   border: none;
-  transition: all var(--transition-base);
+  transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
   cursor: pointer;
   letter-spacing: 0.01em;
   position: relative;
@@ -1139,7 +1139,7 @@ body.no-scroll {
   font-weight: 500;
   border-bottom: 1px solid var(--border-secondary);
   border-radius: 0;
-  transition: all var(--transition-base);
+  transition: color var(--transition-base), border-color var(--transition-base);
 }
 
 .btn--ghost:hover {
@@ -1747,7 +1747,7 @@ a.section-eyebrow__label:hover {
   background: transparent;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  transition: all var(--transition-base);
+  transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
   font-weight: 500;
 }
 
@@ -2134,7 +2134,7 @@ a.section-eyebrow__label:hover {
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
-  transition: all var(--transition-base);
+  transition: opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
   z-index: 900;
 }
 
