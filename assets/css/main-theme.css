@@ -1180,6 +1180,12 @@ body.no-scroll {
   font-size: var(--text-base);
 }
 
+/* Press feedback — confirms the interface heard the user (Emil Kowalski) */
+.btn:active {
+  transform: scale(0.97);
+  transition-duration: 100ms;
+}
+
 /* ================================
    BENTO GRID
 ================================ */
