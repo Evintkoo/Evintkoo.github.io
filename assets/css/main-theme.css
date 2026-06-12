@@ -1124,12 +1124,6 @@ body.no-scroll {
 .btn--primary:hover {
   background-color: var(--accent-warm);
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(225, 29, 100, 0.2);
-}
-
-.btn--primary:hover svg {
-  transform: translateX(3px);
 }
 
 .btn--ghost {
@@ -1167,12 +1161,6 @@ body.no-scroll {
 .btn--secondary:hover {
   border-color: var(--accent-warm);
   color: var(--accent-warm);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(225, 29, 100, 0.1);
-}
-
-.btn--secondary:hover svg {
-  transform: translate(2px, -2px);
 }
 
 .btn--large {
@@ -1438,9 +1426,7 @@ a.section-eyebrow__label:hover {
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
   border-color: rgba(244, 63, 122, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(244, 63, 122, 0.15);
 }
 
 .project-card:hover::before { opacity: 1; }
@@ -1616,8 +1602,6 @@ a.section-eyebrow__label:hover {
 }
 
 .experience-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(244, 63, 122, 0.15);
   border-color: rgba(244, 63, 122, 0.4);
 }
 
@@ -2422,6 +2406,42 @@ a.section-eyebrow__label:hover {
   .btn--large {
     padding: var(--space-3) var(--space-6);
     font-size: var(--text-sm);
+  }
+}
+
+/* ================================
+   HOVER GUARD
+   Transform-based lifts and SVG arrow movements only apply on
+   real pointer devices. Touch screens get color-only hover.
+   Emil Kowalski: gate transform hovers behind (hover: hover) and (pointer: fine).
+================================ */
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(225, 29, 100, 0.2);
+  }
+
+  .btn--primary:hover svg {
+    transform: translateX(3px);
+  }
+
+  .btn--secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(225, 29, 100, 0.1);
+  }
+
+  .btn--secondary:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(244, 63, 122, 0.15);
+  }
+
+  .experience-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(244, 63, 122, 0.15);
   }
 }
 
