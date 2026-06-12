@@ -94,10 +94,10 @@
 
 /* ── Dark Mode ── */
 [data-theme="dark"] {
-  --bg-primary: #0a0a0c;
-  --bg-secondary: #111114;
-  --bg-tertiary: #1a1a1f;
-  --bg-accent: #24242b;
+  --bg-primary: #0c0b09;
+  --bg-secondary: #131210;
+  --bg-tertiary: #1c1a18;
+  --bg-accent: #252320;
 
   --text-primary: #ebe8e4;
   --text-secondary: #b5b0aa;
@@ -613,7 +613,7 @@ button {
 
 /* Sun: enters with a triumphant spring bounce */
 @keyframes sun-enter {
-  0%   { opacity: 0; transform: scale(0.15) rotate(-120deg); }
+  0%   { opacity: 0; transform: scale(0.6) rotate(-120deg); }
   45%  { opacity: 1; transform: scale(1.28) rotate(15deg);   }
   65%  { transform: scale(0.88) rotate(-6deg); }
   82%  { transform: scale(1.07) rotate(3deg);  }
@@ -637,7 +637,7 @@ button {
 
 /* Moon: enters with a graceful arc from the upper-right */
 @keyframes moon-enter {
-  0%   { opacity: 0; transform: translate(10px, -10px) scale(0.2) rotate(50deg); }
+  0%   { opacity: 0; transform: translate(10px, -10px) scale(0.6) rotate(50deg); }
   55%  { opacity: 1; transform: translate(-3px, 3px)   scale(1.12) rotate(-7deg); }
   75%  { transform: translate(2px, -2px) scale(0.95) rotate(3deg); }
   100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
