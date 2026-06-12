@@ -2450,6 +2450,21 @@ a.section-eyebrow__label:hover {
 ================================ */
 
 @media (prefers-reduced-motion: reduce) {
+  /* Global catch-all: kill all movement animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+
   .hero__greeting,
   .hero__title,
   .hero__description,
