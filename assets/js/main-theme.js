@@ -623,7 +623,7 @@
           // Set staggered delays on children
           var children = entry.target.children;
           for (var i = 0; i < children.length; i++) {
-            children[i].style.transitionDelay = (i * 0.09) + 's';
+            children[i].style.transitionDelay = (i * 0.05) + 's';
           }
           entry.target.classList.add('revealed');
           staggerObs.unobserve(entry.target);
