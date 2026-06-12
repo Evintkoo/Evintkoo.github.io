@@ -458,7 +458,6 @@ button {
 
 .nav__logo:hover .nav__monogram {
   background: var(--accent-warm);
-  transform: scale(1.06) rotate(-2deg);
 }
 
 .nav__logo-img {
@@ -736,10 +735,6 @@ button {
   width: 20px;
   height: 20px;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.caveman-toggle:hover .caveman-icon {
-  transform: rotate(-12deg);
 }
 
 .caveman-toggle.is-active .caveman-icon {
@@ -1358,10 +1353,6 @@ a.section-eyebrow__label:hover {
   transition: transform var(--transition-fast);
 }
 
-.project-featured__link:hover .arrow {
-  transform: translate(3px, -3px);
-}
-
 @media (max-width: 639px) {
   .project-featured {
     grid-template-columns: 1fr;
@@ -1528,10 +1519,6 @@ a.section-eyebrow__label:hover {
 
 .project-card__link:hover {
   color: var(--accent-warm);
-}
-
-.project-card__link:hover .arrow {
-  transform: translate(3px, -3px);
 }
 
 .tag--featured {
@@ -1749,7 +1736,6 @@ a.section-eyebrow__label:hover {
   background: var(--text-primary);
   color: var(--bg-primary);
   border-color: var(--text-primary);
-  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
 }
 
@@ -2449,6 +2435,26 @@ a.section-eyebrow__label:hover {
   .experience-item:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(244, 63, 122, 0.15);
+  }
+
+  .nav__logo:hover .nav__monogram {
+    transform: scale(1.06) rotate(-2deg);
+  }
+
+  .caveman-toggle:hover .caveman-icon {
+    transform: rotate(-12deg);
+  }
+
+  .project-featured__link:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+
+  .project-card__link:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+
+  .tech-grid li:hover {
+    transform: translateY(-3px);
   }
 }
 
