@@ -1302,6 +1302,19 @@ a.section-eyebrow__label:hover {
   color: #f43f7a;
 }
 
+a.project-featured__tag {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.project-featured__tag:hover {
+    color: var(--accent-warm);
+    border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+  }
+}
+
 .project-featured__title {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.25rem);
@@ -2677,4 +2690,75 @@ a.tech-tag:hover {
 @media (prefers-reduced-motion: reduce) {
   .filter-pill--flash { animation: none; }
   .filter-chip:hover { transform: none; }
+}
+
+/* No-results message for the research filter */
+.filter-empty {
+  margin: var(--space-8) 0;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+.filter-empty__reset {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--accent-warm);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Research-row badges as drag sources / tap-to-filter controls */
+.research-row__tag {
+  cursor: grab;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.research-row__tag.is-dragging { opacity: 0.4; }
+.research-row__tag:active { cursor: grabbing; }
+
+@media (hover: hover) and (pointer: fine) {
+  .research-row__tag:hover {
+    color: var(--accent-warm);
+    background: color-mix(in srgb, var(--accent-warm) 12%, var(--bg-tertiary));
+  }
+}
+
+/* Skill pills as links (about page) */
+a.skill-pill {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast),
+              border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.skill-pill:hover {
+    color: var(--accent-warm);
+    background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg-tertiary));
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.skill-pill:hover { transform: none; }
+}
+
+/* Detail-page chips as links (project.css / research.css define base + hover) */
+a.proj-tech-pill,
+a.tag,
+a.meta-pill,
+a.paper-hero__badge {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.tag:hover,
+  a.paper-hero__badge:hover {
+    color: var(--accent-warm);
+    border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+  }
 }

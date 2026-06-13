@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="assets/css/main-theme.css?v=16">
+    <link rel="stylesheet" href="assets/css/main-theme.css?v=17">
     <style>
         .listing-hero { padding-top: calc(var(--nav-height) + var(--space-16)); }
         @media (max-width: 768px) { .listing-hero { padding-top: calc(var(--nav-height) + var(--space-10)); } }
@@ -76,6 +76,16 @@
                 </div>
                 <h1 class="section__title" data-reveal>Papers &amp; analyses</h1>
                 <p class="section__subtitle" data-reveal>First-author research in ML, computational biology, quantitative finance, and computational economics</p>
+
+                <!-- Filter dock: always-visible drop target for topic chips -->
+                <div id="filterDock" class="filter-dock" data-empty="true" data-reveal>
+                    <span class="filter-dock__label">Filtering by:</span>
+                    <div class="filter-dock__chips" id="filterDockChips" aria-live="polite"></div>
+                    <span class="filter-dock__hint" id="filterDockHint">drag a topic here, or tap one below</span>
+                    <button class="filter-dock__clear" id="filterDockClear" aria-label="Clear all filters" hidden>&times;</button>
+                </div>
+                <!-- Filter palette: draggable domain/badge chips, auto-built from the papers -->
+                <div class="filter-palette" id="filterPalette" aria-label="Available topics" data-reveal></div>
 
                 <div class="research-list" data-reveal>
                     <!-- Keynesian ABM Paper 1 -->
@@ -306,6 +316,7 @@
                         </div>
                     </a>
                 </div>
+                <p class="filter-empty" id="filterEmpty" hidden>No papers match those topics. <button type="button" class="filter-empty__reset" id="filterEmptyReset">Clear filters</button></p>
             </div>
         </section>
     </main>
@@ -330,5 +341,189 @@
 
     <script src="assets/js/main-theme.js?v=14" defer></script>
     <script type="module" src="assets/js/hero-scene.js?v=13"></script>
+    <script>
+        (function () {
+            function slugify(str) {
+                return str.toLowerCase().trim()
+                    .replace(/[\/&]+/g, ' ')
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+
+            var dock = document.getElementById('filterDock');
+            var dockChips = document.getElementById('filterDockChips');
+            var dockHint = document.getElementById('filterDockHint');
+            var dockClear = document.getElementById('filterDockClear');
+            var palette = document.getElementById('filterPalette');
+            var emptyMsg = document.getElementById('filterEmpty');
+            var emptyReset = document.getElementById('filterEmptyReset');
+            var rows = Array.prototype.slice.call(document.querySelectorAll('.research-row'));
+
+            var active = new Map();   // slug -> label (current filters)
+            var registry = new Map(); // slug -> label (every known facet, for the palette)
+            var paletteSlugs = [];    // curated browseable facets, in display order
+
+            // Derive each paper's matchable tags from its subtitle, badges, and keywords.
+            rows.forEach(function (row) {
+                var tokens = [];
+                var sub = row.querySelector('.research-row__subtitle');
+                var subParts = [];
+                if (sub) {
+                    subParts = sub.textContent.split('·').map(function (s) { return s.trim(); });
+                    tokens = tokens.concat(subParts);
+                }
+                var badges = Array.prototype.slice.call(row.querySelectorAll('.research-row__tag'));
+                badges.forEach(function (b) { tokens.push(b.textContent.trim()); });
+                var kw = row.querySelector('.research-row__keywords');
+                if (kw) tokens = tokens.concat(kw.textContent.split(',').map(function (s) { return s.trim(); }));
+
+                var slugSet = {};
+                tokens.forEach(function (t) {
+                    var s = slugify(t);
+                    if (s) { slugSet[s] = true; if (!registry.has(s)) registry.set(s, t); }
+                });
+                row.dataset.tags = Object.keys(slugSet).join(' ');
+
+                // Palette = primary domain (first subtitle segment) + badges. Keep it clean.
+                var facets = subParts.slice(0, 1).concat(badges.map(function (b) { return b.textContent.trim(); }));
+                facets.forEach(function (f) {
+                    var s = slugify(f);
+                    if (s && paletteSlugs.indexOf(s) === -1) paletteSlugs.push(s);
+                });
+
+                // Make each badge a drag source + tap-to-filter control (without triggering the row link).
+                badges.forEach(function (b) {
+                    makeChipInteractive(b, slugify(b.textContent.trim()), b.textContent.trim(), true);
+                });
+            });
+
+            // Build the palette: domains first, then badges, each alphabetical within group is overkill — keep discovery order but de-noise.
+            paletteSlugs.sort(function (a, b) {
+                return (registry.get(a) || a).localeCompare(registry.get(b) || b);
+            });
+            paletteSlugs.forEach(function (slug) {
+                var label = registry.get(slug) || slug;
+                var chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'filter-chip';
+                chip.textContent = label;
+                chip.dataset.slug = slug;
+                makeChipInteractive(chip, slug, label, false);
+                palette.appendChild(chip);
+            });
+
+            function makeChipInteractive(el, slug, label, insideRow) {
+                el.setAttribute('draggable', 'true');
+                el.dataset.slug = slug;
+                el.addEventListener('dragstart', function (e) {
+                    e.stopPropagation();
+                    e.dataTransfer.setData('text/plain', slug + '|' + label);
+                    e.dataTransfer.effectAllowed = 'copy';
+                    el.classList.add('is-dragging');
+                });
+                el.addEventListener('dragend', function () { el.classList.remove('is-dragging'); });
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (insideRow) e.stopPropagation(); // don't follow the row's paper link
+                    addFilter(slug, label);
+                });
+            }
+
+            function addFilter(slug, label) {
+                if (active.has(slug)) { flashPill(slug); return; }
+                active.set(slug, label);
+                render();
+            }
+            function removeFilter(slug) { active.delete(slug); render(); }
+            function clearAll() { active.clear(); render(); }
+
+            function render() { renderDock(); applyFilter(); syncUrl(); }
+
+            function renderDock() {
+                dockChips.innerHTML = '';
+                active.forEach(function (label, slug) {
+                    var pill = document.createElement('span');
+                    pill.className = 'filter-pill';
+                    pill.dataset.slug = slug;
+                    var text = document.createElement('span');
+                    text.textContent = label;
+                    var rm = document.createElement('button');
+                    rm.type = 'button';
+                    rm.className = 'filter-pill__remove';
+                    rm.setAttribute('aria-label', 'Remove ' + label + ' filter');
+                    rm.innerHTML = '&times;';
+                    rm.addEventListener('click', function () { removeFilter(slug); });
+                    pill.appendChild(text);
+                    pill.appendChild(rm);
+                    dockChips.appendChild(pill);
+                });
+                var empty = active.size === 0;
+                dock.dataset.empty = empty ? 'true' : 'false';
+                dockHint.hidden = !empty;
+                dockClear.hidden = empty;
+                palette.querySelectorAll('.filter-chip').forEach(function (c) {
+                    c.classList.toggle('is-active', active.has(c.dataset.slug));
+                });
+            }
+
+            function applyFilter() {
+                var slugs = Array.from(active.keys());
+                var shown = 0;
+                rows.forEach(function (row) {
+                    if (slugs.length === 0) { row.style.display = ''; shown++; return; }
+                    var tags = (row.dataset.tags || '').split(' ');
+                    var match = slugs.some(function (s) { return tags.indexOf(s) !== -1; });
+                    row.style.display = match ? '' : 'none';
+                    if (match) shown++;
+                });
+                emptyMsg.hidden = !(slugs.length > 0 && shown === 0);
+            }
+
+            function syncUrl() {
+                var slugs = Array.from(active.keys());
+                var url = window.location.pathname;
+                if (slugs.length) url += '?tags=' + slugs.join(',');
+                window.history.replaceState(null, '', url);
+            }
+
+            function flashPill(slug) {
+                var pill = dockChips.querySelector('.filter-pill[data-slug="' + slug + '"]');
+                if (!pill) return;
+                pill.classList.remove('filter-pill--flash');
+                void pill.offsetWidth;
+                pill.classList.add('filter-pill--flash');
+            }
+
+            dock.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+                dock.classList.add('is-droptarget');
+            });
+            dock.addEventListener('dragleave', function (e) {
+                if (!dock.contains(e.relatedTarget)) dock.classList.remove('is-droptarget');
+            });
+            dock.addEventListener('drop', function (e) {
+                e.preventDefault();
+                dock.classList.remove('is-droptarget');
+                var data = e.dataTransfer.getData('text/plain');
+                if (!data) return;
+                var parts = data.split('|');
+                addFilter(parts[0], parts[1] || registry.get(parts[0]) || parts[0]);
+            });
+
+            dockClear.addEventListener('click', clearAll);
+            if (emptyReset) emptyReset.addEventListener('click', clearAll);
+
+            // Seed from URL ?tags=a,b — used by topic links from the about page and paper pages.
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('tags')) {
+                params.get('tags').split(',').forEach(function (raw) {
+                    var slug = slugify(raw);
+                    if (slug) active.set(slug, registry.get(slug) || raw.replace(/-/g, ' '));
+                });
+            }
+            render();
+        })();
+    </script>
 </body>
 </html>
