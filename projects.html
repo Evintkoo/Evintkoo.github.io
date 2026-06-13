@@ -424,6 +424,11 @@
                 document.querySelectorAll('.project-card, .project-featured')
             );
 
+            // Lift the FAB + sheet to <body> so their z-index beats the bottom nav
+            // (inside the container they sit in a trapped stacking context).
+            if (fab) document.body.appendChild(fab);
+            if (sheet) document.body.appendChild(sheet);
+
             // Active filters (slug -> label) and a registry of every known tag.
             var active = new Map();
             var registry = new Map();

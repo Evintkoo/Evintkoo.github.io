@@ -388,6 +388,11 @@
             var emptyReset = document.getElementById('filterEmptyReset');
             var rows = Array.prototype.slice.call(document.querySelectorAll('.research-row'));
 
+            // Lift the FAB + sheet to <body> so their z-index beats the bottom nav
+            // (inside the container they sit in a trapped stacking context).
+            if (fab) document.body.appendChild(fab);
+            if (sheet) document.body.appendChild(sheet);
+
             var active = new Map();   // slug -> label (current filters)
             var registry = new Map(); // slug -> label (every known facet, for the palette)
             var paletteSlugs = [];    // curated browseable facets, in display order
