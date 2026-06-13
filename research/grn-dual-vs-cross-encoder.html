@@ -74,7 +74,7 @@
             </div>
 
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -148,10 +148,10 @@
 
                             <h1 class="circrna-title">Dual-Encoder vs Cross-Encoder for Transductive GRN Link Prediction</h1>
                             <p class="circrna-subtitle prose">An Empirical Comparison Under Parameter-Matched Conditions</p>
-                            <p class="circrna-subtitle prose prose--caveman">Two ways to predict which genes control which other genes &mdash; tested side by side with the same model size, so the contest is fair.</p>
+                            <p class="circrna-subtitle prose prose--caveman">Two ways to predict which genes control which other genes, tested side by side with the same model size, so the contest is fair.</p>
 
                             <div class="circrna-summary">
-                                <p class="summary-lead">A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction &mdash; including ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation.</p>
+                                <p class="summary-lead">A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction: ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation.</p>
 
                                 <div class="summary-highlights">
                                     <div class="hero-metric">
@@ -262,7 +262,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Introduction</h3>
                                 <p class="prose">This paper presents a rigorous, parameter-matched comparison of dual-encoder (two-tower) and cross-encoder neural architectures for predicting transcription factor&ndash;gene regulatory relationships from single-cell RNA-seq data. Both models contain exactly 5.58M parameters but differ fundamentally in how they process input pairs.</p>
-                                <p class="prose prose--caveman">Cells contain master-switch genes &mdash; called <strong>transcription factors</strong> &mdash; that turn other genes on or off. Mapping who controls whom would help biologists understand disease and design drugs. We compare two AI designs on this prediction task. One reads each gene on its own, then checks if the pair matches. The other reads the pair together from the start. Both models have exactly <strong>5.58M</strong> parameters (their internal "dials"), so any difference in skill comes from the design, not the size.</p>
+                                <p class="prose prose--caveman">Cells contain master-switch genes (called <strong>transcription factors</strong>) that turn other genes on or off. Mapping who controls whom would help biologists understand disease and design drugs. We compare two AI designs on this prediction task. One reads each gene on its own, then checks if the pair matches. The other reads the pair together from the start. Both models have exactly <strong>5.58M</strong> parameters (their internal "dials"), so any difference in skill comes from the design, not the size.</p>
                             </div>
                         </div>
 
@@ -279,8 +279,8 @@
                             <div class="abstract-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
-                                <p class="prose">The cross-encoder achieves AUROC <strong>0.9025</strong> vs 0.7941 for the dual-encoder under balanced training &mdash; a 10.84-point gap. The dual-encoder degrades severely with imbalance (AUROC &minus;13.6 pp at 10:1, complete collapse at 50:1) while the cross-encoder remains stable (&asymp;0.911 at 10:1). Ablation reveals 95% of the gap stems from joint encoding itself, with only 5% from the element-wise product interaction term.</p>
-                                <p class="prose prose--caveman">The model that reads pairs together scored <strong>0.9025</strong> on the standard accuracy measure (AUROC, where 1.0 is perfect and 0.5 is a coin flip). The model that reads inputs separately scored 0.7941 &mdash; a 10.84-point gap. When real-world imbalance was added, the separate-reader fell apart (<strong>&minus;13.6 pp</strong> at 10:1, complete collapse at 50:1). The joint-reader held steady at &asymp;0.911 at 10:1. When we turned off parts of the winner, <strong>95%</strong> of its advantage came from simply reading the pair together. Only <strong>5%</strong> came from a specific math trick inside it.</p>
+                                <p class="prose">The cross-encoder achieves AUROC <strong>0.9025</strong> vs 0.7941 for the dual-encoder under balanced training, a 10.84-point gap. The dual-encoder degrades severely with imbalance (AUROC &minus;13.6 pp at 10:1, complete collapse at 50:1) while the cross-encoder remains stable (&asymp;0.911 at 10:1). Ablation reveals 95% of the gap stems from joint encoding itself, with only 5% from the element-wise product interaction term.</p>
+                                <p class="prose prose--caveman">The model that reads pairs together scored <strong>0.9025</strong> on the standard accuracy measure (AUROC, where 1.0 is perfect and 0.5 is a coin flip). The model that reads inputs separately scored 0.7941, a 10.84-point gap. When real-world imbalance was added, the separate-reader fell apart (<strong>&minus;13.6 pp</strong> at 10:1, complete collapse at 50:1). The joint-reader held steady at &asymp;0.911 at 10:1. When we turned off parts of the winner, <strong>95%</strong> of its advantage came from simply reading the pair together. Only <strong>5%</strong> came from a specific math trick inside it.</p>
                             </div>
                         </div>
 
@@ -289,7 +289,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Discussion</h3>
                                 <p class="prose">Pruning experiments show both architectures tolerate &ge;60% neuron removal without post-hoc performance loss, suggesting substantial over-parameterization. Cold-start evaluation reveals that the dual-encoder's independent representations provide slightly better generalization to unseen entities, while the cross-encoder's joint processing is inherently transductive.</p>
-                                <p class="prose prose--caveman">We could remove <strong>more than 60%</strong> of each model's internal neurons without hurting accuracy &mdash; meaning both have a lot of unused capacity. On genes never seen during training, the separate-reader generalized a little better. The joint-reader, by design, only works on gene pairs it has met before.</p>
+                                <p class="prose prose--caveman">We could remove <strong>more than 60%</strong> of each model's internal neurons without hurting accuracy, which means both have a lot of unused capacity. On genes never seen during training, the separate-reader generalized a little better. The joint-reader, by design, only works on gene pairs it has met before.</p>
                             </div>
                         </div>
 
@@ -327,7 +327,7 @@
                             </div>
                         </div>
 
-                        <p class="prose">This study enforces strict parameter matching at 5.58M parameters across both architectures and performs the most comprehensive evaluation of dual-encoder vs cross-encoder trade-offs for GRN inference to date, including ablation, pruning, effective rank analysis, and cold-start evaluation.</p>
+                        <p class="prose">This study enforces strict parameter matching at 5.58M parameters across both architectures and evaluates dual-encoder vs cross-encoder trade-offs for GRN inference across ablation, pruning, effective rank analysis, and cold-start evaluation.</p>
                         <p class="prose prose--caveman">Both models are fixed at exactly 5.58M parameters. From there, we run the most thorough head-to-head test yet: turning off parts, trimming neurons, measuring how compactly each model represents information, and testing it on genes it has never seen.</p>
                     </div>
                 </section>
@@ -387,7 +387,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Cold-Start &amp; Classical Baselines</h3>
                                     <p class="method-description prose">Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching.</p>
-                                    <p class="prose prose--caveman">For the cold-start test, we hide some genes during training and ask the model to handle them only at test time &mdash; this checks if it has truly learned biology or just memorized. We also compare against a simple baseline that uses raw gene-activity numbers and no learned summaries, to see how much value the neural network actually adds.</p>
+                                    <p class="prose prose--caveman">For the cold-start test, we hide some genes during training and ask the model to handle them only at test time. This checks if it has truly learned biology or just memorized. We also compare against a simple baseline that uses raw gene-activity numbers and no learned summaries, to see how much value the neural network actually adds.</p>
                                     <div class="method-tags"><span class="method-tag">Cold-Start</span><span class="method-tag">Inductive</span><span class="method-tag">Expression-Only Baseline</span></div>
                                 </div>
                             </div>
@@ -405,7 +405,7 @@
 
                     <div class="content-text">
                         <p class="lead-paragraph prose">Under parameter-matched conditions, the cross-encoder outperforms the dual-encoder across every evaluation setting except cold-start generalization.</p>
-                        <p class="prose prose--caveman">With the two models held to the same size, the joint-reader wins in every test &mdash; except when handling genes it has never seen before.</p>
+                        <p class="prose prose--caveman">With the two models held to the same size, the joint-reader wins in every test, except when handling genes it has never seen before.</p>
                     </div>
 
                     <div class="performance-comparison">
@@ -450,7 +450,7 @@
                         </div>
 
                         <div class="performance-summary">
-                            <p class="summary-text">The dual-encoder collapses entirely at 50:1 imbalance, while the cross-encoder remains stable &mdash; a critical advantage for real biological datasets where positive regulatory interactions are rare.</p>
+                            <p class="summary-text">The dual-encoder collapses entirely at 50:1 imbalance, while the cross-encoder remains stable, a critical advantage for real biological datasets where positive regulatory interactions are rare.</p>
                         </div>
                     </div>
 
@@ -460,7 +460,7 @@
                         </div>
                         <div class="highlight-content">
                             <h4 class="highlight-title">Ablation: What Drives the Gap?</h4>
-                            <p class="prose">Ablation reveals that <strong>95% of the AUROC gap</strong> stems from joint encoding itself. The element-wise product interaction term within the cross-encoder accounts for only 5% &mdash; the decisive factor is whether inputs are processed jointly or independently.</p>
+                            <p class="prose">Ablation reveals that <strong>95% of the AUROC gap</strong> stems from joint encoding itself. The element-wise product interaction term within the cross-encoder accounts for only 5%. The decisive factor is whether inputs are processed jointly or independently.</p>
                             <p class="prose prose--caveman">When we turned off parts to see which mattered, <strong>95% of the accuracy gap</strong> came down to just reading the gene pair together from the start. A specific math trick inside the joint-reader added only 5%. In short: the winning move is looking at both genes at once.</p>
                         </div>
                     </div>
@@ -475,8 +475,8 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph prose">By matching parameters exactly at 5.58M, this study eliminates capacity as a confounding variable. The 10.84-point AUROC gap at balanced training &mdash; growing to >25 points at severe imbalance &mdash; is attributable to architectural choice alone.</p>
-                        <p class="prose prose--caveman">Because both models have exactly 5.58M parameters, size can't be the reason one wins. The 10.84-point accuracy gap in easy mode &mdash; growing to over 25 points when the data gets realistic &mdash; is purely about how each model is designed.</p>
+                        <p class="lead-paragraph prose">By matching parameters exactly at 5.58M, this study eliminates capacity as a confounding variable. The 10.84-point AUROC gap at balanced training (growing to >25 points at severe imbalance) is attributable to architectural choice alone.</p>
+                        <p class="prose prose--caveman">Because both models have exactly 5.58M parameters, size can't be the reason one wins. The 10.84-point accuracy gap in easy mode (growing to over 25 points when the data gets realistic) is purely about how each model is designed.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -489,7 +489,7 @@
                             </div>
                         </div>
 
-                        <p class="prose">The dual-encoder's only advantage is a modest improvement in cold-start generalization to unseen entities, a consequence of its independent representations. However, this advantage is practically limited by the transductive nature of GRN inference &mdash; in most scenarios, TF and gene identities are known at training time, making the cross-encoder's inductive limitation irrelevant.</p>
+                        <p class="prose">The dual-encoder's only advantage is a modest improvement in cold-start generalization to unseen entities, a consequence of its independent representations. However, this advantage is practically limited by the transductive nature of GRN inference. In most scenarios, TF and gene identities are known at training time, making the cross-encoder's inductive limitation irrelevant.</p>
                         <p class="prose prose--caveman">The separate-reader has one bright spot: it handles brand-new genes a bit better, because it builds an independent summary for each gene. But in real gene-network research, scientists usually already know which genes they're studying. So the joint-reader's weakness with unseen genes rarely shows up in practice.</p>
 
                         <p class="prose">The 50:1 collapse of the dual-encoder is a critical practical concern. Real regulatory databases have far more non-interacting TF&ndash;gene pairs than interacting ones, making the dual-encoder unsuitable for production GRN inference without significant modifications.</p>
@@ -513,7 +513,7 @@
                         <p class="prose prose--caveman">The verdict is clear. For predicting gene-control links from single-cell data, the joint-reader wins by a wide margin (10.84 points in easy mode, much more under realistic imbalance). What matters is reading both genes together. Smaller design choices are just details.</p>
 
                         <p class="prose">Future directions include investigating whether dual-encoders can be augmented with late interaction mechanisms to recover the AUROC gap while retaining their retrieval efficiency, and exploring whether the 60% pruning tolerance enables significant model compression without accuracy loss.</p>
-                        <p class="prose prose--caveman">Next, we want to see if the separate-reader can close the gap by adding a small "compare step" at the end &mdash; keeping it fast but smarter. And since both models survive losing 60% of their neurons, we'll explore how much smaller and cheaper to run we can make them without losing accuracy.</p>
+                        <p class="prose prose--caveman">Next, we want to see if the separate-reader can close the gap by adding a small "compare step" at the end, keeping it fast but smarter. And since both models survive losing 60% of their neurons, we'll explore how much smaller and cheaper to run we can make them without losing accuracy.</p>
                     </div>
                 </section>
 
@@ -544,7 +544,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>

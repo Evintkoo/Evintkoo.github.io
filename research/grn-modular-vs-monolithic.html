@@ -74,7 +74,7 @@
             </div>
 
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -151,7 +151,7 @@
                             <p class="circrna-subtitle prose prose--caveman">Should you build one big AI model, or two smaller ones that work side by side? A close look at where the smaller setup quietly breaks.</p>
 
                             <div class="circrna-summary">
-                                <p class="summary-lead">A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference &mdash; diagnosing three critical gradient failures in the two-tower design and demonstrating that the cross-encoder outperforms it, especially under class imbalance.</p>
+                                <p class="summary-lead">A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference. We diagnose three critical gradient failures in the two-tower design and demonstrate that the cross-encoder outperforms it, especially under class imbalance.</p>
 
                                 <div class="summary-highlights">
                                     <div class="hero-metric">
@@ -218,7 +218,7 @@
                                     </div>
                                     <div class="meta-detail">
                                         <span class="meta-detail__label">Dataset</span>
-                                        <span class="meta-detail__value">Human brain single-cell RNA-seq &mdash; 47,388 TF&ndash;gene pairs, balanced and 5:1 imbalanced.</span>
+                                        <span class="meta-detail__value">Human brain single-cell RNA-seq: 47,388 TF&ndash;gene pairs, balanced and 5:1 imbalanced.</span>
                                     </div>
                                     <div class="meta-detail">
                                         <span class="meta-detail__label">Implementation</span>
@@ -271,7 +271,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
                                 <p class="prose">Three critical gradient failures in the original two-tower implementation are identified and corrected: double-sigmoid in the backward pass, unstable gradient estimators, and missing gradient clipping. Both architectures are then evaluated on balanced and 5:1 imbalanced training configurations using accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.</p>
-                                <p class="prose prose--caveman">Before comparing fairly, we had to fix the two-tower's learning signal. AI models learn by nudging themselves in tiny steps. We found three bugs that quietly broke those nudges: the model squashed its own signal twice, used a shaky math shortcut, and let some steps grow too large. After the fixes, we tested both models on two settings &mdash; a fair 1:1 mix of real and fake pairs, and a 5:1 mix that looks more like real biology. We ran each test five times and measured accuracy, F1, and AUROC with confidence ranges.</p>
+                                <p class="prose prose--caveman">Before comparing fairly, we had to fix the two-tower's learning signal. AI models learn by nudging themselves in tiny steps. We found three bugs that quietly broke those nudges: the model squashed its own signal twice, used a shaky math shortcut, and let some steps grow too large. After the fixes, we tested both models on two settings: a fair 1:1 mix of real and fake pairs, and a 5:1 mix that looks more like real biology. We ran each test five times and measured accuracy, F1, and AUROC with confidence ranges.</p>
                             </div>
                         </div>
 
@@ -280,7 +280,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
                                 <p class="prose">After gradient correction, the cross-encoder achieves <strong>83.03% accuracy</strong> vs the two-tower's 80.90%, with AUROC <strong>0.904</strong> vs 0.810 under balanced training. Under 5:1 imbalance, the two-tower degrades &minus;6.87 pp while the cross-encoder degrades only &minus;1.56 pp. Each gradient failure alone collapses training accuracy to ~50%.</p>
-                                <p class="prose prose--caveman">Even after the fixes, the bigger model wins. The cross-encoder gets <strong>83.03% accuracy</strong>, the two-tower gets 80.90%. On AUROC &mdash; a score for how well it ranks real links above fake ones &mdash; the cross-encoder scores <strong>0.904</strong> versus 0.810. When real pairs become rare (5 fakes for every 1 real), the two-tower loses &minus;6.87 pp of accuracy. The cross-encoder loses just &minus;1.56 pp. And each of the three bugs alone is enough to crash training down to about 50% &mdash; a coin flip.</p>
+                                <p class="prose prose--caveman">Even after the fixes, the bigger model wins. The cross-encoder gets <strong>83.03% accuracy</strong>, the two-tower gets 80.90%. On AUROC (a score for how well it ranks real links above fake ones), the cross-encoder scores <strong>0.904</strong> versus 0.810. When real pairs become rare (5 fakes for every 1 real), the two-tower loses &minus;6.87 pp of accuracy. The cross-encoder loses just &minus;1.56 pp. And each of the three bugs alone is enough to crash training down to about 50%, a coin flip.</p>
                             </div>
                         </div>
 
@@ -298,7 +298,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Conclusion</h3>
                                 <p class="prose">For GRN link prediction, monolithic cross-encoders outperform modular two-tower models on both accuracy and imbalance robustness, particularly in realistic biological settings where negative examples far outnumber positives.</p>
-                                <p class="prose prose--caveman">For predicting gene control links, the single bigger model beats the split-into-two-pieces model. It is more accurate, and it holds up better when real links are rare &mdash; which is what real biology looks like, since most random gene pairs do not actually control each other.</p>
+                                <p class="prose prose--caveman">For predicting gene control links, the single bigger model beats the split-into-two-pieces model. It is more accurate, and it holds up better when real links are rare, which is what real biology looks like, since most random gene pairs do not actually control each other.</p>
                             </div>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
 
                     <div class="content-text">
                         <p class="lead-paragraph prose">Two-tower (dual-encoder) models are attractive for link prediction tasks because they can independently encode entities and support efficient nearest-neighbor retrieval at inference time. However, their modular design limits the model's ability to capture joint interactions between input pairs, which may be critical for biological link prediction.</p>
-                        <p class="prose prose--caveman">Two-tower models are popular because each tower learns to describe its own input on its own. That separation makes search fast &mdash; you can prepare all the descriptions in advance and just look up matches later. The trade-off is that the two towers never truly meet. They cannot pick up on the back-and-forth between a pair of things, and in biology, that back-and-forth is where the answer lives.</p>
+                        <p class="prose prose--caveman">Two-tower models are popular because each tower learns to describe its own input on its own. That separation makes search fast. You can prepare all the descriptions in advance and just look up matches later. The trade-off is that the two towers never truly meet. They cannot pick up on the back-and-forth between a pair of things, and in biology, that back-and-forth is where the answer lives.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -323,7 +323,7 @@
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Question</h4>
                                 <p class="prose">Does the modular separation of a two-tower model fundamentally limit its expressivity for GRN inference, or can the gap be closed by correcting implementation-level gradient failures?</p>
-                                <p class="prose prose--caveman">Is the two-tower model held back by its split design? Or has it just been let down by buggy code &mdash; bugs that, once fixed, would let it catch up?</p>
+                                <p class="prose prose--caveman">Is the two-tower model held back by its split design? Or has it just been let down by buggy code, bugs that, once fixed, would let it catch up?</p>
                             </div>
                         </div>
 
@@ -348,7 +348,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Gradient Failure Diagnosis</h3>
                                     <p class="method-description prose">Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy.</p>
-                                    <p class="prose prose--caveman">Three things were going wrong with how the two-tower model learned. First, it squashed its own learning signal twice, so almost nothing was left to learn from. Second, it used a shaky math shortcut that gave noisy nudges. Third, it never put a cap on the size of those nudges, so some grew huge and blew everything up. Any one of these alone drags the model down to about 50% accuracy &mdash; a coin flip.</p>
+                                    <p class="prose prose--caveman">Three things were going wrong with how the two-tower model learned. First, it squashed its own learning signal twice, so almost nothing was left to learn from. Second, it used a shaky math shortcut that gave noisy nudges. Third, it never put a cap on the size of those nudges, so some grew huge and blew everything up. Any one of these alone drags the model down to about 50% accuracy, a coin flip.</p>
                                     <div class="method-tags"><span class="method-tag">Gradient Analysis</span><span class="method-tag">Numerical Stability</span><span class="method-tag">Debugging</span></div>
                                 </div>
                             </div>
@@ -398,7 +398,7 @@
                     <div class="performance-comparison">
                         <div class="performance-comparison__header">
                             <h3 class="performance-comparison__title">Architecture Comparison (Balanced Training)</h3>
-                            <p class="performance-comparison__subtitle">Cross-encoder vs two-tower on human brain scRNA-seq &mdash; both with corrected gradients.</p>
+                            <p class="performance-comparison__subtitle">Cross-encoder vs two-tower on human brain scRNA-seq, both with corrected gradients.</p>
                         </div>
 
                         <div class="performance-table">
@@ -425,7 +425,7 @@
                         </div>
 
                         <div class="performance-summary">
-                            <p class="summary-text">The cross-encoder's joint input processing provides a fundamentally stronger inductive bias for GRN link prediction, remaining robust under the class imbalance ratios typical in real biological datasets.</p>
+                            <p class="summary-text">The cross-encoder's joint input processing provides a fundamentally stronger inductive bias for GRN link prediction, remaining stable under the class imbalance ratios typical in real biological datasets.</p>
                         </div>
                     </div>
 
@@ -435,8 +435,8 @@
                         </div>
                         <div class="highlight-content">
                             <h4 class="highlight-title">Gradient Failure Impact</h4>
-                            <p class="prose">Each of the three gradient failures individually collapsed training to approximately <strong>50% accuracy</strong> &mdash; no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.</p>
-                            <p class="prose prose--caveman">Each of the three bugs, by itself, drags the model down to about <strong>50% accuracy</strong> &mdash; the same as flipping a coin. All three had to be found and fixed before the two designs could be compared honestly.</p>
+                            <p class="prose">Each of the three gradient failures individually collapsed training to approximately <strong>50% accuracy</strong>, no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.</p>
+                            <p class="prose prose--caveman">Each of the three bugs, by itself, drags the model down to about <strong>50% accuracy</strong>, the same as flipping a coin. All three had to be found and fixed before the two designs could be compared honestly.</p>
                         </div>
                     </div>
                 </section>
@@ -451,7 +451,7 @@
 
                     <div class="content-text">
                         <p class="lead-paragraph prose">The gradient stability analysis reveals that a substantial portion of the two-tower's apparent underperformance in prior work was attributable to implementation bugs rather than architectural limitations. After correction, the performance gap narrows but persists.</p>
-                        <p class="prose prose--caveman">The deeper look shows that a lot of the two-tower's bad reputation came from broken code, not a broken idea. After the fixes, the gap shrinks &mdash; but it does not go away.</p>
+                        <p class="prose prose--caveman">The deeper look shows that a lot of the two-tower's bad reputation came from broken code, not a broken idea. After the fixes, the gap shrinks, but it does not go away.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -459,13 +459,13 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Imbalance as a Practical Concern</h4>
-                                <p class="prose">Real GRN datasets are highly imbalanced &mdash; regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's &minus;6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.</p>
-                                <p class="prose prose--caveman">Real gene networks are lopsided &mdash; most random pairs of genes do not actually control each other, so true links are rare. The two-tower's &minus;6.87 pp drop at a mild 5-to-1 ratio is a red flag. Without serious changes, it is not ready for real-world biology, where the lopsidedness is much worse.</p>
+                                <p class="prose">Real GRN datasets are highly imbalanced. Regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's &minus;6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.</p>
+                                <p class="prose prose--caveman">Real gene networks are lopsided. Most random pairs of genes do not actually control each other, so true links are rare. The two-tower's &minus;6.87 pp drop at a mild 5-to-1 ratio is a red flag. Without serious changes, it is not ready for real-world biology, where the lopsidedness is much worse.</p>
                             </div>
                         </div>
 
                         <p class="prose">The cross-encoder's monolithic joint processing naturally captures TF&ndash;gene co-expression patterns that the two-tower's independence assumption prevents. This architectural difference, not implementation quality, ultimately drives the AUROC gap of 0.094.</p>
-                        <p class="prose prose--caveman">When the cross-encoder looks at both genes at once, it can spot when they switch on and off together &mdash; a pattern the two-tower is structurally blind to, because it studies each gene alone. That blind spot, not bad code, is what causes the 0.094 gap in AUROC scores.</p>
+                        <p class="prose prose--caveman">When the cross-encoder looks at both genes at once, it can spot when they switch on and off together, a pattern the two-tower is structurally blind to, because it studies each gene alone. That blind spot, not bad code, is what causes the 0.094 gap in AUROC scores.</p>
                     </div>
                 </section>
 
@@ -482,10 +482,10 @@
                         <p class="prose prose--caveman">This study offers two things. First, a checklist of learning-signal bugs that anyone hand-coding a two-tower model can use to debug their own work. Second, a fair head-to-head test that shows the bigger single-model design is the better fit for predicting gene control links.</p>
 
                         <p class="prose">For practitioners, the gradient failure checklist (double-sigmoid, unstable estimator, missing clipping) is directly applicable to other Rust or custom-framework implementations. For researchers designing GRN inference architectures, the results favor joint encoding over independent encoding followed by similarity scoring.</p>
-                        <p class="prose prose--caveman">If you build models from scratch &mdash; in Rust or any custom setup &mdash; the three-bug checklist (double squashing, shaky math, no step-size cap) will save you headaches. If you design models to map gene networks, the lesson is clear: let the model look at both genes together from the start, rather than studying each one alone and comparing notes later.</p>
+                        <p class="prose prose--caveman">If you build models from scratch (in Rust or any custom setup), the three-bug checklist (double squashing, shaky math, no step-size cap) will save you headaches. If you design models to map gene networks, the lesson is clear: let the model look at both genes together from the start, rather than studying each one alone and comparing notes later.</p>
 
                         <p class="prose">Future work should examine whether the two-tower's efficiency advantages (precomputed entity representations) can be retained while closing the AUROC gap through architectural modifications such as late interaction or cross-attention scoring.</p>
-                        <p class="prose prose--caveman">The two-tower is fast because it can do most of its work in advance. The next question is whether we can keep that speed but still close the accuracy gap &mdash; maybe by letting the two towers compare notes at the very end, instead of meeting only through a simple similarity score.</p>
+                        <p class="prose prose--caveman">The two-tower is fast because it can do most of its work in advance. The next question is whether we can keep that speed but still close the accuracy gap, maybe by letting the two towers compare notes at the very end, instead of meeting only through a simple similarity score.</p>
                     </div>
                 </section>
 
@@ -516,7 +516,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>

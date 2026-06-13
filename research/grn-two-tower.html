@@ -74,7 +74,7 @@
             </div>
 
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -151,7 +151,7 @@
                             <p class="circrna-subtitle prose prose--caveman">Guessing which genes turn other genes on or off, using single-cell readings of what each cell is doing.</p>
 
                             <div class="circrna-summary">
-                                <p class="summary-lead">A pure-Rust two-tower MLP that learns entity embeddings and cell-type expression profiles to predict transcription factor&ndash;gene interactions &mdash; 83% ensemble accuracy, CPU-trainable without any deep learning framework.</p>
+                                <p class="summary-lead">A pure-Rust two-tower MLP that learns entity embeddings and cell-type expression profiles to predict transcription factor&ndash;gene interactions: 83% ensemble accuracy, CPU-trainable without any deep learning framework.</p>
 
                                 <div class="summary-highlights">
                                     <div class="hero-metric">
@@ -218,7 +218,7 @@
                                     </div>
                                     <div class="meta-detail">
                                         <span class="meta-detail__label">Dataset</span>
-                                        <span class="meta-detail__value">Human brain single-cell RNA-seq &mdash; 47,388 TF&ndash;gene pairs from DoRothEA &amp; TRRUST databases.</span>
+                                        <span class="meta-detail__value">Human brain single-cell RNA-seq: 47,388 TF&ndash;gene pairs from DoRothEA &amp; TRRUST databases.</span>
                                     </div>
                                     <div class="meta-detail">
                                         <span class="meta-detail__label">Implementation</span>
@@ -264,7 +264,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Introduction</h3>
                                 <p class="prose">Inferring gene regulatory networks (GRNs) from single-cell RNA-seq data is a central challenge in computational biology. This paper proposes a two-tower multilayer perceptron that jointly learns entity embeddings for transcription factors and target genes alongside cell-type-specific expression profiles to predict regulatory interactions.</p>
-                                <p class="prose prose--caveman">Cells are run by genes that switch each other on and off. Mapping those switches from single-cell data is a hard, central puzzle in biology. We try a simple setup: two small neural networks &mdash; one reads the controlling gene, one reads the gene being controlled &mdash; and they meet in the middle to score whether one likely controls the other. The model also takes in how active each gene is across different cell types.</p>
+                                <p class="prose prose--caveman">Cells are run by genes that switch each other on and off. Mapping those switches from single-cell data is a hard, central puzzle in biology. We try a simple setup: two small neural networks (one reads the controlling gene, one reads the gene being controlled), and they meet in the middle to score whether one likely controls the other. The model also takes in how active each gene is across different cell types.</p>
                             </div>
                         </div>
 
@@ -275,7 +275,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Methods</h3>
                                 <p class="prose">Separate encoder towers process 512-dimensional learnable embeddings and 11-dimensional cell-type expression profiles through three fully connected layers with batch normalization and dropout. Interaction scores are produced via temperature-scaled dot-product similarity (&tau; = 0.05). The system is implemented entirely in Rust without external deep learning dependencies.</p>
-                                <p class="prose prose--caveman">Each gene gets a numerical fingerprint &mdash; a list of 512 numbers the model learns on its own. Each cell type gets a smaller 11-number profile of gene activity. Both pass through three layers of a small neural network that smooths and stabilizes the signal. To check if one gene likely controls another, we measure how aligned the two fingerprints are, with a tuning knob (&tau; = 0.05) that sharpens the comparison. Everything runs in Rust, with no PyTorch or TensorFlow.</p>
+                                <p class="prose prose--caveman">Each gene gets a numerical fingerprint, a list of 512 numbers the model learns on its own. Each cell type gets a smaller 11-number profile of gene activity. Both pass through three layers of a small neural network that smooths and stabilizes the signal. To check if one gene likely controls another, we measure how aligned the two fingerprints are, with a tuning knob (&tau; = 0.05) that sharpens the comparison. Everything runs in Rust, with no PyTorch or TensorFlow.</p>
                             </div>
                         </div>
 
@@ -286,7 +286,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
                                 <p class="prose">On a human brain dataset with 47,388 TF&ndash;gene pairs, the single model achieves <strong>80.14% accuracy</strong> and AUROC of <strong>0.844</strong>. A 5-model ensemble reaches <strong>83.06% accuracy</strong>. Hyperparameter optimization alone contributed 77% of total improvement (+16.1 pp), with cross-seed variance (CV = 2.06%) confirming model robustness.</p>
-                                <p class="prose prose--caveman">We test on 47,388 gene pairings from human brain data. One model gets <strong>80.14% right</strong>, with a quality score of <strong>0.844</strong> out of 1. Averaging 5 models pushes that to <strong>83.06% accuracy</strong>. Most of the improvement (77%, or +16.1 percentage points) came from carefully tuning the model's settings &mdash; not fancy new tricks. Results barely shift when we re-run with different starting points (variance of 2.06%), so the model is steady.</p>
+                                <p class="prose prose--caveman">We test on 47,388 gene pairings from human brain data. One model gets <strong>80.14% right</strong>, with a quality score of <strong>0.844</strong> out of 1. Averaging 5 models pushes that to <strong>83.06% accuracy</strong>. Most of the improvement (77%, or +16.1 percentage points) came from carefully tuning the model's settings, not fancy new tricks. Results barely shift when we re-run with different starting points (variance of 2.06%), so the model is steady.</p>
                             </div>
                         </div>
 
@@ -297,7 +297,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Discussion</h3>
                                 <p class="prose">A competing cross-attention model (GCAN) achieved 91% accuracy but only 0.692 F1-score due to poor recall, underperforming on balanced prediction metrics. This highlights a critical accuracy&ndash;F1 paradox where high accuracy masks poor generalization under class imbalance.</p>
-                                <p class="prose prose--caveman">A rival model, GCAN, looks better at first glance with 91% accuracy. But its F1 score &mdash; which measures how well it actually catches real cases &mdash; is only 0.692. It misses too many true regulatory links. So a flashy accuracy number can hide a model that fails when the data is uneven.</p>
+                                <p class="prose prose--caveman">A rival model, GCAN, looks better at first glance with 91% accuracy. But its F1 score (which measures how well it actually catches real cases) is only 0.692. It misses too many true regulatory links. So a flashy accuracy number can hide a model that fails when the data is uneven.</p>
                             </div>
                         </div>
 
@@ -324,7 +324,7 @@
 
                     <div class="content-text">
                         <p class="lead-paragraph prose">Gene regulatory networks encode the interactions between transcription factors (TFs) and target genes that govern cellular identity and function. Reconstructing these networks from single-cell RNA-seq data is challenging due to the high dimensionality, sparsity, and cell-type heterogeneity of expression measurements.</p>
-                        <p class="prose prose--caveman">Cells decide what to be &mdash; a neuron, a skin cell, a muscle cell &mdash; based on which genes are switched on. Some genes are the switches; the rest are the targets. The map of who controls whom is called a gene regulatory network. We try to rebuild that map from single-cell readings of gene activity. It is hard work: the data is enormous, mostly empty, and looks very different from one cell type to the next.</p>
+                        <p class="prose prose--caveman">Cells decide what to be (a neuron, a skin cell, a muscle cell) based on which genes are switched on. Some genes are the switches; the rest are the targets. The map of who controls whom is called a gene regulatory network. We try to rebuild that map from single-cell readings of gene activity. It is hard work: the data is enormous, mostly empty, and looks very different from one cell type to the next.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -332,8 +332,8 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Motivation</h4>
-                                <p class="prose">Prior work on GRN inference often relies on complex graph neural networks or attention mechanisms. This study investigates whether a well-tuned, simple MLP can close the gap &mdash; with the added benefit of full CPU trainability and no framework dependencies.</p>
-                                <p class="prose prose--caveman">Most prior work on this problem reaches for complex modern AI tools. We wanted to see if a simple, classic neural network &mdash; tuned with care &mdash; could keep up. As a bonus, our version runs on a normal CPU and uses no off-the-shelf AI frameworks.</p>
+                                <p class="prose">Prior work on GRN inference often relies on complex graph neural networks or attention mechanisms. This study investigates whether a well-tuned, simple MLP can close the gap, with the added benefit of full CPU trainability and no framework dependencies.</p>
+                                <p class="prose prose--caveman">Most prior work on this problem reaches for complex modern AI tools. We wanted to see if a simple, classic neural network, tuned with care, could keep up. As a bonus, our version runs on a normal CPU and uses no off-the-shelf AI frameworks.</p>
                             </div>
                         </div>
 
@@ -405,7 +405,7 @@
                                 <div class="method-text">
                                     <h3 class="method-title">Ensemble &amp; Evaluation</h3>
                                     <p class="method-description prose">Five independently trained models are aggregated by averaging predicted probabilities. Cross-seed evaluation across five random initializations measures variance (CV = 2.06%). Metrics include accuracy, F1, AUROC, and a comparison against GCAN (cross-attention baseline).</p>
-                                    <p class="prose prose--caveman">We train five separate copies of the model and average their guesses, the way a panel of judges is more reliable than one. Five random starting points show how much the results jitter (only 2.06%, so very little). We compare against a more complex rival called GCAN and report accuracy, F1, and AUROC &mdash; three different ways of measuring how often the model gets it right.</p>
+                                    <p class="prose prose--caveman">We train five separate copies of the model and average their guesses, the way a panel of judges is more reliable than one. Five random starting points show how much the results jitter (only 2.06%, so very little). We compare against a more complex rival called GCAN and report accuracy, F1, and AUROC, three different ways of measuring how often the model gets it right.</p>
                                     <div class="method-tags"><span class="method-tag">Ensemble</span><span class="method-tag">AUROC</span><span class="method-tag">Cross-seed</span></div>
                                 </div>
                             </div>
@@ -462,7 +462,7 @@
                         </div>
 
                         <div class="performance-summary">
-                            <p class="summary-text">GCAN's 91% accuracy masks a 0.692 F1-score driven by poor recall &mdash; the two-tower ensemble is more reliable on balanced prediction despite a lower headline accuracy.</p>
+                            <p class="summary-text">GCAN's 91% accuracy masks a 0.692 F1-score driven by poor recall. The two-tower ensemble is more reliable on balanced prediction despite a lower headline accuracy.</p>
                         </div>
                     </div>
 
@@ -515,7 +515,7 @@
                     </div>
 
                     <div class="content-text">
-                        <p class="lead-paragraph prose">This study demonstrates that a standard, well-tuned MLP implemented in pure Rust can achieve 83% ensemble accuracy on GRN inference from single-cell RNA-seq data &mdash; competitive with significantly more complex architectures.</p>
+                        <p class="lead-paragraph prose">This study demonstrates that a standard, well-tuned MLP implemented in pure Rust can achieve 83% ensemble accuracy on GRN inference from single-cell RNA-seq data, competitive with significantly more complex architectures.</p>
                         <p class="prose prose--caveman">A plain neural network, carefully tuned and written in pure Rust, can map gene controls from single-cell data with 83% accuracy. That holds its own against far more complicated models.</p>
 
                         <p class="prose">The dominant contribution of hyperparameter optimization over architectural complexity suggests that future work on GRN inference should prioritize thorough tuning before escalating model complexity. The CPU-trainable implementation also makes the approach accessible to researchers without GPU infrastructure.</p>
@@ -553,7 +553,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>

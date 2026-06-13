@@ -84,7 +84,7 @@
             </div>
             
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -143,7 +143,7 @@
                 <section class="hero hero--research">
                     <div class="hero__content">
                         <h1 class="hero__title">Leading or Lagging? <span class="hero__title--accent">Equity and Crypto Timing Analysis</span></h1>
-                        <p class="prose hero__subtitle">Do equity markets still lead recessions &mdash; or has crypto changed the playbook? Empirical analysis of cross-asset dynamics across five business cycles.</p>
+                        <p class="prose hero__subtitle">Do equity markets still lead recessions, or has crypto changed the playbook? Empirical analysis of cross-asset dynamics across five business cycles.</p>
                         <p class="prose prose--caveman hero__subtitle">If you watch both stocks and crypto, which one warns you first when a recession is coming? We checked five business cycles to find out.</p>
                         
                         <div class="paper-meta-box">
@@ -210,7 +210,7 @@
                         <p class="prose prose--caveman">Markets look different than they did a generation ago. Since Bitcoin launched in 2009, digital assets have ballooned from a fringe experiment into a multi-trillion-dollar arena where everyday retail traders and giant institutions now meet (Harvey et al., 2020).</p>
 
                         <p class="prose">This remarkable growth has ignited a vigorous academic debate regarding the economic role and informational content of cryptocurrencies. One perspective posits that crypto-assets are predominantly speculative instruments, driven by sentiment and largely detached from macroeconomic fundamentals (Shiller, 2019; Baur et al., 2018). An alternative and increasingly influential view suggests that, as these markets mature and achieve greater integration with the broader financial system, they may contain unique forward-looking information about economic activity, liquidity conditions, and global risk appetite (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
-                        <p class="prose prose--caveman">Researchers are still arguing about what crypto really is. One camp says it is pure speculation — mood and hype, not fundamentals (Shiller, 2019; Baur et al., 2018). The other camp says crypto has grown up enough to actually tell us something useful about the economy, liquidity, and how brave investors feel (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
+                        <p class="prose prose--caveman">Researchers are still arguing about what crypto really is. One camp says it is pure speculation: mood and hype, not fundamentals (Shiller, 2019; Baur et al., 2018). The other camp says crypto has grown up enough to actually tell us something useful about the economy, liquidity, and how brave investors feel (Corbet et al., 2020; Yousaf &amp; Ali, 2020).</p>
                         
                         <h3>Research Question and Hypotheses</h3>
                         <p class="prose">This study directly addresses a critical research gap by investigating a precise empirical question: <strong>"Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?"</strong></p>
@@ -222,7 +222,7 @@
                         <div class="hypothesis-box">
                             <h4>H₁ (Equity Recession Lead)</h4>
                             <p class="prose">The equity market, as the more established and institutionally dominated asset class with deeper liquidity and more sophisticated information processing mechanisms, incorporates adverse macroeconomic signals more rapidly than the crypto market, thus leading crypto-assets into recessions.</p>
-                            <p class="prose prose--caveman">The stock market has more money, more pros, and better research desks. That means it should pick up bad news faster than crypto — and start falling first when a recession is coming.</p>
+                            <p class="prose prose--caveman">The stock market has more money, more pros, and better research desks. That means it should pick up bad news faster than crypto, and start falling first when a recession is coming.</p>
                         </div>
 
                         <div class="hypothesis-box">
@@ -234,7 +234,7 @@
                         <div class="hypothesis-box">
                             <h4>H₃ (Regime Dependence)</h4>
                             <p class="prose">The lead-lag relationship between equity and crypto markets is not static but exhibits regime-dependent behavior, varying systematically across different market states such as bull versus bear markets, periods of high versus low volatility, or different phases of the business cycle.</p>
-                            <p class="prose prose--caveman">Which market leads is not fixed. It shifts with the <strong>market mood</strong> — bull or bear, calm or stormy, expansion or recession.</p>
+                            <p class="prose prose--caveman">Which market leads is not fixed. It shifts with the <strong>market mood</strong>: bull or bear, calm or stormy, expansion or recession.</p>
                         </div>
                     </div>
                 </section>
@@ -258,7 +258,7 @@
                                 <p class="prose">To test our hypotheses, we first transform the NBER business-cycle dates into machine-readable formats. We construct a binary recession indicator R₂, which takes a value of 1 for all trading days falling within an officially defined NBER recession period (from peak to trough) and 0 otherwise.</p>
                                 <p class="prose prose--caveman">First, we tag every trading day as either "recession" or "not recession" using the official NBER dates. A simple flag: 1 if the economy was in a recession that day, 0 if it was not.</p>
                                 <p class="prose">To specifically investigate recovery dynamics (H₂), we define a distinct recovery window as the first six months (approximately 126 trading days) immediately following an NBER-declared trough. Furthermore, to formalize the concept of an early-warning signal, we operationalize a pre-recession hazard window as the 30 days immediately preceding an NBER-defined peak.</p>
-                                <p class="prose prose--caveman">To check the recovery question, we zoom in on the six months right after each recession ends — roughly 126 trading days. To check the warning question, we zoom in on the 30 days right before each recession begins.</p>
+                                <p class="prose prose--caveman">To check the recovery question, we zoom in on the six months right after each recession ends, roughly 126 trading days. To check the warning question, we zoom in on the 30 days right before each recession begins.</p>
                             </div>
                         </div>
 
@@ -274,7 +274,7 @@
 
                                 <h4>Time-domain Causality</h4>
                                 <p class="prose">We employ the vector autoregression (VAR) framework to conduct Granger causality tests. The test assesses whether lagged values of one time series have statistically significant power in predicting the current value of another time series.</p>
-                                <p class="prose prose--caveman">Next we run a <strong>Granger causality</strong> test — a fancy way of asking whether yesterday's stock moves help us guess today's crypto moves better than chance. If they do, stocks are leading.</p>
+                                <p class="prose prose--caveman">Next we run a <strong>Granger causality</strong> test, a fancy way of asking whether yesterday's stock moves help us guess today's crypto moves better than chance. If they do, stocks are leading.</p>
 
                                 <h4>Information-theoretic Analysis</h4>
                                 <p class="prose">To capture potentially non-linear relationships missed by linear Granger tests, we calculate transfer entropy to quantify the reduction in uncertainty about a system's future state from knowing the past state of another system.</p>
@@ -289,9 +289,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">Recognizing that lead-lag relationships may be frequency-dependent, we use wavelet coherence analysis. This technique decomposes time series into time-frequency space, allowing for the identification of transient or frequency-specific correlations.</p>
-                                <p class="prose prose--caveman">Sometimes markets sync up on short cycles but not long ones — or the other way around. <strong>Wavelet analysis</strong> lets us check different time scales at once, so we can see day-by-day, week-by-week, and month-by-month patterns separately.</p>
+                                <p class="prose prose--caveman">Sometimes markets sync up on short cycles but not long ones, or the other way around. <strong>Wavelet analysis</strong> lets us check different time scales at once, so we can see day-by-day, week-by-week, and month-by-month patterns separately.</p>
                                 <p class="prose">The key output is the wavelet phase difference, which indicates the lead-lag relationship at each point in time and for specific frequency bands (e.g., 2–8 days, 8–32 days).</p>
-                                <p class="prose prose--caveman">The main result is a "phase" reading that shows, at every moment in time, which market is dancing ahead of the other — and over what time horizon (think a couple of days versus a couple of months).</p>
+                                <p class="prose prose--caveman">The main result is a "phase" reading that shows, at every moment in time, which market is dancing ahead of the other, and over what time horizon (think a couple of days versus a couple of months).</p>
                             </div>
                         </div>
 
@@ -302,9 +302,9 @@
                             </div>
                             <div class="method-content">
                                 <p class="prose">We reframe the problem as a classification task: predicting the onset of a recession. We build and compare several binary classification models, including a benchmark logistic regression and a Long Short-Term Memory (LSTM) neural network.</p>
-                                <p class="prose prose--caveman">Finally we flip the question around: can we actually forecast a recession? We train a handful of models — a simple statistical one and a more advanced neural network called an LSTM — to call the next downturn.</p>
+                                <p class="prose prose--caveman">Finally we flip the question around: can we actually forecast a recession? We train a handful of models (a simple statistical one and a more advanced neural network called an LSTM) to call the next downturn.</p>
                                 <p class="prose">The performance of models using equity-only, crypto-only, and combined feature sets is compared using the Area Under the Receiver Operating Characteristic Curve (AUROC) and Precision-Recall Curves (PRC).</p>
-                                <p class="prose prose--caveman">We feed each model three different diets — stocks only, crypto only, and both together — and grade them with two standard scoring tools (AUROC and Precision-Recall Curves) to see which inputs forecast best.</p>
+                                <p class="prose prose--caveman">We feed each model three different diets (stocks only, crypto only, and both together) and grade them with two standard scoring tools (AUROC and Precision-Recall Curves) to see which inputs forecast best.</p>
                             </div>
                         </div>
 
@@ -390,7 +390,7 @@
                     <h3>Lead-Lag Relationship</h3>
                     <div class="content-text">
                         <p class="prose">The cross-correlation analysis over a ±30-day trading period indicates that <strong>the equity market leads the cryptocurrency market by approximately 27 trading days</strong>, as evidenced by a maximum cross-correlation value of 0.4215 at lag −27.</p>
-                        <p class="prose prose--caveman">Here is the headline. <strong>The stock market moves first — and crypto follows about 27 trading days later, roughly a month.</strong> That is where the strongest match shows up (correlation of 0.4215 at a 27-day lag).</p>
+                        <p class="prose prose--caveman">Here is the headline. <strong>The stock market moves first, and crypto follows about 27 trading days later, roughly a month.</strong> That is where the strongest match shows up (correlation of 0.4215 at a 27-day lag).</p>
                     </div>
                     
                     <div class="results-table">
@@ -426,7 +426,7 @@
                     <h3>Regime-Switching Behavior</h3>
                     <div class="content-text">
                         <p class="prose">Using a Gaussian Mixture Model, we identified four statistically distinct regimes characterizing the joint behavior of the equity and cryptocurrency markets:</p>
-                        <p class="prose prose--caveman">Markets do not have one personality — they have several. Using a clustering tool, we sort all the data into four distinct <strong>market moods</strong> that stocks and crypto live in together:</p>
+                        <p class="prose prose--caveman">Markets do not have one personality. They have several. Using a clustering tool, we sort all the data into four distinct <strong>market moods</strong> that stocks and crypto live in together:</p>
                     </div>
                     
                     <div class="results-table">
@@ -540,7 +540,7 @@
                         <p class="prose prose--caveman">Behavioral finance offers another clean explanation. Crypto is mostly retail traders, who can only pay attention to so many things at once. Big stock-market institutions have whole teams reading the news all day. So pros react first; everyone else catches up later.</p>
 
                         <p class="prose">This creates an "attention cascade" where crypto investors gradually process equity market signals over approximately four weeks. The theoretical mechanism follows a cascade model:</p>
-                        <p class="prose prose--caveman">The result is what researchers call an "attention cascade" — the news rolls slowly from one crowd of investors to the next, over about four weeks:</p>
+                        <p class="prose prose--caveman">The result is what researchers call an "attention cascade": the news rolls slowly from one crowd of investors to the next, over about four weeks:</p>
 
                         <ul>
                             <li class="prose"><strong>Weeks 1-2:</strong> Institutional processing of equity signals</li>
@@ -562,11 +562,11 @@
                         <p class="prose prose--caveman">Knowing which market leads has real money behind it. Trading strategies built on lead-lag effects have earned more than 20% a year, on average, across several decades of academic studies.</p>
 
                         <p class="prose">Dynamic hedging applications have evolved significantly, with studies showing that futures markets lead spot markets by 0-5 minutes, providing real-time hedging opportunities. However, implementation challenges are substantial, including capacity constraints, regime changes during market stress, estimation errors, and execution risks.</p>
-                        <p class="prose prose--caveman">Hedging — protecting one bet with another — has changed too. Futures prices move 0 to 5 minutes before spot prices, which sounds like easy money. In reality, it is brutal: trading costs, sudden market mood swings, and execution slip-ups can eat the edge alive.</p>
+                        <p class="prose prose--caveman">Hedging (protecting one bet with another) has changed too. Futures prices move 0 to 5 minutes before spot prices, which sounds like easy money. In reality, it is brutal: trading costs, sudden market mood swings, and execution slip-ups can eat the edge alive.</p>
 
                         <h3>Information Transmission Mechanisms</h3>
                         <p class="prose">Research on information transmission reveals complex, multi-channel mechanisms connecting traditional and digital asset markets. Price discovery analysis shows that Bitcoin spot markets lead exchange-traded products in incorporating new information, though mixed evidence exists regarding futures versus spot market leadership.</p>
-                        <p class="prose prose--caveman">News does not flow through markets in just one pipe. The Bitcoin spot market actually leads the new Bitcoin ETFs in pricing in fresh information. The story is messier when comparing Bitcoin futures to spot — researchers still disagree on who moves first.</p>
+                        <p class="prose prose--caveman">News does not flow through markets in just one pipe. The Bitcoin spot market actually leads the new Bitcoin ETFs in pricing in fresh information. The story is messier when comparing Bitcoin futures to spot. Researchers still disagree on who moves first.</p>
 
                         <p class="prose">Network effects and contagion models demonstrate that COVID-19 significantly altered network structures and intensified information flows. Research reveals asymmetric contagion effects, with stronger transmission during market downturns and changing correlation structures during crisis periods.</p>
                         <p class="prose prose--caveman">COVID-19 rewired how shocks spread across markets. The link between stocks and crypto turned out to be lopsided: bad news travels harder and faster than good news, and the whole web of relationships shifts during a crisis.</p>
@@ -580,7 +580,7 @@
                     <div class="content-text">
                         <h3>Primary Research Findings</h3>
                         <p class="prose">This study provides the first comprehensive empirical analysis addressing the fundamental question: "Between equity-market and crypto-asset price movements, which serves as a leading versus lagging indicator of recession onset and recovery?" Through a multi-methodological framework, we present robust evidence that fundamentally answers this research question.</p>
-                        <p class="prose prose--caveman">This is the first full study of the basic question: when a recession is on the way — or on its way out — does the stock market move first, or does crypto? With several methods checking each other's work, the answer comes through clearly.</p>
+                        <p class="prose prose--caveman">This is the first full study of the basic question: when a recession is on the way (or on its way out) does the stock market move first, or does crypto? With several methods checking each other's work, the answer comes through clearly.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -590,7 +590,7 @@
                             </div>
                             <div class="highlight-content">
                                 <p class="prose"><strong>Key Finding:</strong> The equity market systematically leads the cryptocurrency market by approximately 27 trading days around business cycle turning points, with a maximum correlation coefficient of 0.4215 at lag -27.</p>
-                                <p class="prose prose--caveman"><strong>Bottom line:</strong> The stock market moves first. Crypto follows roughly 27 trading days later — about a month — at recessions and at recoveries (correlation of 0.4215 at a 27-day lag).</p>
+                                <p class="prose prose--caveman"><strong>Bottom line:</strong> The stock market moves first. Crypto follows roughly 27 trading days later (about a month) at recessions and at recoveries (correlation of 0.4215 at a 27-day lag).</p>
                             </div>
                         </div>
 
@@ -609,11 +609,11 @@
 
                         <h3>Theoretical Contributions</h3>
                         <p class="prose">The documented 27-day lead-lag relationship provides strong empirical validation for information processing theory and behavioral finance frameworks. The timing pattern reflects the systematic cascade of information transmission from institutionally dominated equity markets to retail-dominated cryptocurrency markets.</p>
-                        <p class="prose prose--caveman">The 27-day gap is not just a number — it is real-world evidence for how markets actually digest news. Wall Street pros read the signal in stocks, then everyday investors hear about it, then crypto catches up.</p>
+                        <p class="prose prose--caveman">The 27-day gap is not just a number. It is real-world evidence for how markets actually digest news. Wall Street pros read the signal in stocks, then everyday investors hear about it, then crypto catches up.</p>
 
                         <h3>Practical Implications</h3>
                         <p class="prose">For institutional investors, our findings provide actionable insights for dynamic hedging strategies and asset allocation decisions. The documented lead-lag relationship enables more sophisticated risk management approaches, particularly during volatile market periods when traditional diversification benefits erode.</p>
-                        <p class="prose prose--caveman">For professional investors, this is practical. Knowing stocks lead crypto by a month opens the door to smarter hedges and asset mixes — especially in stormy markets, when usual ways to spread risk stop working.</p>
+                        <p class="prose prose--caveman">For professional investors, this is practical. Knowing stocks lead crypto by a month opens the door to smarter hedges and asset mixes, especially in stormy markets, when usual ways to spread risk stop working.</p>
 
                         <h3>Policy and Regulatory Implications</h3>
                         <p class="prose">Our findings carry important implications for financial regulators and policymakers. The documented integration between equity and cryptocurrency markets, particularly during crisis periods, suggests that cryptocurrency markets can no longer be viewed as isolated from the broader financial system.</p>
@@ -624,8 +624,8 @@
                         <p class="prose prose--caveman">There is plenty left to explore. Future work can add social media sentiment, regulatory news, and adoption data into the mix, build live dashboards that track whether the link is holding up, and look at how it behaves on different time scales.</p>
 
                         <h3>Final Synthesis</h3>
-                        <p class="prose">This research definitively answers the central question of whether equity or cryptocurrency markets serve as leading indicators around business cycle turning points. The 27-day lead-lag relationship represents more than a statistical curiosity—it reflects the fundamental information processing differences between institutionally sophisticated equity markets and retail-dominated cryptocurrency markets.</p>
-                        <p class="prose prose--caveman">The answer is clear: stocks lead crypto. And that 27-day gap is more than a stat in a paper — it reveals how differently the pro-driven stock market and the retail-driven crypto market actually digest the world around them.</p>
+                        <p class="prose">This research answers the central question of whether equity or cryptocurrency markets are the leading indicators around business cycle turning points. The 27-day lead-lag relationship represents more than a statistical curiosity. It reflects the information processing differences between institutionally sophisticated equity markets and retail-dominated cryptocurrency markets.</p>
+                        <p class="prose prose--caveman">The answer is clear: stocks lead crypto. And that 27-day gap is more than a stat in a paper. It reveals how differently the pro-driven stock market and the retail-driven crypto market actually digest the world around them.</p>
 
                         <p class="prose">As cryptocurrency markets continue to mature and integrate with traditional financial systems, understanding these lead-lag dynamics becomes increasingly crucial for investors, regulators, and policymakers navigating the evolving financial landscape.</p>
                         <p class="prose prose--caveman">As crypto keeps growing up and fusing with traditional finance, knowing who moves first matters more, not less. Investors, regulators, and policymakers all need to keep this rhythm in mind.</p>
@@ -750,7 +750,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>

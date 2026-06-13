@@ -16,7 +16,7 @@
       })();
     </script>
     <title>SOM-TSK: Topology-Seeded Clustering Framework | Evint Leovonzko</title>
-    <meta name="description" content="SOM-TSK: A Self-Organizing Map Topology-Seeded Clustering Framework with Deterministic Multi-Start Initialization and Adaptive Selection — Research by Evint Leovonzko">
+    <meta name="description" content="SOM-TSK: A Self-Organizing Map Topology-Seeded Clustering Framework with Deterministic Multi-Start Initialization and Adaptive Selection. Research by Evint Leovonzko">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="SOM-TSK: Topology-Seeded Clustering | Evint Leovonzko">
@@ -56,7 +56,7 @@
                 <a href="../index.html#contact" class="nav__link nav__link--cta">Get in touch</a>
             </div>
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -131,7 +131,7 @@
                             <p class="circrna-subtitle prose prose--caveman">A simple idea: try several smart starting points, then keep the one that works best.</p>
 
                             <div class="circrna-summary">
-                                <p class="summary-lead">SOM-TSK exploits the manifold-mapping properties of a trained Self-Organizing Map to generate topology-guided seed pools for deterministic K-means &mdash; matching or exceeding KMeans++ on every one of 24 benchmark datasets, with zero losses.</p>
+                                <p class="summary-lead">SOM-TSK exploits the manifold-mapping properties of a trained Self-Organizing Map to generate topology-guided seed pools for deterministic K-means: it matches or exceeds KMeans++ on every one of 24 benchmark datasets, with zero losses.</p>
 
                                 <div class="summary-highlights">
                                     <div class="hero-metric">
@@ -249,8 +249,8 @@
                             </div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Problem</h3>
-                                <p class="prose">Clustering remains one of the most widely applied problems in unsupervised machine learning. The K-means algorithm is ubiquitous owing to its simplicity and scalability, yet its quality is sensitive to initialization &mdash; KMeans++ provides a theoretical O(log k) improvement but still traps the algorithm in suboptimal local minima.</p>
-                                <p class="prose prose--caveman">Sometimes you hand a pile of data to a computer and ask it: "what groups are in here?" That's clustering. The most popular tool for the job is <strong>K-means</strong> — it's fast, simple, and everywhere. But it has a quiet flaw: the answer depends a lot on where it starts guessing. Pick bad starting points and you get bad groups. <strong>KMeans++</strong> tries to pick smarter starting points, and it helps by a factor of O(log k), but the trap is still there.</p>
+                                <p class="prose">Clustering remains one of the most widely applied problems in unsupervised machine learning. The K-means algorithm is ubiquitous owing to its simplicity and scalability, yet its quality is sensitive to initialization. KMeans++ provides a theoretical O(log k) improvement but still traps the algorithm in suboptimal local minima.</p>
+                                <p class="prose prose--caveman">Sometimes you hand a pile of data to a computer and ask it: "what groups are in here?" That's clustering. The most popular tool for the job is <strong>K-means</strong>: it's fast, simple, and everywhere. But it has a quiet flaw: the answer depends a lot on where it starts guessing. Pick bad starting points and you get bad groups. <strong>KMeans++</strong> tries to pick smarter starting points, and it helps by a factor of O(log k), but the trap is still there.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="methods">
@@ -264,7 +264,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Approach</h3>
                                 <p class="prose">SOM-TSK presents a clustering framework that exploits the manifold-mapping properties of a trained Self-Organizing Map to generate a topology-aware candidate pool for deterministic K-means. The framework includes complementary selection criteria: Phase A (max-spread greedy), Phase A-alt, Phase B-bis (multi-start coverage-aware density), and Phase C (deterministic KMeans++ baseline), plus DenSOM for parameter-free density clustering and AutoSOM for automatic k-selection.</p>
-                                <p class="prose prose--caveman">SOM-TSK first runs a <strong>self-organizing map</strong> — a small grid of "neurons" that arranges itself so similar data items end up near each other on the grid. That layout reveals the shape of your data. We then use that shape to pick four sets of smart starting points for K-means, each chosen with a different rule: one spreads them as far apart as possible, one starts from the edge, one focuses on dense regions (run three times for robustness), and one uses a steady version of KMeans++. We also bundle <strong>DenSOM</strong>, which finds groups without you having to say how many, and <strong>AutoSOM</strong>, which figures out that number for you.</p>
+                                <p class="prose prose--caveman">SOM-TSK first runs a <strong>self-organizing map</strong>, a small grid of "neurons" that arranges itself so similar data items end up near each other on the grid. That layout reveals the shape of your data. We then use that shape to pick four sets of smart starting points for K-means, each chosen with a different rule: one spreads them as far apart as possible, one starts from the edge, one focuses on dense regions (run three times for robustness), and one uses a steady version of KMeans++. We also bundle <strong>DenSOM</strong>, which finds groups without you having to say how many, and <strong>AutoSOM</strong>, which figures out that number for you.</p>
                             </div>
                         </div>
                         <div class="abstract-item" data-phase="results">
@@ -278,7 +278,7 @@
                             </div>
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Results</h3>
-                                <p class="prose">Comprehensive benchmarks on 24 datasets spanning 5 categories demonstrate that SOM-TSK matches or exceeds KMeans++ on every evaluation metric. SOM-TSK achieves <strong>6 wins, 18 ties, and 0 losses</strong> &mdash; it never performs more than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is <strong>+0.014</strong> across all 24 datasets.</p>
+                                <p class="prose">Benchmarks on 24 datasets spanning 5 categories show that SOM-TSK matches or exceeds KMeans++ on every evaluation metric. SOM-TSK achieves <strong>6 wins, 18 ties, and 0 losses</strong>: it never performs more than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is <strong>+0.014</strong> across all 24 datasets.</p>
                                 <p class="prose prose--caveman">We tested it on 24 different datasets, sorted into 5 categories. SOM-TSK either matched or beat KMeans++ every single time. The final tally: <strong>6 wins, 18 ties, 0 losses</strong>. Even on the ties, it never slipped more than 0.005 behind on the agreement score (ARI), and on average it improved that score by <strong>+0.014</strong> across the whole suite.</p>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                             <div class="abstract-content-wrapper">
                                 <h3 class="abstract-label">Contribution</h3>
                                 <p class="prose">A rigorous comparative evaluation over 24 benchmarks and competitive implementation in safe Rust that provides competitive throughput at comparable quality. Three new seeding strategies, a novel density-based SOM clustering mode, and an automatic algorithm selection meta-algorithm are introduced and evaluated.</p>
-                                <p class="prose prose--caveman">We ran a careful head-to-head comparison across 24 benchmarks and built the whole thing in <strong>Rust</strong> — a language known for being fast and safe. The result is quality on par with the alternatives at competitive speed. Along the way we introduced three new ways to choose starting points, a fresh approach to finding groups by density, and a smart system that picks which method to use automatically.</p>
+                                <p class="prose prose--caveman">We ran a careful head-to-head comparison across 24 benchmarks and built the whole thing in <strong>Rust</strong>, a language known for being fast and safe. The result is quality on par with the alternatives at competitive speed. Along the way we introduced three new ways to choose starting points, a fresh approach to finding groups by density, and a smart system that picks which method to use automatically.</p>
                             </div>
                         </div>
                     </div>
@@ -305,8 +305,8 @@
                         </div>
                     </div>
                     <div class="content-text">
-                        <p class="lead-paragraph prose">K-means is the de facto clustering algorithm owing to its O(nkd) iteration cost and theoretical guarantees &mdash; yet its quality is bottlenecked entirely by initialization. KMeans++ provides an O(log k) competitive ratio in expectation, but a single initialization is still frequently inadequate when cluster boundaries are irregular or datasets are high-dimensional.</p>
-                        <p class="prose prose--caveman">K-means rules the world of clustering because it's quick (cost grows tidily as O(nkd) per pass) and because mathematicians have proven useful things about it. But there's a catch: <strong>the quality of the answer depends entirely on where it starts</strong>. KMeans++ patches this with smarter starting points and gives an O(log k) improvement on average — but it still only takes one guess. When the groups in your data have weird shapes or live in many dimensions, one guess often isn't enough.</p>
+                        <p class="lead-paragraph prose">K-means is the de facto clustering algorithm owing to its O(nkd) iteration cost and theoretical guarantees, yet its quality is bottlenecked entirely by initialization. KMeans++ provides an O(log k) competitive ratio in expectation, but a single initialization is still frequently inadequate when cluster boundaries are irregular or datasets are high-dimensional.</p>
+                        <p class="prose prose--caveman">K-means rules the world of clustering because it's quick (cost grows tidily as O(nkd) per pass) and because mathematicians have proven useful things about it. But there's a catch: <strong>the quality of the answer depends entirely on where it starts</strong>. KMeans++ patches this with smarter starting points and gives an O(log k) improvement on average, but it still only takes one guess. When the groups in your data have weird shapes or live in many dimensions, one guess often isn't enough.</p>
 
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
@@ -316,16 +316,16 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Key Insight</h4>
-                                <p class="prose">Self-Organizing Maps implicitly encode global topology &mdash; their neighbourhood relationships and weight matrix contain information about cluster structure that is entirely unexploited by standard K-means pipelines. SOM-TSK systematically mines this information.</p>
+                                <p class="prose">Self-Organizing Maps implicitly encode global topology: their neighbourhood relationships and weight matrix contain information about cluster structure that is entirely unexploited by standard K-means pipelines. SOM-TSK systematically mines this information.</p>
                                 <p class="prose prose--caveman">A self-organizing map quietly learns the <em>shape</em> of your data. Which neurons sit next to which, and what each one has learned, is basically a hand-drawn map of where the natural groups live. Standard K-means throws that map away. SOM-TSK picks it up and uses it.</p>
                             </div>
                         </div>
 
                         <p class="prose">Several prior works have coupled SOMs with K-means. Vesanto and Alhoniemi cluster SOM neurons directly; Tasdemir and Merenyi showed SOM adjacency topology can reveal cluster boundaries invisible to standard metrics. SOM-TSK generalises this by constructing a structured pool of diverse candidates, each seeded from different topological perspectives of the SOM graph, rather than running brute-force multi-restart independently.</p>
-                        <p class="prose prose--caveman">Other researchers have paired self-organizing maps with K-means before. Vesanto and Alhoniemi clustered the map's neurons directly. Tasdemir and Merenyi showed the map's neighbour layout exposes boundaries that the usual measures miss. We push the idea further: instead of brute-forcing many random restarts, we build a small, hand-picked lineup of starting points — each one a different angle on what the map sees.</p>
+                        <p class="prose prose--caveman">Other researchers have paired self-organizing maps with K-means before. Vesanto and Alhoniemi clustered the map's neurons directly. Tasdemir and Merenyi showed the map's neighbour layout exposes boundaries that the usual measures miss. We push the idea further: instead of brute-forcing many random restarts, we build a small, hand-picked lineup of starting points, each one a different angle on what the map sees.</p>
 
                         <p class="prose">The pool-based approach is more efficient than brute-force restart because each phase uses complementary structural information that reduces redundancy among candidates. After the pool is built, an inertia-windowed Calinski-Harabasz selection criterion picks the globally optimal partition while being wide enough to include SOM-seeded candidates that may have lower inertia but better topological quality.</p>
-                        <p class="prose prose--caveman">Why is a small lineup better than many random tries? Because each one comes from a different angle, so we waste less effort on duplicates. Once we have the lineup, we score each option two ways — how tight the groups are (inertia) and how well-separated they look (Calinski-Harabasz). We pick the best-separated option, but only among those that are also reasonably tight. That balance is the secret: it rewards good shape, not just compactness.</p>
+                        <p class="prose prose--caveman">Why is a small lineup better than many random tries? Because each one comes from a different angle, so we waste less effort on duplicates. Once we have the lineup, we score each option two ways: how tight the groups are (inertia) and how well-separated they look (Calinski-Harabasz). We pick the best-separated option, but only among those that are also reasonably tight. That balance is the secret: it rewards good shape, not just compactness.</p>
                     </div>
                 </section>
 
@@ -349,8 +349,8 @@
                                 </div>
                                 <div class="method-text">
                                     <h3 class="method-title">SOM Training</h3>
-                                    <p class="method-description prose">A Self-Organizing Map with M = m&times;n prototype neurons is trained on the data using the competitive learning rule. The neighbourhood kernel h<sub>c,j</sub>(t) = exp(&minus;&Vert;r<sub>c</sub> &minus; r<sub>j</sub>&Vert;&sup2; / 2&sigma;&sup2;(t)) shrinks over T epochs. After training, each data point is assigned to its Best-Matching Unit (BMU), producing a topology-preserving codebook that implicitly compresses cluster structure.</p>
-                                    <p class="method-description prose prose--caveman">First we lay out a grid of M = m&times;n "neurons" and train them on the data. Each neuron competes to look most like whatever data point comes in — and when one wins, its grid neighbours learn a little too. That nudging dies down over T training rounds (the formula h<sub>c,j</sub>(t) = exp(&minus;&Vert;r<sub>c</sub> &minus; r<sub>j</sub>&Vert;&sup2; / 2&sigma;&sup2;(t)) controls how far the ripples spread). At the end, every data point gets paired with its closest neuron — its <strong>Best-Matching Unit</strong> — and the grid becomes a tidy map of the data.</p>
+                                    <p class="method-description prose">A Self-Organizing Map with M = m&times;n prototype neurons is trained on the data using the competitive learning rule. The neighbourhood kernel h<sub>c,j</sub>(t) = exp(&minus;&Vert;r<sub>c</sub> &minus; r<sub>j</sub>&Vert;&sup2; / 2&sigma;&sup2;(t)) shrinks over T epochs. After training, each data point is assigned to its Best-Matching Unit (BMU). The result is a topology-preserving codebook that implicitly compresses cluster structure.</p>
+                                    <p class="method-description prose prose--caveman">First we lay out a grid of M = m&times;n "neurons" and train them on the data. Each neuron competes to look most like whatever data point comes in, and when one wins, its grid neighbours learn a little too. That nudging dies down over T training rounds (the formula h<sub>c,j</sub>(t) = exp(&minus;&Vert;r<sub>c</sub> &minus; r<sub>j</sub>&Vert;&sup2; / 2&sigma;&sup2;(t)) controls how far the ripples spread). At the end, every data point gets paired with its closest neuron, its <strong>Best-Matching Unit</strong>, and the grid becomes a tidy map of the data.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Competitive Learning</span>
                                         <span class="method-tag">Topology Preservation</span>
@@ -370,9 +370,9 @@
                                     </svg>
                                 </div>
                                 <div class="method-text">
-                                    <h3 class="method-title">Phase A &amp; A-alt — Max-Spread Greedy Seeding</h3>
+                                    <h3 class="method-title">Phase A &amp; A-alt: Max-Spread Greedy Seeding</h3>
                                     <p class="method-description prose">Phase A applies a greedy max-spread strategy analogous to KMeans++ but on SOM neuron weights: the first neuron is the one with highest hit-count, and each subsequent neuron is the one maximally distant from already-selected centres. Phase A-alt uses maximum-spread (farthest from global centroid) as the first selection, providing a complementary topological perspective.</p>
-                                    <p class="method-description prose prose--caveman">Phase A is the spread-them-out strategy. We start with the busiest neuron on the map — the one most data points landed on. Then we keep adding neurons that are as far from the already-chosen ones as possible. Phase A-alt does the same dance but kicks off from the neuron furthest from the average of the data — a different vantage point that sometimes catches groups the first version misses.</p>
+                                    <p class="method-description prose prose--caveman">Phase A is the spread-them-out strategy. We start with the busiest neuron on the map, the one most data points landed on. Then we keep adding neurons that are as far from the already-chosen ones as possible. Phase A-alt does the same dance but kicks off from the neuron furthest from the average of the data, a different vantage point that sometimes catches groups the first version misses.</p>
                                     <div class="formula-box">
                                         <code class="formula">f* = arg max<sub>h</sub> (h<sub>i</sub> &ge; 0.5) &middot; min<sub>j &in; S</sub> &Vert;w<sub>i</sub> &minus; w<sub>j</sub>&Vert;</code>
                                         <span class="formula-note">Starting with S = {1} and iterating until |S| = k</span>
@@ -397,9 +397,9 @@
                                     </svg>
                                 </div>
                                 <div class="method-text">
-                                    <h3 class="method-title">Phase B-bis — Multi-Start Coverage-Aware Density Seeding</h3>
+                                    <h3 class="method-title">Phase B-bis: Multi-Start Coverage-Aware Density Seeding</h3>
                                     <p class="method-description prose">Phase B-bis runs three independent instances of Phase B, each seeded from a different starting neuron (the 1st, 2nd, and 3rd highest hit-count neurons). This multi-start approach substantially reduces sensitivity to poor single-start choices. A final KMeans++ run on the top-3 B-bis candidates is then retained for the pool, improving ARI by up to 0.20 over a single start.</p>
-                                    <p class="method-description prose prose--caveman">Phase B-bis is the safety-in-numbers strategy. We run a density-focused search three times — each time kicking off from a different popular neuron (the 1st, 2nd, and 3rd busiest). That way, one unlucky start can't ruin the result. The three best outcomes get a final KMeans++ pass to polish them up. This single tweak pushes the agreement score up by as much as 0.20 compared to starting from just one spot.</p>
+                                    <p class="method-description prose prose--caveman">Phase B-bis is the safety-in-numbers strategy. We run a density-focused search three times, each time kicking off from a different popular neuron (the 1st, 2nd, and 3rd busiest). That way, one unlucky start can't ruin the result. The three best outcomes get a final KMeans++ pass to polish them up. This single tweak pushes the agreement score up by as much as 0.20 compared to starting from just one spot.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Multi-Start</span>
                                         <span class="method-tag">Coverage-Aware</span>
@@ -418,9 +418,9 @@
                                     </svg>
                                 </div>
                                 <div class="method-text">
-                                    <h3 class="method-title">DenSOM — Density-Based SOM Clustering</h3>
+                                    <h3 class="method-title">DenSOM: Density-Based SOM Clustering</h3>
                                     <p class="method-description prose">DenSOM extracts density-defined cluster structure from the SOM activation map entirely, requiring no distance parameter &epsilon; and automatically determining k. Gaussian smoothing (standard deviation &sigma;) is applied via separable 1D convolution to the hit-count map, followed by Otsu thresholding to identify core neurons, and then topographic watershed flood-fill partitions neurons into clusters.</p>
-                                    <p class="method-description prose prose--caveman">DenSOM reads groups straight off the map by looking at which areas are most crowded — and it figures out how many groups exist on its own. Think of it like a satellite photo at night: bright clusters of lights are obviously cities, dark stretches are gaps between them. We blur the activation map a little (with a Gaussian filter of width &sigma;) to smooth out noise, pick a brightness cutoff automatically (Otsu's method), and then "flood" outward from each bright peak — wherever the flood lines meet, that's a border between groups.</p>
+                                    <p class="method-description prose prose--caveman">DenSOM reads groups straight off the map by looking at which areas are most crowded, and it figures out how many groups exist on its own. Think of it like a satellite photo at night: bright clusters of lights are obviously cities, dark stretches are gaps between them. We blur the activation map a little (with a Gaussian filter of width &sigma;) to smooth out noise, pick a brightness cutoff automatically (Otsu's method), and then "flood" outward from each bright peak. Wherever the flood lines meet, that's a border between groups.</p>
                                     <div class="method-tags">
                                         <span class="method-tag">Density Clustering</span>
                                         <span class="method-tag">Otsu Thresholding</span>
@@ -439,9 +439,9 @@
                                     </svg>
                                 </div>
                                 <div class="method-text">
-                                    <h3 class="method-title">AutoSOM — Automatic k-Selection &amp; Routing</h3>
+                                    <h3 class="method-title">AutoSOM: Automatic k-Selection &amp; Routing</h3>
                                     <p class="method-description prose">AutoSOM removes the need to specify k by fitting a Gaussian Mixture Model with BIC criterion for k &isin; {2, &hellip;, k<sub>max</sub>}. The optimal k is then passed to SOM-TSK or DenSOM depending on the geometry of the data, selected by evaluating the DenSOM path on a random min(n, 2000) subsample in parallel. Final selection uses silhouette score on min(n, 2000) samples.</p>
-                                    <p class="method-description prose prose--caveman">Most clustering tools force you to tell them how many groups to look for. AutoSOM removes that burden. It tries different group counts from 2 up to k<sub>max</sub>, scores each using a standard model-fitting penalty (BIC), and keeps the winner. Then it decides whether SOM-TSK or DenSOM will do a better job on your data — and to keep things fast, it tests on a random sample of up to 2,000 points before committing.</p>
+                                    <p class="method-description prose prose--caveman">Most clustering tools force you to tell them how many groups to look for. AutoSOM removes that burden. It tries different group counts from 2 up to k<sub>max</sub>, scores each using a standard model-fitting penalty (BIC), and keeps the winner. Then it decides whether SOM-TSK or DenSOM will do a better job on your data, and to keep things fast, it tests on a random sample of up to 2,000 points before committing.</p>
                                     <div class="formula-box">
                                         <code class="formula">k&#770; = arg min<sub>k</sub> BIC(k) = &minus;2&ell;<sub>k</sub> + p<sub>k</sub> ln n</code>
                                         <span class="formula-note">where &ell;<sub>k</sub> is the maximised log-likelihood of a k-component GMM</span>
@@ -464,7 +464,7 @@
                                     </svg>
                                 </div>
                                 <div class="method-text">
-                                    <h3 class="method-title">Selection Criterion — Calinski-Harabasz with Inertia Window</h3>
+                                    <h3 class="method-title">Selection Criterion: Calinski-Harabasz with Inertia Window</h3>
                                     <p class="method-description prose">A single candidate is chosen from the pool by maximising the Calinski-Harabasz (CH) score within an inertia window of 5% above the pool minimum. This window is wide enough to include SOM-seeded candidates with slightly higher inertia but better topological cluster separation. The 5% threshold avoids including pathologically compact but unnatural partitions.</p>
                                     <p class="method-description prose prose--caveman">After all the candidates are ready, we have to pick one. Two scores matter: how tight the groups are (lower is tighter) and how cleanly separated they look (Calinski-Harabasz, higher is better). We take all candidates within 5% of the tightest one, then among those, pick the one with the best separation. The 5% rule keeps things honest: it lets us favour the candidate with the nicer overall shape, but blocks ones that look weirdly squashed.</p>
                                     <div class="formula-box">
@@ -501,19 +501,19 @@
                             </div>
                             <div class="highlight-content">
                                 <h4 class="highlight-title">Zero Losses</h4>
-                                <p class="prose">SOM-TSK <em>never</em> performs worse than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is +0.014 across all 24 datasets &mdash; with no red bars in the ARI gain plot (SOM-TSK never loses).</p>
-                                <p class="prose prose--caveman">On none of the 24 datasets did SOM-TSK fall meaningfully behind — at worst it was within 0.005 of KMeans++. On average it was ahead by +0.014. If you drew a bar chart of wins and losses, there would be no red bars at all.</p>
+                                <p class="prose">SOM-TSK <em>never</em> performs worse than 0.005 ARI below KMeans++ on any dataset. The mean ARI improvement is +0.014 across all 24 datasets, with no red bars in the ARI gain plot (SOM-TSK never loses).</p>
+                                <p class="prose prose--caveman">On none of the 24 datasets did SOM-TSK fall meaningfully behind; at worst it was within 0.005 of KMeans++. On average it was ahead by +0.014. If you drew a bar chart of wins and losses, there would be no red bars at all.</p>
                             </div>
                         </div>
 
                         <p class="prose">The four strongly significant wins (s2, a2, a3, Digits) have bootstrap confidence intervals entirely above zero, with &rho;&#770; = 1.00 for s2 and a2. These are topologically complex datasets where SOM's manifold approximation gives a decisive advantage over random KMeans++ seeding.</p>
-                        <p class="prose prose--caveman">Four wins stand out as clearly real, not flukes (s2, a2, a3, and Digits). Statistical resampling confirms it — on s2 and a2, the win rate is a clean 1.00. These datasets have unusual, twisty shapes that confuse random starting points; the self-organizing map's understanding of shape pays off big here.</p>
+                        <p class="prose prose--caveman">Four wins stand out as clearly real, not flukes (s2, a2, a3, and Digits). Statistical resampling confirms it: on s2 and a2, the win rate is a clean 1.00. These datasets have unusual, twisty shapes that confuse random starting points; the self-organizing map's understanding of shape pays off big here.</p>
 
-                        <p class="prose"><strong>Scalability results</strong> at n = 1,000; 5,000; 10,000; 50,000 (d=2, k=5, 10&times;10 SOM) confirm that SOM-TSK's training time scales as T &middot; M &middot; n, while KMeans is loop-optimised for cache-efficient early convergence &mdash; giving SOM-TSK a training ratio of ~11&times; vs KMeans++, dominated by the O(nmk&middot;d) Nystr&ouml;m-free KMeans phase. The gap is larger than the analytic estimate because the Rust SOM implementation processes all n samples per epoch, while KMeans is cache-optimised.</p>
-                        <p class="prose prose--caveman"><strong>How well does it scale?</strong> We ran tests at 1,000, 5,000, 10,000, and 50,000 data points (with a 10&times;10 map). SOM-TSK's training time grows steadily with the data. The downside: it's about <strong>11 times slower</strong> to train than plain KMeans++. The bottleneck isn't the map itself — it's the K-means refinement step that follows. The gap is wider than the math predicts because the map dutifully visits every data point in every training round, while K-means is heavily optimised for short bursts of computation.</p>
+                        <p class="prose"><strong>Scalability results</strong> at n = 1,000; 5,000; 10,000; 50,000 (d=2, k=5, 10&times;10 SOM) confirm that SOM-TSK's training time scales as T &middot; M &middot; n, while KMeans is loop-optimised for cache-efficient early convergence. This gives SOM-TSK a training ratio of ~11&times; vs KMeans++, dominated by the O(nmk&middot;d) Nystr&ouml;m-free KMeans phase. The gap is larger than the analytic estimate because the Rust SOM implementation processes all n samples per epoch, while KMeans is cache-optimised.</p>
+                        <p class="prose prose--caveman"><strong>How well does it scale?</strong> We ran tests at 1,000, 5,000, 10,000, and 50,000 data points (with a 10&times;10 map). SOM-TSK's training time grows steadily with the data. The downside: it's about <strong>11 times slower</strong> to train than plain KMeans++. The bottleneck isn't the map itself; it's the K-means refinement step that follows. The gap is wider than the math predicts because the map dutifully visits every data point in every training round, while K-means is heavily optimised for short bursts of computation.</p>
 
                         <p class="prose"><strong>High-dimensional evaluation</strong> (n=1000, k=5, d &isin; {32, 64, 128, 256}) shows SOM-TSK maintaining competitive quality through 256 dimensions, with the SOM grid size and epoch count adjusted per dataset to avoid over-fitting to small-n samples.</p>
-                        <p class="prose prose--caveman"><strong>What about really complicated data?</strong> We also tested data with many "features" per item — 32, 64, 128, and 256 dimensions, with 1,000 points and 5 expected groups. SOM-TSK kept up with the competition all the way to 256 dimensions. For each test, we sized the map and the number of training rounds carefully so the model didn't memorise the small sample.</p>
+                        <p class="prose prose--caveman"><strong>What about really complicated data?</strong> We also tested data with many "features" per item: 32, 64, 128, and 256 dimensions, with 1,000 points and 5 expected groups. SOM-TSK kept up with the competition all the way to 256 dimensions. For each test, we sized the map and the number of training rounds carefully so the model didn't memorise the small sample.</p>
                     </div>
                 </section>
 
@@ -525,8 +525,8 @@
                         </div>
                     </div>
                     <div class="content-text">
-                        <p class="lead-paragraph prose">The results confirm that SOM topology carries actionable information about cluster structure &mdash; Phase A's max-spread approach alone outperforms a single KMeans++ run on well-separated, non-Gaussian datasets, and the multi-start pool eliminates the variance that plagues single-initialisation methods.</p>
-                        <p class="prose prose--caveman">The results back up the main idea: the shape information stored in a self-organizing map is genuinely useful. Even Phase A on its own — the simple spread-them-out strategy — beats a single run of KMeans++ on tidy, oddly-shaped datasets. And combining several candidates kills the unpredictability that plagues methods relying on just one lucky guess.</p>
+                        <p class="lead-paragraph prose">The results confirm that SOM topology carries actionable information about cluster structure. Phase A's max-spread approach alone outperforms a single KMeans++ run on well-separated, non-Gaussian datasets, and the multi-start pool eliminates the variance that plagues single-initialisation methods.</p>
+                        <p class="prose prose--caveman">The results back up the main idea: the shape information stored in a self-organizing map is genuinely useful. Even Phase A on its own, the simple spread-them-out strategy, beats a single run of KMeans++ on tidy, oddly-shaped datasets. And combining several candidates kills the unpredictability that plagues methods relying on just one lucky guess.</p>
 
                         <div class="research-highlight">
                             <div class="highlight-icon">
@@ -557,14 +557,14 @@
                         </div>
                     </div>
                     <div class="content-text">
-                        <p class="lead-paragraph prose">SOM-TSK demonstrates that the SOM's topology-preserving weight matrix is a powerful, underutilised resource for K-means initialisation. By constructing a structured pool of topologically diverse candidates and selecting via inertia-windowed Calinski-Harabasz, the framework achieves 6 wins, 18 ties, and zero losses against KMeans++ across a comprehensive benchmark suite.</p>
+                        <p class="lead-paragraph prose">SOM-TSK demonstrates that the SOM's topology-preserving weight matrix is a powerful, underutilised resource for K-means initialisation. By constructing a structured pool of topologically diverse candidates and selecting via inertia-windowed Calinski-Harabasz, the framework achieves 6 wins, 18 ties, and zero losses against KMeans++ across the full benchmark suite.</p>
                         <p class="prose prose--caveman">The takeaway: the shape that a self-organizing map quietly learns is a powerful, underused tool for giving K-means a smart head start. By building a handful of varied candidates and picking the one with the best balance of tightness and clean separation, SOM-TSK racks up 6 wins, 18 ties, and zero losses against KMeans++ across the whole benchmark suite.</p>
 
-                        <p class="prose">The Rust implementation delivers competitive throughput: SOM training is fully parallelised via Rayon and optionally offloaded to CUDA or Metal backends. DenSOM eliminates both the k-specification and &epsilon;-specification requirements simultaneously &mdash; the only free parameter is the Gaussian smoothing &sigma;. AutoSOM removes even this through BIC-guided GMM selection and automatic algorithm routing.</p>
-                        <p class="prose prose--caveman">The whole thing is built in Rust, so it runs fast. Training is spread across all available CPU cores (via Rayon), and it can also hand work off to NVIDIA GPUs (CUDA) or Apple GPUs (Metal). DenSOM drops two of the usual knobs at once — you don't have to say how many groups exist, and you don't have to set a distance threshold. Only one knob remains (a blur setting), and AutoSOM removes even that by deciding everything automatically.</p>
+                        <p class="prose">The Rust implementation delivers competitive throughput: SOM training is fully parallelised via Rayon and optionally offloaded to CUDA or Metal backends. DenSOM eliminates both the k-specification and &epsilon;-specification requirements simultaneously: the only free parameter is the Gaussian smoothing &sigma;. AutoSOM removes even this through BIC-guided GMM selection and automatic algorithm routing.</p>
+                        <p class="prose prose--caveman">The whole thing is built in Rust, so it runs fast. Training is spread across all available CPU cores (via Rayon), and it can also hand work off to NVIDIA GPUs (CUDA) or Apple GPUs (Metal). DenSOM drops two of the usual knobs at once: you don't have to say how many groups exist, and you don't have to set a distance threshold. Only one knob remains (a blur setting), and AutoSOM removes even that by deciding everything automatically.</p>
 
                         <p class="prose">Future directions include extending the SOM-seeded pool to non-Euclidean metric spaces, integrating GRASP's topology-aware spectral routing as a downstream alternative to K-means, and evaluating on RNA-seq cell-type clustering tasks where topology preservation has direct biological interpretability.</p>
-                        <p class="prose prose--caveman">Where to next? A few directions are exciting. First, making the approach work with distance measures beyond plain straight-line distance — useful when your data isn't laid out neatly. Second, swapping K-means for a fancier method (GRASP) that also pays attention to shape. And third, applying all of this to RNA sequencing data, where finding cell types is essentially a clustering problem and the "shape" of the data has real biological meaning.</p>
+                        <p class="prose prose--caveman">Where to next? A few directions are exciting. First, making the approach work with distance measures beyond plain straight-line distance, useful when your data isn't laid out neatly. Second, swapping K-means for a fancier method (GRASP) that also pays attention to shape. And third, applying all of this to RNA sequencing data, where finding cell types is essentially a clustering problem and the "shape" of the data has real biological meaning.</p>
                     </div>
                 </section>
 
@@ -598,7 +598,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>

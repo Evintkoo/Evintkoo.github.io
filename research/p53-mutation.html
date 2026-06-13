@@ -74,7 +74,7 @@
             </div>
             
             <div class="nav__actions">
-                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode — plain-English rewrite">
+                <button class="caveman-toggle" id="cavemanToggle" aria-label="Toggle simple mode" aria-pressed="false" title="Simple mode: plain-English rewrite">
                     <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"/>
                         <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"/>
@@ -145,10 +145,10 @@
                             </span>
                         </h1>
                         <p class="hero__subtitle prose">
-                            Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 &mdash; the "guardian of the genome" &mdash; before malignant cascades take hold. Award-winning research bridging evolutionary computation and cancer genomics.
+                            Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 (the "guardian of the genome") before malignant cascades take hold. Award-winning research that connects evolutionary computation and cancer genomics.
                         </p>
                         <p class="hero__subtitle prose prose--caveman">
-                            About half of all cancers carry a broken copy of a single gene called <strong>p53</strong> &mdash; the cell's built-in safety switch that tells damaged cells to shut down. This project uses evolution-inspired algorithms to spot the very first signs that p53 is breaking, long before cancer takes hold. The work won Best Research Project at UBC Vantage.
+                            About half of all cancers carry a broken copy of a single gene called <strong>p53</strong>, the cell's built-in safety switch that tells damaged cells to shut down. This project uses evolution-inspired algorithms to spot the very first signs that p53 is breaking, long before cancer takes hold. The work won Best Research Project at UBC Vantage.
                         </p>
                         
                         <div class="paper-meta-box">
@@ -204,7 +204,7 @@
                                     Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
                                 </p>
                                 <p class="prose prose--caveman">
-                                    Most cancer studies look at DNA that is already cancerous &mdash; like inspecting a fire after the house has burned. This study looks earlier, at the DNA just before it turns cancerous, hunting for warning patterns that could let doctors step in before the disease takes hold.
+                                    Most cancer studies look at DNA that is already cancerous, like inspecting a fire after the house has burned. This study looks earlier, at the DNA just before it turns cancerous, hunting for warning patterns that could let doctors step in before the disease takes hold.
                                 </p>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                                         Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        First, we needed examples to study. We pulled 25 P-53 DNA sequences from the public NCBI database &mdash; some healthy, some cancerous. Each one is 2,509 letters long. We cleaned up stray characters and lined up each cancerous sequence next to the healthy version it came from, so we could compare them directly.
+                                        First, we needed examples to study. We pulled 25 P-53 DNA sequences from the public NCBI database, some healthy, some cancerous. Each one is 2,509 letters long. We cleaned up stray characters and lined up each cancerous sequence next to the healthy version it came from, so we could compare them directly.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">NCBI Database</span>
@@ -311,7 +311,7 @@
                                         Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Cells grow by splitting in two, again and again. We modelled that as a tree: one cell becomes two, two become four, and so on. Each branch remembers which generation it belongs to, what its DNA looks like, and whether it has turned cancerous. We let the tree grow 14 generations deep &mdash; roughly the depth where a tumour usually gets started.
+                                        Cells grow by splitting in two, again and again. We modelled that as a tree: one cell becomes two, two become four, and so on. Each branch remembers which generation it belongs to, what its DNA looks like, and whether it has turned cancerous. We let the tree grow 14 generations deep, roughly the depth where a tumour usually gets started.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Binary Tree</span>
@@ -330,7 +330,7 @@
                                         Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Next we walked each branch of the tree from root to tip. For every step, we measured how much the DNA had drifted away from its parent using Levenshtein similarity &mdash; a score that counts how many letters changed. The branches that drifted the most just before turning cancerous are the ones we flagged as suspects.
+                                        Next we walked each branch of the tree from root to tip. For every step, we measured how much the DNA had drifted away from its parent using Levenshtein similarity, a score that counts how many letters changed. The branches that drifted the most just before turning cancerous are the ones we flagged as suspects.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Levenshtein Distance</span>
@@ -368,7 +368,7 @@
                                         Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion.
                                     </p>
                                     <p class="method-description prose prose--caveman">
-                                        Finally we used a self-organizing map &mdash; a method that groups similar fingerprints together, like sorting socks by colour. We tried sorting them into anywhere from 2 to 11 groups. Six groups turned out to give the cleanest split: each pile was tight and clearly different from its neighbours.
+                                        Finally we used a self-organizing map, a method that groups similar fingerprints together, like sorting socks by colour. We tried sorting them into anywhere from 2 to 11 groups. Six groups turned out to give the cleanest split: each pile was tight and clearly different from its neighbours.
                                     </p>
                                     <div class="method-tags">
                                         <span class="method-tag">Self-Organizing Maps</span>
@@ -512,7 +512,7 @@
                             Genetic algorithms plus SOM clustering expose deterministic shifts toward malignancy. Six pentamer motifs consistently precede malignant conversion, providing high-clarity monitoring targets.
                         </p>
                         <p class="prose prose--caveman">
-                            The big takeaway is that cancer is not pure bad luck at the DNA level. Cells seem to follow a predictable path on the way to going rogue. Six short DNA patterns &mdash; each five letters long &mdash; keep showing up just before that switch flips. That gives doctors and researchers a clear list of things to watch for.
+                            The big takeaway is that cancer is not pure bad luck at the DNA level. Cells seem to follow a predictable path on the way to going rogue. Six short DNA patterns (each five letters long) keep showing up just before that switch flips. That gives doctors and researchers a clear list of things to watch for.
                         </p>
                         
                         <div class="research-highlight">
@@ -609,7 +609,7 @@
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <p class="footer__text">Built with curiosity &mdash; Evint Leovonzko, 2025</p>
+                    <p class="footer__text">Built with curiosity. Evint Leovonzko, 2025</p>
                 </div>
                 <div class="footer__links">
                     <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
