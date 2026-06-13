@@ -2816,6 +2816,8 @@ a.paper-hero__badge {
 .filter-fab:active { transform: scale(0.96); }
 .filter-fab svg { width: 18px; height: 18px; }
 
+.filter-fab__badge[hidden] { display: none; }
+
 .filter-fab__badge {
   display: inline-flex;
   align-items: center;
@@ -2970,4 +2972,57 @@ a.paper-hero__badge {
 @media (prefers-reduced-motion: reduce) {
   .filter-sheet__overlay,
   .filter-sheet__panel { transition: none; }
+}
+
+/* ── Mobile bottom navigation bar (thumb zone) ──────────────────────────── */
+.bottom-nav { display: none; }
+
+@media (max-width: 767px) {
+  .bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;
+    background: color-mix(in srgb, var(--bg-secondary) 90%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border-primary);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .bottom-nav__tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 58px;
+    text-decoration: none;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+    transition: color var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-nav__tab svg { width: 21px; height: 21px; }
+  .bottom-nav__tab:active { color: var(--accent-warm); }
+
+  .bottom-nav__tab.is-active {
+    color: var(--accent-warm);
+  }
+  .bottom-nav__tab.is-active svg { stroke: var(--accent-warm); }
+
+  /* Keep page content (and footer) clear of the fixed bar */
+  body { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Lift the filter button above the bottom nav bar */
+  .filter-fab { bottom: calc(74px + env(safe-area-inset-bottom, 0px)); }
+
+  /* The bottom bar replaces the hamburger on mobile */
+  .nav__toggle { display: none; }
 }

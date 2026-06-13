@@ -956,3 +956,25 @@
   console.log('%cWelcome to Evint\'s Portfolio!', 'color: #f43f7a; font-size: 20px; font-weight: bold; font-family: "Instrument Serif", Georgia, serif;');
 
 })();
+
+// Highlight the active tab in the mobile bottom navigation bar.
+(function () {
+  function setActiveTab() {
+    var path = window.location.pathname;
+    var key = 'home';
+    if (/\/projects(\/|\.html)/.test(path)) key = 'projects';
+    else if (/\/research(\/|\.html)/.test(path)) key = 'research';
+    else if (/\/about\.html/.test(path)) key = 'about';
+    var tab = document.querySelector('.bottom-nav__tab[data-nav="' + key + '"]');
+    if (tab) {
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-current', 'page');
+    }
+  }
+  // Detail pages load this script before the bottom nav is parsed, so wait for DOM.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setActiveTab);
+  } else {
+    setActiveTab();
+  }
+})();
