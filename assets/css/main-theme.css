@@ -2514,27 +2514,50 @@ a.section-eyebrow__label:hover {
   }
 }
 
-/* ── Tech-tag filter banner ─────────────────────────────────────────────── */
-.tag-filter-banner {
+/* ── Filter dock (drag-and-drop drop target) ────────────────────────────── */
+.filter-dock {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  min-height: 3rem;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
+  border: 1px dashed var(--border-primary);
   border-radius: var(--radius-sm);
   padding: var(--space-3) var(--space-5);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4);
   font-size: var(--text-sm);
   color: var(--text-secondary);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
-.tag-filter-banner strong {
-  color: var(--accent-warm);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+.filter-dock[data-empty="false"] {
+  border-style: solid;
 }
 
-.tag-filter-banner__clear {
+.filter-dock.is-droptarget {
+  border-color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg-tertiary));
+}
+
+.filter-dock__label {
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.filter-dock__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.filter-dock__hint {
+  color: var(--text-tertiary);
+  font-style: italic;
+  font-size: 0.78rem;
+}
+
+.filter-dock__clear {
   margin-left: auto;
   background: none;
   border: none;
@@ -2546,18 +2569,112 @@ a.section-eyebrow__label:hover {
   transition: color var(--transition-fast);
 }
 
-.tag-filter-banner__clear:hover {
+.filter-dock__clear:hover {
   color: var(--text-primary);
 }
 
-/* ── Tech-tag as link ───────────────────────────────────────────────────── */
+/* Active filter pills inside the dock */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 10%, var(--bg-secondary));
+  border: 1px solid color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+  border-radius: var(--radius-sm);
+  padding: 2px 4px 2px 8px;
+  letter-spacing: 0.02em;
+}
+
+.filter-pill__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.filter-pill__remove:hover {
+  opacity: 1;
+}
+
+.filter-pill--flash {
+  animation: filterPillFlash 0.4s var(--ease-out);
+}
+
+@keyframes filterPillFlash {
+  0%, 100% { transform: scale(1); }
+  40%      { transform: scale(1.12); }
+}
+
+/* ── Draggable chip palette ─────────────────────────────────────────────── */
+.filter-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.filter-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  border: 1px solid var(--border-primary);
+  letter-spacing: 0.02em;
+  cursor: grab;
+  transition: color var(--transition-fast), background var(--transition-fast),
+              border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.filter-chip:active { cursor: grabbing; }
+.filter-chip.is-dragging { opacity: 0.4; }
+
+.filter-chip.is-active {
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 10%, var(--bg-tertiary));
+  border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+}
+
+/* ── Tech-tag as link / drag source ─────────────────────────────────────── */
 a.tech-tag {
   text-decoration: none;
+  cursor: grab;
   transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
 }
+
+a.tech-tag:active { cursor: grabbing; }
+a.tech-tag.is-dragging { opacity: 0.4; }
 
 a.tech-tag:hover {
   color: var(--accent-warm);
   background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg-tertiary));
   border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .filter-chip:hover {
+    color: var(--accent-warm);
+    background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg-tertiary));
+    border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-pill--flash { animation: none; }
+  .filter-chip:hover { transform: none; }
 }
