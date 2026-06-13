@@ -2762,3 +2762,212 @@ a.paper-hero__badge {
     border-color: color-mix(in srgb, var(--accent-warm) 30%, var(--border-primary));
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   MOBILE / TOUCH ACCESSIBILITY
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Bigger, comfortable tap targets for every interactive chip on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .tech-tag,
+  .research-row__tag,
+  .skill-pill,
+  .project-featured__tag,
+  .proj-tech-pill,
+  .proj-hero__tags .tag,
+  .meta-pill,
+  .filter-chip {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  /* draggable cursor hints are meaningless without a pointer */
+  .filter-chip,
+  .tech-tag,
+  .research-row__tag { cursor: pointer; }
+}
+
+/* ── Floating "Filters" button (thumb zone) — mobile only ───────────────── */
+.filter-fab {
+  display: none;
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 1200;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-5);
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--accent-warm);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.filter-fab:active { transform: scale(0.96); }
+.filter-fab svg { width: 18px; height: 18px; }
+
+.filter-fab__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: #fff;
+  color: var(--accent-warm);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ── Filter bottom sheet ─────────────────────────────────────────────────── */
+.filter-sheet { position: fixed; inset: 0; z-index: 1300; }
+.filter-sheet[hidden] { display: none; }
+
+.filter-sheet__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.28s var(--ease-out);
+}
+
+.filter-sheet.is-open .filter-sheet__overlay { opacity: 1; }
+
+.filter-sheet__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top: 1px solid var(--border-primary);
+  padding: var(--space-3) var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  transition: transform 0.32s var(--ease-out);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.filter-sheet.is-open .filter-sheet__panel { transform: translateY(0); }
+
+.filter-sheet__handle {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--border-primary);
+  margin: 0 auto var(--space-3);
+}
+
+.filter-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.filter-sheet__title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.filter-sheet__close {
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.filter-sheet__active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.filter-sheet__active:empty { display: none; }
+
+.filter-sheet__palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  overflow-y: auto;
+  padding: var(--space-1) 0 var(--space-3);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+/* Larger chips inside the sheet for thumb tapping */
+.filter-sheet__palette .filter-chip {
+  min-height: 44px;
+  font-size: 0.78rem;
+  padding: 0 var(--space-4);
+}
+
+.filter-sheet__footer {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.filter-sheet__clear {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.filter-sheet__apply {
+  flex: 1;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--accent-warm);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Show the FAB / sheet and hide the top dock+palette only on small screens */
+@media (max-width: 767px) {
+  .filter-fab { display: inline-flex; }
+  .filter-dock,
+  .filter-palette { display: none; }
+}
+
+/* The FAB and bottom sheet are mobile-only — never let them appear on desktop */
+@media (min-width: 768px) {
+  .filter-fab,
+  .filter-sheet { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-sheet__overlay,
+  .filter-sheet__panel { transition: none; }
+}

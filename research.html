@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/images/logos/logo-light.png">
     <link rel="apple-touch-icon" href="assets/images/logos/logo-light.png">
-    <link rel="stylesheet" href="assets/css/main-theme.css?v=17">
+    <link rel="stylesheet" href="assets/css/main-theme.css?v=18">
     <style>
         .listing-hero { padding-top: calc(var(--nav-height) + var(--space-16)); }
         @media (max-width: 768px) { .listing-hero { padding-top: calc(var(--nav-height) + var(--space-10)); } }
@@ -86,6 +86,29 @@
                 </div>
                 <!-- Filter palette: draggable domain/badge chips, auto-built from the papers -->
                 <div class="filter-palette" id="filterPalette" aria-label="Available topics" data-reveal></div>
+
+                <!-- Mobile: thumb-reachable filter trigger + bottom sheet -->
+                <button class="filter-fab" id="filterFab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="filterSheet">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    <span class="filter-fab__label">Filters</span>
+                    <span class="filter-fab__badge" id="filterFabBadge" hidden>0</span>
+                </button>
+                <div class="filter-sheet" id="filterSheet" role="dialog" aria-modal="true" aria-label="Filter papers by topic" hidden>
+                    <div class="filter-sheet__overlay" id="filterSheetOverlay"></div>
+                    <div class="filter-sheet__panel">
+                        <div class="filter-sheet__handle"></div>
+                        <div class="filter-sheet__header">
+                            <span class="filter-sheet__title">Tap topics to filter</span>
+                            <button class="filter-sheet__close" id="filterSheetClose" type="button" aria-label="Close filters">&times;</button>
+                        </div>
+                        <div class="filter-sheet__active" id="filterSheetActive" aria-live="polite"></div>
+                        <div class="filter-sheet__palette" id="filterSheetPalette"></div>
+                        <div class="filter-sheet__footer">
+                            <button class="filter-sheet__clear" id="filterSheetClear" type="button">Clear</button>
+                            <button class="filter-sheet__apply" id="filterSheetApply" type="button">Show <span id="filterSheetCount">0</span></button>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="research-list" data-reveal>
                     <!-- Keynesian ABM Paper 1 -->
@@ -355,6 +378,12 @@
             var dockHint = document.getElementById('filterDockHint');
             var dockClear = document.getElementById('filterDockClear');
             var palette = document.getElementById('filterPalette');
+            var sheetPalette = document.getElementById('filterSheetPalette');
+            var sheetActive = document.getElementById('filterSheetActive');
+            var sheet = document.getElementById('filterSheet');
+            var fab = document.getElementById('filterFab');
+            var fabBadge = document.getElementById('filterFabBadge');
+            var sheetCount = document.getElementById('filterSheetCount');
             var emptyMsg = document.getElementById('filterEmpty');
             var emptyReset = document.getElementById('filterEmptyReset');
             var rows = Array.prototype.slice.call(document.querySelectorAll('.research-row'));
@@ -403,14 +432,19 @@
             });
             paletteSlugs.forEach(function (slug) {
                 var label = registry.get(slug) || slug;
+                palette.appendChild(buildChip(slug, label));
+                sheetPalette.appendChild(buildChip(slug, label));
+            });
+
+            function buildChip(slug, label) {
                 var chip = document.createElement('button');
                 chip.type = 'button';
                 chip.className = 'filter-chip';
                 chip.textContent = label;
                 chip.dataset.slug = slug;
                 makeChipInteractive(chip, slug, label, false);
-                palette.appendChild(chip);
-            });
+                return chip;
+            }
 
             function makeChipInteractive(el, slug, label, insideRow) {
                 el.setAttribute('draggable', 'true');
@@ -437,10 +471,29 @@
             function removeFilter(slug) { active.delete(slug); render(); }
             function clearAll() { active.clear(); render(); }
 
-            function render() { renderDock(); applyFilter(); syncUrl(); }
+            function render() {
+                renderPills(dockChips);
+                renderPills(sheetActive);
+                var shown = applyFilter();
 
-            function renderDock() {
-                dockChips.innerHTML = '';
+                var empty = active.size === 0;
+                dock.dataset.empty = empty ? 'true' : 'false';
+                dockHint.hidden = !empty;
+                dockClear.hidden = empty;
+
+                document.querySelectorAll('.filter-chip').forEach(function (c) {
+                    c.classList.toggle('is-active', active.has(c.dataset.slug));
+                });
+
+                fabBadge.hidden = empty;
+                fabBadge.textContent = active.size;
+                sheetCount.textContent = shown + (shown === 1 ? ' result' : ' results');
+
+                syncUrl();
+            }
+
+            function renderPills(container) {
+                container.innerHTML = '';
                 active.forEach(function (label, slug) {
                     var pill = document.createElement('span');
                     pill.className = 'filter-pill';
@@ -455,14 +508,7 @@
                     rm.addEventListener('click', function () { removeFilter(slug); });
                     pill.appendChild(text);
                     pill.appendChild(rm);
-                    dockChips.appendChild(pill);
-                });
-                var empty = active.size === 0;
-                dock.dataset.empty = empty ? 'true' : 'false';
-                dockHint.hidden = !empty;
-                dockClear.hidden = empty;
-                palette.querySelectorAll('.filter-chip').forEach(function (c) {
-                    c.classList.toggle('is-active', active.has(c.dataset.slug));
+                    container.appendChild(pill);
                 });
             }
 
@@ -477,6 +523,7 @@
                     if (match) shown++;
                 });
                 emptyMsg.hidden = !(slugs.length > 0 && shown === 0);
+                return shown;
             }
 
             function syncUrl() {
@@ -487,11 +534,11 @@
             }
 
             function flashPill(slug) {
-                var pill = dockChips.querySelector('.filter-pill[data-slug="' + slug + '"]');
-                if (!pill) return;
-                pill.classList.remove('filter-pill--flash');
-                void pill.offsetWidth;
-                pill.classList.add('filter-pill--flash');
+                document.querySelectorAll('.filter-pill[data-slug="' + slug + '"]').forEach(function (pill) {
+                    pill.classList.remove('filter-pill--flash');
+                    void pill.offsetWidth;
+                    pill.classList.add('filter-pill--flash');
+                });
             }
 
             dock.addEventListener('dragover', function (e) {
@@ -513,6 +560,20 @@
 
             dockClear.addEventListener('click', clearAll);
             if (emptyReset) emptyReset.addEventListener('click', clearAll);
+
+            // Mobile bottom sheet open/close.
+            function openSheet() { sheet.hidden = false; requestAnimationFrame(function () { sheet.classList.add('is-open'); }); fab.setAttribute('aria-expanded', 'true'); }
+            function closeSheet() {
+                sheet.classList.remove('is-open');
+                fab.setAttribute('aria-expanded', 'false');
+                setTimeout(function () { sheet.hidden = true; }, 320);
+            }
+            fab.addEventListener('click', openSheet);
+            document.getElementById('filterSheetClose').addEventListener('click', closeSheet);
+            document.getElementById('filterSheetOverlay').addEventListener('click', closeSheet);
+            document.getElementById('filterSheetApply').addEventListener('click', closeSheet);
+            document.getElementById('filterSheetClear').addEventListener('click', clearAll);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeSheet(); });
 
             // Seed from URL ?tags=a,b — used by topic links from the about page and paper pages.
             var params = new URLSearchParams(window.location.search);
