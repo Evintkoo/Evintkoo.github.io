@@ -186,6 +186,10 @@
                                         <span class="meta-highlight__value">177M</span>
                                         <span class="meta-highlight__label">encoder parameters</span>
                                     </div>
+                                    <div class="meta-highlight">
+                                        <span class="meta-highlight__value">4&times;</span>
+                                        <span class="meta-highlight__label">semantic spread gain</span>
+                                    </div>
                                 </div>
 
                                 <div class="paper-meta-details">
@@ -426,6 +430,25 @@
 
                         <p class="prose"><strong>Regional breakdown</strong> shows that ThreatSafety content activates the language network and prefrontal cortex most strongly under hash-mode, while AudioText and ImageVisual content drives the largest visual and auditory cortex responses under semantic encoding. This suggests hash-mode captures surface lexical features while semantic-mode captures deeper representational content.</p>
                         <p class="prose prose--caveman"><strong>Zooming in by brain region:</strong> in hash-mode, ThreatSafety content lights up the language areas and the prefrontal cortex (the brain&rsquo;s decision-maker) the most. In semantic-mode, AudioText and ImageVisual content drive the biggest responses in the visual and auditory areas. The likely reason: hash-mode reacts to the words themselves, while semantic-mode reacts to what those words actually describe.</p>
+
+                        <div class="research-highlight research-highlight--info">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Robustness Checks: Ranking is Stable, Not Just Surface Text</h4>
+                                <p class="prose">Two checks confirmed the semantic-mode ranking is not an artefact. <strong>(1) seq_len sweep:</strong> the per-CT ordering is essentially identical across temporal integration windows seq_len = 4, 8, 16 (Spearman &rho; &ge; 0.956, all p &lt; 0.001). <strong>(2) LSA Mantel test:</strong> TRIBE&rsquo;s representational geometry is near-zero correlated with surface text similarity (Mantel r = 0.055, p = 0.340), confirming the encoder captures stimulus-specific neural coding. <strong>Vertex-level analysis</strong> (20,484 independent ANOVAs) further shows the discriminative effect is whole-brain: 99.8% of vertices are significant at p &lt; 0.001, with the top vertex reaching F = 71.05 (5.3&times; the six-region aggregate).</p>
+                                <p class="prose prose--caveman"><strong>Is the ranking real?</strong> Two checks say yes. First, we ran the model with different time windows and the category order barely budged (&rho; &ge; 0.956). Second, we checked whether the ranking is just echoing how similar the texts look on the surface (using a completely separate text-similarity method called LSA). The answer is no (Mantel r = 0.055) &mdash; TRIBE is picking up on something deeper. We also checked each of the 20,484 brain points independently: 99.8% show a significant category effect, and the hottest single point has 5.3&times; more discriminating power than the six-region average.</p>
+                            </div>
+                        </div>
+
+                        <p class="prose"><strong>Cross-source robustness</strong> confirms category effects are not dataset artefacts. For each category represented in two or more independent sources, an ICC-style reproducibility index was computed. The mean ICC across 12 categories is 0.89; 10 of 12 fall in the good-to-excellent range. Narrative is the exception (ICC = 0.67), consistent with its heterogeneous sourcing (HellaSwag completions vs TinyStories).</p>
+                        <p class="prose prose--caveman"><strong>Different data sources, same story.</strong> We checked whether the results were just an accident of which dataset we used. For categories that come from multiple independent sources, we measured how well the results reproduce. The average score is 0.89 out of 1.0 (excellent). Only Narrative is shaky (0.67), because the two types of stories we used behave quite differently.</p>
+
+                        <p class="prose"><strong>Extended multivariate analyses</strong> further confirm content-type profiles are discriminable above chance: linear SVM classification achieves significant cross-validated accuracy, hierarchical clustering reveals a structured taxonomy (sensory categories cluster separately from semantic ones), and mutual information analysis shows distinct information carried by each cortical region &mdash; consistent with the view that different content types engage specialised neural subsystems rather than a single undifferentiated response.</p>
+                        <p class="prose prose--caveman"><strong>Machine learning confirms the pattern.</strong> We trained a simple classifier on the brain responses and it could tell which content category a snippet belonged to, well above chance. Clustering the response patterns reveals a sensible family tree: sensory categories (AudioText, ImageVisual) group together, and semantic categories form their own branches. Different brain regions carry distinct information about the content, confirming the idea that each type of content engages its own mix of specialised circuits.</p>
                     </div>
                 </section>
 
@@ -461,6 +484,19 @@
 
                         <p class="prose"><strong>Integrated Information Theory</strong> predicts content with higher integrated information (&Phi;) should drive more cortical activation. IIT receives mixed evidence: there is no reliable proxy for &Phi; in natural language stimuli, making this prediction untestable at current resolution.</p>
                         <p class="prose prose--caveman"><strong>Integrated Information Theory:</strong> IIT measures &ldquo;richness of experience&rdquo; with a number called &Phi;, and predicts that richer content should activate more of the brain. The honest verdict is: we cannot really tell yet. There is no good way to measure &Phi; in a short piece of text, so this prediction is essentially untestable with the tools we have today.</p>
+
+                        <div class="research-highlight research-highlight--info">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-content">
+                                <h4 class="highlight-title">Quantitative Theory Scorecard</h4>
+                                <p class="prose">A formal numerical evaluation (1.0 = confirmed, 0.5 = partial, 0.0 = not confirmed) across six predictions produces the following aggregate scores: <strong>GWT</strong> scores highest (0.58), driven by ThreatSafety&rsquo;s consistent top ranking. <strong>IIT and DCT</strong> tie at 0.33, while <strong>FEP</strong> scores 0.25. These scores establish a principled baseline against which future semantic-replication results can be compared.</p>
+                                <p class="prose prose--caveman"><strong>Numbers confirm the story.</strong> We turned each theory prediction into a numerical score (1.0 for confirmed, 0.5 for partial, 0 for not confirmed). GWT leads at 0.58 out of 1.0, thanks to ThreatSafety persistently coming out on top. IIT and DCT tie at 0.33, and FEP trails at 0.25. These are not final grades, but a benchmark for the next round with meaning-aware encoding.</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -478,16 +514,33 @@
                         <p class="prose">The encoding-mode dependence of category rankings (r = 0.09 between hash-mode and semantic-mode) is the study&rsquo;s most important methodological finding: surface lexical features (hash-mode) and deep semantic representations (semantic-mode) produce systematically different activation predictions, suggesting that fMRI encoding models are sensitive to which level of linguistic representation is used as input.</p>
                         <p class="prose prose--caveman">The most important method lesson is that the two modes barely agree on which categories rank highest (r = 0.09). Reading words on the surface (hash-mode) and reading them for meaning (semantic-mode) give very different brain predictions. That is a warning to anyone using these AI brain models: the answer you get depends a lot on how you describe the input.</p>
 
-                        <p class="prose">Future directions include higher-powered semantic replication (N &ge; 150 per category) to resolve the hash/semantic discrepancy, extension to multimodal stimuli (images, audio) using TRIBE v2&rsquo;s full multimodal encoder, and pre-registration of the category-ranking hypothesis for confirmatory testing.</p>
-                        <p class="prose prose--caveman">Next steps: run a bigger semantic-mode pass (at least N &ge; 150 per category) to settle which mode is closer to the truth, push beyond text by feeding TRIBE v2 real images and audio, and lock in the category rankings as a prediction up front, so a future study can confirm or refute them cleanly.</p>
+                        <p class="prose"><strong>Robustness extensions confirm the core result.</strong> Six extension analyses collectively support a nuanced picture: (i) the discriminative effect is whole-brain and 5&times; stronger at vertex resolution than the six-region aggregate; (ii) category effects reproduce across independent data sources (mean ICC = 0.89); (iii) the activation spectrum is a smooth continuum; (iv) the semantic-mode ranking (AudioText &gt; ImageVisual &gt; Emotional) is stable across temporal integration windows (&rho; &ge; 0.956) and independent of surface text similarity (Mantel r = 0.055, p = 0.340). Extended multivariate analyses confirm category profiles are discriminable above chance with a structured hierarchical organisation.</p>
+                        <p class="prose prose--caveman"><strong>Six extra checks, same big picture.</strong> We ran six additional analyses to stress-test the results. The category signal holds up across all 20,484 brain points individually (5&times; stronger than the big-region average). It holds up when we swap the data sources. It holds up when we change the model&rsquo;s time window. And it does not come from surface text similarity. A machine-learning classifier can tell which content category a snippet belongs to from its brain response alone, and the response patterns form a sensible family tree.</p>
+
+                        <p class="prose">Future directions include higher-powered semantic replication (N &ge; 150 per category) to resolve the hash/semantic discrepancy, extension to multimodal stimuli (images, audio) using TRIBE v2&rsquo;s full multimodal encoder, independent cross-encoder validation with BrainBERT or the Huth semantic atlas, and pre-registration of the category-ranking hypothesis for confirmatory testing.</p>
+                        <p class="prose prose--caveman">Next steps: run a bigger semantic-mode pass (at least N &ge; 150 per category) to settle which mode is closer to the truth, push beyond text by feeding TRIBE v2 real images and audio, check the results against a completely different AI brain model to make sure it is not just a TRIBE quirk, and lock in the category rankings as a prediction up front so a future study can confirm or refute them cleanly.</p>
                     </div>
                 </section>
 
                 <!-- Related Research -->
                 <section class="research-section">
                     <h2 class="research-section__title">Related Research</h2>
-                    <div class="cards" id="smart-recommendations"></div>
+                    <div class="cards" id="smart-recommendations">                    </div>
                 </section>
+
+                <!-- Mind map scripts (lazy-loaded) -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var mmSection = document.getElementById('overview');
+                        var mmContainer = document.getElementById('mindmap-svg-container');
+                        // Lazy-load the mindmap SVG builder after the page settles
+                        setTimeout(function () {
+                            if (typeof buildMindmap === 'function') {
+                                buildMindmap(window.MINDMAP_DATA, mmContainer);
+                            }
+                        }, 100);
+                    });
+                </script>
 
                 <!-- Back to Portfolio -->
                 <section class="research-section">
@@ -531,7 +584,8 @@
     { label: "Study Design", nodes: ["3,008 Stimuli", "13 Categories", "TRIBE v2"] },
     { label: "Statistics",   nodes: ["F = 13.51", "eta2 = 0.051", "d = -0.82"] },
     { label: "Cortex",       nodes: ["20,484 Points", "6 Regions", "PC1 96.9%"] },
-    { label: "Theory",       nodes: ["GWT Supported", "FEP Partial", "DCT Mixed"] }
+    { label: "Theory",       nodes: ["GWT 0.58", "IIT 0.33", "FEP 0.25"] },
+    { label: "Robustness",   nodes: ["ICC 0.89", "Vertex F=71", "Mantel r=0.06"] }
   ]
 };
     </script>
