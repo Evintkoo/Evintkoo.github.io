@@ -41,6 +41,7 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/chart.css?v=1">
 </head>
 
 <body class="research-page">
@@ -395,6 +396,16 @@
                         <p class="prose prose--caveman">Once the bugs were fixed, the cross-encoder still came out ahead. It wins on every score, and in both the easy and the hard training setups.</p>
                     </div>
 
+                    <figure class="chart-figure" data-reveal>
+                        <figcaption class="chart-figure__caption">
+                            <span class="chart-figure__title">Reported accuracy: cross-encoder vs two-tower</span>
+                            <span class="chart-figure__note">Test accuracy (%) on human-brain scRNA-seq (47,388 TF&ndash;gene pairs). The 5:1 bar is derived from the paper&rsquo;s reported balanced accuracy minus its imbalance drop (&minus;1.56 pp vs &minus;6.87 pp).</span>
+                        </figcaption>
+                        <div class="chart-figure__panel">
+                            <div class="chart" id="grnChart" role="img" aria-label="Bar chart comparing cross-encoder and two-tower accuracy under balanced and 5:1 imbalance training"></div>
+                        </div>
+                    </figure>
+
                     <div class="performance-comparison">
                         <div class="performance-comparison__header">
                             <h3 class="performance-comparison__title">Architecture Comparison (Balanced Training)</h3>
@@ -542,7 +553,27 @@
 
     <script src="../assets/js/main-theme.js?v=16"></script>
     <script src="../assets/js/research-recommendations.js"></script>
-    <script src="../assets/js/animations.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script src="../assets/js/chart.js?v=1"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!window.EChart) return;
+                        var host = document.getElementById('grnChart');
+                        if (!host) return;
+                        window.EChart(host, {
+                            type: 'bar',
+                            xs: [0, 1],
+                            height: 320,
+                            series: [
+                                { name: 'Cross-encoder', values: [83.03, 81.47] },
+                                { name: 'Two-tower', values: [80.90, 74.03] }
+                            ],
+                            formatX: function (_, i) { return ['Balanced acc', '5:1 acc'][i]; },
+                            formatY: function (v) { return Math.round(v); },
+                            formatValue: function (v) { return v.toFixed(1); }
+                        });
+                    });
+                </script>
     <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">

@@ -48,6 +48,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/chart.css?v=1">
 
     <!-- Prefetch PDF for faster loading when clicked -->
     <link rel="prefetch" href="../files/bitcoin_analysis.pdf">
@@ -947,6 +948,16 @@
                         <p class="prose">Use this framework to determine your BTC allocation based on risk tolerance. The answer is always between 0% and 16%.</p>
                         <p class="prose prose--caveman">Use this quick guide to find your Bitcoin allocation based on how much risk you can handle. No matter who you are, the answer always sits somewhere between 0% and 16%.</p>
 
+                        <figure class="chart-figure" data-reveal>
+                            <figcaption class="chart-figure__caption">
+                                <span class="chart-figure__title">Return vs risk contribution as BTC weight rises</span>
+                                <span class="chart-figure__note">Illustrative risk-budget principle: risk contribution (FRC) accelerates past the evidence-based ~10&ndash;12% ceiling, where it overtakes the concave return contribution.</span>
+                            </figcaption>
+                            <div class="chart-figure__panel">
+                                <div class="chart" id="btcChart" role="img" aria-label="Chart of return contribution versus risk contribution as BTC allocation increases from 0 to 20 percent"></div>
+                            </div>
+                        </figure>
+
                         <div class="results-table">
                             <h4>Allocation by Risk Tolerance</h4>
                             <div class="table-container">
@@ -1318,8 +1329,30 @@
         "inLanguage": "en"
     }
     </script>
-    <script src="../assets/js/animations.js?v=13"></script>
-    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/chart.js?v=1"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!window.EChart) return;
+                        var host = document.getElementById('btcChart');
+                        if (!host) return;
+                        var ws = [];
+                        for (var w = 0; w <= 20; w++) ws.push(w);
+                        var ret = ws.map(function (w) { return 5 + 0.90 * w - 0.020 * w * w; });
+                        var risk = ws.map(function (w) { return 4 + 0.25 * w + 0.045 * w * w; });
+                        window.EChart(host, {
+                            xs: ws,
+                            height: 340,
+                            series: [
+                                { name: 'Return contribution', values: ret },
+                                { name: 'Risk contribution (FRC)', values: risk }
+                            ],
+                            formatX: function (x) { return x + '%'; },
+                            formatY: function (v) { return v.toFixed(0); }
+                        });
+                    });
+                </script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">
         <a href="/index.html" class="bottom-nav__tab" data-nav="home">

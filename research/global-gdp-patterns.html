@@ -40,6 +40,7 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/chart.css?v=1">
 </head>
 
 <body class="research-page">
@@ -425,6 +426,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <figure class="chart-figure" data-reveal>
+                        <figcaption class="chart-figure__caption">
+                            <span class="chart-figure__title">Representative GDP trajectories by cluster</span>
+                            <span class="chart-figure__note">Log-scaled index (1980 = 100). Curves show representative qualitative shapes drawn from the clustering &mdash; illustrative, not country-level data.</span>
+                        </figcaption>
+                        <div class="chart-figure__panel">
+                            <div class="chart" id="gdpChart" role="img" aria-label="Line chart of representative GDP trajectories for the four clusters from 1980 to 2024"></div>
+                        </div>
+                    </figure>
                 </section>
 
                 <!-- Policy Implications Section -->
@@ -676,8 +687,32 @@
 
     <script src="../assets/js/main-theme.js?v=16"></script>
     <script src="../assets/js/research-recommendations.js"></script>
-    <script src="../assets/js/animations.js?v=13"></script>
-    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/chart.js?v=1"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!window.EChart) return;
+                        var host = document.getElementById('gdpChart');
+                        if (!host) return;
+                        var years = [];
+                        for (var y = 1980; y <= 2024; y++) years.push(y);
+                        function arr(fn) { return years.map(function (_, i) { return Math.max(1, fn(i)); }); }
+                        var series = [
+                            { name: 'Cluster 1 \u00b7 High growth', values: arr(function (i) { return 100 * Math.pow(1.075, i) + 6 * Math.sin(i * 0.5); }) },
+                            { name: 'Cluster 0 \u00b7 Boom-bust',    values: arr(function (i) { var t = 100 * Math.pow(1.045, i); return t * (1 + 0.22 * Math.sin(i * 0.95) - 0.12 * Math.cos(i * 0.6)); }) },
+                            { name: 'Cluster 3 \u00b7 Recovery',     values: arr(function (i) { return i <= 10 ? (100 - 28 * (i / 10)) * (1 + 0.02 * Math.sin(i)) : 72 * Math.pow(1.05, i - 10); }) },
+                            { name: 'Cluster 2 \u00b7 Stagnant',     values: arr(function (i) { return 100 * Math.pow(1.012, i) * (1 + 0.03 * Math.sin(i * 0.8)); }) }
+                        ];
+                        window.EChart(host, {
+                            xs: years,
+                            logY: true,
+                            series: series,
+                            formatX: function (x) { return x; },
+                            formatY: function (v) { return Math.round(v); }
+                        });
+                    });
+                </script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">
         <a href="/index.html" class="bottom-nav__tab" data-nav="home">

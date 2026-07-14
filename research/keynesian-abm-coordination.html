@@ -31,6 +31,7 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/chart.css?v=1">
 </head>
 
 <body class="research-page">
@@ -412,6 +413,16 @@
                         <p class="lead-paragraph prose">The grid search identifies survival-maximising strategies for each agent type that are individually coherent but collectively destructive when activated simultaneously.</p>
                         <p class="prose prose--caveman">The grid search finds a survival playbook for each group that makes total sense on its own. But when everyone runs their playbook at the same time, the economy collapses.</p>
 
+                        <figure class="chart-figure" data-reveal>
+                            <figcaption class="chart-figure__caption">
+                                <span class="chart-figure__title">GDP under three strategy regimes</span>
+                                <span class="chart-figure__note">Indexed GDP (start = 100) over simulation quarters. The &ldquo;all-best&rdquo; economy collapses (≈&minus;65%), the core coordination-failure result. Representative shapes &mdash; illustrative.</span>
+                            </figcaption>
+                            <div class="chart-figure__panel">
+                                <div class="chart" id="abmChart" role="img" aria-label="Line chart of representative GDP trajectories under three strategy regimes over 200 simulation quarters"></div>
+                            </div>
+                        </figure>
+
                         <div class="research-highlight research-highlight--success">
                             <div class="highlight-icon">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -541,8 +552,31 @@
 
     <script src="../assets/js/main-theme.js?v=16"></script>
     <script src="../assets/js/research-recommendations.js"></script>
-    <script src="../assets/js/animations.js?v=13"></script>
-    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/chart.js?v=1"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!window.EChart) return;
+                        var host = document.getElementById('abmChart');
+                        if (!host) return;
+                        var xs = [];
+                        for (var q = 0; q <= 200; q += 5) xs.push(q);
+                        var eq = xs.map(function (_, i) { return 100 + 15 * (i / 40) + 6 * Math.sin(i * 0.5); });
+                        var allbest = xs.map(function (_, i) { return 100 * (1 - 0.65 * Math.pow(i / 40, 1.3)); });
+                        var mixed = xs.map(function (_, i) { return 100 - 5 * (i / 40) + 4 * Math.sin(i * 0.7); });
+                        window.EChart(host, {
+                            xs: xs,
+                            series: [
+                                { name: 'Decentralised equilibrium', values: eq },
+                                { name: 'All-best strategies', values: allbest },
+                                { name: 'Survival-optimal (mixed)', values: mixed }
+                            ],
+                            formatX: function (x) { return 'Q' + x; },
+                            formatY: function (v) { return Math.round(v); }
+                        });
+                    });
+                </script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">
         <a href="/index.html" class="bottom-nav__tab" data-nav="home">

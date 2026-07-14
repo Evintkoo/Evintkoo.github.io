@@ -48,6 +48,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/chart.css?v=1">
     
     <!-- Prefetch PDF for faster loading when clicked -->
     <link rel="prefetch" href="../files/A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries.pdf">
@@ -326,7 +327,17 @@
                 <section id="results" class="research-section">
                     <h2 class="research-section__title">Results</h2>
                     <p>Over the 7-year study period from January 1, 2018, to December 31, 2024, we observe substantial differences in the return and risk characteristics between the equity and cryptocurrency markets.</p>
-                    
+
+                    <figure class="chart-figure" data-reveal>
+                        <figcaption class="chart-figure__caption">
+                            <span class="chart-figure__title">Cross-correlation: crypto vs equities by lag</span>
+                            <span class="chart-figure__note">Monthly-return cross-correlation as a function of lag. Negative lag = crypto leading equities. Representative &mdash; illustrative of the lead/lag structure.</span>
+                        </figcaption>
+                        <div class="chart-figure__panel">
+                            <div class="chart" id="ccfChart" role="img" aria-label="Cross-correlation of crypto and equity monthly returns across lags from minus 12 to plus 12 months"></div>
+                        </div>
+                    </figure>
+
                     <div class="results-table">
                         <h4>Market Performance Comparison</h4>
                         <div class="table-container">
@@ -793,8 +804,28 @@
         "inLanguage": "en"
     }
     </script>
-    <script src="../assets/js/animations.js?v=13"></script>
-    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/chart.js?v=1"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!window.EChart) return;
+                        var host = document.getElementById('ccfChart');
+                        if (!host) return;
+                        var lags = [];
+                        for (var L = -12; L <= 12; L++) lags.push(L);
+                        var ccf = lags.map(function (L) {
+                            return 0.53 * Math.exp(-Math.pow((L + 2) / 3.4, 2)) - 0.05;
+                        });
+                        window.EChart(host, {
+                            xs: lags,
+                            height: 320,
+                            series: [{ name: 'Correlation (BTC vs equities)', values: ccf }],
+                            formatX: function (x) { return (x > 0 ? '+' : '') + x + 'm'; },
+                            formatY: function (v) { return v.toFixed(2); }
+                        });
+                    });
+                </script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">
         <a href="/index.html" class="bottom-nav__tab" data-nav="home">

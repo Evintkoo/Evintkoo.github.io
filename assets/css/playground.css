@@ -1,0 +1,133 @@
+/* ================================
+   SOM PLAYGROUND
+================================ */
+
+.pg {
+  margin-top: var(--space-6);
+}
+
+.pg__grid {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.pg__stage {
+  flex: 1 1 380px;
+  min-width: 280px;
+}
+
+.pg__canvas-wrap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.pg__canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+.pg__panel {
+  flex: 0 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pg__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pg__control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg__control label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.pg__control label span {
+  color: var(--accent-warm);
+  font-weight: 600;
+}
+
+.pg__control input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent-warm);
+  cursor: pointer;
+}
+
+.pg__control select {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.pg__buttons {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.pg__btn {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  border: 1px solid var(--border-secondary);
+  background: transparent;
+  color: var(--text-primary);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.pg__btn:hover {
+  border-color: var(--accent-warm);
+  color: var(--accent-warm);
+}
+
+.pg__btn--primary {
+  background: var(--accent-warm);
+  border-color: var(--accent-warm);
+  color: #fff;
+}
+
+.pg__btn--primary:hover {
+  background: var(--accent-warm-hover);
+  border-color: var(--accent-warm-hover);
+  color: #fff;
+}
+
+.pg__hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-quaternary);
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .pg__panel {
+    flex: 1 1 100%;
+  }
+}

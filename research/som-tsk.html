@@ -31,6 +31,7 @@
     <link rel="apple-touch-icon" href="../assets/images/logos/logo-light.png">
     <link rel="stylesheet" href="../assets/css/main-theme.css?v=20">
     <link rel="stylesheet" href="../assets/css/research.css?v=17">
+    <link rel="stylesheet" href="../assets/css/playground.css?v=1">
 </head>
 
 <body class="research-page">
@@ -568,6 +569,60 @@
                     </div>
                 </section>
 
+                <section id="playground" class="research-section">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <h2 class="section-title">Live Demo: Self-Organizing Map</h2>
+                        </div>
+                    </div>
+                    <div class="content-text">
+                        <p class="lead-paragraph prose">Watch a Kohonen self-organizing map fold itself onto a 2D point cloud. The neuron lattice (warm nodes, linked by the grid) drifts toward the data; each point takes the colour of its best-matching neuron, exposing the topology the map has learned. Tune the grid, learning rate, neighbourhood and epochs &mdash; or swap the dataset.</p>
+                        <div class="pg">
+                            <div class="pg__grid">
+                                <div class="pg__stage">
+                                    <div class="pg__canvas-wrap">
+                                        <canvas class="pg__canvas" id="somCanvas" aria-label="Self-organizing map visualization"></canvas>
+                                    </div>
+                                </div>
+                                <div class="pg__panel">
+                                    <div class="pg__controls">
+                                        <div class="pg__control">
+                                            <label for="somData">Dataset</label>
+                                            <select id="somData">
+                                                <option value="blobs">Three blobs</option>
+                                                <option value="rings">Concentric rings</option>
+                                                <option value="moons">Two moons</option>
+                                            </select>
+                                        </div>
+                                        <div class="pg__control">
+                                            <label for="somGrid">Grid size <span id="somGridVal">6</span></label>
+                                            <input type="range" id="somGrid" min="4" max="10" step="1" value="6">
+                                        </div>
+                                        <div class="pg__control">
+                                            <label for="somLr">Learning rate <span id="somLrVal">0.30</span></label>
+                                            <input type="range" id="somLr" min="0.05" max="0.6" step="0.05" value="0.30">
+                                        </div>
+                                        <div class="pg__control">
+                                            <label for="somRad">Neighbourhood <span id="somRadVal">3</span></label>
+                                            <input type="range" id="somRad" min="1" max="5" step="1" value="3">
+                                        </div>
+                                        <div class="pg__control">
+                                            <label for="somEp">Epochs <span id="somEpVal">40</span></label>
+                                            <input type="range" id="somEp" min="10" max="80" step="5" value="40">
+                                        </div>
+                                    </div>
+                                    <div class="pg__buttons">
+                                        <button class="pg__btn pg__btn--primary" id="somRun" type="button">Run</button>
+                                        <button class="pg__btn" id="somReset" type="button">Reset</button>
+                                    </div>
+                                    <p class="pg__hint">Epoch <span id="somEpoch">0 / 40</span></p>
+                                    <p class="pg__hint">Pure in-browser SOM &mdash; no server, no build step.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Related Research -->
                 <section class="research-section">
                     <h2 class="research-section__title">Related Research</h2>
@@ -624,8 +679,9 @@
 
     <script src="../assets/js/main-theme.js?v=16"></script>
     <script src="../assets/js/research-recommendations.js"></script>
-    <script src="../assets/js/animations.js?v=13"></script>
-    <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/animations.js?v=13"></script>
+                <script type="module" src="../assets/js/hero-scene.js?v=13"></script>
+                <script src="../assets/js/som-playground.js?v=1"></script>
     <!-- Mobile bottom navigation (thumb zone) -->
     <nav class="bottom-nav" aria-label="Primary">
         <a href="/index.html" class="bottom-nav__tab" data-nav="home">
