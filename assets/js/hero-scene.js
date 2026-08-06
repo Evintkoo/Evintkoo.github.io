@@ -406,31 +406,52 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
 
     const amb = addAmbientParticles(graph.R_HUB);
 
-    // Temporary simple drag-to-nudge — replaced with click/drag/expand
-    // pointer logic in Task 3.
-    let dragStartX = 0, dragStartY = 0, dragBaseX = 0, dragBaseY = 0;
-    canvas.addEventListener('mousedown', function (e) {
-      isDragging = true; dragStartX = e.clientX; dragStartY = e.clientY;
-      dragBaseX = dragOffX; dragBaseY = dragOffY; canvas.style.cursor = 'grabbing';
-    });
-    window.addEventListener('mousemove', function (e) {
-      if (isDragging) {
-        dragOffX = dragBaseX + (e.clientX - dragStartX) * 0.012;
-        dragOffY = dragBaseY + (e.clientY - dragStartY) * -0.012;
-      }
-    });
-    window.addEventListener('mouseup', function () { isDragging = false; canvas.style.cursor = ''; });
-    canvas.addEventListener('touchstart', function (e) {
-      isDragging = true; dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
+    // Click (expand) vs. drag (nudge) via a single pointer flow.
+    // Movement under CLICK_MOVE_THRESHOLD px counts as a click.
+    const CLICK_MOVE_THRESHOLD = 4;
+    let pointerDown = false;
+    let pointerMoved = false;
+    let downX = 0, downY = 0, dragBaseX = 0, dragBaseY = 0;
+
+    canvas.addEventListener('pointerdown', function (e) {
+      pointerDown = true;
+      pointerMoved = false;
+      downX = e.clientX; downY = e.clientY;
       dragBaseX = dragOffX; dragBaseY = dragOffY;
-    }, { passive: true });
-    document.addEventListener('touchmove', function (e) {
-      if (isDragging) {
-        dragOffX = dragBaseX + (e.touches[0].clientX - dragStartX) * 0.012;
-        dragOffY = dragBaseY + (e.touches[0].clientY - dragStartY) * -0.012;
+    });
+
+    window.addEventListener('pointermove', function (e) {
+      if (!pointerDown) return;
+      const dx = e.clientX - downX, dy = e.clientY - downY;
+      if (!pointerMoved && Math.hypot(dx, dy) > CLICK_MOVE_THRESHOLD) {
+        pointerMoved = true;
+        isDragging = true;
+        canvas.style.cursor = 'grabbing';
       }
-    }, { passive: true });
-    window.addEventListener('touchend', function () { isDragging = false; });
+      if (isDragging) {
+        dragOffX = dragBaseX + dx * 0.012;
+        dragOffY = dragBaseY + dy * -0.012;
+      }
+    });
+
+    window.addEventListener('pointerup', function () {
+      if (pointerDown && !pointerMoved) {
+        // Only treat a click as "open the explorer" while the hero is
+        // still substantially in view — this canvas is a persistent
+        // full-page background, and we don't want a stray click on
+        // empty whitespace far down the page to pop the fullscreen graph.
+        if (window.pageYOffset < window.innerHeight * 0.9) {
+          expand();
+        }
+      }
+      pointerDown = false;
+      isDragging = false;
+      canvas.style.cursor = '';
+    });
+
+    function expand() {
+      console.log('[hero-graph] expand (stub — implemented in Task 4)');
+    }
 
     frameUpdate = function (dt, t) {
       updateNodePositions(t);
