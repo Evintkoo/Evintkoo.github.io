@@ -418,6 +418,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
       pointerMoved = false;
       downX = e.clientX; downY = e.clientY;
       dragBaseX = dragOffX; dragBaseY = dragOffY;
+      orbitBaseRotY = group.rotation.y;
     });
 
     window.addEventListener('pointermove', function (e) {
@@ -429,8 +430,12 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
         canvas.style.cursor = 'grabbing';
       }
       if (isDragging) {
-        dragOffX = dragBaseX + dx * 0.012;
-        dragOffY = dragBaseY + dy * -0.012;
+        if (mode === 'expanded') {
+          group.rotation.y = orbitBaseRotY + dx * 0.006;
+        } else {
+          dragOffX = dragBaseX + dx * 0.012;
+          dragOffY = dragBaseY + dy * -0.012;
+        }
       }
     });
 
@@ -449,39 +454,91 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
       canvas.style.cursor = '';
     });
 
+    const CAM_Z_EXPANDED = isMobile ? 14 : 11; // tune visually if graph edges clip off-screen
+    const TWEEN_DUR = 0.7;
+    const backdropEl = document.getElementById('heroGraphBackdrop');
+    const backBtn = document.getElementById('heroGraphBack');
+
+    let mode = 'collapsed'; // 'collapsed' | 'expanding' | 'expanded' | 'collapsing'
+    let tweenT = 0;
+    let orbitBaseRotY = 0;
+
     function expand() {
-      console.log('[hero-graph] expand (stub — implemented in Task 4)');
+      if (mode !== 'collapsed') return;
+      mode = 'expanding';
+      tweenT = 0;
+      canvas.classList.add('hero-graph--expanded');
+      backdropEl.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function collapse() {
+      if (mode !== 'expanded') return;
+      mode = 'collapsing';
+      tweenT = 0;
+      backBtn.classList.remove('visible');
+    }
+
+    backBtn.addEventListener('click', collapse);
+
+    function updateExpandTween(dt) {
+      tweenT = Math.min(tweenT + dt / TWEEN_DUR, 1);
+      const e = easeInOutCubic(tweenT);
+      if (mode === 'expanding') {
+        camera.position.z = CAM_Z_HERO + (CAM_Z_EXPANDED - CAM_Z_HERO) * e;
+        group.position.x += (0 - group.position.x) * 0.15;
+        group.position.y += (0 - group.position.y) * 0.15;
+        if (tweenT >= 1) {
+          mode = 'expanded';
+          backBtn.classList.add('visible');
+        }
+      } else if (mode === 'collapsing') {
+        camera.position.z = CAM_Z_EXPANDED + (CAM_Z_HERO - CAM_Z_EXPANDED) * e;
+        if (tweenT >= 1) {
+          mode = 'collapsed';
+          canvas.classList.remove('hero-graph--expanded');
+          backdropEl.classList.remove('active');
+          document.body.classList.remove('no-scroll');
+        }
+      }
     }
 
     frameUpdate = function (dt, t) {
       updateNodePositions(t);
       glowMesh.scale.setScalar(1.15 + Math.sin(t * 0.3) * 0.05);
 
-      if (!isReduced) {
-        group.rotation.y += 0.002;
-        group.rotation.x = Math.sin(t * 0.25) * 0.04;
-        group.rotation.z = Math.cos(t * 0.18) * 0.02;
-      }
-
-      let targetX = dragOffX;
-      let targetY = baseY + dragOffY;
-      if (!isReduced) {
-        const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-        const scrollProgress = scrollY / maxScroll;
-        const zigAmp = isMobile ? 2.0 : 4.5;
-        targetX += Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
-        targetY += -(scrollProgress) * 1.2;
-      }
-
-      if (isDragging) {
-        group.position.x += (targetX - group.position.x) * 0.12;
-        group.position.y += (targetY - group.position.y) * 0.12;
+      if (mode === 'expanding' || mode === 'collapsing') {
+        updateExpandTween(dt);
+      } else if (mode === 'expanded') {
+        if (!isDragging) group.rotation.y += 0.0008;
       } else {
-        dragOffX *= 0.97; dragOffY *= 0.97;
-        if (Math.abs(dragOffX) < 0.001) dragOffX = 0;
-        if (Math.abs(dragOffY) < 0.001) dragOffY = 0;
-        group.position.x += (targetX - group.position.x) * 0.06;
-        group.position.y += (targetY - group.position.y) * 0.06;
+        // collapsed
+        if (!isReduced) {
+          group.rotation.y += 0.002;
+          group.rotation.x = Math.sin(t * 0.25) * 0.04;
+          group.rotation.z = Math.cos(t * 0.18) * 0.02;
+        }
+
+        let targetX = dragOffX;
+        let targetY = baseY + dragOffY;
+        if (!isReduced) {
+          const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+          const scrollProgress = scrollY / maxScroll;
+          const zigAmp = isMobile ? 2.0 : 4.5;
+          targetX += Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
+          targetY += -(scrollProgress) * 1.2;
+        }
+
+        if (isDragging) {
+          group.position.x += (targetX - group.position.x) * 0.12;
+          group.position.y += (targetY - group.position.y) * 0.12;
+        } else {
+          dragOffX *= 0.97; dragOffY *= 0.97;
+          if (Math.abs(dragOffX) < 0.001) dragOffX = 0;
+          if (Math.abs(dragOffY) < 0.001) dragOffY = 0;
+          group.position.x += (targetX - group.position.x) * 0.06;
+          group.position.y += (targetY - group.position.y) * 0.06;
+        }
       }
       amb.update(t);
     };

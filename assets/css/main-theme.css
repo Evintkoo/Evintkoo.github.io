@@ -3029,3 +3029,105 @@ a.paper-hero__badge {
   /* The bottom bar replaces the hamburger on mobile */
   .nav__toggle { display: none; }
 }
+
+/* ================================
+   HERO GRAPH — EXPANDED OVERLAY
+================================ */
+
+#heroCanvas.hero-graph--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.hero-graph-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.hero-graph-backdrop.active {
+  opacity: 1;
+}
+
+.hero-graph-back {
+  position: fixed;
+  top: var(--space-8);
+  left: var(--space-8);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1002;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+
+.hero-graph-back.visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hero-graph-back:hover {
+  background: var(--accent-warm);
+  color: #fff;
+  border-color: var(--accent-warm);
+}
+
+.hero-graph-back svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-graph-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.hero-graph-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.15s ease;
+}
+
+.hero-graph-label.is-visible {
+  opacity: 1;
+}
+
+.hero-graph-label--hub {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.hero-graph-label--leaf {
+  font-size: 11px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hero-graph-label--leaf:hover,
+.hero-graph-label--leaf.is-hovered {
+  color: var(--accent-warm);
+}
