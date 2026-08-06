@@ -64,7 +64,7 @@ Currently `mousedown`/`touchstart` on the canvas starts a drag immediately. New 
 
 ## 4. Expand / Collapse Transition
 
-**Trigger:** click (per §3) anywhere on the canvas, while in the collapsed (hero-embedded) state.
+**Trigger:** click (per §3) anywhere on the canvas, while in the collapsed (hero-embedded) state — and only while the hero is still substantially in view (`window.pageYOffset < window.innerHeight * 0.9`). `#heroCanvas` is a persistent full-page fixed background (visible throughout the scroll-driven zig-zag, not just within the hero), so without this guard a stray click on empty whitespace far down the page would also pop the fullscreen graph.
 
 **Expand animation (~700ms eased tween):**
 1. Canvas element switches to `position: fixed; inset: 0; z-index: <above nav>` — same overlay pattern as the existing `.nav-overlay` (blurred backdrop layered behind the canvas, `document.body.classList.add('no-scroll')`).
