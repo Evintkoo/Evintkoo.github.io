@@ -454,6 +454,54 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
       canvas.style.cursor = '';
     });
 
+    const labelsContainer = document.getElementById('heroGraphLabels');
+    const hubLabelEls = graph.hubs.map(function (h) {
+      const el = document.createElement('div');
+      el.className = 'hero-graph-label hero-graph-label--hub';
+      el.textContent = h.label;
+      labelsContainer.appendChild(el);
+      return el;
+    });
+    const leafLabelEls = graph.leaves.map(function (l) {
+      const el = document.createElement('div');
+      el.className = 'hero-graph-label hero-graph-label--leaf';
+      el.textContent = l.label;
+      el.addEventListener('click', function () { window.location.href = l.href; });
+      labelsContainer.appendChild(el);
+      return el;
+    });
+
+    const scratchVec = new THREE.Vector3();
+    const screenPos = { x: 0, y: 0, behind: false };
+    function projectToScreen(x, y, z, target) {
+      scratchVec.set(x, y, z).applyMatrix4(group.matrixWorld);
+      scratchVec.project(camera);
+      target.x = (scratchVec.x * 0.5 + 0.5) * canvas.clientWidth;
+      target.y = (-scratchVec.y * 0.5 + 0.5) * canvas.clientHeight;
+      target.behind = scratchVec.z > 1;
+    }
+
+    function updateLabels() {
+      for (let i = 0; i < hubCount; i++) {
+        projectToScreen(hubPosAttr.array[i * 3], hubPosAttr.array[i * 3 + 1], hubPosAttr.array[i * 3 + 2], screenPos);
+        const el = hubLabelEls[i];
+        el.style.left = screenPos.x + 'px';
+        el.style.top = screenPos.y + 'px';
+        el.classList.toggle('is-visible', !screenPos.behind);
+      }
+      for (let i = 0; i < leafCount; i++) {
+        projectToScreen(leafPosAttr.array[i * 3], leafPosAttr.array[i * 3 + 1], leafPosAttr.array[i * 3 + 2], screenPos);
+        const el = leafLabelEls[i];
+        el.style.left = screenPos.x + 'px';
+        el.style.top = screenPos.y + 'px';
+        el.classList.toggle('is-visible', !screenPos.behind);
+      }
+    }
+
+    function hideAllLabels() {
+      hubLabelEls.concat(leafLabelEls).forEach(function (el) { el.classList.remove('is-visible'); });
+    }
+
     const CAM_Z_EXPANDED = isMobile ? 14 : 11; // tune visually if graph edges clip off-screen
     const TWEEN_DUR = 0.7;
     const backdropEl = document.getElementById('heroGraphBackdrop');
@@ -478,6 +526,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
       mode = 'collapsing';
       tweenT = 0;
       backBtn.classList.remove('visible');
+      hideAllLabels();
     }
 
     backBtn.addEventListener('click', collapse);
@@ -513,6 +562,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
         updateExpandTween(dt);
       } else if (mode === 'expanded') {
         if (!isDragging) group.rotation.y += 0.0008;
+        updateLabels();
       } else {
         // collapsed
         if (!isReduced) {
