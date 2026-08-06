@@ -1,8 +1,10 @@
 // ─────────────────────────────────────────────
-//  Morphing Organic Blob — Three.js
-//  Abstract wireframe icosahedron with organic
-//  vertex displacement, vertex particles, and
-//  ambient floating particles. Rose/violet.
+//  Hero Scene — Three.js
+//  index.html: renders SITE_DATA as an organic,
+//  drifting topic/article graph. Click expands to
+//  a fullscreen explorer; click a node there to
+//  open it. Every other page: original abstract
+//  morphing wireframe blob, unchanged.
 // ─────────────────────────────────────────────
 
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js';
@@ -13,49 +15,41 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
 
   const isMobile = window.innerWidth < 768;
   const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasGraphData = !!(window.SITE_DATA && (window.SITE_DATA.projects || window.SITE_DATA.research));
 
   // ── Renderer ──
   const renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: !isMobile,
-    powerPreference: 'low-power',
+    canvas, alpha: true, antialias: !isMobile, powerPreference: 'low-power',
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   function getSize() {
-    return {
-      w: canvas.clientWidth || window.innerWidth,
-      h: canvas.clientHeight || window.innerHeight,
-    };
+    return { w: canvas.clientWidth || window.innerWidth, h: canvas.clientHeight || window.innerHeight };
   }
-
   const sz = getSize();
   renderer.setSize(sz.w, sz.h, false);
 
   // ── Scene & Camera ──
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    isMobile ? 55 : 45, sz.w / sz.h, 0.1, 100
-  );
-  camera.position.z = isMobile ? 7 : 5.5;
+  const camera = new THREE.PerspectiveCamera(isMobile ? 55 : 45, sz.w / sz.h, 0.1, 100);
+  const CAM_Z_HERO = isMobile ? 7 : 5.5;
+  camera.position.z = CAM_Z_HERO;
 
   // ── Theme Colors ──
   function getThemeColors() {
     const dk = document.documentElement.getAttribute('data-theme') !== 'light';
     return {
-      wire:       dk ? 0xf43f7a : 0xe11d64,
-      point:      dk ? 0xa78bfa : 0x7c3aed,
-      glow:       dk ? 0xf43f7a : 0xe11d64,
-      wireAlpha:  dk ? 0.15 : 0.18,
+      wire: dk ? 0xf43f7a : 0xe11d64,
+      point: dk ? 0xa78bfa : 0x7c3aed,
+      glow: dk ? 0xf43f7a : 0xe11d64,
+      wireAlpha: dk ? 0.15 : 0.18,
       pointAlpha: dk ? 0.50 : 0.55,
-      pointSz:    dk ? 2.5  : 2.2,
-      ambAlpha:   dk ? 0.18 : 0.22,
-      glowAlpha:  dk ? 0.03 : 0.04,
-      blending:   dk ? THREE.AdditiveBlending : THREE.NormalBlending,
+      pointSz: dk ? 2.5 : 2.2,
+      ambAlpha: dk ? 0.18 : 0.22,
+      glowAlpha: dk ? 0.03 : 0.04,
+      blending: dk ? THREE.AdditiveBlending : THREE.NormalBlending,
     };
   }
-
   let tc = getThemeColors();
 
   // ── Group ──
@@ -66,231 +60,93 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
   group.scale.setScalar(isReduced ? 1 : 0.01);
   scene.add(group);
 
-  // ── Morphing Blob ──
-  const detail = isMobile ? 2 : 4;
-  const radius = isMobile ? 2.0 : 2.5;
-  const geometry = new THREE.IcosahedronGeometry(radius, detail);
-  const origPos = new Float32Array(geometry.attributes.position.array);
-
-  // Precompute vertex normals once — avoids Math.sqrt in the animation loop
-  const vertCount = geometry.attributes.position.count;
-  const origNormals = new Float32Array(vertCount * 3);
-  for (let i = 0; i < vertCount; i++) {
-    const ix = i * 3;
-    const ox = origPos[ix], oy = origPos[ix + 1], oz = origPos[ix + 2];
-    const invLen = 1 / Math.sqrt(ox * ox + oy * oy + oz * oz);
-    origNormals[ix]     = ox * invLen;
-    origNormals[ix + 1] = oy * invLen;
-    origNormals[ix + 2] = oz * invLen;
-  }
-
-  // Wireframe
-  const wireMat = new THREE.MeshBasicMaterial({
-    color: tc.wire,
-    wireframe: true,
-    transparent: true,
-    opacity: tc.wireAlpha,
-  });
-  group.add(new THREE.Mesh(geometry, wireMat));
-
-  // Vertex points
-  const ptsMat = new THREE.PointsMaterial({
-    color: tc.point,
-    size: tc.pointSz,
-    transparent: true,
-    opacity: tc.pointAlpha,
-    blending: tc.blending,
-    depthWrite: false,
-    sizeAttenuation: false,
-  });
-  group.add(new THREE.Points(geometry, ptsMat));
-
-  // Soft backface glow
-  const glowGeo = new THREE.SphereGeometry(radius * 1.15, 16, 16);
-  const glowMat = new THREE.MeshBasicMaterial({
-    color: tc.glow,
-    transparent: true,
-    opacity: tc.glowAlpha,
-    side: THREE.BackSide,
-  });
-  const glowMesh = new THREE.Mesh(glowGeo, glowMat);
-  group.add(glowMesh);
-
-  // ── Ambient Particles ──
-  const ambCount = isMobile ? 60 : 160;
-  const ambGeo = new THREE.BufferGeometry();
-  const ambArr = new Float32Array(ambCount * 3);
-  const spread = radius * 3;
-
-  for (let i = 0; i < ambCount; i++) {
-    ambArr[i * 3]     = (Math.random() - 0.5) * spread * 2;
-    ambArr[i * 3 + 1] = (Math.random() - 0.5) * spread * 2;
-    ambArr[i * 3 + 2] = (Math.random() - 0.5) * spread;
-  }
-  ambGeo.setAttribute('position', new THREE.BufferAttribute(ambArr, 3));
-
-  const ambMat = new THREE.PointsMaterial({
-    color: tc.wire,
-    size: 1.5,
-    transparent: true,
-    opacity: tc.ambAlpha,
-    blending: tc.blending,
-    depthWrite: false,
-    sizeAttenuation: false,
-  });
-  group.add(new THREE.Points(ambGeo, ambMat));
-
-  // Particle animation data
-  const pData = [];
-  for (let i = 0; i < ambCount; i++) {
-    pData.push({
-      spd: 0.1 + Math.random() * 0.3,
-      ph:  Math.random() * Math.PI * 2,
-      amp: 0.3 + Math.random() * 0.8,
-      bx:  ambArr[i * 3],
-      by:  ambArr[i * 3 + 1],
-      bz:  ambArr[i * 3 + 2],
-    });
-  }
-
-  // ── Displacement (layered sine waves ≈ organic noise) ──
+  // ── Shared: organic displacement noise ──
   function displace(x, y, z, t) {
-    let d  = Math.sin(x * 1.2 + t * 0.6) * Math.cos(y * 1.3 + t * 0.4) * 0.35;
+    let d = Math.sin(x * 1.2 + t * 0.6) * Math.cos(y * 1.3 + t * 0.4) * 0.35;
     d += Math.sin(y * 2.0 + t * 0.5 + 1.0) * Math.sin(z * 1.8 + t * 0.7) * 0.2;
     d += Math.cos(z * 3.0 + x * 2.5 + t * 0.9) * 0.1;
     d += Math.sin(t * 0.3) * 0.08;
     return d;
   }
 
-  // ── Mouse Interaction (drag to move, springs back) ──
-  let isDragging = false;
-  let dragOffX = 0, dragOffY = 0;
-  let dragStartX = 0, dragStartY = 0;
-  let dragBaseX = 0, dragBaseY = 0;
-
-  canvas.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
-    dragBaseX = dragOffX;
-    dragBaseY = dragOffY;
-    canvas.style.cursor = 'grabbing';
-  });
-
-  window.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      dragOffX = dragBaseX + (e.clientX - dragStartX) * 0.012;
-      dragOffY = dragBaseY + (e.clientY - dragStartY) * -0.012;
+  // ── Shared: ambient background particles ──
+  function addAmbientParticles(spreadRadius) {
+    const ambCount = isMobile ? 60 : 160;
+    const ambGeo = new THREE.BufferGeometry();
+    const ambArr = new Float32Array(ambCount * 3);
+    const spread = spreadRadius * 3;
+    for (let i = 0; i < ambCount; i++) {
+      ambArr[i * 3] = (Math.random() - 0.5) * spread * 2;
+      ambArr[i * 3 + 1] = (Math.random() - 0.5) * spread * 2;
+      ambArr[i * 3 + 2] = (Math.random() - 0.5) * spread;
     }
-  });
+    ambGeo.setAttribute('position', new THREE.BufferAttribute(ambArr, 3));
+    const ambMat = new THREE.PointsMaterial({
+      color: tc.wire, size: 1.5, transparent: true, opacity: tc.ambAlpha,
+      blending: tc.blending, depthWrite: false, sizeAttenuation: false,
+    });
+    const points = new THREE.Points(ambGeo, ambMat);
+    group.add(points);
 
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-    canvas.style.cursor = '';
-  });
-
-  // Touch support
-  canvas.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    dragStartX = e.touches[0].clientX;
-    dragStartY = e.touches[0].clientY;
-    dragBaseX = dragOffX;
-    dragBaseY = dragOffY;
-  }, { passive: true });
-
-  document.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-      dragOffX = dragBaseX + (e.touches[0].clientX - dragStartX) * 0.012;
-      dragOffY = dragBaseY + (e.touches[0].clientY - dragStartY) * -0.012;
+    const pData = [];
+    for (let i = 0; i < ambCount; i++) {
+      pData.push({
+        spd: 0.1 + Math.random() * 0.3, ph: Math.random() * Math.PI * 2, amp: 0.3 + Math.random() * 0.8,
+        bx: ambArr[i * 3], by: ambArr[i * 3 + 1], bz: ambArr[i * 3 + 2],
+      });
     }
-  }, { passive: true });
+    function update(time) {
+      const aPos = ambGeo.attributes.position;
+      for (let i = 0; i < ambCount; i++) {
+        const p = pData[i], ix = i * 3;
+        aPos.array[ix] = p.bx + Math.sin(time * p.spd + p.ph) * p.amp;
+        aPos.array[ix + 1] = p.by + Math.cos(time * p.spd * 0.7 + p.ph) * p.amp;
+        aPos.array[ix + 2] = p.bz + Math.sin(time * p.spd * 0.5 + p.ph) * p.amp * 0.5;
+      }
+      aPos.needsUpdate = true;
+    }
+    return { mat: ambMat, update: update };
+  }
 
-  window.addEventListener('touchend', () => { isDragging = false; });
+  function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.pageYOffset; }, { passive: true });
-
-  // ── Animation ──
+  // ── Shared animation state ──
   const clock = new THREE.Clock();
   let time = 0;
   let entrance = isReduced ? 1 : 0;
   const entrDur = 2.5;
 
-  function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+  let scrollY = 0;
+  window.addEventListener('scroll', function () { scrollY = window.pageYOffset; }, { passive: true });
+
+  let isDragging = false;
+  let dragOffX = 0, dragOffY = 0;
+
+  let frameUpdate = function () {};
+  let onThemeChange = function () {};
+
+  // ── Mode dispatch ──
+  if (hasGraphData) {
+    initGraphMode();
+  } else {
+    initLegacyBlob();
+  }
 
   function animate() {
     requestAnimationFrame(animate);
     const dt = clock.getDelta();
     time += dt;
-
-    // Entrance scale
     if (entrance < 1) {
       entrance = Math.min(entrance + dt / entrDur, 1);
       group.scale.setScalar(easeOutQuart(entrance));
     }
-
-    // Vertex displacement (normals precomputed — no sqrt here)
-    const pos = geometry.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      const ix = i * 3;
-      const ox = origPos[ix], oy = origPos[ix + 1], oz = origPos[ix + 2];
-      const d = displace(ox, oy, oz, time);
-      pos.array[ix]     = ox + origNormals[ix]     * d;
-      pos.array[ix + 1] = oy + origNormals[ix + 1] * d;
-      pos.array[ix + 2] = oz + origNormals[ix + 2] * d;
-    }
-    pos.needsUpdate = true;
-
-    // Glow breathing
-    glowMesh.scale.setScalar(1.15 + Math.sin(time * 0.3) * 0.05);
-
-    // Rotation — gentle auto-rotation
-    group.rotation.y += 0.002;
-    group.rotation.x  = Math.sin(time * 0.25) * 0.04;
-    group.rotation.z  = Math.cos(time * 0.18) * 0.02;
-
-    // Scroll-driven zig-zag: maps full page scroll to one complete cycle
-    // cos(0)=1 → starts right; cos(π)=-1 → reaches left; cos(2π)=1 → back right
-    const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-    const scrollProgress = scrollY / maxScroll;
-    const zigAmp = isMobile ? 2.0 : 4.5;
-    const scrollX = Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
-    const scrollOffY = -(scrollProgress) * 1.2;
-
-    // Position: full-screen zig-zag + drag offset
-    const targetX = dragOffX + scrollX;
-    const targetY = baseY + dragOffY + scrollOffY;
-
-    if (isDragging) {
-      group.position.x += (targetX - group.position.x) * 0.12;
-      group.position.y += (targetY - group.position.y) * 0.12;
-    } else {
-      // Spring back when not dragging
-      dragOffX *= 0.97;
-      dragOffY *= 0.97;
-      if (Math.abs(dragOffX) < 0.001) dragOffX = 0;
-      if (Math.abs(dragOffY) < 0.001) dragOffY = 0;
-      group.position.x += (targetX - group.position.x) * 0.06;
-      group.position.y += (targetY - group.position.y) * 0.06;
-    }
-
-    // Ambient particles
-    const aPos = ambGeo.attributes.position;
-    for (let i = 0; i < ambCount; i++) {
-      const p = pData[i], ix = i * 3;
-      aPos.array[ix]     = p.bx + Math.sin(time * p.spd + p.ph) * p.amp;
-      aPos.array[ix + 1] = p.by + Math.cos(time * p.spd * 0.7 + p.ph) * p.amp;
-      aPos.array[ix + 2] = p.bz + Math.sin(time * p.spd * 0.5 + p.ph) * p.amp * 0.5;
-    }
-    aPos.needsUpdate = true;
-
+    frameUpdate(dt, time);
     renderer.render(scene, camera);
   }
-
   animate();
 
-  // ── Resize ──
-  window.addEventListener('resize', () => {
+  window.addEventListener('resize', function () {
     const s = getSize();
     if (s.w === 0 || s.h === 0) return;
     camera.aspect = s.w / s.h;
@@ -298,16 +154,301 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
     renderer.setSize(s.w, s.h, false);
   });
 
-  // ── Theme Observer ──
-  function updateTheme() {
-    tc = getThemeColors();
-    wireMat.color.setHex(tc.wire);    wireMat.opacity = tc.wireAlpha;
-    ptsMat.color.setHex(tc.point);   ptsMat.opacity  = tc.pointAlpha; ptsMat.size = tc.pointSz;
-    glowMat.color.setHex(tc.glow);   glowMat.opacity = tc.glowAlpha;
-    ambMat.color.setHex(tc.wire);    ambMat.opacity  = tc.ambAlpha;
+  new MutationObserver(function () { tc = getThemeColors(); onThemeChange(); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ═══════════════════════════════════════════
+  //  LEGACY MODE — original icosahedron blob
+  //  (unchanged from the pre-graph implementation;
+  //  runs on every page except index.html)
+  // ═══════════════════════════════════════════
+  function initLegacyBlob() {
+    const detail = isMobile ? 2 : 4;
+    const radius = isMobile ? 2.0 : 2.5;
+    const geometry = new THREE.IcosahedronGeometry(radius, detail);
+    const origPos = new Float32Array(geometry.attributes.position.array);
+    const vertCount = geometry.attributes.position.count;
+    const origNormals = new Float32Array(vertCount * 3);
+    for (let i = 0; i < vertCount; i++) {
+      const ix = i * 3;
+      const ox = origPos[ix], oy = origPos[ix + 1], oz = origPos[ix + 2];
+      const invLen = 1 / Math.sqrt(ox * ox + oy * oy + oz * oz);
+      origNormals[ix] = ox * invLen;
+      origNormals[ix + 1] = oy * invLen;
+      origNormals[ix + 2] = oz * invLen;
+    }
+
+    const wireMat = new THREE.MeshBasicMaterial({ color: tc.wire, wireframe: true, transparent: true, opacity: tc.wireAlpha });
+    group.add(new THREE.Mesh(geometry, wireMat));
+
+    const ptsMat = new THREE.PointsMaterial({
+      color: tc.point, size: tc.pointSz, transparent: true, opacity: tc.pointAlpha,
+      blending: tc.blending, depthWrite: false, sizeAttenuation: false,
+    });
+    group.add(new THREE.Points(geometry, ptsMat));
+
+    const glowGeo = new THREE.SphereGeometry(radius * 1.15, 16, 16);
+    const glowMat = new THREE.MeshBasicMaterial({ color: tc.glow, transparent: true, opacity: tc.glowAlpha, side: THREE.BackSide });
+    const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+    group.add(glowMesh);
+
+    const amb = addAmbientParticles(radius);
+
+    let dragStartX = 0, dragStartY = 0, dragBaseX = 0, dragBaseY = 0;
+    canvas.addEventListener('mousedown', function (e) {
+      isDragging = true; dragStartX = e.clientX; dragStartY = e.clientY;
+      dragBaseX = dragOffX; dragBaseY = dragOffY; canvas.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (isDragging) {
+        dragOffX = dragBaseX + (e.clientX - dragStartX) * 0.012;
+        dragOffY = dragBaseY + (e.clientY - dragStartY) * -0.012;
+      }
+    });
+    window.addEventListener('mouseup', function () { isDragging = false; canvas.style.cursor = ''; });
+    canvas.addEventListener('touchstart', function (e) {
+      isDragging = true; dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
+      dragBaseX = dragOffX; dragBaseY = dragOffY;
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (isDragging) {
+        dragOffX = dragBaseX + (e.touches[0].clientX - dragStartX) * 0.012;
+        dragOffY = dragBaseY + (e.touches[0].clientY - dragStartY) * -0.012;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', function () { isDragging = false; });
+
+    frameUpdate = function (dt, t) {
+      const pos = geometry.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const ix = i * 3;
+        const ox = origPos[ix], oy = origPos[ix + 1], oz = origPos[ix + 2];
+        const d = displace(ox, oy, oz, t);
+        pos.array[ix] = ox + origNormals[ix] * d;
+        pos.array[ix + 1] = oy + origNormals[ix + 1] * d;
+        pos.array[ix + 2] = oz + origNormals[ix + 2] * d;
+      }
+      pos.needsUpdate = true;
+
+      glowMesh.scale.setScalar(1.15 + Math.sin(t * 0.3) * 0.05);
+      group.rotation.y += 0.002;
+      group.rotation.x = Math.sin(t * 0.25) * 0.04;
+      group.rotation.z = Math.cos(t * 0.18) * 0.02;
+
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const scrollProgress = scrollY / maxScroll;
+      const zigAmp = isMobile ? 2.0 : 4.5;
+      const scrollX = Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
+      const scrollOffY = -(scrollProgress) * 1.2;
+      const targetX = dragOffX + scrollX;
+      const targetY = baseY + dragOffY + scrollOffY;
+
+      if (isDragging) {
+        group.position.x += (targetX - group.position.x) * 0.12;
+        group.position.y += (targetY - group.position.y) * 0.12;
+      } else {
+        dragOffX *= 0.97; dragOffY *= 0.97;
+        if (Math.abs(dragOffX) < 0.001) dragOffX = 0;
+        if (Math.abs(dragOffY) < 0.001) dragOffY = 0;
+        group.position.x += (targetX - group.position.x) * 0.06;
+        group.position.y += (targetY - group.position.y) * 0.06;
+      }
+      amb.update(t);
+    };
+
+    onThemeChange = function () {
+      wireMat.color.setHex(tc.wire); wireMat.opacity = tc.wireAlpha;
+      ptsMat.color.setHex(tc.point); ptsMat.opacity = tc.pointAlpha; ptsMat.size = tc.pointSz;
+      glowMat.color.setHex(tc.glow); glowMat.opacity = tc.glowAlpha;
+      amb.mat.color.setHex(tc.wire); amb.mat.opacity = tc.ambAlpha;
+    };
   }
 
-  new MutationObserver(updateTheme).observe(document.documentElement, {
-    attributes: true, attributeFilter: ['data-theme'],
-  });
+  // ═══════════════════════════════════════════
+  //  GRAPH MODE — data-driven topic/article graph
+  //  (index.html only)
+  // ═══════════════════════════════════════════
+
+  function hashStr(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+    return h >>> 0;
+  }
+  function seededDir(id) {
+    const h = hashStr(id);
+    const a = Math.abs(Math.sin(h * 12.9898)) % 1;
+    const b = Math.abs(Math.sin(h * 78.233)) % 1;
+    const c = Math.abs(Math.sin(h * 37.719)) % 1;
+    const v = new THREE.Vector3(a - 0.5, b - 0.5, c - 0.5);
+    return v.lengthSq() > 1e-6 ? v.normalize() : new THREE.Vector3(1, 0, 0);
+  }
+  function seededScalar01(id) {
+    return Math.abs(Math.sin(hashStr(id) * 53.171)) % 1;
+  }
+  function fibonacciSphere(n, r) {
+    const pts = [];
+    if (n <= 0) return pts;
+    if (n === 1) { pts.push(new THREE.Vector3(r, 0, 0)); return pts; }
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < n; i++) {
+      const y = 1 - (i / (n - 1)) * 2;
+      const rad = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = golden * i;
+      pts.push(new THREE.Vector3(Math.cos(theta) * rad * r, y * r, Math.sin(theta) * rad * r));
+    }
+    return pts;
+  }
+
+  function buildGraphData() {
+    const data = window.SITE_DATA || {};
+    const topics = data.topics || [];
+    const items = [].concat(data.projects || [], data.research || []).filter(function (it) { return it.topic; });
+
+    const byTopic = {};
+    items.forEach(function (it) { (byTopic[it.topic] = byTopic[it.topic] || []).push(it); });
+    const activeTopics = topics.filter(function (t) { return byTopic[t.id] && byTopic[t.id].length; });
+
+    const R_HUB = isMobile ? 2.0 : 2.5;
+    const R_LEAF = R_HUB * 0.42;
+
+    const hubPos = fibonacciSphere(activeTopics.length, R_HUB);
+    const hubs = activeTopics.map(function (t, i) { return { id: t.id, label: t.label, base: hubPos[i] }; });
+    const hubIndex = {};
+    hubs.forEach(function (h, i) { hubIndex[h.id] = i; });
+
+    const leaves = items.map(function (it) {
+      const hub = hubs[hubIndex[it.topic]];
+      const mag = R_LEAF * (0.65 + 0.35 * seededScalar01(it.id));
+      const base = hub.base.clone().add(seededDir(it.id).multiplyScalar(mag));
+      return { id: it.id, label: it.label, href: it.href, hubIdx: hubIndex[it.topic], base: base };
+    });
+
+    return { hubs: hubs, leaves: leaves, R_HUB: R_HUB };
+  }
+
+  function initGraphMode() {
+    canvas.style.pointerEvents = 'auto'; // enable interaction (only ever runs on index.html)
+
+    const graph = buildGraphData();
+    const hubCount = graph.hubs.length;
+    const leafCount = graph.leaves.length;
+
+    const hubGeo = new THREE.BufferGeometry();
+    const hubPosAttr = new THREE.BufferAttribute(new Float32Array(Math.max(hubCount, 1) * 3), 3);
+    hubGeo.setAttribute('position', hubPosAttr);
+
+    const leafGeo = new THREE.BufferGeometry();
+    const leafPosAttr = new THREE.BufferAttribute(new Float32Array(Math.max(leafCount, 1) * 3), 3);
+    leafGeo.setAttribute('position', leafPosAttr);
+
+    const edgeGeo = new THREE.BufferGeometry();
+    const edgePosAttr = new THREE.BufferAttribute(new Float32Array(Math.max(leafCount, 1) * 2 * 3), 3);
+    edgeGeo.setAttribute('position', edgePosAttr);
+
+    function writeStaticPositions() {
+      for (let i = 0; i < hubCount; i++) {
+        hubPosAttr.array[i * 3] = graph.hubs[i].base.x;
+        hubPosAttr.array[i * 3 + 1] = graph.hubs[i].base.y;
+        hubPosAttr.array[i * 3 + 2] = graph.hubs[i].base.z;
+      }
+      hubPosAttr.needsUpdate = true;
+      for (let i = 0; i < leafCount; i++) {
+        leafPosAttr.array[i * 3] = graph.leaves[i].base.x;
+        leafPosAttr.array[i * 3 + 1] = graph.leaves[i].base.y;
+        leafPosAttr.array[i * 3 + 2] = graph.leaves[i].base.z;
+      }
+      leafPosAttr.needsUpdate = true;
+      for (let i = 0; i < leafCount; i++) {
+        const leaf = graph.leaves[i];
+        const hub = graph.hubs[leaf.hubIdx];
+        edgePosAttr.array[i * 6] = hub.base.x; edgePosAttr.array[i * 6 + 1] = hub.base.y; edgePosAttr.array[i * 6 + 2] = hub.base.z;
+        edgePosAttr.array[i * 6 + 3] = leaf.base.x; edgePosAttr.array[i * 6 + 4] = leaf.base.y; edgePosAttr.array[i * 6 + 5] = leaf.base.z;
+      }
+      edgePosAttr.needsUpdate = true;
+    }
+    writeStaticPositions();
+
+    const hubMat = new THREE.PointsMaterial({
+      color: tc.point, size: tc.pointSz * 2.2, transparent: true, opacity: tc.pointAlpha,
+      blending: tc.blending, depthWrite: false, sizeAttenuation: false,
+    });
+    const leafMat = new THREE.PointsMaterial({
+      color: tc.point, size: tc.pointSz, transparent: true, opacity: tc.pointAlpha * 0.8,
+      blending: tc.blending, depthWrite: false, sizeAttenuation: false,
+    });
+    const edgeMat = new THREE.LineBasicMaterial({ color: tc.wire, transparent: true, opacity: tc.wireAlpha });
+
+    const hubPoints = new THREE.Points(hubGeo, hubMat);
+    const leafPoints = new THREE.Points(leafGeo, leafMat);
+    const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
+    group.add(edgeLines, hubPoints, leafPoints);
+
+    const glowGeo = new THREE.SphereGeometry(graph.R_HUB * 1.3, 16, 16);
+    const glowMat = new THREE.MeshBasicMaterial({ color: tc.glow, transparent: true, opacity: tc.glowAlpha, side: THREE.BackSide });
+    const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+    group.add(glowMesh);
+
+    const amb = addAmbientParticles(graph.R_HUB);
+
+    // Temporary simple drag-to-nudge — replaced with click/drag/expand
+    // pointer logic in Task 3.
+    let dragStartX = 0, dragStartY = 0, dragBaseX = 0, dragBaseY = 0;
+    canvas.addEventListener('mousedown', function (e) {
+      isDragging = true; dragStartX = e.clientX; dragStartY = e.clientY;
+      dragBaseX = dragOffX; dragBaseY = dragOffY; canvas.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (isDragging) {
+        dragOffX = dragBaseX + (e.clientX - dragStartX) * 0.012;
+        dragOffY = dragBaseY + (e.clientY - dragStartY) * -0.012;
+      }
+    });
+    window.addEventListener('mouseup', function () { isDragging = false; canvas.style.cursor = ''; });
+    canvas.addEventListener('touchstart', function (e) {
+      isDragging = true; dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
+      dragBaseX = dragOffX; dragBaseY = dragOffY;
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (isDragging) {
+        dragOffX = dragBaseX + (e.touches[0].clientX - dragStartX) * 0.012;
+        dragOffY = dragBaseY + (e.touches[0].clientY - dragStartY) * -0.012;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', function () { isDragging = false; });
+
+    frameUpdate = function (dt, t) {
+      glowMesh.scale.setScalar(1.15 + Math.sin(t * 0.3) * 0.05);
+      group.rotation.y += 0.002;
+      group.rotation.x = Math.sin(t * 0.25) * 0.04;
+      group.rotation.z = Math.cos(t * 0.18) * 0.02;
+
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const scrollProgress = scrollY / maxScroll;
+      const zigAmp = isMobile ? 2.0 : 4.5;
+      const scrollX = Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
+      const scrollOffY = -(scrollProgress) * 1.2;
+      const targetX = dragOffX + scrollX;
+      const targetY = baseY + dragOffY + scrollOffY;
+
+      if (isDragging) {
+        group.position.x += (targetX - group.position.x) * 0.12;
+        group.position.y += (targetY - group.position.y) * 0.12;
+      } else {
+        dragOffX *= 0.97; dragOffY *= 0.97;
+        if (Math.abs(dragOffX) < 0.001) dragOffX = 0;
+        if (Math.abs(dragOffY) < 0.001) dragOffY = 0;
+        group.position.x += (targetX - group.position.x) * 0.06;
+        group.position.y += (targetY - group.position.y) * 0.06;
+      }
+      amb.update(t);
+    };
+
+    onThemeChange = function () {
+      hubMat.color.setHex(tc.point); hubMat.opacity = tc.pointAlpha;
+      leafMat.color.setHex(tc.point); leafMat.opacity = tc.pointAlpha * 0.8;
+      edgeMat.color.setHex(tc.wire); edgeMat.opacity = tc.wireAlpha;
+      glowMat.color.setHex(tc.glow); glowMat.opacity = tc.glowAlpha;
+      amb.mat.color.setHex(tc.wire); amb.mat.opacity = tc.ambAlpha;
+    };
+  }
 })();
