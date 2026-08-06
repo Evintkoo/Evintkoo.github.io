@@ -345,28 +345,44 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
     const edgePosAttr = new THREE.BufferAttribute(new Float32Array(Math.max(leafCount, 1) * 2 * 3), 3);
     edgeGeo.setAttribute('position', edgePosAttr);
 
-    function writeStaticPositions() {
+    const hubJitterDir = graph.hubs.map(function (h) { return seededDir(h.id + ':jit'); });
+    const leafJitterDir = graph.leaves.map(function (l) { return seededDir(l.id + ':jit'); });
+    const JITTER_AMT = isReduced ? 0 : 0.18;
+
+    function updateNodePositions(t) {
       for (let i = 0; i < hubCount; i++) {
-        hubPosAttr.array[i * 3] = graph.hubs[i].base.x;
-        hubPosAttr.array[i * 3 + 1] = graph.hubs[i].base.y;
-        hubPosAttr.array[i * 3 + 2] = graph.hubs[i].base.z;
+        const b = graph.hubs[i].base;
+        const d = JITTER_AMT ? displace(b.x, b.y, b.z, t) * JITTER_AMT : 0;
+        const dir = hubJitterDir[i];
+        hubPosAttr.array[i * 3] = b.x + dir.x * d;
+        hubPosAttr.array[i * 3 + 1] = b.y + dir.y * d;
+        hubPosAttr.array[i * 3 + 2] = b.z + dir.z * d;
       }
       hubPosAttr.needsUpdate = true;
+
       for (let i = 0; i < leafCount; i++) {
-        leafPosAttr.array[i * 3] = graph.leaves[i].base.x;
-        leafPosAttr.array[i * 3 + 1] = graph.leaves[i].base.y;
-        leafPosAttr.array[i * 3 + 2] = graph.leaves[i].base.z;
+        const b = graph.leaves[i].base;
+        const d = JITTER_AMT ? displace(b.x, b.y, b.z, t + 10) * JITTER_AMT : 0;
+        const dir = leafJitterDir[i];
+        leafPosAttr.array[i * 3] = b.x + dir.x * d;
+        leafPosAttr.array[i * 3 + 1] = b.y + dir.y * d;
+        leafPosAttr.array[i * 3 + 2] = b.z + dir.z * d;
       }
       leafPosAttr.needsUpdate = true;
+
       for (let i = 0; i < leafCount; i++) {
         const leaf = graph.leaves[i];
-        const hub = graph.hubs[leaf.hubIdx];
-        edgePosAttr.array[i * 6] = hub.base.x; edgePosAttr.array[i * 6 + 1] = hub.base.y; edgePosAttr.array[i * 6 + 2] = hub.base.z;
-        edgePosAttr.array[i * 6 + 3] = leaf.base.x; edgePosAttr.array[i * 6 + 4] = leaf.base.y; edgePosAttr.array[i * 6 + 5] = leaf.base.z;
+        const h3 = leaf.hubIdx * 3;
+        edgePosAttr.array[i * 6] = hubPosAttr.array[h3];
+        edgePosAttr.array[i * 6 + 1] = hubPosAttr.array[h3 + 1];
+        edgePosAttr.array[i * 6 + 2] = hubPosAttr.array[h3 + 2];
+        edgePosAttr.array[i * 6 + 3] = leafPosAttr.array[i * 3];
+        edgePosAttr.array[i * 6 + 4] = leafPosAttr.array[i * 3 + 1];
+        edgePosAttr.array[i * 6 + 5] = leafPosAttr.array[i * 3 + 2];
       }
       edgePosAttr.needsUpdate = true;
     }
-    writeStaticPositions();
+    updateNodePositions(0);
 
     const hubMat = new THREE.PointsMaterial({
       color: tc.point, size: tc.pointSz * 2.2, transparent: true, opacity: tc.pointAlpha,
@@ -417,18 +433,24 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
     window.addEventListener('touchend', function () { isDragging = false; });
 
     frameUpdate = function (dt, t) {
+      updateNodePositions(t);
       glowMesh.scale.setScalar(1.15 + Math.sin(t * 0.3) * 0.05);
-      group.rotation.y += 0.002;
-      group.rotation.x = Math.sin(t * 0.25) * 0.04;
-      group.rotation.z = Math.cos(t * 0.18) * 0.02;
 
-      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      const scrollProgress = scrollY / maxScroll;
-      const zigAmp = isMobile ? 2.0 : 4.5;
-      const scrollX = Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
-      const scrollOffY = -(scrollProgress) * 1.2;
-      const targetX = dragOffX + scrollX;
-      const targetY = baseY + dragOffY + scrollOffY;
+      if (!isReduced) {
+        group.rotation.y += 0.002;
+        group.rotation.x = Math.sin(t * 0.25) * 0.04;
+        group.rotation.z = Math.cos(t * 0.18) * 0.02;
+      }
+
+      let targetX = dragOffX;
+      let targetY = baseY + dragOffY;
+      if (!isReduced) {
+        const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+        const scrollProgress = scrollY / maxScroll;
+        const zigAmp = isMobile ? 2.0 : 4.5;
+        targetX += Math.cos(scrollProgress * Math.PI * 2) * zigAmp;
+        targetY += -(scrollProgress) * 1.2;
+      }
 
       if (isDragging) {
         group.position.x += (targetX - group.position.x) * 0.12;
