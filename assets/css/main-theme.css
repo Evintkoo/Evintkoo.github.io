@@ -3040,6 +3040,10 @@ a.paper-hero__badge {
   z-index: 1000;
 }
 
+.scene-bg.hero-graph--expanded {
+  z-index: 1000;
+}
+
 .hero-graph-backdrop {
   position: fixed;
   inset: 0;

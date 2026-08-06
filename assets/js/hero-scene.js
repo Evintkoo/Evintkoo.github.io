@@ -468,6 +468,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
       mode = 'expanding';
       tweenT = 0;
       canvas.classList.add('hero-graph--expanded');
+      canvas.parentElement.classList.add('hero-graph--expanded');
       backdropEl.classList.add('active');
       document.body.classList.add('no-scroll');
     }
@@ -497,6 +498,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
         if (tweenT >= 1) {
           mode = 'collapsed';
           canvas.classList.remove('hero-graph--expanded');
+          canvas.parentElement.classList.remove('hero-graph--expanded');
           backdropEl.classList.remove('active');
           document.body.classList.remove('no-scroll');
         }
