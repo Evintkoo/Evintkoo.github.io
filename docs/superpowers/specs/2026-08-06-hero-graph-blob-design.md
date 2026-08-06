@@ -22,6 +22,8 @@ No new data modeling. Reuses what already exists:
 
 `hero-scene.js` will build its node/edge list from `SITE_DATA` directly (not `MINDMAP_DATA`'s label-only branches), since it needs each leaf's `href` and `id` for click-navigation. It replicates the same grouping logic already in `buildMindmap()`: group `projects.concat(research)` by `topic`, one hub per topic with ≥1 member.
 
+**Scope: homepage only.** `#heroCanvas` / `hero-scene.js` is not unique to the homepage — it's the shared ambient background canvas loaded via `.scene-bg` on ~25 pages (every research article, project page, `about.html`, `research.html`, `projects.html`). Only `index.html` loads `data.js`; on every other page `window.SITE_DATA` is undefined, and `SITE_DATA`'s project/research `href`s are root-relative (e.g. `research/grasp.html`), which would resolve incorrectly if clicked from inside `/research/*.html` or `/projects/*.html`. Rather than rolling the graph out site-wide (which would require adding `data.js` to every page and rewriting href resolution for nested folders), this feature ships **homepage-only**: `hero-scene.js` checks for `window.SITE_DATA` at init. When present (index.html only) it builds and renders the new graph with click-to-expand. When absent (every other page), it renders the **original icosahedron blob exactly as it works today** (same geometry, displacement, particles, drag, scroll zig-zag — no expand/click) — so no other page's appearance or behavior changes at all.
+
 ---
 
 ## 2. Graph Model
