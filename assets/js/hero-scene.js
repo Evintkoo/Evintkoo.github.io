@@ -327,8 +327,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
   }
 
   function initGraphMode() {
-    canvas.style.pointerEvents = 'auto'; // enable interaction (only ever runs on index.html)
-
     const graph = buildGraphData();
     const hubCount = graph.hubs.length;
     const leafCount = graph.leaves.length;
@@ -536,6 +534,10 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
 
     backBtn.addEventListener('click', collapse);
 
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mode === 'expanded') collapse();
+    });
+
     const raycaster = new THREE.Raycaster();
     raycaster.params.Points.threshold = 0.12;
     const pointerNDC = new THREE.Vector2();
@@ -578,6 +580,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
         if (tweenT >= 1) {
           mode = 'expanded';
           backBtn.classList.add('visible');
+          backBtn.focus();
         }
       } else if (mode === 'collapsing') {
         camera.position.z = CAM_Z_EXPANDED + (CAM_Z_HERO - CAM_Z_EXPANDED) * e;
@@ -592,6 +595,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
     }
 
     frameUpdate = function (dt, t) {
+      canvas.style.pointerEvents = (mode === 'expanded' || mode === 'expanding' || mode === 'collapsing' || scrollY < window.innerHeight * 0.9) ? 'auto' : 'none';
       updateNodePositions(t);
       glowMesh.scale.setScalar(1.15 + Math.sin(t * 0.3) * 0.05);
 
