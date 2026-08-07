@@ -3135,3 +3135,12 @@ a.paper-hero__badge {
 .hero-graph-label--leaf.is-hovered {
   color: var(--accent-warm);
 }
+
+@media (max-width: 767px) {
+  .hero-graph-label--hub {
+    font-size: 11px;
+  }
+  .hero-graph-label--leaf {
+    font-size: 9px;
+  }
+}
