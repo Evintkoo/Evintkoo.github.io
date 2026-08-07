@@ -472,29 +472,34 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
     });
 
     const scratchVec = new THREE.Vector3();
-    const screenPos = { x: 0, y: 0, behind: false };
+    const camSpaceVec = new THREE.Vector3();
+    const centerCamSpace = new THREE.Vector3();
+    const screenPos = { x: 0, y: 0, camZ: 0 };
     function projectToScreen(x, y, z, target) {
       scratchVec.set(x, y, z).applyMatrix4(group.matrixWorld);
+      camSpaceVec.copy(scratchVec).applyMatrix4(camera.matrixWorldInverse);
       scratchVec.project(camera);
       target.x = (scratchVec.x * 0.5 + 0.5) * canvas.clientWidth;
       target.y = (-scratchVec.y * 0.5 + 0.5) * canvas.clientHeight;
-      target.behind = scratchVec.z > 1;
+      target.camZ = camSpaceVec.z;
     }
 
     function updateLabels() {
+      centerCamSpace.set(0, 0, 0).applyMatrix4(group.matrixWorld).applyMatrix4(camera.matrixWorldInverse);
+      const centerZ = centerCamSpace.z;
       for (let i = 0; i < hubCount; i++) {
         projectToScreen(hubPosAttr.array[i * 3], hubPosAttr.array[i * 3 + 1], hubPosAttr.array[i * 3 + 2], screenPos);
         const el = hubLabelEls[i];
         el.style.left = screenPos.x + 'px';
         el.style.top = screenPos.y + 'px';
-        el.classList.toggle('is-visible', !screenPos.behind);
+        el.classList.toggle('is-visible', screenPos.camZ >= centerZ);
       }
       for (let i = 0; i < leafCount; i++) {
         projectToScreen(leafPosAttr.array[i * 3], leafPosAttr.array[i * 3 + 1], leafPosAttr.array[i * 3 + 2], screenPos);
         const el = leafLabelEls[i];
         el.style.left = screenPos.x + 'px';
         el.style.top = screenPos.y + 'px';
-        el.classList.toggle('is-visible', !screenPos.behind);
+        el.classList.toggle('is-visible', screenPos.camZ >= centerZ);
       }
     }
 
