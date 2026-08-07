@@ -893,6 +893,7 @@ body.no-scroll {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .hero__accent {
@@ -921,6 +922,7 @@ body.no-scroll {
   max-width: 720px;
   z-index: 1;
   position: relative;
+  pointer-events: auto;
 }
 
 /* Eyebrow label */
@@ -2167,6 +2169,7 @@ a.project-featured__tag {
   opacity: 0;
   animation: fadeIn 0.8s ease 2.4s forwards;
   z-index: 2;
+  pointer-events: auto;
   /* button reset */
   background: none;
   border: none;
