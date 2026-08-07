@@ -536,6 +536,38 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.m
 
     backBtn.addEventListener('click', collapse);
 
+    const raycaster = new THREE.Raycaster();
+    raycaster.params.Points.threshold = 0.12;
+    const pointerNDC = new THREE.Vector2();
+    let hoveredLeaf = -1;
+
+    window.addEventListener('pointermove', function (e) {
+      if (mode !== 'expanded' || isDragging) {
+        if (hoveredLeaf >= 0) {
+          leafLabelEls[hoveredLeaf].classList.remove('is-hovered');
+          hoveredLeaf = -1;
+          canvas.style.cursor = '';
+        }
+        return;
+      }
+      const rect = canvas.getBoundingClientRect();
+      pointerNDC.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      pointerNDC.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointerNDC, camera);
+      const hits = raycaster.intersectObject(leafPoints);
+      const idx = hits.length ? hits[0].index : -1;
+      if (idx !== hoveredLeaf) {
+        if (hoveredLeaf >= 0) leafLabelEls[hoveredLeaf].classList.remove('is-hovered');
+        hoveredLeaf = idx;
+        if (hoveredLeaf >= 0) {
+          leafLabelEls[hoveredLeaf].classList.add('is-hovered');
+          canvas.style.cursor = 'pointer';
+        } else {
+          canvas.style.cursor = '';
+        }
+      }
+    });
+
     function updateExpandTween(dt) {
       tweenT = Math.min(tweenT + dt / TWEEN_DUR, 1);
       const e = easeInOutCubic(tweenT);
