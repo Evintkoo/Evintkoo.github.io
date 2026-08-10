@@ -3029,6 +3029,9 @@ a.paper-hero__badge {
   /* Lift the filter button above the bottom nav bar */
   .filter-fab { bottom: calc(74px + env(safe-area-inset-bottom, 0px)); }
 
+  /* Lift scroll-to-top above the bottom nav bar */
+  .scroll-to-top { bottom: calc(74px + env(safe-area-inset-bottom, 0px)); z-index: 1200; }
+
   /* The bottom bar replaces the hamburger on mobile */
   .nav__toggle { display: none; }
 }

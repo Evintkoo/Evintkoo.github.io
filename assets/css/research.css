@@ -582,7 +582,7 @@ svg {
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 200;
+    z-index: 1200;
     width: 220px;
     /* translateX(200px) → only 20px tab visible at right edge */
     transform: translateX(200px);
@@ -604,7 +604,7 @@ svg {
     width: 200px;
     background: var(--bg-primary);
     border-left: 1px solid var(--border-primary);
-    padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-8);
+    padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) calc(var(--space-8) + 58px + env(safe-area-inset-bottom, 0px));
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -658,7 +658,7 @@ svg {
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 199;
+    z-index: 1199;
     background: rgba(0, 0, 0, 0.3);
   }
 
@@ -3370,3 +3370,62 @@ tbody td strong {
 .prose--caveman { display: none; }
 html.caveman .prose:not(.prose--caveman) { display: none; }
 html.caveman .prose--caveman { display: revert; }
+
+/* ============================================
+   Reading-time badge
+   (injected into .paper-meta-content / .paper-meta-footer by main-theme.js)
+   ============================================ */
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-warm-light);
+  color: var(--accent-warm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  white-space: nowrap;
+}
+.reading-time svg { width: 0.85rem; height: 0.85rem; }
+
+/* ============================================
+   DNA Helix — decorative background for p53 page
+   (created by P53Animations.createHelixBackground)
+   ============================================ */
+.p53-hero { position: relative; overflow: hidden; }
+
+.dna-helix {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.dna-helix__strand {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--accent-warm) 0,
+    var(--accent-warm) 14px,
+    transparent 14px,
+    transparent 28px
+  );
+  animation: dna-flow 6s linear infinite;
+}
+.dna-helix__strand:nth-child(1) { left: 6%; animation-duration: 7s; }
+.dna-helix__strand:nth-child(2) { right: 6%; animation-duration: 8s; animation-direction: reverse; }
+.dna-helix__strand:nth-child(3) { left: 42%; animation-duration: 9s; opacity: 0.6; }
+
+@keyframes dna-flow {
+  from { background-position: 0 0; }
+  to   { background-position: 0 56px; }
+}
+
+[data-theme="dark"] .dna-helix { opacity: 0.08; }
+

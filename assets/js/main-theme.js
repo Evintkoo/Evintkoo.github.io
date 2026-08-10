@@ -326,12 +326,14 @@
       if (rsb) rsb.classList.add('open');
       if (rsbOverlay) rsbOverlay.classList.add('visible');
       if (rsbTab) rsbTab.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('no-scroll');
     }
 
     function closeDrawer() {
       if (rsb) rsb.classList.remove('open');
       if (rsbOverlay) rsbOverlay.classList.remove('visible');
       if (rsbTab) rsbTab.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
     }
 
     if (rsbTab) {
@@ -457,142 +459,6 @@
     });
   }
 
-  // ── Category Filter Dropdown (multi-select) ──
-  function initCategoryFilter() {
-    const toggle = document.getElementById('filterToggle');
-    const menu = document.getElementById('filterMenu');
-    const carousel = document.querySelector('.project-carousel');
-    const filterLabel = document.getElementById('filterLabel');
-    if (!toggle || !menu || !carousel || !filterLabel) return;
-
-    const items = menu.querySelectorAll('.filter-dropdown__item');
-    const cards = carousel.querySelectorAll('.project-card');
-    let selected = new Set(); // empty = show all
-
-    function updateLabel() {
-      if (selected.size === 0) {
-        filterLabel.textContent = '';
-      } else {
-        filterLabel.textContent = Array.from(selected).join(', ');
-      }
-    }
-
-    function applyFilter() {
-      cards.forEach((card) => {
-        if (selected.size === 0 || selected.has(card.dataset.category)) {
-          card.classList.remove('filter-hidden');
-        } else {
-          card.classList.add('filter-hidden');
-        }
-      });
-      carousel.scrollLeft = 0;
-      carousel.dispatchEvent(new Event('scroll'));
-    }
-
-    // Toggle dropdown
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open);
-    });
-
-    // Close on outside click
-    document.addEventListener('click', () => {
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-
-    menu.addEventListener('click', (e) => e.stopPropagation());
-
-    // Item selection
-    items.forEach((item) => {
-      item.addEventListener('click', () => {
-        const filter = item.dataset.filter;
-
-        if (filter === 'all') {
-          // Clear all selections
-          selected.clear();
-          items.forEach((i) => { i.classList.remove('active'); i.setAttribute('aria-selected', 'false'); });
-        } else {
-          // Toggle this category
-          if (selected.has(filter)) {
-            selected.delete(filter);
-            item.classList.remove('active');
-            item.setAttribute('aria-selected', 'false');
-          } else {
-            selected.add(filter);
-            item.classList.add('active');
-            item.setAttribute('aria-selected', 'true');
-          }
-        }
-
-        updateLabel();
-        applyFilter();
-      });
-    });
-
-    updateLabel();
-  }
-
-  // Project Carousel (CSS scroll-snap + drag support)
-  function initProjectCarousel() {
-    const carousel = document.querySelector('.project-carousel');
-    const prevBtn = document.querySelector('.carousel-btn--prev');
-    const nextBtn = document.querySelector('.carousel-btn--next');
-
-    if (!carousel || !prevBtn || !nextBtn) return;
-
-    function getScrollAmount() {
-      const card = carousel.querySelector('.project-card');
-      if (!card) return 300;
-      const gap = parseFloat(getComputedStyle(carousel).gap) || 24;
-      return card.offsetWidth + gap;
-    }
-
-    // Button navigation
-    prevBtn.addEventListener('click', () => {
-      carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
-    });
-
-    nextBtn.addEventListener('click', () => {
-      carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-    });
-
-    // Update button disabled state
-    function updateButtons() {
-      const { scrollLeft, scrollWidth, clientWidth } = carousel;
-      prevBtn.disabled = scrollLeft <= 2;
-      nextBtn.disabled = scrollLeft >= scrollWidth - clientWidth - 2;
-    }
-
-    carousel.addEventListener('scroll', updateButtons, { passive: true });
-    updateButtons();
-
-    // Drag to scroll (desktop)
-    let isDown = false, startX = 0, scrollStart = 0;
-
-    carousel.addEventListener('mousedown', (e) => {
-      if (e.target.closest('a, button')) return;
-      isDown = true;
-      startX = e.pageX;
-      scrollStart = carousel.scrollLeft;
-      carousel.style.scrollSnapType = 'none';
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (!isDown) return;
-      isDown = false;
-      carousel.style.scrollSnapType = '';
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const dx = e.pageX - startX;
-      carousel.scrollLeft = scrollStart - dx;
-    });
-  }
-
   // ── Scroll Reveal System ──
   // Triggers [data-reveal] and [data-stagger] as they enter viewport
   function initScrollReveal() {
@@ -634,11 +500,6 @@
     staggers.forEach(function(el) { staggerObs.observe(el); });
   }
 
-  // ── Card 3D Tilt — disabled for carousel (use CSS hover instead) ──
-  function initCardTilt() {
-    // Tilt removed — carousel cards use CSS-only hover effects
-  }
-
   // ── Hero Parallax on Scroll ──
   // Scroll hint click — jump to first section below hero
   var scrollHintBtn = document.getElementById('scrollHint');
@@ -674,13 +535,78 @@
     });
   }
 
+  // Research detail-page enhancements — section fade-in, table-row hover,
+  // reading-time badge, and paper-hero parallax. Each piece self-guards.
+  function initResearchEnhancements() {
+    // 1. Section fade-in on scroll
+    var sections = document.querySelectorAll('.research-section');
+    if (sections.length) {
+      if (!('IntersectionObserver' in window)) {
+        sections.forEach(function (s) {
+          s.style.opacity = '1';
+          s.style.transform = 'none';
+          s.style.transition = '';
+        });
+      } else {
+        sections.forEach(function (s) {
+          s.style.opacity = '0';
+          s.style.transform = 'translateY(20px)';
+          s.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        });
+        var sectionObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || entry.target.dataset.revealed) return;
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            entry.target.dataset.revealed = 'true';
+            sectionObs.unobserve(entry.target);
+          });
+        }, { threshold: [0, 0.3, 0.5], rootMargin: '-80px 0px -30% 0px' });
+        sections.forEach(function (s) { sectionObs.observe(s); });
+      }
+    }
+
+    // 2. Performance-table row hover
+    document.querySelectorAll('.performance-table tbody tr').forEach(function (row) {
+      row.addEventListener('mouseenter', function () { this.style.transform = 'translateX(4px)'; });
+      row.addEventListener('mouseleave', function () { this.style.transform = ''; });
+    });
+
+    // 3. Reading-time badge (target the meta block that exists on this page)
+    var contentEl = document.querySelector('.research-content__inner');
+    if (contentEl && !document.querySelector('.reading-time')) {
+      var words = (contentEl.textContent || '').trim().split(/\s+/).filter(Boolean).length;
+      var mins = Math.max(1, Math.ceil(words / 200));
+      var metaTarget = document.querySelector('.paper-meta-content') ||
+                       document.querySelector('.paper-meta-footer');
+      if (metaTarget) {
+        var badge = document.createElement('div');
+        badge.className = 'reading-time';
+        badge.innerHTML =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>' +
+          '<span>' + mins + ' min read</span>';
+        metaTarget.appendChild(badge);
+      }
+    }
+
+    // 4. Paper-hero subtle parallax (uses the shared scroll dispatcher)
+    var paperHero = document.querySelector('.paper-hero');
+    if (paperHero) {
+      _scrollCbs.push(function () {
+        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrolled < window.innerHeight) {
+          paperHero.style.transform = 'translate3d(0, ' + (scrolled * 0.3) + 'px, 0)';
+        }
+      });
+    }
+  }
+
   // Initialize new features
   initResearchFeatures();
+  initResearchEnhancements();
   initScrollToTop();
-  initCategoryFilter();
-  initProjectCarousel();
   initScrollReveal();
-  initCardTilt();
   initHeroParallax();
 
   // ── Custom Cursor ──
@@ -873,51 +799,6 @@
     s.textContent = '@keyframes card-ripple{to{transform:scale(3);opacity:0}}';
     document.head.appendChild(s);
   }
-
-  // Single-click → section on index, double-click → dedicated page
-  (function () {
-    var DELAY = 260;
-    var inSubdir = /\/(research|projects)\//.test(window.location.pathname);
-    var prefix = inSubdir ? '../' : '';
-
-    var MAP = {
-      'projects':     { sectionId: 'projects', page: 'projects.html' },
-      'research':     { sectionId: 'research', page: 'research.html' },
-      'about':        { sectionId: null,        page: 'about.html'    },
-      'get in touch': { sectionId: 'contact',   page: null            },
-    };
-
-    document.querySelectorAll('a.nav__link').forEach(function (link) {
-      var key = link.textContent.trim().toLowerCase();
-      var m = MAP[key];
-      if (!m) return;
-
-      var timer = null;
-
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (timer) {
-          clearTimeout(timer);
-          timer = null;
-          if (m.page) window.location.href = prefix + m.page;
-        } else {
-          timer = setTimeout(function () {
-            timer = null;
-            if (m.sectionId) {
-              var el = document.getElementById(m.sectionId);
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              } else {
-                window.location.href = prefix + 'index.html#' + m.sectionId;
-              }
-            } else if (m.page) {
-              window.location.href = prefix + m.page;
-            }
-          }, DELAY);
-        }
-      });
-    });
-  })();
 
   // Nav logo name scramble on hover
   var logoTextEl = document.querySelector('.nav__logo-text');

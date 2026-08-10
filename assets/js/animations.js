@@ -1,139 +1,7 @@
 /**
- * Portfolio Animations and Interactions
- * Consolidated animation scripts for all pages
+ * Research Page Animations
+ * Per-paper visual modules + shared scroll/counter effects.
  */
-
-// Main Portfolio Animations
-const PortfolioAnimations = (function() {
-  'use strict';
-
-  /**
-   * Initialize main portfolio animations
-   */
-  function initPortfolioAnimations() {
-    setupTechTagAnimations();
-    setupProjectAnimations();
-    setupScrollAnimations();
-  }
-
-  /**
-   * Tech Tag Animation - Adds SVG border animation to project tech tags
-   */
-  function setupTechTagAnimations() {
-    // Function to create SVG element for border animation
-    function createAnimatedBorderSVG() {
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      
-      // Set SVG attributes
-      svg.setAttribute('viewBox', '0 0 100 100');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      
-      // Set rectangle attributes for border animation
-      rect.setAttribute('x', '1');
-      rect.setAttribute('y', '1');
-      rect.setAttribute('width', '98');
-      rect.setAttribute('height', '98');
-      rect.setAttribute('rx', '6'); // Rounded corners to match border-radius
-      
-      svg.appendChild(rect);
-      return svg;
-    }
-    
-    // Add animated border to all project tech tags
-    const techTags = document.querySelectorAll('.project__tech-tag');
-    techTags.forEach(tag => {
-      const svg = createAnimatedBorderSVG();
-      tag.appendChild(svg);
-    });
-    
-    // Add animated border to all project tech spans
-    const techSpans = document.querySelectorAll('.project__tech span');
-    techSpans.forEach(span => {
-      const svg = createAnimatedBorderSVG();
-      span.appendChild(svg);
-    });
-  }
-
-  /**
-   * Setup project card animations
-   */
-  function setupProjectAnimations() {
-    const projects = document.querySelectorAll('.project');
-    if (!projects.length) return;
-
-    // Build index map once for O(1) stagger lookup
-    const indexMap = new Map();
-    projects.forEach((project, i) => {
-      indexMap.set(project, i);
-      project.addEventListener('click', addRippleEffect);
-    });
-
-    // One shared observer for all project cards
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('animated');
-          }, indexMap.get(entry.target) * 100);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    projects.forEach(project => observer.observe(project));
-  }
-
-  /**
-   * Add ripple effect to elements
-   */
-  function addRippleEffect(e) {
-    const target = e.currentTarget;
-    const rect = target.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple';
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    
-    target.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
-  }
-
-  /**
-   * Setup scroll-triggered animations
-   */
-  function setupScrollAnimations() {
-    const animatedElements = document.querySelectorAll('[data-animate]');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const animation = entry.target.dataset.animate;
-          entry.target.classList.add(`animate-${animation}`);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    animatedElements.forEach(el => observer.observe(el));
-  }
-
-  return {
-    init: initPortfolioAnimations
-  };
-})();
-
-// Research Page Animations - Deprecated (Moved to main-theme.js)
-// const ResearchAnimations = ... (Removed to avoid conflict)
-
 
 // Circular RNA Research Animations
 const CircRNAAnimations = (function() {
@@ -845,28 +713,19 @@ const SharedResearchAnimations = (function () {
 
 // Auto-initialization based on page type
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize portfolio animations on main page
-  if (document.querySelector('.portfolio-main')) {
-    PortfolioAnimations.init();
-  }
-
   // Initialize research animations on research pages
   if (document.querySelector('.research-page')) {
     // Always run shared animations
     SharedResearchAnimations.init();
 
-    // Initialize specific research theme animations
-    if (document.querySelector('.circrna-hero')) {
+    // CircRNA-specific: neural-network + circular-metrics exist only on circular-rna.html
+    if (document.querySelector('.neural-network') || document.querySelector('.circular-metrics')) {
       CircRNAAnimations.init();
     }
 
-    if (document.querySelector('.p53-hero')) {
+    // P53-specific: hero--research on p53-mutation.html
+    if (document.querySelector('.hero--research')) {
       P53Animations.init();
     }
   }
 });
-
-// Export for manual initialization if needed
-window.PortfolioAnimations = PortfolioAnimations;
-window.CircRNAAnimations = CircRNAAnimations;
-window.P53Animations = P53Animations;
