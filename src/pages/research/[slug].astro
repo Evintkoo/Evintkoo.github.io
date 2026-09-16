@@ -90,7 +90,15 @@ const mindmapData = {
     border: 1px solid var(--border);
     overflow: hidden;
   }
-  #mindmapContainer svg { width: 100%; height: auto; display: block; }
+  /* :global() is required here: the <svg> is created client-side via
+     document.createElementNS (src/islands/mindmap.ts), so it never receives
+     Astro's data-astro-cid-* scope attribute and a scoped selector would
+     never match it. Without this rule an SVG with only a viewBox (no
+     width/height attrs) relies on the browser's default auto-sizing to fill
+     its container — modern Chromium happens to do this today, but it's not
+     guaranteed behavior, so this rule is a deliberate safety net, not
+     redundant. */
+  :global(#mindmapContainer svg) { width: 100%; height: auto; display: block; }
 
   @keyframes mindmap-in {
     from { opacity: 0; transform: scale(0.75); }
