@@ -26,6 +26,16 @@ h1, h2, h3 {
 
 a { color: inherit; }
 
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
 .container {
   max-width: var(--max-width);
   margin-inline: auto;
