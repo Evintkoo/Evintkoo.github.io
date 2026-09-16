@@ -31,7 +31,15 @@ const { data } = entry;
       <Content />
     </article>
     <TechPills tech={data.tech} />
-    <ProjectCTA repo={data.repo} demo={data.demo} paperLink={data.paperLink} />
+    <ProjectCTA
+      repo={data.repo}
+      demo={data.demo}
+      paperLink={data.paperLink}
+      ctaHeading={data.ctaHeading}
+      ctaSubtitle={data.ctaSubtitle}
+      ctaLink={data.ctaLink}
+      ctaLabel={data.ctaLabel}
+    />
   </div>
 </Layout>
 

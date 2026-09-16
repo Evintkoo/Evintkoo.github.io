@@ -1,15 +1,25 @@
 ---
-interface Props { repo?: string; demo?: string; paperLink?: string }
-const { repo, demo, paperLink } = Astro.props;
+interface Props {
+  repo?: string;
+  demo?: string;
+  paperLink?: string;
+  ctaHeading?: string;
+  ctaSubtitle?: string;
+  ctaLink?: string;
+  ctaLabel?: string;
+}
+const { repo, demo, paperLink, ctaHeading, ctaSubtitle, ctaLink, ctaLabel } = Astro.props;
 ---
 <div class="proj-cta">
   <div>
-    <h3>See the code</h3>
-    <p>Full source, docs, and usage examples on GitHub.</p>
+    <h3>{ctaHeading || 'See the code'}</h3>
+    <p>{ctaSubtitle || 'Full source, docs, and usage examples on GitHub.'}</p>
   </div>
   <div class="proj-cta__actions">
     {paperLink && <a href={paperLink} class="btn btn--secondary">Read Paper</a>}
-    {repo && <a href={repo} target="_blank" rel="noopener noreferrer" class="btn btn--primary">View on GitHub</a>}
+    {ctaLink && ctaLabel
+      ? <a href={ctaLink} target="_blank" rel="noopener noreferrer" class="btn btn--primary">{ctaLabel}</a>
+      : repo && <a href={repo} target="_blank" rel="noopener noreferrer" class="btn btn--primary">View on GitHub</a>}
     {demo && <a href={demo} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Live demo</a>}
     <a href="/projects" class="btn btn--secondary">All Projects</a>
   </div>
