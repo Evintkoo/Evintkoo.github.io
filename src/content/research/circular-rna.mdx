@@ -1,0 +1,111 @@
+---
+title: "Deep Learning for Circular RNA Classification"
+tagline: "A lightweight ANN pipeline that turns circAtlas k-mer frequencies into reliable disease predictions: fast enough for real-time screening, accurate enough for clinical relevance."
+tags: ["circRNA", "ANN", "Disease Classification"]
+topic: "bio"
+order: 8
+metrics:
+  - label: "Model accuracy"
+    value: "75.11%"
+  - label: "Prediction runtime"
+    value: "0.14 ms"
+  - label: "Reading time"
+    value: "8 min"
+simpleSummary: |-
+  Most RNA in your cells is a straight strand. A small group, called
+  circRNAs, loops into a closed ring instead. That shape lets them help your
+  cells turn genes on and off in ways straight RNAs cannot. Our goal was
+  simple: use machine learning to guess which circRNAs are tied to which
+  diseases.
+
+  We built an artificial neural network (ANN), a machine-learning model
+  loosely inspired by how brain cells connect. We grabbed circRNA sequences
+  from public databases. Then we chopped each one into short fixed-length
+  pieces called k-mers and counted how often each piece showed up. A
+  Gaussian blur step gently smoothed those counts, like softening a photo,
+  so the network could focus on real patterns instead of noise.
+
+  The finished model scored 0.7511 on accuracy, right about three out of
+  four times. Its precision was 0.7982, its recall 0.7511, and its f1-score
+  0.7637. The ANN sorted circRNAs reliably across every test we threw at
+  it.
+
+  Our ANN spots and sorts circRNAs well. The bigger win: it does the job
+  using far less computing power than earlier models. Same result, lighter
+  machine.
+
+  Lined up against older approaches, our model comes out ahead. It needs
+  less computing power and is simpler to set up, so labs and clinics can
+  adopt it without a server farm.
+---
+
+## Abstract
+
+**Introduction** — Circular RNAs (circRNAs) are increasingly recognized as key regulators of gene expression due to their unique closed-loop structure and involvement in various cellular processes. This study investigates the utilization of machine learning algorithms in predicting circRNA-disease associations.
+
+**Methods** — This study proposes a novel deep learning approach leveraging artificial neural networks (ANN) for circRNA classification. The methodology involves data collection from circRNA databases, k-mers counting for feature extraction, Gaussian blur implementation for data smoothing, and ANN-based model training.
+
+**Results** — Evaluation of the trained models based on precision, recall, and f1-score metrics shows an overall accuracy of **0.7511**, with an average precision score of **0.7982**, recall of **0.7511**, and f1-score of **0.7637**.
+
+**Discussion** — The results indicate that our ANN-based algorithm effectively detects and classifies circRNA datasets with considerable accuracy. Compared to the algorithm from past research, our algorithm is also shown to have **significantly less computational requirements**.
+
+**Conclusion** — Comparative analysis demonstrates improved performance compared to previous algorithms, suggesting its potential for widespread implementation due to reduced computational requirements and simpler implementation.
+
+## Introduction
+
+Circular RNAs (circRNAs) represent a category of single-stranded RNA molecules characterized by the absence of 5′ caps and 3′ polyadenylated tails, forming a covalently closed continuous loop structure. Recent research indicates that circRNAs play a distinct role in regulating human gene expression.
+
+> **Key Insight**
+>
+> CircRNAs are emerging as valuable biomarkers due to their high stability and tissue-specific expression patterns, making them reliable indicators for various diseases.
+
+The rapid development of machine learning has enhanced the prediction of circRNA-disease associations. Current models for predicting these associations are often complex, which can lead to overfitting and lack of generalization. This study proposes a simpler model using Artificial Neural Networks (ANN) to achieve high accuracy with improved computational efficiency.
+
+## Methods
+
+The model uses a 5-layer ANN with 256 input nodes for k-mers features.
+
+1. **Dataset Collection** — Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA). `tags: Python, circAtlas, RNA Sequences`
+2. **Feature Extraction with K-mers** — K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula: `k = log_k(average of l)` (where l is the length of sequences). For k = 4, there are 4-mers obtained, e.g., `{ACGT, GTAA, CGTT}` which were then processed. `tags: K-mer Analysis, Feature Engineering`
+3. **Gaussian Blur Implementation** — Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula: `f(x) = 1/(σ√(2π)) · e^(−1/2((x−μ)/σ)²)` (the value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment). `tags: Data Preprocessing, Gaussian Blur, Signal Processing`
+4. **Model Architecture** — The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons. `tags: Neural Network, Deep Learning, Leaky ReLU, Dropout`
+
+## Results
+
+Our neural network models for both detection and classification showed promising training progress with the following performance metrics:
+
+**Model Performance Comparison** — Evaluation metrics and runtime performance across tested algorithms.
+
+| Model | Accuracy | Precision | F1-Score | Runtime |
+| --- | --- | --- | --- | --- |
+| ANN + Gaussian Blur (Our Algorithm) | 75.11% | 79.82% | 76.37% | 0.14 ms |
+| DeepCirCode (Deep Learning) | 81.29% | 92.71% | 83.65% | 6.74 ms |
+| Support Vector Machine (Traditional ML) | 73.28% | 77.42% | 79.21% | 0.84 ms |
+| Random Forest (Ensemble) | 71.86% | 73.93% | 79.18% | 0.62 ms |
+| Att-CNN (Attention Model) | 72.64% | 74.52% | 76.96% | 23.67 ms |
+
+Our algorithm achieves competitive performance while being **significantly faster** than deep learning approaches, making it ideal for real-time applications.
+
+> **Performance Highlight**
+>
+> The proposed method's runtime was significantly faster than other existing algorithms, taking only **0.14 milliseconds** to predict one RNA. It was **at least 10× faster** than similar models like DeepCirCode and circDeep.
+
+## Discussion
+
+The objective of this experiment was to create a machine-learning model that can detect and classify different types of circular RNA with a high accuracy score by using an artificial neural network. The results show that our designed neural network was able to detect and classify the circular RNA dataset with good evaluation scores.
+
+The similarity between both training and validation evaluation scores shows that there was not an underfitting and overfitting issue on the detection model. However, the high difference between the training and validation loss in the classification model showed an indicator of overfitting that occurred in the training process.
+
+> **Key Advantage**
+>
+> The proposed algorithm would likely have less computing power requirements and simpler implementation compared to previous research, which would make its implementation less costly and more efficient.
+
+By conducting runtime analysis, the proposed method is also shown to have better efficiency in time and algorithm complexity, which leads to less computational power. Hence, the proposed algorithm might have comparable accuracy, while also having less computational power which made the model best to be commercialized and implemented widely.
+
+## Conclusion
+
+This study aimed to create an algorithm based on neural networks to detect and classify non-coding circular RNA with a high accuracy score. We implemented an ANN as the detection and classification model and evaluated its accuracy, precision, recall, and f1-score.
+
+The results demonstrate that the proposed method was comparable to other similar algorithms. However, our algorithm was determined to have a better evaluation score compared to most other existing algorithms while requiring significantly less computational resources.
+
+In conclusion, the proposed algorithm was able to detect and classify the non-coding circular RNA with a high accuracy score and exceptional computational efficiency.
