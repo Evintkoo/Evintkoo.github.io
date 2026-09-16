@@ -31,14 +31,18 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
       ))}
     </div>
   )}
-  {(metaLabel && metaValue) || pdf || externalLink ? (
+  {(metaLabel && metaValue) || pdf || externalLink || repoLink ? (
     <div class="research-hero__paper">
       {metaLabel && metaValue && (
         <p class="research-hero__meta-line"><strong>{metaLabel}:</strong> {metaValue}</p>
       )}
       {pdf
         ? <a href={pdf} target="_blank" rel="noopener" class="btn btn--primary">View Full Paper</a>
-        : externalLink && <a href={externalLink} target="_blank" rel="noopener" class="btn btn--primary">View on GitHub</a>}
+        : externalLink && (
+            <a href={externalLink} target="_blank" rel="noopener" class="btn btn--primary">
+              {externalLink.includes('github.com') ? 'View on GitHub' : 'View Full Paper'}
+            </a>
+          )}
       {repoLink && <a href={repoLink} target="_blank" rel="noopener" class="btn btn--secondary">View Code</a>}
     </div>
   ) : null}
