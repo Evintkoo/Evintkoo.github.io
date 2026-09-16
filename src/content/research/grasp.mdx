@@ -81,9 +81,7 @@ GRASP's three design principles separate it from existing methods. First, topolo
 
 Full spectral clustering incurs O(n²) memory for the kernel matrix and O(n³) for eigendecomposition, prohibitive at n ≥ 10,000. GRASP's Nyström extension with GNG landmarks reduces this to O(nmk) with data-proportional coverage, enabling spectral-quality clustering at linear cost.
 
-## Methods
-
-GRASP's pipeline runs in seven stages: Convex-Bypass Probe → Growing Neural Gas Topology → Graph Laplacian → Eigengap k* → Nyström Embedding → six specialist sub-algorithms → Routing Oracle.
+## Pipeline
 
 1. **Stage 1: Convex-Bypass Probe** — On a random subsample X̂ of size `n_s = 800`, GRASP runs `r = 2` independent KMeans++ restarts with `k = k_hint`, computes the best mean silhouette ŝ on the best labelling. If ŝ > 0.55, all n points are assigned by nearest-centroid and the pipeline terminates at cost `O(n_s · k · d)`. This fast convex-bypass saves 16 of 26 benchmark datasets, completing in 2–22ms. `tags: Silhouette Probe, O(n_s k d), Fast Bypass`
 2. **Stage 2: Growing Neural Gas Topology** — GRASP trains a GNG on X using min(n, 8000) points for `T = 50` epochs. GNG inserts new neurons at locations of maximal quantisation error, yielding a topology map whose connectivity emerges from data. The Competitive Hebbian Learning theorem guarantees the GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions, providing a formal topological fidelity guarantee. Edges older than `d_max` are pruned every λ steps. `tags: Growing Neural Gas, Delaunay Subgraph, O(nmT)`
@@ -106,7 +104,7 @@ GRASP was evaluated on 26 benchmark datasets in six categories: non-convex shape
 
 **Scalability**: GNG, Laplacian, and eigendecomposition stages collectively incur O(m³) operations, entirely independent of n. The sole n-dependent step is the Nyström extension O(nmk); at n = 50,000 this completes in ~140ms. Standard SC requires O(n²d) — at n = 10,000 this is 10¹² operations. GRASP's O(nm) is a 500× reduction at comparable quality.
 
-## Discussion
+## Theoretical Analysis
 
 GRASP's three main theoretical results establish conditions under which each component achieves its design goal.
 
