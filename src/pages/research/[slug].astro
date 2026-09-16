@@ -99,6 +99,9 @@ const mindmapData = {
     <a href="/research" class="back-to-portfolio">Back to Research</a>
   </div>
   <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
+  {data.chart && (
+    <script type="application/json" id="chart-data" set:html={JSON.stringify(data.chart)} />
+  )}
 </Layout>
 
 <script>
@@ -112,6 +115,38 @@ const mindmapData = {
   import { initCavemanToggle } from '../../islands/caveman-mode';
   const cavemanBtn = document.getElementById('cavemanToggle');
   if (cavemanBtn) initCavemanToggle(cavemanBtn);
+</script>
+
+<script>
+  // Chart container lives inside the MDX body content itself (each entry's
+  // <div id="research-chart"> sits wherever the source page's chart figure
+  // actually appeared — see bitcoin-portfolio-allocation.mdx/
+  // crypto-stock-timing.mdx), not in this template — so there's at most one
+  // per rendered page. The `chart` frontmatter field only carries
+  // serializable data (height/logY/type/xs/series); formatX/formatY are
+  // functions and can't survive the JSON round-trip, so they're
+  // reconstructed here from the container's data-chart-format attribute,
+  // matching each source page's actual original chart-init script.
+  import { initResearchChart, type ResearchChartConfig } from '../../islands/research-chart';
+
+  const chartEl = document.getElementById('research-chart') as HTMLElement | null;
+  const chartDataEl = document.getElementById('chart-data');
+  if (chartEl && chartDataEl) {
+    const cfg = JSON.parse(chartDataEl.textContent || '{}') as ResearchChartConfig;
+    const format = chartEl.dataset.chartFormat;
+    if (format === 'btc-allocation') {
+      // bitcoin-portfolio-allocation.html's original inline chart script:
+      // formatX: x + '%', formatY: v.toFixed(0)
+      cfg.formatX = (x) => `${x}%`;
+      cfg.formatY = (v) => v.toFixed(0);
+    } else if (format === 'lead-lag') {
+      // crypto-stock-timing.html's original inline chart script:
+      // formatX: signed lag + 'm', formatY: v.toFixed(2)
+      cfg.formatX = (x) => `${Number(x) > 0 ? '+' : ''}${x}m`;
+      cfg.formatY = (v) => v.toFixed(2);
+    }
+    initResearchChart(chartEl, cfg);
+  }
 </script>
 
 <style>
@@ -144,6 +179,65 @@ const mindmapData = {
 
   .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
+
+  /* Research chart (Task 23) — ported from assets/css/chart.css, current
+     token names (see Task 20's port-decision notes: --text-tertiary ->
+     --ink-faint, --border-primary -> --border, --bg-primary/--bg-secondary
+     -> --paper-raised). :global() is required throughout: this markup
+     lives inside the rendered MDX <Content /> (a different compiled
+     component with its own scope hash) or is created client-side via
+     research-chart.ts's createElementNS/createElement calls, so it never
+     receives this file's data-astro-cid-* scope attribute — same
+     reasoning as `.research-content :global(h2)` above and the mindmap
+     precedent in src/islands/mindmap.ts. */
+  .research-content :global(.chart-figure) { margin: var(--space-16) 0 0; }
+  .research-content :global(.chart-figure__caption) { display: flex; flex-direction: column; gap: 2px; margin-bottom: var(--space-4); }
+  .research-content :global(.chart-figure__title) { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); }
+  .research-content :global(.chart-figure__note) { font-size: 0.75rem; color: var(--ink-faint); font-style: italic; line-height: 1.5; }
+  .research-content :global(.chart-figure__panel) { background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-8) var(--space-4) var(--space-4); }
+  .research-content :global(.chart) { position: relative; width: 100%; }
+  .research-content :global(.chart__svg) { width: 100%; height: auto; display: block; overflow: visible; }
+  .research-content :global(.chart__legend) { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+  .research-content :global(.chart__chip) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: opacity var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  }
+  .research-content :global(.chart__chip:hover) { border-color: var(--accent); color: var(--accent); }
+  .research-content :global(.chart__chip.is-muted) { opacity: 0.4; }
+  .research-content :global(.chart__swatch) { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .research-content :global(.chart__tooltip) {
+    position: absolute;
+    pointer-events: none;
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+    min-width: 150px;
+    line-height: 1.5;
+  }
+  .research-content :global(.chart__tiphead) { font-weight: 600; margin-bottom: var(--space-1); color: var(--ink-soft); }
+  .research-content :global(.chart__tiprow) { display: flex; align-items: center; gap: var(--space-2); }
+  .research-content :global(.chart__tiprow .chart__dot) { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .research-content :global(.chart__tiprow .chart__tipname) { color: var(--ink-soft); }
+  .research-content :global(.chart__tiprow .chart__tipval) { margin-left: auto; font-weight: 600; }
+  @media (max-width: 639px) {
+    .research-content :global(.chart__chip) { font-size: 0.65rem; }
+  }
 
   .cards { margin-top: var(--space-16); }
   .cards__heading {

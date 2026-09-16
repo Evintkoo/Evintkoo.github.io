@@ -41,6 +41,28 @@ const research = defineCollection({
     pdf: z.string().url().optional(),
     externalLink: z.string().url().optional(),
     simpleSummary: z.string().optional(),
+    // Serializable chart data/config only (Task 20's ResearchChartConfig).
+    // formatX/formatY/formatValue are functions and cannot survive a
+    // frontmatter (YAML) round-trip or JSON.stringify in a <script
+    // type="application/json"> tag — those are reconstructed at render
+    // time in src/pages/research/[slug].astro, keyed off the
+    // data-chart-format attribute on the chart container div written
+    // directly in each entry's MDX body (see Task 23).
+    chart: z
+      .object({
+        height: z.number().optional(),
+        logY: z.boolean().optional(),
+        type: z.enum(['line', 'bar']).optional(),
+        xs: z.array(z.number()),
+        series: z.array(
+          z.object({
+            name: z.string().optional(),
+            values: z.array(z.number()),
+            color: z.string().optional(),
+          }),
+        ),
+      })
+      .optional(),
   }),
 });
 
