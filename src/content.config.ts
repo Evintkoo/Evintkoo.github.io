@@ -33,6 +33,8 @@ const research = defineCollection({
     topic,
     date: z.coerce.date().optional(),
     order: z.number(),
+    authors: z.string().optional(),
+    affiliation: z.string().optional(),
     metrics: z
       .array(z.object({ label: z.string(), value: z.string() }))
       .default([]),
