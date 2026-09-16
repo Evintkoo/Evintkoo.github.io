@@ -33,5 +33,10 @@ const { title, description } = Astro.props;
     <slot />
   </main>
   <Footer />
+  <script>
+    import { initHeroScene } from '../islands/hero-scene';
+    const canvas = document.getElementById('heroCanvas') as HTMLCanvasElement | null;
+    if (canvas) initHeroScene(canvas);
+  </script>
 </body>
 </html>
