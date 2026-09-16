@@ -33,6 +33,9 @@ const research = defineCollection({
     topic,
     date: z.coerce.date().optional(),
     order: z.number(),
+    // Same field name/pattern as the `projects` schema (Task 19) — used by
+    // som-tsk, the only research page with the SOM playground island.
+    hasPlayground: z.boolean().default(false),
     authors: z.string().optional(),
     affiliation: z.string().optional(),
     metrics: z
