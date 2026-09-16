@@ -2,12 +2,12 @@
 
 **Date:** 2026-09-16
 **Branch:** `worktree-astro-rebrand` (isolated git worktree at `.claude/worktrees/astro-rebrand`)
-**Status:** Draft — pending user review
+**Status:** Approved — see §11 for the post-approval correction to content scope
 
 ## 1. Why
 
-The current site (`AGENTS.md`) is vanilla HTML/CSS/JS, no build step, ~24 hand-duplicated pages
-(4 root + 10 project + 13 research), with project/research metadata living in up to three unsynced
+The current site (`AGENTS.md`) is vanilla HTML/CSS/JS, no build step, ~28 hand-duplicated pages
+(4 root + 10 project + 14 research), with project/research metadata living in up to three unsynced
 places (`data.js`, hand-written HTML cards, `research-recommendations.js`'s `PAPERS` array). This
 causes real drift risk and makes "every page follows the same wireframe" something that has to be
 manually maintained rather than structurally guaranteed. The user asked for a full rebrand and
@@ -25,14 +25,11 @@ including `torch-inference` and `kolosal-automl`) sharing one consistent standar
 | Interactivity | Vanilla TS Astro islands — no React/Vue |
 | Deploy | GitHub Actions build + native GitHub Pages Actions deployment (no committed build output) |
 | Feature policy | Preserve all existing interactive features, rebuilt cleanly |
-| Copy | Refresh written content (bios, project/research prose) to match the new brand voice, not a verbatim port |
-| Styling | Hand-authored CSS with design-token custom properties, scoped per Astro component (no Tailwind) — my recommendation, not yet explicitly confirmed by the user (they were away for the last two questions); flagged for their review below |
+| Copy | **Superseded — see §11:** verbatim content parity, not a refresh |
+| Styling | Hand-authored CSS with design-token custom properties, scoped per Astro component (no Tailwind) — confirmed |
 | Isolation | Git worktree (`.claude/worktrees/astro-rebrand`) + dedicated branch, per user's explicit instruction |
 
-## 3. Visual direction — "Technical Editorial"
-
-Proposed and not yet explicitly confirmed (user was away for that question) — **please confirm or
-redirect this in review**:
+## 3. Visual direction — "Technical Editorial" (confirmed)
 
 - **Palette:** ink/paper base (near-black / near-white, not the current warm neutrals) with one
   confident accent color (candidates: electric blue or amber) instead of the current two
@@ -125,10 +122,12 @@ All preserved, reimplemented as typed vanilla TS Astro islands (`src/islands/`):
 
 ## 8. Migration & copy
 
-Content migrated from existing HTML into MDX frontmatter + body per collection entry. Factual
-content (links, tech stacks, dates, repo URLs) is preserved exactly. Prose (bios, project blurbs,
-research abstracts) is rewritten to match the refreshed brand voice as part of this pass — final
-copy is surfaced for the user's review before merge, not auto-published as-is.
+**Superseded by §11: content is ported verbatim (1:1 parity), not rewritten.** Content is migrated
+from existing HTML into MDX frontmatter + body per collection entry: factual fields (links, tech
+stacks, dates, repo URLs) map directly to typed frontmatter, and body prose is carried over as-is,
+re-marked-up as MDX. The wireframe — section order and information architecture of each page type
+— is also preserved 1:1 from the current HTML. Only the UI (visual design: palette, typography,
+component styling per §3) changes.
 
 ## 9. Implementation phasing (for the implementation plan)
 
@@ -140,17 +139,36 @@ copy is surfaced for the user's review before merge, not auto-published as-is.
 3. **Root pages** — home (incl. hero graph island), about, projects index, research index.
 4. **Project pages** — `[slug].astro` template finalized, all 10 project entries migrated
    (including `kolosal-automl`), SOM playground island.
-5. **Research pages** — `[slug].astro` template finalized, all 13 research entries migrated,
+5. **Research pages** — `[slug].astro` template finalized, all 14 research entries migrated,
    charts island, caveman-mode island, related-papers computation.
 6. **Cross-cutting polish** — activity feed island, full light/dark pass, responsive pass at the
    existing breakpoints (1023/767/639/479), remove legacy root HTML/CSS/JS files.
-7. **Cutover** — GitHub Pages source switched to Actions (user-performed), merge.
+7. **QA pass** — page-by-page content/wireframe parity check against the old site (every fact,
+   link, and section present and in the same order), full click-through of every interactive
+   feature, cross-browser/responsive spot check, Lighthouse/build sanity check. Site is release-
+   ready only after this phase.
+8. **Cutover** — GitHub Pages source switched to Actions (user-performed), merge.
 
 ## 10. Open items for user review
 
-1. Confirm or redirect the "Technical Editorial" visual direction (§3).
-2. Confirm the styling approach (hand-authored CSS + tokens, no Tailwind) — recommended default,
-   not yet explicitly answered.
-3. Confirm branch/worktree naming is acceptable: worktree at `.claude/worktrees/astro-rebrand`,
-   branch `worktree-astro-rebrand` (auto-named by the worktree tool; can be renamed before the
-   implementation plan is written if a different name is preferred).
+All resolved — see §11.
+
+## 11. Post-approval correction: content & wireframe parity
+
+After spec approval, the user clarified the actual target: **"one on one parity of content and
+wireframe with different UI, QAed and ready to release."** This overrides §2's "Copy" row and §8
+as originally written:
+
+- **Content parity:** existing project/research prose is ported verbatim, not rewritten. No new
+  copywriting pass.
+- **Wireframe parity:** the section-by-section structure of each page type (hero → body sections →
+  feature grid → tech pills → CTA, for project pages; the equivalent for research pages) is
+  preserved as-is from the current site — the rewrite does not redesign information architecture.
+- **UI changes:** only the visual layer changes — palette, typography, component styling per §3's
+  Technical Editorial direction, plus the framework/architecture changes in §4-§7.
+- **Release readiness:** an explicit QA phase (§9 step 7) is added — this is not just a technical
+  migration, it needs to be verified content-complete and functionally correct before it's
+  considered done.
+
+Styling approach (hand-authored CSS + tokens) and the Technical Editorial visual direction were
+both confirmed by the user's "approve."
