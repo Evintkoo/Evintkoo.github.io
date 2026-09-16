@@ -1,6 +1,50 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
+
+const projects = await getCollection('projects');
+const research = await getCollection('research');
+
+// Fixed topic taxonomy — mirrors assets/js/data.js's TOPICS list (source of
+// truth for the pre-migration site). Only `id`/`label` are consumed by
+// hero-scene.ts's buildGraphData(); unlike projects/research these topics
+// aren't backed by a content collection, so they're hardcoded here.
+const topics = [
+  { id: 'ml', label: 'ML' },
+  { id: 'bio', label: 'Biology' },
+  { id: 'fin', label: 'Finance' },
+  { id: 'econ', label: 'Economics' },
+  { id: 'infra', label: 'AI Infra' },
+  { id: 'neuro', label: 'Neuro' },
+];
+
+const graphData = {
+  topics,
+  projects: projects.map((p) => ({ id: p.id, label: p.data.title, topic: p.data.topic, href: `/projects/${p.id}/` })),
+  research: research.map((r) => ({ id: r.id, label: r.data.title, topic: r.data.topic, href: `/research/${r.id}/` })),
+};
+
+const featured = projects.filter((p) => p.data.featured).concat(projects).slice(0, 6);
 ---
-<Layout title="Evint Leovonzko" description="Personal portfolio and research showcase.">
-  <p class="container">Homepage placeholder.</p>
+<Layout title="Evint Leovonzko" description="Personal portfolio and research showcase — ML infrastructure, computational biology, and quantitative finance.">
+  <section class="hero container">
+    <h1>Evint Leovonzko</h1>
+    <p>Founder of Kolosal AI. Independent quant researcher.</p>
+  </section>
+
+  <section class="container">
+    <h2>Featured projects</h2>
+    <ul class="project-list">
+      {featured.map((p) => (
+        <li><a href={`/projects/${p.id}/`}>{p.data.title}</a><p>{p.data.tagline}</p></li>
+      ))}
+    </ul>
+  </section>
+
+  <script type="application/json" id="graph-data" set:html={JSON.stringify(graphData)} />
 </Layout>
+
+<style>
+  .hero { padding-block: var(--space-24) var(--space-12); }
+  .project-list { list-style: none; padding: 0; display: grid; gap: var(--space-6); }
+</style>

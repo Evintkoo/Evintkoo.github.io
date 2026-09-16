@@ -10,6 +10,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js';
 
 export interface GraphData {
+  topics: Array<{ id: string; label: string }>;
   projects: Array<{ id: string; label: string; topic: string | null; href: string }>;
   research: Array<{ id: string; label: string; topic: string; href: string }>;
 }
