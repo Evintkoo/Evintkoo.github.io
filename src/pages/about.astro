@@ -636,8 +636,10 @@ import Layout from '../components/Layout.astro';
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
+  /* ── Responsive (spec breakpoints: 1023/767/639/479 — renamed from this
+     page's original 900/600 ad hoc thresholds so the collapse points match
+     the rest of the site) ── */
+  @media (max-width: 1023px) {
     .about-hero__inner { grid-template-columns: 1fr; gap: var(--space-8); }
     .about-card { position: static; }
     .timeline-item { grid-template-columns: 70px 1px 1fr; gap: 0 var(--space-4); }
@@ -645,7 +647,16 @@ import Layout from '../components/Layout.astro';
     .about-cta { flex-direction: column; align-items: flex-start; }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 767px) {
+    .about-hero { padding-block: var(--space-12) var(--space-8); }
+  }
+
+  @media (max-width: 639px) {
     .about-body { gap: var(--space-12); }
+  }
+
+  @media (max-width: 479px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .about-cta { padding: var(--space-6); }
   }
 </style>

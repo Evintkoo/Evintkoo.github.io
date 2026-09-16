@@ -59,6 +59,10 @@ const featured = projects.filter((p) => p.data.featured).concat(projects).slice(
   .hero { padding-block: var(--space-24) var(--space-12); }
   .project-list { list-style: none; padding: 0; display: grid; gap: var(--space-6); }
 
+  @media (max-width: 767px) {
+    .hero { padding-block: var(--space-16) var(--space-8); }
+  }
+
   /* ── Activity feed ──
      initActivityFeed() builds the panel markup via innerHTML, so none of
      the descendant classes below exist in this template at compile time —

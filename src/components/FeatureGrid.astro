@@ -3,4 +3,7 @@
 <style is:global>
   .proj-content ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
   .proj-content li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-4); background: var(--paper-raised); }
+  @media (max-width: 639px) {
+    .proj-content ul { grid-template-columns: 1fr; }
+  }
 </style>

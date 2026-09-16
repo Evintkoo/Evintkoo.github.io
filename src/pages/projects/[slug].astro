@@ -96,8 +96,11 @@ const { data } = entry;
 
 <style>
   .proj-hero { padding-block: var(--space-16) var(--space-8); }
+  @media (max-width: 767px) {
+    .proj-hero { padding-block: var(--space-12) var(--space-6); }
+  }
   .proj-breadcrumb { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); text-decoration: none; }
-  .proj-hero__tags { display: flex; gap: var(--space-2); margin-block: var(--space-4); }
+  .proj-hero__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-4); }
   .proj-hero__subtitle { color: var(--ink-soft); max-width: 640px; margin-top: var(--space-4); }
   .proj-body { padding-block: var(--space-8) var(--space-24); }
   .proj-content :global(h2) { margin-top: var(--space-12); font-size: 1.75rem; }
@@ -131,5 +134,8 @@ const { data } = entry;
 
   @media (max-width: 767px) {
     .pg__panel { flex: 1 1 100%; }
+  }
+  @media (max-width: 639px) {
+    .pg__stage { min-width: 0; flex-basis: 100%; }
   }
 </style>

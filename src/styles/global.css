@@ -64,3 +64,158 @@ a { color: inherit; }
 #heroGraphBack.visible {
   display: inline-flex;
 }
+
+/*
+ * ── Hero scene canvas + graph-mode overlay ──
+ * Ported from assets/css/main-theme.css (.scene-bg, #heroCanvas.hero-graph--expanded,
+ * .hero-graph-backdrop, .hero-graph-back, .hero-graph-labels/.hero-graph-label —
+ * lines ~866-3157 of the old stylesheet). None of this had been ported into src/
+ * through Task 26 (confirmed via grep — Task 11's report flags it explicitly as
+ * deferred), so both the persistent full-page 3D canvas background (.scene-bg,
+ * used by every page's hero-scene.ts blob/graph mode) and the graph-mode overlay
+ * UI (only reachable on the homepage) were completely unstyled. Token mapping
+ * follows the same precedent set elsewhere in this codebase (e.g. src/pages/
+ * index.astro's activity-feed icon-tone collapse, src/islands/mindmap.ts's
+ * ACCENTS collapse): --bg-secondary -> --paper-raised, --border-primary ->
+ * --border, --text-primary -> --ink, --text-secondary -> --ink-soft,
+ * --accent-warm -> --accent (single-accent token set), #fff -> --accent-ink.
+ */
+.scene-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scene-bg canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#heroCanvas.hero-graph--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.scene-bg.hero-graph--expanded {
+  z-index: 1000;
+}
+
+.hero-graph-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.hero-graph-backdrop.active {
+  opacity: 1;
+}
+
+/* Layout/visual styling for the back button — the display:none/.visible
+   toggle above stays untouched; this layers position, size, and theming
+   on top of it. */
+.hero-graph-back {
+  position: fixed;
+  top: var(--space-8);
+  left: var(--space-8);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base),
+    transform var(--transition-base), background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.hero-graph-back.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hero-graph-back:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.hero-graph-back svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-graph-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+/* hero-scene.ts's initGraphMode() creates these label <div>s via
+   document.createElement and positions each with inline style.left/top
+   (see updateLabels()) — no width/height, just absolute positioning
+   relative to the fixed .hero-graph-labels container. */
+.hero-graph-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.15s ease;
+}
+
+.hero-graph-label.is-visible {
+  opacity: 1;
+}
+
+.hero-graph-label--hub {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.hero-graph-label--leaf {
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.hero-graph-label--leaf.is-visible {
+  pointer-events: auto;
+}
+
+.hero-graph-label--leaf:hover,
+.hero-graph-label--leaf.is-hovered {
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .hero-graph-label--hub { font-size: 11px; }
+  .hero-graph-label--leaf { font-size: 9px; }
+  .hero-graph-back { top: var(--space-4); left: var(--space-4); width: 40px; height: 40px; }
+}
+
+@media (max-width: 479px) {
+  .hero-graph-back { top: var(--space-3); left: var(--space-3); width: 36px; height: 36px; }
+  .hero-graph-back svg { width: 18px; height: 18px; }
+}

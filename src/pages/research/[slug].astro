@@ -212,7 +212,7 @@ const mindmapData = {
 <style>
   .research-body { padding-block: var(--space-8) var(--space-24); }
   .research-tags-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8); }
-  .research-tags { display: flex; gap: var(--space-2); }
+  .research-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .caveman-toggle {
     display: inline-flex;
     align-items: center;
@@ -269,6 +269,9 @@ const mindmapData = {
 
   @media (max-width: 767px) {
     .pg__panel { flex: 1 1 100%; }
+  }
+  @media (max-width: 639px) {
+    .pg__stage { min-width: 0; flex-basis: 100%; }
   }
 
   /* Research chart (Task 23) — ported from assets/css/chart.css, current
@@ -343,6 +346,9 @@ const mindmapData = {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: var(--space-4);
+  }
+  @media (max-width: 639px) {
+    .cards__grid { grid-template-columns: 1fr; }
   }
   .cards__card {
     display: block;

@@ -34,4 +34,10 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   .project-grid__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
   .project-grid h2 { font-size: 1.5rem; margin-bottom: var(--space-2); }
   .project-grid p { color: var(--ink-soft); margin: 0; }
+  @media (max-width: 767px) {
+    .listing-hero { padding-block: var(--space-12) var(--space-6); }
+  }
+  @media (max-width: 639px) {
+    .project-grid { grid-template-columns: 1fr; }
+  }
 </style>
