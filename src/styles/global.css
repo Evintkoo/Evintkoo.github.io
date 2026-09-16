@@ -114,6 +114,23 @@ a { color: inherit; }
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-base);
+  /*
+   * Fix round 1 (Task 27 review): hints the browser to promote this element
+   * to its own compositing layer ahead of time, rather than only doing so
+   * lazily when `.active` first toggles opacity. Addresses an intermittent
+   * Chromium race (reproduced ~3/6 trials in review) where the
+   * backdrop-filter blur transiently failed to composite on the very first
+   * paint after expand() — most notably right after a same-tick theme
+   * switch, when the WebGL canvas resize and the blur layer's own
+   * compositing setup were contending for the same frame. Always-on
+   * because this element is already `display:none`-by-default-adjacent
+   * (`.hero-graph-backdrop` itself has no display toggle — it's always in
+   * the DOM at opacity:0 — see the `#heroGraphBack` comment above for the
+   * analogous pattern), so the memory/layer cost is paid once per page
+   * load, not per expand(), and only on the homepage (this element only
+   * ever gets `.active` toggled by hero-scene.ts's graph mode).
+   */
+  will-change: backdrop-filter, opacity;
 }
 
 .hero-graph-backdrop.active {
