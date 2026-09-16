@@ -1,0 +1,25 @@
+---
+title: "TRIBE v2: Neural Prediction Workstation"
+tagline: "An interactive 3D brain visualization tool that predicts cortical activation patterns across six regions in response to text, image, and audio stimuli. It runs LLaMA, CLIP, and Wav2Vec encoders locally in Rust."
+tags: ["Open Source", "Neuroscience", "AI"]
+topic: "neuro"
+tech: ["Rust", "Three.js", "HTML / CSS / JS", "LLaMA", "CLIP", "Wav2Vec", "Python"]
+repo: "https://github.com/Evintkoo/tribe-playground"
+featured: false
+order: 10
+---
+
+## Overview
+
+TRIBE v2 is a neural encoding playground that bridges cognitive neuroscience and modern AI. Given a stimulus (a passage of text, an image, or an audio clip), the tool predicts which cortical regions activate and by how much, then renders the result as real-time BOLD signal intensity on an interactive 3D brain model.
+
+The prediction pipeline uses multimodal encoders: LLaMA for language, CLIP for vision, and Wav2Vec for audio. A Rust backend handles model weights and inference via the `tribe-downloader` module, while a Three.js frontend renders the brain geometry (loaded from a compressed `.obj.gz` mesh) with per-region color overlays driven by live predictions.
+
+## Features
+
+- **3D Brain Visualization** — Interactive Three.js rendering of a volumetric brain mesh with real-time BOLD signal colormap overlays across six cortical regions, rotatable from lateral, medial, and dorsal perspectives.
+- **Multimodal Stimulus Input** — Accepts text (narrative, poetry, technical, isolated sentences), images (natural scenes, faces, objects, abstract), and audio (podcast, music, ambient, speech-in-noise) as prediction inputs.
+- **Six Cortical Regions** — Maps activation across Visual Cortex, Auditory Cortex, Language Network (Broca's/Wernicke's), Prefrontal Cortex, Motor Cortex, and Parietal Cortex with per-region ROI toggles.
+- **Neural Encoders** — Downloadable LLaMA, CLIP, and Wav2Vec encoder weights slot into a unified prediction pipeline. Each encoder projects its modality into a shared representational space for cross-modal brain decoding.
+- **Rust Inference Backend** — The `tribe-downloader` Rust module manages encoder weight fetching and checkpoint conversion. No Python runtime required for the core inference path.
+- **Prediction Result Cards** — Each prediction run outputs structured result cards that show per-region activation statistics alongside the 3D heatmap, so you can compare stimulus types side by side.
