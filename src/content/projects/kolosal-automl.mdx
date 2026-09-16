@@ -1,0 +1,25 @@
+---
+title: "Kolosal AutoML Platform"
+tagline: "End-to-end AutoML with a Gradio UI: from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one open-source platform built under Kolosal AI."
+tags: ["Open Source", "AutoML"]
+topic: "infra"
+tech: ["Gradio", "MLflow", "Optuna", "FastAPI", "Python", "scikit-learn"]
+repo: "https://github.com/KolosalAI/kolosal_automl"
+featured: false
+order: 3
+---
+
+## Overview
+
+AutoML tooling is either too opinionated or too complex to extend. Kolosal AutoML Platform is a fully open-source alternative that gives you a visual UI, a tuning engine, and experiment tracking in one deployable service.
+
+You upload a dataset, pick a target column, and the platform searches for the best model and hyperparameters automatically. Every trial is logged to MLflow so nothing is lost. All accessible through a clean Gradio interface, no code required.
+
+## Features
+
+- **Gradio UI** — No-code interface for uploading data, configuring runs, and inspecting results, all in the browser.
+- **Optuna Tuning** — Bayesian hyperparameter search with pruning. Finds good configs faster than grid search.
+- **MLflow Tracking** — Every experiment, metric, and artifact is logged automatically, so runs stay fully reproducible.
+- **End-to-end Pipeline** — From raw data to a trained, evaluated model: preprocessing, training, and evaluation in one flow.
+- **FastAPI Backend** — REST API layer for programmatic access: trigger runs, fetch results, and serve models via HTTP.
+- **Fully Open Source** — No vendor lock-in. Deploy anywhere, extend freely, and contribute back to the community.
