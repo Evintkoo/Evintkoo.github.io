@@ -1,11 +1,10 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const topic = z.enum(['ml', 'bio', 'fin', 'econ', 'infra', 'neuro']);
 
 const projects = defineCollection({
-  loader: async () => {
-    return [];
-  },
+  loader: glob({ base: './src/content/projects', pattern: '**/*.mdx' }),
   schema: z.object({
     title: z.string(),
     tagline: z.string(),
@@ -20,9 +19,7 @@ const projects = defineCollection({
 });
 
 const research = defineCollection({
-  loader: async () => {
-    return [];
-  },
+  loader: glob({ base: './src/content/research', pattern: '**/*.mdx' }),
   schema: z.object({
     title: z.string(),
     tagline: z.string(),
