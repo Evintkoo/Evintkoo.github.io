@@ -41,10 +41,229 @@ const featured = projects.filter((p) => p.data.featured).concat(projects).slice(
     </ul>
   </section>
 
+  <section class="container">
+    <h2>Recent activity</h2>
+    <div id="activityFeed" class="activity-feed"></div>
+  </section>
+
   <script type="application/json" id="graph-data" set:html={JSON.stringify(graphData)} />
 </Layout>
+
+<script>
+  import { initActivityFeed } from '../islands/activity-feed';
+  const el = document.getElementById('activityFeed');
+  if (el) initActivityFeed(el, 'Evintkoo');
+</script>
 
 <style>
   .hero { padding-block: var(--space-24) var(--space-12); }
   .project-list { list-style: none; padding: 0; display: grid; gap: var(--space-6); }
+
+  /* ── Activity feed ──
+     initActivityFeed() builds the panel markup via innerHTML, so none of
+     the descendant classes below exist in this template at compile time —
+     each rule needs :global() to apply (see mindmap.ts / Task 12 precedent
+     in src/pages/research/[slug].astro). Only the top-level .activity-feed
+     container itself is real Astro-compiled markup. */
+  .activity-feed { margin-top: var(--space-6); margin-bottom: var(--space-12); }
+  .activity-feed.is-hidden { display: none; }
+
+  .activity-feed :global(.activity-feed__panel) {
+    position: relative;
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    overflow: hidden;
+  }
+
+  .activity-feed :global(.activity-feed__head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .activity-feed :global(.activity-feed__status) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .activity-feed :global(.activity-feed__pulse) {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .activity-feed :global(.activity-feed__pulse)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activity-feed-ping 1.9s var(--ease-out) infinite;
+  }
+
+  @keyframes activity-feed-ping {
+    0% { transform: scale(1); opacity: 0.55; }
+    70% { transform: scale(2.8); opacity: 0; }
+    100% { transform: scale(2.8); opacity: 0; }
+  }
+
+  .activity-feed :global(.activity-feed__label) {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .activity-feed :global(.activity-feed__sub) {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+
+  .activity-feed :global(.activity-feed__focus) {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    text-decoration: none;
+    line-height: 1.25;
+    transition: opacity var(--transition-base);
+  }
+
+  .activity-feed :global(.activity-feed__focus):hover { opacity: 0.75; }
+
+  .activity-feed :global(.activity-feed__focus-kicker) {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .activity-feed :global(.activity-feed__focus-repo) {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+    font-weight: 600;
+    max-width: 52vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .activity-feed :global(.activity-feed__stats) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .activity-feed :global(.activity-feed__stats):empty { display: none; }
+
+  .activity-feed :global(.activity-feed__stat) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .activity-feed :global(.activity-feed__stat-num) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .activity-feed :global(.activity-feed__stat-label) {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+  }
+
+  .activity-feed :global(.activity-feed__list) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .activity-feed :global(.activity-feed__item) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+
+  .activity-feed :global(.activity-feed__item):first-child { border-top: none; }
+  .activity-feed :global(.activity-feed__item--loading) { color: var(--ink-faint); border-top: none; }
+
+  /* Icon tone modifiers — the old site had separate --accent-warm /
+     --accent-sage tokens; this token set (src/styles/tokens.css) only
+     defines a single --accent, so both tones share it (same simplification
+     precedent as src/islands/mindmap.ts's ACCENTS collapse). */
+  .activity-feed :global(.activity-feed__icon) {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--ink-faint);
+  }
+  .activity-feed :global(.activity-feed__icon--warm),
+  .activity-feed :global(.activity-feed__icon--sage) {
+    color: var(--accent);
+  }
+
+  .activity-feed :global(.activity-feed__text) {
+    flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .activity-feed :global(.activity-feed__action) { color: var(--ink-soft); }
+  .activity-feed :global(.activity-feed__action) b { color: var(--ink); font-weight: 600; }
+
+  .activity-feed :global(.activity-feed__repo) {
+    color: var(--ink);
+    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .activity-feed :global(.activity-feed__item:hover .activity-feed__repo) { color: var(--accent); }
+
+  .activity-feed :global(.activity-feed__time) {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .activity-feed :global(.activity-feed__pulse)::after { animation: none; opacity: 0.5; }
+  }
+
+  @media (max-width: 639px) {
+    .activity-feed :global(.activity-feed__head) { flex-direction: column; align-items: flex-start; }
+    .activity-feed :global(.activity-feed__focus) { align-items: flex-start; text-align: left; }
+    .activity-feed :global(.activity-feed__focus-repo) { max-width: 82vw; }
+  }
 </style>
