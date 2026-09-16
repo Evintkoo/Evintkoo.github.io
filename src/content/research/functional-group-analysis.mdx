@@ -1,0 +1,172 @@
+---
+title: "Functional Group Analysis of Drug-Like Chemical Space"
+tagline: "Graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing map how functional group composition varies across 249,455 ZINC15 drug-like molecules, with counterfactual QED analysis decomposing scoring artefacts from genuine chemical signals."
+tags: ["GAT-VGAE", "SOM", "Drug-Likeness"]
+topic: "ml"
+order: 9
+metrics:
+  - label: "ZINC15 molecules"
+    value: "249,455"
+  - label: "Functional group types"
+    value: "22"
+  - label: "Molecules/sec throughput"
+    value: "5,496"
+simpleSummary: |-
+  Drug hunters sift through millions of molecules to find ones that could
+  become medicines. We wanted a map showing which chemical building
+  blocks tend to live where on that landscape. So we took 249,455 ZINC15
+  molecules, turned each one into a tiny graph with GAT-VGAE (a neural
+  network that reads molecules), sorted them by QED (a 0-to-1 score for
+  how drug-like a molecule looks), and grouped them using an auto-tuned
+  SOM (Self-Organising Map, an algorithm that lays similar items near
+  each other on a grid).
+
+  Molecules with a nitro group (a common chemical flag) are 22 times
+  rarer among drug-like molecules than you'd expect by chance. We asked:
+  is that real, or just because QED already punishes nitro on purpose?
+  The answer splits cleanly: 78% comes from QED's built-in nitro penalty,
+  and 22% is genuinely the molecule's fault: nitro-bearing molecules tend
+  to be heavier (higher MW) and oilier (higher LogP), which the body
+  doesn't love.
+
+  Most drug-like molecules lean on flat benzene rings (phenyl groups).
+  But we found one cluster of 1,615 highly drug-like molecules with 7.2
+  times fewer of them. Instead, they're full of curvier, three-dimensional
+  pieces: thioethers, tertiary amines, and ethers. The takeaway: you
+  don't need flat aromatic rings to look drug-like. The catch: this
+  cluster is only 2% of the high-QED pool, so the route works but few
+  molecules take it.
+
+  A three-piece recipe (sulfonamide, heterocycle, and nitrile) keeps
+  showing up together across every drug-likeness band, far more often
+  than chance allows (p«0.001). To check our work, we re-ran the
+  analysis with Morgan fingerprints (a classic, simpler molecule
+  descriptor). They agreed on 72% of the top-10 results, while our
+  graph-based pipeline drew a sharper map (18% lower quantization error,
+  meaning molecules sit closer to where they belong).
+
+  We spotted functional groups by direct pattern matching, not by
+  trusting the neural network to learn them (22 types, agreeing with the
+  standard tool RDKit 96.3% of the time). To check the clusters were
+  stable, we re-shuffled the data 1,000 times: the clusters held together
+  with ARI (Adjusted Rand Index, a 0-to-1 agreement score) = 0.68. Six
+  knock-out experiments confirmed every part of the pipeline pulls its
+  weight.
+---
+
+## Abstract
+
+**Context** — This study combines graph-level variational encoding, stratified unsupervised clustering, and formal enrichment testing to map how functional group composition varies across drug-like chemical space. Analysis of 249,455 ZINC15 molecules encoded via GAT-VGAE, stratified by QED, and clustered with autotuned SOMs.
+
+**Finding 1: Counterfactual QED Decomposition** — Counterfactual QED analysis decomposes the >22-fold nitro prevalence gradient into 78% entailed (attributable to QED's structural alert penalty) and 22% empirical (genuine physicochemical disfavour from elevated MW and LogP).
+
+**Finding 2: Phenyl-Depleted Drug-Likeness** — A high-QED cluster (n=1,615) shows 7.2-fold phenyl depletion with enrichment for saturated groups (thioethers, tertiary amines, ethers), demonstrating drug-likeness without aromatic dominance, though representing only 2% of high-QED space.
+
+**Finding 3: Pharmacophore Signatures** — Sulfonamide–heterocycle–nitrile pharmacophore signatures recur across all five QED strata with non-random co-occurrence (p«0.001, χ²). Comparison with Morgan fingerprint baselines confirms 72% top-10 enrichment agreement, while VGAE provides 18% lower quantization error.
+
+**Validation** — Functional groups identified via substructure matching (22 types, 96.3% agreement with RDKit), not learned by encoder. Bootstrap resampling (1,000 iterations) yields mean cluster stability of ARI = 0.68. Six ablation experiments confirm each pipeline component contributes to final resolution.
+
+## Introduction
+
+Functional groups (hydroxyl, carbonyl, amine, sulfonyl, and hundreds more) are the primary carriers of chemical reactivity, physicochemical properties, and biological activity. Each imparts characteristic properties: carboxylic acids introduce ionisability at physiological pH, amide bonds provide hydrogen bonding, aromatic rings contribute hydrophobicity, halogens modulate lipophilicity and metabolic resistance.
+
+Drug-likeness, the degree to which a molecule's properties are consistent with oral bioavailability, is a key filtering criterion in early-stage drug discovery. Lipinski's Rule of Five provides binary pass/fail filtering (MW ≤500, LogP ≤5, HBD ≤5, HBA ≤10), but cannot quantify *degree* of drug-likeness. The Quantitative Estimate of Drug-likeness (QED) addresses this gap as a continuous 0–1 score integrating eight molecular descriptors, calibrated against 771 FDA-approved oral drugs.
+
+> **Research Gap**
+>
+> Despite the recognised importance of functional groups, systematic large-scale analyses relating functional group composition to quantitative drug-likeness scores remain sparse. Traditional fingerprint methods flatten molecular topology into fixed-length bit vectors, losing the structural context that makes chemistry meaningful.
+
+This study extends a prior analysis by the present authors applying a feed-forward autoencoder and Deep SOM to the same 249,455 molecules. That study found sp² hybridisation correlated negatively with drug-likeness (r = −0.45) while Fsp³ correlated positively (r = +0.26), but was limited by a flat feature vector, deterministic autoencoder, and aggregate atomic statistics rather than functional group analysis.
+
+The present work advances to full molecular graph representations, graph attention network encoding, variational inference for smooth latent manifolds, and a 22-type functional group vocabulary with formal enrichment testing. The primary methodological contribution is **counterfactual QED analysis**, which disentangles scoring-function artefacts from genuine chemical signals.
+
+Four research questions frame the analysis:
+
+1. **Functional Group Landscape** — What is the functional group landscape of drug-like chemical space, and how does it relate to known structural trends in approved drugs?
+2. **FG–Property Relationships** — What are the quantitative functional group–property relationships, with effect sizes and confidence intervals, for QED, LogP, and synthetic accessibility?
+3. **Cluster Substructure** — Does unsupervised clustering resolve interpretable FG-level substructure? What is the relationship between aromatic character and drug-likeness?
+4. **Entailed vs. Empirical** — To what extent are QED-stratified patterns artefacts of QED's construction versus genuine chemical signals? Addressed through counterfactual QED decomposition, the study's primary methodological contribution.
+
+## Methods
+
+1. **Dataset & Molecular Graph Construction** — 249,455 drug-like molecules from ZINC15 (Lipinski-compliant, commercially available), deduplicated by canonical SMILES. Each molecule represented as undirected graph G = (V, E) with **29-dimensional node features** (atom type one-hot, degree, charge, hybridisation, aromaticity, ring membership, atomic mass, chirality) and **9-dimensional edge features** (bond type, conjugation, ring membership, stereochemistry). Mean graph size: 23.2 atoms, 24.9 bonds; totalling 5.78M atoms and 6.21M bonds. `tags: ZINC15, 249,455 Molecules, 29-dim Node Features, 9-dim Edge Features`
+2. **Functional Group Detection** — Substructure pattern matching identifies **22 functional group types** across six categories: oxygen-containing (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-containing (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-containing (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). Priority-based two-pass algorithm resolves overlapping substructures. **Validated at 96.3% agreement with RDKit** (range: 91.8% ketone to 99.7% nitro). `tags: 22 FG Types, Two-Pass Matching, 96.3% RDKit Agreement`
+3. **GAT-VGAE Encoding** — Encoder: input projection (29→64) followed by **three GAT layers** with edge-aware attention, residual connections, and ReLU. Global attention pooling produces graph-level embeddings. Two parallel heads project to mean μ and log-variance (both ∈ ℝ¹⁶). Sampling via reparameterisation trick. Decoder reconstructs node features via three linear layers (16→64→128→29). Loss: MSE + βKL with **β = 0.001** (selected via grid search to prevent posterior collapse). Trained 100 epochs with Adam, cosine annealing, batch size 128. **Validation MSE = 0.0512** (training: 0.0505, Δ = 1.4%). `tags: 3-Layer GAT, 16-dim Latent, β = 0.001, MSE = 0.051`
+4. **QED-Stratified SOM Clustering** — Molecules divided into **five strata** via automated valley detection on QED distribution (breakpoints at 0.399, 0.520, 0.694, 0.814). Per-stratum SOM trained on 16-dim latent embeddings with **autotuned grid size** (10×10 to 30×30, composite score of QE + TE + ActiveRatio). Training: 128 epochs, Gaussian neighbourhood, K-Means++ init. Clusters characterised by functional group census, enrichment ratios with 95% CIs, Fisher's exact test with **Benjamini–Hochberg FDR correction** (α = 0.05). Total: 68,836 enrichment tests with three safeguards. `tags: 5 QED Strata, Autotuned SOM, Fisher's Exact Test, 68,836 Tests`
+5. **Counterfactual QED Analysis** — QED recomputed with the structural alert component removed (`QED_no-alert`), using geometric mean of seven non-alert desirability functions. Each molecule re-stratified using same valley-detection algorithm. Decomposes observed gradients into **entailed components** (attributable to QED's construction) and **empirical components** (genuine chemical signals). Primary methodological contribution of the study. `tags: Counterfactual Scoring, Entailed vs. Empirical, Novel Method`
+6. **Implementation** — Full pipeline in **Rust (2021 edition)** using Burn 0.16 (wgpu/Metal GPU backend), petgraph 0.7, rayon for parallelism. Training on Apple M2 Ultra (76-core GPU) completed in ~45 minutes. Throughput: **5,496 molecules/second**. Visualisation via UMAP-rs with plotters SVG output in colorblind-safe palettes. Fixed random seed (42) for primary run; metrics reported as mean ± std over 5 seeds. `tags: Rust + Burn 0.16, wgpu/Metal, ~45 min Training, 5,496 mol/s`
+
+## Results
+
+The dataset comprises 249,455 molecules with mean QED = 0.728 ± 0.140, mean LogP = 2.457 ± 1.434, and mean SAS = 3.053 ± 0.835. All 22 functional group types were detected. Prevalence is highly skewed: phenyl (83.0%), amide (68.0%), and heterocycle (58.0%) dominate, while nitro (4.3%), carboxyl (3.8%), and phosphate (0.1%) are rare.
+
+**Aromatic Dominance of ZINC15** (Functional Group Census) — 83.0% of molecules contain ≥1 phenyl ring (mean 2.42 rings/molecule). 96.2% contain at least one ring system. Phenyl accounts for 604,208 total occurrences, followed by heterocycle (338,210), amide (221,905), halide (135,900), and ether (122,335).
+
+**Key Structure–Property Relationships** (FG–Property Correlations) — Nitro shows strongest negative QED correlation (r = −0.321). Phenyl dominates LogP (r = +0.397) and SAS (r = −0.427). Amide has strongest SAS association (r = −0.290), reflecting amide coupling as the most-used C–N bond-forming reaction. No single binary FG–property correlation exceeds |r| = 0.43.
+
+**Latent Space Quality** (VGAE Encoding) — Reconstruction MSE = 0.0505 (43% error reduction over per-atom-type baseline). Dimension 0 carries highest variance (σ² = 0.952) encoding phenyl presence (|r| = 0.543). Dimensions 5 and 7 show strongest QED associations (r = +0.322, +0.315). Negligible overfitting (Δ = 1.4% train/val gap).
+
+**Five-Stratum Structure** (QED Stratification) — Automated valley detection yields five strata: S0 (n=6,830, QED \<0.40), S1 (n=17,622), S2 (n=60,427), S3 (n=83,673), S4 (n=80,903, QED >0.81). Quantization error drops 33% from S0 (1.10) to S4 (0.74), indicating high-QED molecules occupy progressively more compact latent space.
+
+### Headline Enrichment Findings
+
+**Phenyl-Depleted Drug-Likeness** (Stratum 4 · High QED) — **Cluster 0** (n=1,615, QED̄ = 0.847, 2.0% of S4): 7.2-fold phenyl depletion (11.5% vs. 83.0% overall). Enriched for thioether (1.89×, 95% CI [1.62, 2.20]), tertiary amine (1.81×, CI [1.58, 2.07]), ether (1.41×, CI [1.24, 1.60]). Identifies saturated 3D scaffolds (piperidines, morpholines, tetrahydropyrans) achieving drug-likeness without aromatic dominance.
+
+**Sulfonamide Pharmacophore Recurrence** (Cross-Stratum Pattern) — Sulfonyl-enriched clusters (1.5–2.1×, all `p_adj` < 0.01) consistently co-enrich for nitrile (1.3–1.8×), imine (1.4–2.6×), and heterocyclic nitrogen (1.2–1.5×) across all five strata. Non-random co-occurrence confirmed (p«0.001, Yates-corrected χ²). Matches known pharmacophore of ATP-competitive kinase inhibitors and sulfonamide antibacterials.
+
+**Carboxylate-Bearing Drug-Like Molecules** (Stratum 4 · Cluster 899) — Largest high-QED cluster (n=3,347, QED̄ = 0.871). Carboxyl enrichment **3.67×** [3.3, 4.1], halide 1.51× [1.4, 1.6], sulfonyl 1.50× [1.3, 1.7]. Challenges the assumption carboxylic acids preclude oral bioavailability: many approved drugs (ibuprofen, valsartan, atorvastatin) use anionic carboxylate for salt-bridge target engagement.
+
+**>22-fold Nitro Depletion** (Cross-Stratum Gradient) — Nitro prevalence drops monotonically: S0 = 29.6%, S1 = 17.5%, S2 = 9.2%, S3 = 4.6%, S4 = 1.3% (>22-fold reduction). **Counterfactual analysis** decomposes this: ~78% attributable to QED's structural alert penalty, ~22% reflects genuine physicochemical disfavour (nitro-bearing molecules have +34 Da MW and +0.8 LogP at matched ring count).
+
+**Polar Aliphatic Peptidomimetics** (Stratum 0 · Low QED) — **Cluster 600** (n=302, LogP = −0.19): primary amine 3.8× (`p_adj` < 10⁻¹²), hydroxyl 3.7× (`p_adj` < 10⁻¹⁰), carboxyl 2.5× (`p_adj` < 10⁻⁶). Identifies amino acid derivatives that fail QED not because pharmacologically inert, but because QED penalises low LogP and high polar surface area, a known limitation for transporter-mediated drugs like gabapentin.
+
+**VGAE vs. Morgan Fingerprints** (Baseline Comparison) — 1024-bit Morgan fingerprints (ECFP4) reduced to 16 dims via PCA produce 18% higher QE. ARI between methods: 0.34 (different but overlapping partitions). **72% of top-10 enrichments shared**. Broad patterns robust to embedding method, but Morgan/PCA cannot resolve phenyl-depleted Cluster 0 as distinct (1,615 molecules split across 8 clusters with enrichment \<2.0×).
+
+## Discussion
+
+The functional group census reveals a striking aromatic bias: 83.0% of 249,455 ZINC15 molecules contain at least one phenyl ring, with a mean of 2.42 aromatic rings per molecule. This dominance reflects the well-documented bias toward flat, sp²-rich scaffolds in commercial chemical libraries.
+
+### The Aromatic Dominance Problem
+
+Excessive aromaticity impairs drug-likeness through three interconnected mechanisms: each additional aromatic ring increases LogP ~0.5 units, reducing aqueous solubility; electron-rich π-systems are preferential substrates for CYP-mediated oxidative metabolism (particularly CYP1A2, CYP3A4), reducing oral bioavailability; and flat aromatic surfaces promote crystal packing and π-stacking, reducing dissolution rates and increasing plasma protein binding.
+
+Stratum 4's Cluster 0 provides granular evidence for the "escape from flatland" hypothesis: 7.2-fold phenyl depletion with enrichment for saturated groups indicates piperidine, morpholine, and tetrahydropyran scaffolds. However, this cluster represents only 2.0% of Stratum 4 (n=1,615 of 80,903), so phenyl-depleted drug-likeness remains uncommon, likely reflecting synthetic accessibility bias, as flat aromatic scaffolds dominate vendor catalogues via well-established cross-coupling reactions.
+
+> **Drug-Likeness–Synthetic Accessibility Trade-off**
+>
+> LogP decreases with increasing QED (S0 mean = 3.21 → S4 mean = 1.97; Δ = −1.24, p < 10⁻¹⁰). Conversely, SAS increases with QED (S0 mean = 2.52 → S4 mean = 3.48; Δ = +0.96). Molecule-level correlation is moderate (r = +0.31, R² = 0.096). Substantial within-stratum variance implies "Pareto-efficient" molecules achieving high QED without proportionate SAS penalties.
+
+### Topology of Drug-Like Chemical Space
+
+Quantization error decreases monotonically from Stratum 0 (QE = 1.10) to Stratum 4 (QE = 0.74), a 33% reduction. Topographic error drops 44%, and U-matrix maxima decrease 33%. Together, these metrics indicate drug-like molecules occupy a progressively more compact latent space region with smoother inter-cluster transitions. Stratum 4 has the smoothest internal topology (U-max = 0.074), suggesting the high-QED latent surface can serve as a navigation tool for scaffold hopping via centroid interpolation.
+
+**Component Validation** (Ablation Results) — Six ablation experiments confirm each component's contribution. Deterministic AE (β=0) achieves lower reconstruction loss but fragments latent space (+12% QE, 76% FG agreement). GCN encoder degrades both metrics. Fixed 10×10 SOM shows largest degradation (64% FG agreement). However, 15×15 grids reproduce all principal findings within 15% enrichment ratios.
+
+**Bootstrap Validation** (Cluster Stability) — 1,000 bootstrap iterations (80% subsample) yield mean ARI = 0.68 (range: 0.61 for S0 to 0.74 for S4). Highlighted clusters have per-cluster Jaccard stability 0.72 (Cluster 0) and 0.78 (Cluster 899). 5-fold cross-validation yields 82% mean concordance for top-10 enriched FGs per stratum. Moderate stability: clusters are locally enriched neighbourhood partitions, not sharply defined subpopulations.
+
+**Actionable Insights for Medicinal Chemistry** (Design Implications) — (1) Aromatic ring reduction viable but uncommon (2% of high-QED space). (2) Sulfonamide pharmacophores are QED-robust and combinatorially predictable across all strata. (3) 3.67× carboxyl enrichment in S4's largest cluster challenges the assumption carboxylic acids preclude oral bioavailability. (4) Nitro 78%/22% decomposition quantifies known structural alert contribution.
+
+**Study Constraints** (Limitations) — No external bioactivity validation (most significant limitation). ZINC15 biased toward synthetically tractable scaffolds. QED calibrated on 771 historical oral drugs, doesn't account for PROTACs or non-oral administration. 22-type FG vocabulary misses boronic acids, azetidines, covalent warheads. Detection is stereo-agnostic. VGAE decoder broadcasts single code to all nodes. Cluster stability moderate (ARI = 0.68).
+
+## Conclusion
+
+This work contributes an integrated analysis pipeline (graph-level variational encoding, stratified SOM clustering, formal enrichment testing) and applies it to 249,455 ZINC15 molecules. The primary methodological contribution is counterfactual QED decomposition, disentangling scoring-function artefacts from genuine chemical patterns: the >22-fold nitro prevalence gradient decomposes into 78% entailed by QED's alert penalty and 22% empirical.
+
+> **Principal Findings**
+>
+> Phenyl-depleted drug-likeness (n=1,615, 2% of high-QED space) and recurring sulfonamide pharmacophore co-occurrence quantitatively confirm established observations with effect sizes, confidence intervals, and FDR-controlled significance. Broad patterns robust to embedding method (72% top-10 agreement with Morgan fingerprints), while VGAE provides finer resolution (18% lower QE). Cluster stability moderate (ARI = 0.68, 1,000 bootstrap iterations).
+
+The study is descriptive; no bioactivity validation was performed. The critical next step is overlaying ChEMBL bioactivity data to test whether the structural organisation identified here predicts shared pharmacological activity. Additional priorities include extending to the COCONUT natural product database, incorporating 3D conformer generation, and using stratified SOM centroids as conditioning variables for constrained molecular generation.
+
+### References
+
+1. **Bickerton, G. R., Paolini, G. V., Besnard, J., Muresan, S., & Hopkins, A. L. (2012).** Quantifying the chemical beauty of drugs. *Nature Chemistry*, 4(2), 90–98.
+2. **Lipinski, C. A., Lombardo, F., Dominy, B. W., Feeney, P. J. (1997).** Experimental and computational approaches to estimate solubility and permeability in drug discovery. *Advanced Drug Delivery Reviews*, 23(1–3), 3–25.
+3. **Sterling, T., & Irwin, J. J. (2015).** ZINC 15 — Ligand discovery for everyone. *Journal of Chemical Information and Modeling*, 55(11), 2324–2337.
+4. **Veličković, P., Cucurull, G., Casanova, A., Romero, A., Liò, P., & Bengio, Y. (2018).** Graph attention networks. *ICLR 2018*.
+5. **Kipf, T. N., & Welling, M. (2016).** Variational graph auto-encoders. *NeurIPS Workshop on Bayesian Deep Learning*.
+6. **Kohonen, T. (1990).** The self-organizing map. *Proceedings of the IEEE*, 78(9), 1464–1480. **Kohonen, T. (2001).** *Self-Organizing Maps*. Springer Series in Information Sciences, Vol. 30.
+7. **Ertl, P., & Schuffenhauer, A. (2009).** Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions. *Journal of Cheminformatics*, 1, 8.
+8. **Lovering, F., Bikker, J., & Humblet, C. (2009).** Escape from flatland: Increasing saturation as an approach to improving clinical success. *Journal of Medicinal Chemistry*, 52(21), 6752–6756.
+9. **Benjamini, Y., & Hochberg, Y. (1995).** Controlling the false discovery rate: A practical and powerful approach to multiple testing. *Journal of the Royal Statistical Society: Series B*, 57(1), 289–300.
+10. **Meanwell, N. A. (2018).** Fluorine and fluorinated motifs in the design and application of bioisosteres. *J. Med. Chem.*, 61(14), 5822–5880. **Supuran, C. T. (2017).** Special issue: Sulfonamides. *Molecules*, 22(10), 1642.

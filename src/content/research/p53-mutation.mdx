@@ -1,0 +1,66 @@
+---
+title: "Cancer Leading Mutation DNA of P-53 Gene"
+tagline: 'Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 (the "guardian of the genome") before malignant cascades take hold. Award-winning research that connects evolutionary computation and cancer genomics.'
+tags: ["P-53", "Genetic Algorithms", "Cancer Genomics"]
+topic: "bio"
+order: 14
+---
+
+## Abstract
+
+**Best Research Project** — Awarded Best Research Project at UBC Vantage College Capstone Conference for innovative genetic algorithm approaches to identify DNA characteristics leading to P-53 cancerous mutations.
+
+**Early Cancer Detection** — Identify recurring mutation motifs that precede carcinogenic behaviour in the P-53 tumor suppressor gene by simulating mitotic propagation under controlled conditions.
+
+**High-Risk Motifs Identified** — The SOM surfaced six high-risk pentamer motifs (cagcc, agcca, cccag, ccagg, ttttt, ctttt) with an optimal 0.451 silhouette score under a 1×6 matrix configuration.
+
+## Introduction
+
+P-53 operates as the "guardian of the genome," halting cell division when DNA damage is detected. Mutations in this gene contribute to over 50% of all human cancers, making it a critical target for early detection strategies.
+
+> **Research Gap: Pre-Malignant Detection**
+>
+> Traditional approaches focus on already-malignant sequences. This study identifies predictive patterns in pre-malignant mutations, potentially enabling intervention before cancer emerges.
+
+Combining genetic algorithms with self-organizing maps to trace deterministic pathways from healthy to malignant P-53 sequences, revealing early-warning biomarkers for clinical application.
+
+## Methods
+
+1. **Dataset Assembly** — Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs. `tags: NCBI Database, 25 DNA Strands, Data Preprocessing`
+2. **Generative Mitosis Tree** — Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth. `tags: Binary Tree, 14 Generations, Mitosis Simulation`
+3. **Mutation Path Scoring** — Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes. `tags: Levenshtein Distance, Path Analysis, Drift Scoring`
+4. **k-mer Encoding** — Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows. `tags: k-mer Analysis, Feature Vectors, 73.5k Rows`
+5. **SOM Clustering** — Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion. `tags: Self-Organizing Maps, 1×6 Grid, Clustering`
+
+## Results
+
+**Six High-Risk Mutation Motifs** — The SOM revealed six distinct mutation clusters with clearly differentiated nucleotide signatures. Clusters enriched in thymine-heavy motifs surfaced consistently in malignant branches, providing early warning indicators for cancer development.
+
+**Optimal Clustering Results** — Achieved optimal 0.451 silhouette score with 1×6 grid configuration, indicating well-separated cluster centroids with minimal overlap between mutational trajectories.
+
+**Early Detection Pipeline** — Highlighted motifs align with known loss-of-function trajectories for P-53, establishing a computational pipeline to monitor early mutational convergence in other cancer datasets.
+
+## Discussion
+
+**Pathway-Dependent Progression** — Six clusters emerged as reliable precursors to malignant outcomes. Each cluster possesses a signature nucleotide fingerprint, reinforcing that mutation progression is pathway-dependent, not random.
+
+**Optimal Configuration** — Silhouette scores climbed steadily from 1×2 through 1×6 matrices before dropping sharply. The 1×6 configuration maintains separation without sacrificing interpretability.
+
+**Study Constraints** — Limitations include simulated rather than patient-specific conditions and a relatively small number of base sequences. Framework is portable for expanding datasets.
+
+**Scaling Potential** — Scaling this methodology to other tumour suppressor genes could expose similar early-warning mutation signatures, guiding screening pipelines before clinical symptoms manifest.
+
+## Conclusion
+
+Genetic algorithms plus SOM clustering expose deterministic shifts toward malignancy. Six pentamer motifs consistently precede malignant conversion, providing high-clarity monitoring targets.
+
+> **Clinical Impact**
+>
+> Encoded feature space remains interpretable, enabling rapid clinician dialogue. The motif shortlist now feeds wet-lab validation and computational monitoring pipelines.
+
+Future work will expand datasets with longitudinal patient samples and fuse expression-level data to link mutational motifs with phenotypic impact.
+
+### References
+
+1. **Di Leo, A., et al. (2007).** p-53 gene mutations as a predictive marker in advanced breast cancer. *Annals of Oncology*, 18(6), 997-1003.
+2. **Vogelstein, B., Lane, D., & Levine, A. J. (2000).** Surfing the p53 network. *Nature*, 408, 307–310.
