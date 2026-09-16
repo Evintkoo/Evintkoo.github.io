@@ -16,6 +16,7 @@ interface Props {
     summary?: string;
     highlights?: { value: string; label: string }[];
     details?: { label: string; value: string }[];
+    tags?: string[];
   };
 }
 const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink, pairedLink, pairedLinkLabel, snapshot } = Astro.props;
@@ -77,6 +78,14 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
             </>
           ))}
         </dl>
+      )}
+      {snapshot.tags && snapshot.tags.length > 0 && (
+        <div class="research-hero__snapshot-tags">
+          <span class="research-hero__snapshot-tags-label">Tagged</span>
+          <div class="research-hero__snapshot-tags-list">
+            {snapshot.tags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </div>
       )}
     </div>
   )}
@@ -144,4 +153,22 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
     white-space: nowrap;
   }
   .research-hero__snapshot-details dd { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
+
+  /* Snapshot's own finer-grained tag pills (source's paper-meta-tags
+     footer) — kept visually separate from the page's main .research-tags
+     row ([slug].astro) via the "Tagged" micro-label and its position
+     inside this card, since verified per-page (Task 24 fix round 2) that
+     these are a genuinely distinct, non-redundant vocabulary, not a
+     duplicate of the top-level `tags` array. */
+  .research-hero__snapshot-tags { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border); }
+  .research-hero__snapshot-tags-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-2);
+  }
+  .research-hero__snapshot-tags-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 </style>

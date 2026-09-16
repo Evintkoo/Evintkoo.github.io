@@ -76,6 +76,13 @@ const research = defineCollection({
         details: z
           .array(z.object({ label: z.string(), value: z.string() }))
           .optional(),
+        // The source aside's own "paper-meta-tags" pill footer — a
+        // finer-grained, page-specific tag vocabulary genuinely distinct
+        // from the collection's top-level `tags` (verified per-page in
+        // Task 24's fix round 2: only 1-2 pills typically overlap the
+        // top-level tags, not a duplicate list). Both coexist on these
+        // pages; don't conflate this with the top-level `tags` field.
+        tags: z.array(z.string()).optional(),
       })
       .optional(),
     simpleSummary: z.string().optional(),
