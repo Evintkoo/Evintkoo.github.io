@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import ResearchHero from '../../components/ResearchHero.astro';
+import { getRelatedResearch } from '../../lib/related-research';
 
 export async function getStaticPaths() {
   const entries = await getCollection('research');
@@ -26,6 +27,8 @@ const [allProjects, allResearch] = await Promise.all([
   getCollection('projects'),
   getCollection('research'),
 ]);
+
+const relatedResearch = getRelatedResearch(entry, allResearch);
 
 const byTopic: Record<string, string[]> = {};
 for (const t of TOPICS) byTopic[t.id] = [];
@@ -56,6 +59,19 @@ const mindmapData = {
     <article class="research-content">
       <Content />
     </article>
+    {relatedResearch.length > 0 && (
+      <section class="cards" aria-labelledby="related-papers-heading">
+        <p id="related-papers-heading" class="cards__heading">Related papers</p>
+        <div class="cards__grid">
+          {relatedResearch.map((r) => (
+            <a class="cards__card" href={`/research/${r.id}/`}>
+              <h3 class="cards__title">{r.data.title}</h3>
+              <p class="cards__tagline">{r.data.tagline}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
     <a href="/research" class="back-to-portfolio">Back to Research</a>
   </div>
   <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
@@ -73,6 +89,34 @@ const mindmapData = {
   .research-tags { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); }
   .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
+
+  .cards { margin-top: var(--space-16); }
+  .cards__heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-4);
+  }
+  .cards__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+  }
+  .cards__card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    background: var(--paper-raised);
+    transition: border-color var(--transition-base);
+  }
+  .cards__card:hover { border-color: var(--ink-soft); }
+  .cards__title { font-size: 1rem; margin-bottom: var(--space-2); }
+  .cards__tagline { font-size: 0.875rem; color: var(--ink-soft); margin: 0; }
 
   .mindmap-section { padding-top: var(--space-8); }
   .mindmap-section__heading {
