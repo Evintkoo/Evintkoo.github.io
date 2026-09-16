@@ -38,8 +38,18 @@ const research = defineCollection({
     metrics: z
       .array(z.object({ label: z.string(), value: z.string() }))
       .default([]),
-    pdf: z.string().url().optional(),
+    // Site-relative path into public/files/ (e.g. "/files/foo.pdf"), not a
+    // full URL — intentionally not .url() (that would reject relative
+    // paths). externalLink is a real absolute URL (GitHub, etc.) so it
+    // keeps .url().
+    pdf: z.string().optional(),
     externalLink: z.string().url().optional(),
+    // Generic label:value pair for the source's "paper-meta-box" line —
+    // "Published: March 2026", "Award: Best Research Project (UBC
+    // Vantage)", etc. Not all of these are dates, so this is deliberately
+    // separate from the unused `date` field above, which stays untouched.
+    metaLabel: z.string().optional(),
+    metaValue: z.string().optional(),
     simpleSummary: z.string().optional(),
     // Serializable chart data/config only (Task 20's ResearchChartConfig).
     // formatX/formatY/formatValue are functions and cannot survive a

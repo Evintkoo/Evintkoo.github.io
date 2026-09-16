@@ -5,8 +5,12 @@ interface Props {
   metrics: { label: string; value: string }[];
   authors?: string;
   affiliation?: string;
+  metaLabel?: string;
+  metaValue?: string;
+  pdf?: string;
+  externalLink?: string;
 }
-const { title, tagline, metrics, authors, affiliation } = Astro.props;
+const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink } = Astro.props;
 ---
 <section class="research-hero container">
   <h1>{title}</h1>
@@ -26,6 +30,16 @@ const { title, tagline, metrics, authors, affiliation } = Astro.props;
       ))}
     </div>
   )}
+  {(metaLabel && metaValue) || pdf || externalLink ? (
+    <div class="research-hero__paper">
+      {metaLabel && metaValue && (
+        <p class="research-hero__meta-line"><strong>{metaLabel}:</strong> {metaValue}</p>
+      )}
+      {pdf
+        ? <a href={pdf} target="_blank" rel="noopener" class="btn btn--primary">View Full Paper</a>
+        : externalLink && <a href={externalLink} target="_blank" rel="noopener" class="btn btn--primary">View on GitHub</a>}
+    </div>
+  ) : null}
 </section>
 <style>
   .research-hero { padding-block: var(--space-16) var(--space-8); }
@@ -35,4 +49,13 @@ const { title, tagline, metrics, authors, affiliation } = Astro.props;
   .hero-metric { display: flex; flex-direction: column; }
   .hero-metric__value { font-family: var(--font-display); font-size: 2rem; }
   .hero-metric__label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); }
+
+  .research-hero__paper { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-8); }
+  .research-hero__meta-line { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); margin: 0; }
+  .research-hero__meta-line strong { color: var(--ink); }
+  /* Same .btn/.btn--primary convention as src/components/ProjectCTA.astro
+     (Astro scoped styles don't leak across component files, so this is
+     redefined here rather than shared). */
+  .btn { display: inline-block; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; }
+  .btn--primary { background: var(--accent); color: var(--accent-ink); }
 </style>
