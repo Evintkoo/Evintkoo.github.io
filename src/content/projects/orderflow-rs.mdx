@@ -1,0 +1,31 @@
+---
+title: "orderflow-rs"
+tagline: "A high-performance Rust pipeline for limit order book microstructure research. From a single binary, it ingests raw tick data, computes order-flow imbalance features and 87 technical indicators, runs synthetic LOB simulations, and backtests signal-based strategies."
+tags: ["Open Source", "Quantitative Finance", "Rust"]
+topic: "fin"
+tech: ["Rust", "Parquet / Arrow", "Spearman IC", "LOB Reconstruction", "OFI Features", "Walk-forward Backtest", "Criterion Benchmarks"]
+repo: "https://github.com/Evintkoo/orderflow-rs"
+featured: false
+order: 11
+---
+
+## Overview
+
+orderflow-rs is a research pipeline for studying high-frequency limit order book dynamics. It grows out of a companion paper, *Predictability of High-Frequency Limit Order Book Dynamics*, and runs reproducibly from raw Dukascopy tick data all the way to ranked IC reports without any external ML framework.
+
+The pipeline covers four research phases: synthetic LOB simulation to validate OFI signal properties (P4), real FX data evaluation across ten currency pairs (P5), walk-forward backtesting with realistic transaction costs (P6), and a technical indicator IC sweep across 1s–300s horizons (P7). Every phase produces CSV reports you can reproduce locally.
+
+## Research Results
+
+- **P4: Simulation** — OFI_1 predicts synthetic price moves with IC 0.15–0.33. Hypothesis validated in controlled LOB environment.
+- **P5: Real FX Data** — Partial signal: OFI_1 predicts returns on 5 of 10 currency pairs with IC 0.04–0.10. Pair-dependent predictability.
+- **P6: Backtest** — OFI signals produce negative PnL after 0.04% fee + half-spread. Transaction costs absorb the edge entirely.
+- **P7: Tech Indicators** — `pivot_dist` dominates with IC = 0.40 at 1s, following a power-law decay τ⁻⁰·⁴³ across longer horizons.
+- **87 Indicators** — Momentum, mean-reversion, trend, volatility, microstructure, and market-impact measures, all ranked by Spearman IC.
+- **Zero-dependency core** — Core analysis compiles with no async deps. Optional feature flags for `ingest`, `io` (Parquet), and `sim`.
+
+## Pipeline
+
+The pipeline is driven by a single CLI binary with subcommands for each phase. Data flows from raw Dukascopy LOB tick files through feature extraction, simulation, backtesting, and finally IC report generation. All intermediate artifacts are Parquet files; final reports are CSV.
+
+The synthetic LOB simulator (P4) uses configurable spread and queue dynamics so you can stress-test signal properties before committing to live data. Walk-forward out-of-sample evaluation in the backtest phase (P6) guards against lookahead bias, and transaction costs are applied at the 0.04% fee + half-spread level to reflect realistic execution.
