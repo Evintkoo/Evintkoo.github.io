@@ -44,6 +44,10 @@ const research = defineCollection({
     // keeps .url().
     pdf: z.string().optional(),
     externalLink: z.string().url().optional(),
+    // Secondary "View Code" link, alongside (not instead of) pdf/
+    // externalLink — the source's secondary GitHub repo button, present
+    // on only 4 of the 8 pages that have a primary paper link.
+    repoLink: z.string().url().optional(),
     // Generic label:value pair for the source's "paper-meta-box" line —
     // "Published: March 2026", "Award: Best Research Project (UBC
     // Vantage)", etc. Not all of these are dates, so this is deliberately

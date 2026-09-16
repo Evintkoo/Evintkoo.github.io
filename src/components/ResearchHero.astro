@@ -9,8 +9,9 @@ interface Props {
   metaValue?: string;
   pdf?: string;
   externalLink?: string;
+  repoLink?: string;
 }
-const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink } = Astro.props;
+const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink } = Astro.props;
 ---
 <section class="research-hero container">
   <h1>{title}</h1>
@@ -38,6 +39,7 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
       {pdf
         ? <a href={pdf} target="_blank" rel="noopener" class="btn btn--primary">View Full Paper</a>
         : externalLink && <a href={externalLink} target="_blank" rel="noopener" class="btn btn--primary">View on GitHub</a>}
+      {repoLink && <a href={repoLink} target="_blank" rel="noopener" class="btn btn--secondary">View Code</a>}
     </div>
   ) : null}
 </section>
@@ -58,4 +60,5 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
      redefined here rather than shared). */
   .btn { display: inline-block; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; }
   .btn--primary { background: var(--accent); color: var(--accent-ink); }
+  .btn--secondary { border: 1px solid var(--border); color: var(--ink); }
 </style>
