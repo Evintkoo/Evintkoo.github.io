@@ -1,0 +1,30 @@
+---
+title: "SOM Plus Clustering"
+tagline: "An extended self-organizing map library with smarter initialization options and built-in cluster quality metrics, so unsupervised topology learning is more rigorous and reproducible."
+tags: ["Open Source", "Machine Learning"]
+topic: "ml"
+tech: ["Python", "NumPy", "SciPy", "scikit-learn", "Matplotlib"]
+repo: "https://github.com/Evintkoo/SOM_plus_clustering"
+featured: false
+order: 4
+hasPlayground: true
+---
+
+## Overview
+
+Standard SOM implementations leave too much to chance. Random initialization can produce wildly different maps across runs, and most libraries provide no way to evaluate whether the resulting clusters are actually meaningful.
+
+SOM Plus extends the base algorithm with PCA-guided initialization for deterministic, data-aware starting weights, alongside silhouette score and Davies-Bouldin index evaluation so you can objectively compare runs and configurations. It grew out of the GDP trajectory clustering project and the functional group analysis work, where reliable clustering was critical to interpretation.
+
+## Features
+
+- **Extended SOM** — Full self-organizing map implementation with configurable topology, neighbourhood functions, and learning rate decay.
+- **PCA Initialization** — Seeds neuron weights along principal components of the data, giving faster convergence and reproducible maps.
+- **Random Initialization** — Traditional random init still available with seeding for exact reproducibility across experiments.
+- **Silhouette Score** — Measures how well-separated clusters are, where higher is better, and you get it automatically after training.
+- **Davies-Bouldin Index** — Ratio of within-cluster scatter to between-cluster separation, where lower scores mean tighter, more distinct clusters.
+- **Research-ready** — Built for scientific use: clean API, NumPy-native, and compatible with SciPy analysis pipelines.
+
+## Interactive
+
+Run a self-organizing map right here in the browser — no install, no build. Watch the neuron lattice fold onto a point cloud and the topology emerge as points take their best-matching neuron’s colour. Tune the grid, learning rate, neighbourhood, and epochs, or swap datasets.

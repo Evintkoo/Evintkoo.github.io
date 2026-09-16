@@ -19,6 +19,7 @@ const projects = defineCollection({
     ctaLink: z.string().url().optional(),
     ctaLabel: z.string().optional(),
     featured: z.boolean().default(false),
+    hasPlayground: z.boolean().default(false),
     order: z.number(),
   }),
 });
