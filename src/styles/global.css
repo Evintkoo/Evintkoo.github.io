@@ -45,3 +45,22 @@ a { color: inherit; }
 @media (max-width: 767px) {
   .container { padding-inline: var(--space-4); }
 }
+
+/*
+ * #heroGraphBack lives in Layout.astro (rendered on every page) but is only
+ * meaningful in hero-scene.ts's graph mode, which itself only runs on the
+ * homepage. hero-scene.ts toggles a `.visible` class on it during
+ * expand()/collapse() and never touches display directly, so the default
+ * (no `.visible`) state must be hidden here — otherwise the button (and its
+ * unsized <svg>, which browsers default to ~300x150px) renders visible
+ * above <Nav> on every page load, including legacy-blob-mode pages where
+ * it's inert. `display: none` also removes it from the tab order and a11y
+ * tree, so no extra markup/aria is needed for the default-inert state.
+ */
+#heroGraphBack {
+  display: none;
+}
+
+#heroGraphBack.visible {
+  display: inline-flex;
+}
