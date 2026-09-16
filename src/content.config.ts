@@ -28,6 +28,9 @@ const research = defineCollection({
   loader: glob({ base: './src/content/research', pattern: '**/*.mdx' }),
   schema: z.object({
     title: z.string(),
+    // Some source listing rows use a shorter marketing title than the
+    // detail page's full academic title — set only when they differ.
+    shortTitle: z.string().optional(),
     tagline: z.string(),
     tags: z.array(z.string()),
     topic,

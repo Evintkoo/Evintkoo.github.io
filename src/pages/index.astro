@@ -132,7 +132,7 @@ const mindmapData = {
               {r.data.tags.map((t) => <span class="tag">{t}</span>)}
               {r.data.metaLabel && <span class="tag tag--meta">{r.data.metaLabel}: {r.data.metaValue}</span>}
             </div>
-            <h3>{r.data.title}</h3>
+            <h3>{r.data.shortTitle ?? r.data.title}</h3>
             <p>{r.data.tagline}</p>
           </a>
         </li>
