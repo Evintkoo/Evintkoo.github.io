@@ -61,6 +61,23 @@ const research = defineCollection({
     // alongside (not instead of) pdf/externalLink/repoLink.
     pairedLink: z.string().optional(),
     pairedLinkLabel: z.string().optional(),
+    // The source's "paper-meta-snapshot" aside ("Research Snapshot" card):
+    // a summary sentence, a secondary set of highlight metrics (genuinely
+    // distinct from the primary `metrics` above — verified non-redundant
+    // per the Task 24 fix-round audit), and label:value detail rows. The
+    // aside's tag pills are intentionally NOT modeled here — they
+    // duplicate the `tags` array already rendered elsewhere on the page.
+    snapshot: z
+      .object({
+        summary: z.string().optional(),
+        highlights: z
+          .array(z.object({ value: z.string(), label: z.string() }))
+          .optional(),
+        details: z
+          .array(z.object({ label: z.string(), value: z.string() }))
+          .optional(),
+      })
+      .optional(),
     simpleSummary: z.string().optional(),
     // Serializable chart data/config only (Task 20's ResearchChartConfig).
     // formatX/formatY/formatValue are functions and cannot survive a

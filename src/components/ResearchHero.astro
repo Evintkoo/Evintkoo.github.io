@@ -12,8 +12,13 @@ interface Props {
   repoLink?: string;
   pairedLink?: string;
   pairedLinkLabel?: string;
+  snapshot?: {
+    summary?: string;
+    highlights?: { value: string; label: string }[];
+    details?: { label: string; value: string }[];
+  };
 }
-const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink, pairedLink, pairedLinkLabel } = Astro.props;
+const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink, pairedLink, pairedLinkLabel, snapshot } = Astro.props;
 ---
 <section class="research-hero container">
   <h1>{title}</h1>
@@ -49,6 +54,32 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
       {pairedLink && <a href={pairedLink} class="btn btn--secondary">{pairedLinkLabel || 'Companion paper'}</a>}
     </div>
   ) : null}
+  {snapshot && (
+    <div class="research-hero__snapshot">
+      <h2 class="research-hero__snapshot-heading">Research Snapshot</h2>
+      {snapshot.summary && <p class="research-hero__snapshot-summary">{snapshot.summary}</p>}
+      {snapshot.highlights && snapshot.highlights.length > 0 && (
+        <div class="research-hero__snapshot-highlights">
+          {snapshot.highlights.map((h) => (
+            <div class="snapshot-highlight">
+              <span class="snapshot-highlight__value">{h.value}</span>
+              <span class="snapshot-highlight__label">{h.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {snapshot.details && snapshot.details.length > 0 && (
+        <dl class="research-hero__snapshot-details">
+          {snapshot.details.map((d) => (
+            <>
+              <dt>{d.label}</dt>
+              <dd>{d.value}</dd>
+            </>
+          ))}
+        </dl>
+      )}
+    </div>
+  )}
 </section>
 <style>
   .research-hero { padding-block: var(--space-16) var(--space-8); }
@@ -68,4 +99,49 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
   .btn { display: inline-block; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; }
   .btn--primary { background: var(--accent); color: var(--accent-ink); }
   .btn--secondary { border: 1px solid var(--border); color: var(--ink); }
+
+  /* "Research Snapshot" card (source's paper-meta-snapshot aside, Task 24
+     fix-round). A secondary summary block distinct from the primary
+     hero metrics above — smaller highlight values keep it visually
+     subordinate to the page's headline numbers. */
+  .research-hero__snapshot {
+    margin-top: var(--space-12);
+    max-width: 700px;
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+  }
+  .research-hero__snapshot-heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin: 0 0 var(--space-3);
+  }
+  .research-hero__snapshot-summary { margin: 0 0 var(--space-5); color: var(--ink-soft); }
+  .research-hero__snapshot-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+  .snapshot-highlight { display: flex; flex-direction: column; }
+  .snapshot-highlight__value { font-family: var(--font-display); font-size: 1.25rem; }
+  .snapshot-highlight__label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-faint); }
+  .research-hero__snapshot-details {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    margin: 0;
+  }
+  .research-hero__snapshot-details dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .research-hero__snapshot-details dd { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
 </style>

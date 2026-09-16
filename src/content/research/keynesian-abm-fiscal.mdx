@@ -14,6 +14,22 @@ metrics:
     value: "93.7%"
   - label: "GDP CAGR"
     value: "4.6%"
+snapshot:
+  summary: "Model scale, simulation horizon, and key quantitative results."
+  highlights:
+    - value: "4 / 12"
+      label: "stylised facts matched"
+    - value: "50"
+      label: "Monte Carlo seeds"
+    - value: "3,650"
+      label: "simulation steps (10 yr)"
+  details:
+    - label: "Target journal"
+      value: "Journal of Economic Dynamics and Control"
+    - label: "Key result"
+      value: "ZLB binds in 93.7% of periods (MC median; 95% CI: 6.0%–96.1%), a novel bimodal result driven by TFP-variance threshold effects."
+    - label: "Implementation"
+      value: "Rust: a 10-year, 10,000-agent run completes in under 30 seconds, enabling high-throughput Monte Carlo experiments."
 simpleSummary: |-
   We built a small, simulated economy on a computer. Every household, firm,
   and bank makes its own decisions day by day. The simulation includes

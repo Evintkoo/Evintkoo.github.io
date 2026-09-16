@@ -13,6 +13,22 @@ metrics:
     value: "5.58M"
   - label: "AUROC advantage"
     value: "10.84 pp"
+snapshot:
+  summary: "Parameter-matched comparison with ablation, pruning, and cold-start evaluation."
+  highlights:
+    - value: "0.9025"
+      label: "Cross-encoder AUROC"
+    - value: "0.7941"
+      label: "Dual-encoder AUROC"
+    - value: "≥60%"
+      label: "Pruning tolerance"
+  details:
+    - label: "Author"
+      value: "Evint Leovonzko (Independent researcher)"
+    - label: "Venue"
+      value: "Submitted to IEEE Transactions on Neural Networks and Learning Systems (TNNLS)."
+    - label: "Evaluation"
+      value: "Four imbalance regimes (1:1, 5:1, 10:1, 50:1), structured pruning, ablation, cold-start."
 simpleSummary: |-
   Cells contain master-switch genes (called transcription factors) that
   turn other genes on or off. Mapping who controls whom would help

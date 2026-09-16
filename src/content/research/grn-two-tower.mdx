@@ -13,6 +13,22 @@ metrics:
     value: "0.844"
   - label: "TF–gene pairs"
     value: "47,388"
+snapshot:
+  summary: "Architecture details, dataset, and key performance metrics for this GRN inference study."
+  highlights:
+    - value: "83.06%"
+      label: "Ensemble accuracy"
+    - value: "0.844"
+      label: "AUROC"
+    - value: "~4 hrs"
+      label: "CPU training time"
+  details:
+    - label: "Author"
+      value: "Evint Leovonzko"
+    - label: "Dataset"
+      value: "Human brain single-cell RNA-seq: 47,388 TF–gene pairs from DoRothEA & TRRUST databases."
+    - label: "Implementation"
+      value: "Pure Rust without PyTorch or TensorFlow, enabling deterministic CPU training."
 simpleSummary: |-
   Cells are run by genes that switch each other on and off. Mapping those
   switches from single-cell data is a hard, central puzzle in biology. We

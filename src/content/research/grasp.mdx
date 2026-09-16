@@ -13,6 +13,22 @@ metrics:
     value: "140 ms"
   - label: "specialist algorithms"
     value: "6"
+snapshot:
+  summary: "Pipeline architecture, benchmark scope, and performance characteristics."
+  highlights:
+    - value: "26"
+      label: "Benchmark datasets"
+    - value: "140 ms"
+      label: "50K-point throughput"
+    - value: "49 / 49"
+      label: "Unit tests passing"
+  details:
+    - label: "Pipeline"
+      value: "7 stages: Convex probe → GNG → Laplacian → Eigengap → Nyström → 6 specialists → Oracle routing"
+    - label: "Baselines"
+      value: "KMeans++, DBSCAN (ARI 0.000), HDBSCAN (ARI 0.055), KnnSpectral (ARI 0.234)"
+    - label: "Key result"
+      value: "ARI 0.378 on interlocking rings vs GRASP, a 14× improvement over DBSCAN and 7× over HDBSCAN."
 simpleSummary: |-
   When you ask a computer to find groups in unlabelled data, the answer
   depends on which algorithm you pick. No single one works best

@@ -14,6 +14,18 @@ metrics:
     value: "22"
   - label: "Molecules/sec throughput"
     value: "5,496"
+snapshot:
+  summary: "Pipeline details, co-authors, and headline metrics behind this cheminformatics study."
+  highlights:
+    - value: "249,455"
+      label: "Molecules analysed"
+    - value: "18%"
+      label: "Lower QE vs. baseline"
+    - value: "0.68"
+      label: "Bootstrap ARI stability"
+  details:
+    - label: "Pipeline"
+      value: "GAT-VGAE (3-layer, 16-dim latent) → QED-stratified autotuned SOM → FDR-corrected enrichment, all in Rust with Burn 0.16."
 simpleSummary: |-
   Drug hunters sift through millions of molecules to find ones that could
   become medicines. We wanted a map showing which chemical building
