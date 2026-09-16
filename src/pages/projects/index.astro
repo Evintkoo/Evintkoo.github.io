@@ -9,17 +9,55 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     <h1>Projects</h1>
     <p class="listing-hero__subtitle">Open-source tools, platforms, and applications</p>
   </section>
+
   <section class="container">
+    <!--
+      Featured platform card — the source site's Kolosal AI card links to the
+      external kolosal.ai product site, not a /projects/<id>/ detail page, so
+      it isn't (and can't be) a content-collection entry. Hardcoded here to
+      preserve the source's facts/links (spec §11 content parity) without
+      touching the shared projects schema in src/content.config.ts.
+    -->
+    <article class="project-featured">
+      <div class="project-featured__body">
+        <div class="project-featured__tags">
+          <span class="tag tag--featured">Featured</span>
+          <span class="tag">Co-Founder</span>
+          <span class="tag">MLOps</span>
+        </div>
+        <h2 class="project-featured__title">Kolosal AI</h2>
+        <p class="project-featured__desc">
+          Open-source platform for running large language models locally, so your data stays private and inference stays fast. Custom training and production-ready inference at scale.
+        </p>
+        <div class="project-featured__tech">
+          <span class="tag">Python</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CUDA</span>
+        </div>
+      </div>
+      <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform &nearr;</a>
+    </article>
+
     <ul class="project-grid">
       {projects.map((p) => (
         <li>
-          <a href={`/projects/${p.id}/`}>
-            <div class="project-grid__tags">
-              {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+          <div class="project-grid__tags">
+            {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+          <h2><a href={`/projects/${p.id}/`}>{p.data.title}</a></h2>
+          <p>{p.data.tagline}</p>
+          {p.data.tech.length > 0 && (
+            <div class="project-grid__tech">
+              {p.data.tech.map((t) => <span class="tag tag--tech">{t}</span>)}
             </div>
-            <h2>{p.data.title}</h2>
-            <p>{p.data.tagline}</p>
-          </a>
+          )}
+          <div class="project-grid__links">
+            <a href={`/projects/${p.id}/`} class="project-grid__link">Learn More &rarr;</a>
+            {p.data.paperLink && <a href={p.data.paperLink} class="project-grid__link">Read Paper &rarr;</a>}
+            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer" class="project-grid__link">Repo &nearr;</a>}
+          </div>
         </li>
       ))}
     </ul>
@@ -28,16 +66,38 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 <style>
   .listing-hero { padding-block: var(--space-16) var(--space-8); }
   .listing-hero__subtitle { color: var(--ink-soft); margin-top: var(--space-4); }
+
+  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag--featured { color: var(--accent); border-color: var(--accent); }
+  .tag--tech { color: var(--ink-faint); }
+
+  /* ── Featured platform card ── */
+  .project-featured { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); background: var(--paper-raised); margin-bottom: var(--space-8); }
+  .project-featured__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-featured__title { font-size: 1.75rem; margin-bottom: var(--space-3); }
+  .project-featured__desc { color: var(--ink-soft); max-width: 640px; margin-bottom: var(--space-4); }
+  .project-featured__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .project-featured__link { flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
+  .project-featured__link:hover { text-decoration: underline; }
+
   .project-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
-  .project-grid a { text-decoration: none; color: inherit; display: block; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
-  .project-grid a:hover { border-color: var(--ink-soft); }
+  .project-grid > li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
+  .project-grid > li:hover { border-color: var(--ink-soft); }
+  .project-grid a { text-decoration: none; color: inherit; }
+  .project-grid h2 a:hover { color: var(--accent); }
   .project-grid__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
   .project-grid h2 { font-size: 1.5rem; margin-bottom: var(--space-2); }
-  .project-grid p { color: var(--ink-soft); margin: 0; }
+  .project-grid p { color: var(--ink-soft); margin: 0 0 var(--space-4); }
+  .project-grid__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-grid__links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+  .project-grid__link { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+  .project-grid__link:hover { text-decoration: underline; }
+
   @media (max-width: 767px) {
     .listing-hero { padding-block: var(--space-12) var(--space-6); }
   }
   @media (max-width: 639px) {
     .project-grid { grid-template-columns: 1fr; }
+    .project-featured { flex-direction: column; align-items: flex-start; }
   }
 </style>

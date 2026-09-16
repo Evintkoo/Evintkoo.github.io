@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
 
-const projects = await getCollection('projects');
-const research = await getCollection('research');
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
 
 // Fixed topic taxonomy — mirrors assets/js/data.js's TOPICS list (source of
 // truth for the pre-migration site). Only `id`/`label` are consumed by
@@ -24,29 +24,213 @@ const graphData = {
   research: research.map((r) => ({ id: r.id, label: r.data.title, topic: r.data.topic, href: `/research/${r.id}/` })),
 };
 
-const featured = projects.filter((p) => p.data.featured).concat(projects).slice(0, 6);
+// ── "How it all connects" topic mindmap — same server-side pattern as
+// src/pages/research/[slug].astro (Task 12), reused here for the homepage's
+// full-site topic map instead of the old client-side buildMindmap().
+const byTopic: Record<string, string[]> = {};
+for (const t of topics) byTopic[t.id] = [];
+for (const p of projects) {
+  if (p.data.topic && byTopic[p.data.topic]) byTopic[p.data.topic].push(p.data.title);
+}
+for (const r of research) {
+  if (r.data.topic && byTopic[r.data.topic]) byTopic[r.data.topic].push(r.data.title);
+}
+const mindmapData = {
+  center: 'Build & Research',
+  branches: topics.map((t) => ({ label: t.label, nodes: byTopic[t.id] })).filter((b) => b.nodes.length > 0),
+};
 ---
-<Layout title="Evint Leovonzko" description="Personal portfolio and research showcase — ML infrastructure, computational biology, and quantitative finance.">
+<Layout title="Evint Leovonzko | Cofounder of Kolosal AI" description="Evint Leovonzko, Cofounder of Kolosal AI and Researcher at UBC. Building AI for biology, finance, and beyond.">
+  <!-- ── Hero ── -->
   <section class="hero container">
-    <h1>Evint Leovonzko</h1>
-    <p>Founder of Kolosal AI. Independent quant researcher.</p>
+    <p class="hero__eyebrow">Evint Leovonzko</p>
+    <h1 class="hero__title">Cofounder of<br /><span class="hero__accent-word">Kolosal</span> AI</h1>
+    <p class="hero__description">
+      Making AI genuinely useful, at <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer">Kolosal AI</a> and previously at <strong>Genta Technology</strong>.
+      Researcher at UBC, where I implement and explore how machines decode biology (from circular RNA to tumor suppressor genes) and, occasionally, the stock market.
+    </p>
+    <div class="hero__actions">
+      <a href="#projects" class="btn btn--primary">See my work &rarr;</a>
+      <a href="/about" class="btn btn--ghost">About me</a>
+    </div>
   </section>
 
-  <section class="container">
-    <h2>Featured projects</h2>
-    <ul class="project-list">
-      {featured.map((p) => (
-        <li><a href={`/projects/${p.id}/`}>{p.data.title}</a><p>{p.data.tagline}</p></li>
-      ))}
-    </ul>
-  </section>
-
+  <!-- ── Live Activity (real-time GitHub feed) ── -->
   <section class="container">
     <h2>Recent activity</h2>
     <div id="activityFeed" class="activity-feed"></div>
   </section>
 
+  <!-- ── Projects ── -->
+  <section class="container" id="projects">
+    <p class="section-eyebrow"><a href="/projects">01 / Projects</a></p>
+    <h2>Things I've built</h2>
+    <p class="section-subtitle">Open-source tools, platforms, and applications</p>
+
+    <!--
+      Featured platform card — the Kolosal AI product links to the external
+      kolosal.ai site, not a /projects/<id>/ detail page, so it isn't a
+      content-collection entry. Hardcoded to preserve the source's facts
+      without touching the shared projects schema (src/content.config.ts).
+    -->
+    <article class="project-featured">
+      <div class="project-featured__body">
+        <div class="project-featured__tags">
+          <span class="tag tag--featured">Featured</span>
+          <span class="tag">Co-Founder</span>
+          <span class="tag">MLOps</span>
+        </div>
+        <h3 class="project-featured__title">Kolosal AI</h3>
+        <p class="project-featured__desc">
+          Open-source platform for running large language models locally, so your data stays private and inference stays fast. Custom training and production-ready inference at scale.
+        </p>
+        <div class="project-featured__tech">
+          <span class="tag">Python</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CUDA</span>
+        </div>
+      </div>
+      <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform &nearr;</a>
+    </article>
+
+    <ul class="project-list">
+      {projects.map((p) => (
+        <li>
+          <div class="project-list__tags">
+            {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+          <h3><a href={`/projects/${p.id}/`}>{p.data.title}</a></h3>
+          <p>{p.data.tagline}</p>
+          {p.data.tech.length > 0 && (
+            <div class="project-list__tech">
+              {p.data.tech.map((t) => <span class="tag tag--tech">{t}</span>)}
+            </div>
+          )}
+          <div class="project-list__links">
+            <a href={`/projects/${p.id}/`}>Learn More &rarr;</a>
+            {p.data.paperLink && <a href={p.data.paperLink}>Read Paper &rarr;</a>}
+            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer">Repo &nearr;</a>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ── Research & Analysis ── -->
+  <section class="container" id="research">
+    <p class="section-eyebrow"><a href="/research">02 / Research &amp; Analysis</a></p>
+    <h2>Papers &amp; analyses</h2>
+    <p class="section-subtitle">First-author research in ML, computational biology, quantitative finance, and computational economics</p>
+
+    <ul class="research-list">
+      {research.map((r) => (
+        <li>
+          <a href={`/research/${r.id}/`}>
+            <div class="research-list__tags">
+              {r.data.tags.map((t) => <span class="tag">{t}</span>)}
+              {r.data.metaLabel && <span class="tag tag--meta">{r.data.metaLabel}: {r.data.metaValue}</span>}
+            </div>
+            <h3>{r.data.title}</h3>
+            <p>{r.data.tagline}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ── Topic map ── -->
+  <section class="container" id="map">
+    <p class="section-eyebrow">The Map</p>
+    <h2>How it all connects</h2>
+    <p class="section-subtitle">Every project and paper, mapped to the domains they touch.</p>
+    <div id="mindmapContainer"></div>
+    <p class="map__cta">
+      <a class="btn btn--secondary" href="/research/som-tsk/#playground">Try the live SOM playground &rarr;</a>
+    </p>
+  </section>
+
+  <!-- ── Experience ── -->
+  <section class="container" id="experience">
+    <p class="section-eyebrow">03 / Background</p>
+    <h2>Experience</h2>
+    <ul class="experience-list">
+      <li>
+        <span class="experience-list__year">Current</span>
+        <h4>University of British Columbia</h4>
+        <p class="experience-list__role">Undergraduate Researcher</p>
+        <p>Building deep learning pipelines for circular RNA classification and genomic sequence analysis.</p>
+      </li>
+      <li>
+        <span class="experience-list__year">2023 to Present</span>
+        <h4>Kolosal AI</h4>
+        <p class="experience-list__role">Co-Founder</p>
+        <p>Architecting open-source tools for local LLM deployment, inference optimization, and MLOps automation.</p>
+      </li>
+      <li>
+        <span class="experience-list__year">2024</span>
+        <h4>Publication</h4>
+        <p class="experience-list__role">First Author</p>
+        <p>&ldquo;Deep Learning Algorithm with Gaussian Blur Data Pre-processing in Circular RNA Classification&rdquo;</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── About & Tech Stack ── -->
+  <section class="container about-grid" id="about">
+    <div class="about-grid__text">
+      <p class="section-eyebrow"><a href="/about">04 / Who I am</a></p>
+      <h2>About</h2>
+      <p>
+        I chase problems where data hides something meaningful: a motif buried in RNA sequences,
+        a leading signal in financial time series, or a chance to make ML infrastructure less painful.
+      </p>
+      <p>
+        Currently an undergraduate researcher at UBC building deep learning systems for genomic data,
+        and co-founding <strong>Kolosal AI</strong> to make running LLMs locally actually simple.
+        My first-author publication on circular RNA classification is live in URNCST Journal.
+      </p>
+      <p class="about-grid__aside">
+        When I'm not debugging loss curves, I'm reading about macroeconomics or exploring Vancouver's trails.
+      </p>
+      <a href="/about" class="btn btn--secondary">More about me &rarr;</a>
+    </div>
+    <div class="about-grid__tech">
+      <h3>What I work with</h3>
+      <ul class="tech-grid">
+        <li>Python</li>
+        <li>PyTorch</li>
+        <li>TensorFlow</li>
+        <li>FastAPI</li>
+        <li>Docker</li>
+        <li>CUDA</li>
+        <li>Pandas</li>
+        <li>OpenCV</li>
+        <li>Streamlit</li>
+        <li>MLflow</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="container" id="contact">
+    <div class="cta">
+      <p class="cta__badge"><span class="cta__badge-dot"></span> Open to opportunities</p>
+      <h2 class="cta__title">Let's build<br /><em>something</em> together</h2>
+      <p class="cta__description">
+        Always open to interesting conversations, whether it's a research collaboration,
+        an open-source idea, or a dataset that made you stop scrolling.
+      </p>
+      <div class="cta__actions">
+        <a href="https://www.linkedin.com/in/evint-leovonzko" target="_blank" rel="noopener noreferrer" class="btn btn--primary">LinkedIn</a>
+        <a href="https://github.com/Evintkoo" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">GitHub</a>
+      </div>
+    </div>
+  </section>
+
   <script type="application/json" id="graph-data" set:html={JSON.stringify(graphData)} />
+  <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
 </Layout>
 
 <script>
@@ -55,13 +239,81 @@ const featured = projects.filter((p) => p.data.featured).concat(projects).slice(
   if (el) initActivityFeed(el, 'Evintkoo');
 </script>
 
+<script>
+  import { initMindmap } from '../islands/mindmap';
+  const el = document.getElementById('mindmapContainer');
+  const dataEl = document.getElementById('mindmap-data');
+  if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
+</script>
+
 <style>
   .hero { padding-block: var(--space-24) var(--space-12); }
-  .project-list { list-style: none; padding: 0; display: grid; gap: var(--space-6); }
+  .hero__eyebrow { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-4); }
+  .hero__title { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-6); }
+  .hero__accent-word { color: var(--accent); font-style: italic; }
+  .hero__description { color: var(--ink-soft); font-size: 1.125rem; line-height: 1.7; max-width: 640px; margin-bottom: var(--space-8); }
+  .hero__description a { color: var(--accent); }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
 
-  @media (max-width: 767px) {
-    .hero { padding-block: var(--space-16) var(--space-8); }
-  }
+  .btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); border-radius: var(--radius-md); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+  .btn--primary { background: var(--ink); color: var(--paper); }
+  .btn--secondary { background: transparent; border: 1px solid var(--border); color: var(--ink); }
+  .btn--ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+
+  .section-eyebrow { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-3); }
+  .section-eyebrow a { color: inherit; text-decoration: none; }
+  .section-eyebrow a:hover { color: var(--accent); }
+  .section-subtitle { color: var(--ink-soft); margin-bottom: var(--space-8); }
+
+  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag--featured { color: var(--accent); border-color: var(--accent); }
+  .tag--tech, .tag--meta { color: var(--ink-faint); }
+  .tag--meta { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Projects ── */
+  .project-featured { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); background: var(--paper-raised); margin-bottom: var(--space-8); }
+  .project-featured__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-featured__title { font-size: 1.75rem; margin-bottom: var(--space-3); }
+  .project-featured__desc { color: var(--ink-soft); max-width: 640px; margin-bottom: var(--space-4); }
+  .project-featured__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .project-featured__link { flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
+
+  .project-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-16); }
+  .project-list > li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); }
+  .project-list h3 { font-size: 1.35rem; margin-bottom: var(--space-2); }
+  .project-list h3 a { color: inherit; text-decoration: none; }
+  .project-list h3 a:hover { color: var(--accent); }
+  .project-list__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-list p { color: var(--ink-soft); margin: 0 0 var(--space-4); }
+  .project-list__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-list__links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+  .project-list__links a { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+
+  /* ── Research ── */
+  .research-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-16); }
+  .research-list a { display: block; text-decoration: none; color: inherit; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); }
+  .research-list a:hover { border-color: var(--ink-soft); }
+  .research-list__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .research-list h3 { font-size: 1.25rem; margin-bottom: var(--space-2); }
+  .research-list p { color: var(--ink-soft); margin: 0; }
+
+  /* ── Topic map ── */
+  #mindmapContainer { max-width: 900px; margin-inline: auto; }
+  #mindmapContainer :global(svg) { width: 100%; height: auto; display: block; }
+  .map__cta { text-align: center; margin-top: var(--space-8); margin-bottom: var(--space-16); }
+
+  /* ── Experience ── */
+  .experience-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-8); margin-bottom: var(--space-16); }
+  .experience-list__year { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
+  .experience-list h4 { margin-block: var(--space-2) var(--space-1); }
+  .experience-list__role { color: var(--ink-soft); font-weight: 600; margin-bottom: var(--space-2); }
+  .experience-list p:last-child { color: var(--ink-soft); }
+
+  /* ── About & tech stack ── */
+  .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-16); margin-bottom: var(--space-16); align-items: start; }
+  .about-grid__aside { color: var(--ink-faint); font-style: italic; }
+  .about-grid__tech ul.tech-grid { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .about-grid__tech li { font-family: var(--font-mono); font-size: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3); }
 
   /* ── Activity feed ──
      initActivityFeed() builds the panel markup via innerHTML, so none of
@@ -269,5 +521,19 @@ const featured = projects.filter((p) => p.data.featured).concat(projects).slice(
     .activity-feed :global(.activity-feed__head) { flex-direction: column; align-items: flex-start; }
     .activity-feed :global(.activity-feed__focus) { align-items: flex-start; text-align: left; }
     .activity-feed :global(.activity-feed__focus-repo) { max-width: 82vw; }
+  }
+
+  /* ── CTA ── */
+  .cta { text-align: center; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-16); background: var(--paper-raised); margin-bottom: var(--space-16); }
+  .cta__badge { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-bottom: var(--space-6); }
+  .cta__badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .cta__title { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: var(--space-6); }
+  .cta__title em { font-style: italic; color: var(--accent); }
+  .cta__description { color: var(--ink-soft); max-width: 560px; margin: 0 auto var(--space-8); }
+  .cta__actions { display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap; }
+
+  @media (max-width: 767px) {
+    .hero { padding-block: var(--space-16) var(--space-8); }
+    .about-grid { grid-template-columns: 1fr; }
   }
 </style>

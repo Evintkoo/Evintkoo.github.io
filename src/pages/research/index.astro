@@ -21,6 +21,7 @@ const research = (await getCollection('research')).sort((a, b) => a.data.order -
           <a href={`/research/${r.id}/`}>
             <div class="research-grid__tags">
               {r.data.tags.map((t) => <span class="tag">{t}</span>)}
+              {r.data.metaLabel && <span class="tag tag--meta">{r.data.metaLabel}: {r.data.metaValue}</span>}
             </div>
             <h2>{r.data.title}</h2>
             <p>{r.data.tagline}</p>
@@ -33,6 +34,8 @@ const research = (await getCollection('research')).sort((a, b) => a.data.order -
 <style>
   .listing-hero { padding-block: var(--space-16) var(--space-8); }
   .listing-hero__subtitle { color: var(--ink-soft); margin-top: var(--space-4); }
+  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag--meta { color: var(--accent); border-color: var(--accent); }
   .research-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   .research-grid a { text-decoration: none; color: inherit; display: block; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
   .research-grid a:hover { border-color: var(--ink-soft); }
