@@ -11,6 +11,38 @@ metrics:
     value: "93.7%"
   - label: "GDP CAGR"
     value: "4.6%"
+simpleSummary: |-
+  We built a small, simulated economy on a computer. Every household, firm,
+  and bank makes its own decisions day by day. The simulation includes
+  10,000 households, 1,000 firms, 10 banks, a government, and a central bank
+  that follows a standard interest-rate rule. We ran it for 10 years, about
+  3,650 simulated days. The result matched real-world data on four of twelve
+  checkpoints: the economy grew at 4.6% per year, bad years were worse than
+  good years were good (γ₁ = −0.59), and wages made up 72.8% of total
+  income.
+
+  The central bank's interest rate hits zero on day one and stays stuck
+  there: the zero lower bound, or ZLB. Run the simulation 50 times with
+  different starting conditions, and the rate is stuck at zero for 93.7% of
+  the time on average (95% CI: 6.0%–96.1%). That matches what happened in
+  Japan after 1998 and the Euro area after 2013, and nobody had documented
+  it in this kind of model before. The wide range reflects two distinct
+  outcomes: some runs escape the zero floor part of the time, while others
+  never leave it.
+
+  The simulation also misses real-world data in five clear ways: nearly
+  everyone has a job, prices fall instead of rise, the economy is too
+  steady, the rich and poor are too close together, and interest rates stay
+  stuck at zero. Each miss traces back to a specific design choice we made.
+  Two of the misses come from making productivity growth too smooth and
+  predictable: the economy moves only 0.12% per year (real economies move
+  2–5%), and good years tend to follow bad ones instead of clustering (ρ₁ =
+  −0.18 vs. real-world above 0.70).
+
+  A stripped-down model with only one sector shows, by what it can't do,
+  which features of the real economy need a richer two-sector design. It
+  pinpoints exactly when boom-and-bust cycles return as we add complexity
+  back in. JEL codes: C63, E12, E32, E44, E62, G01.
 ---
 
 ## Abstract

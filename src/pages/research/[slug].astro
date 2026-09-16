@@ -53,12 +53,36 @@ const mindmapData = {
     <div id="mindmapContainer"></div>
   </section>
   <div class="research-body container">
-    <div class="research-tags">
-      {data.tags.map((t) => <span class="tag">{t}</span>)}
+    <div class="research-tags-row">
+      <div class="research-tags">
+        {data.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+      {data.simpleSummary && (
+        <button
+          type="button"
+          id="cavemanToggle"
+          class="caveman-toggle"
+          aria-label="Toggle simple mode"
+          title="Simple mode: plain-English rewrite"
+        >
+          <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"></rect>
+            <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"></path>
+          </svg>
+          <span class="caveman-toggle__label">Simple mode</span>
+        </button>
+      )}
     </div>
     <article class="research-content">
       <Content />
     </article>
+    {data.simpleSummary && (
+      <div class="simple-summary">
+        {data.simpleSummary.split('\n\n').map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+    )}
     {relatedResearch.length > 0 && (
       <section class="cards" aria-labelledby="related-papers-heading">
         <p id="related-papers-heading" class="cards__heading">Related papers</p>
@@ -84,9 +108,40 @@ const mindmapData = {
   if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
 </script>
 
+<script>
+  import { initCavemanToggle } from '../../islands/caveman-mode';
+  const cavemanBtn = document.getElementById('cavemanToggle');
+  if (cavemanBtn) initCavemanToggle(cavemanBtn);
+</script>
+
 <style>
   .research-body { padding-block: var(--space-8) var(--space-24); }
-  .research-tags { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); }
+  .research-tags-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8); }
+  .research-tags { display: flex; gap: var(--space-2); }
+  .caveman-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base);
+  }
+  .caveman-toggle:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .caveman-icon { width: 16px; height: 16px; }
+  html.caveman .caveman-toggle { color: var(--accent); border-color: var(--accent); }
+
+  .research-content { display: block; }
+  .simple-summary { display: none; }
+  html.caveman .research-content { display: none; }
+  html.caveman .simple-summary { display: block; }
+  .simple-summary p { margin-bottom: var(--space-4); line-height: 1.7; }
+
   .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
 
