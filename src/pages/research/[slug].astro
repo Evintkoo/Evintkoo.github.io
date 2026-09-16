@@ -11,9 +11,44 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { data } = entry;
+
+// ── Server-side topic mindmap (replaces old client-side buildMindmap()) ──
+const TOPICS = [
+  { id: 'ml', label: 'ML' },
+  { id: 'bio', label: 'Biology' },
+  { id: 'fin', label: 'Finance' },
+  { id: 'econ', label: 'Economics' },
+  { id: 'infra', label: 'AI Infra' },
+  { id: 'neuro', label: 'Neuro' },
+] as const;
+
+const [allProjects, allResearch] = await Promise.all([
+  getCollection('projects'),
+  getCollection('research'),
+]);
+
+const byTopic: Record<string, string[]> = {};
+for (const t of TOPICS) byTopic[t.id] = [];
+for (const p of allProjects) {
+  if (p.data.topic && byTopic[p.data.topic]) byTopic[p.data.topic].push(p.data.title);
+}
+for (const r of allResearch) {
+  if (r.data.topic && byTopic[r.data.topic]) byTopic[r.data.topic].push(r.data.title);
+}
+
+const mindmapData = {
+  center: 'Build & Research',
+  branches: TOPICS.map((t) => ({ label: t.label, nodes: byTopic[t.id] })).filter(
+    (b) => b.nodes.length > 0,
+  ),
+};
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
   <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} />
+  <section id="overview" class="mindmap-section container">
+    <p class="mindmap-section__heading">Concept Overview</p>
+    <div id="mindmapContainer"></div>
+  </section>
   <div class="research-body container">
     <div class="research-tags">
       {data.tags.map((t) => <span class="tag">{t}</span>)}
@@ -23,11 +58,54 @@ const { data } = entry;
     </article>
     <a href="/research" class="back-to-portfolio">Back to Research</a>
   </div>
+  <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
 </Layout>
+
+<script>
+  import { initMindmap } from '../../islands/mindmap';
+  const el = document.getElementById('mindmapContainer');
+  const dataEl = document.getElementById('mindmap-data');
+  if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
+</script>
 
 <style>
   .research-body { padding-block: var(--space-8) var(--space-24); }
   .research-tags { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); }
   .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
+
+  .mindmap-section { padding-top: var(--space-8); }
+  .mindmap-section__heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-4);
+  }
+  #mindmapContainer {
+    width: 100%;
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  #mindmapContainer svg { width: 100%; height: auto; display: block; }
+
+  @keyframes mindmap-in {
+    from { opacity: 0; transform: scale(0.75); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  #mindmapContainer :global(.mindmap-node) {
+    animation: mindmap-in 0.35s ease-out both;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes mindmap-line-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  #mindmapContainer :global(.mindmap-line) {
+    animation: mindmap-line-in 0.25s ease-out both;
+  }
 </style>
