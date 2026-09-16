@@ -1,0 +1,53 @@
+---
+---
+<nav class="nav">
+  <div class="nav__container container">
+    <a href="/" class="nav__logo">
+      <span class="nav__logo-text">Evint Leovonzko</span>
+    </a>
+    <div class="nav__menu">
+      <a href="/projects" class="nav__link">Projects</a>
+      <a href="/research" class="nav__link">Research</a>
+      <a href="/about" class="nav__link">About</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"></circle>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<nav class="bottom-nav" aria-label="Primary">
+  <a href="/" class="bottom-nav__tab">Home</a>
+  <a href="/projects" class="bottom-nav__tab">Projects</a>
+  <a href="/research" class="bottom-nav__tab">Research</a>
+  <a href="/about" class="bottom-nav__tab">About</a>
+</nav>
+
+<style>
+  .nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .nav__container { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-4); }
+  .nav__logo { text-decoration: none; font-family: var(--font-mono); font-weight: 600; color: var(--ink); }
+  .nav__menu { display: flex; gap: var(--space-6); }
+  .nav__link { text-decoration: none; color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.9rem; }
+  .nav__link:hover { color: var(--accent); }
+  .theme-toggle { background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer; color: var(--ink); }
+  .bottom-nav { display: none; }
+  @media (max-width: 767px) {
+    .nav__menu { display: none; }
+    .bottom-nav {
+      display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: var(--paper-raised); border-top: 1px solid var(--border);
+      justify-content: space-around; padding-block: var(--space-2);
+    }
+    .bottom-nav__tab { text-decoration: none; color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.75rem; }
+  }
+</style>
+
+<script>
+  import { initThemeToggle } from '../islands/theme-toggle';
+  const btn = document.getElementById('themeToggle');
+  if (btn) initThemeToggle(btn);
+</script>
