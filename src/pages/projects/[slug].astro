@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import TechPills from '../../components/TechPills.astro';
+import ProjectCTA from '../../components/ProjectCTA.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { data } = entry;
+---
+<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
+  <FeatureGrid />
+  <section class="proj-hero container">
+    <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
+    <div class="proj-hero__tags">
+      {data.tags.map((t) => <a class="tag" href={`/projects?tag=${encodeURIComponent(t)}`}>{t}</a>)}
+    </div>
+    <h1>{data.title}</h1>
+    <p class="proj-hero__subtitle">{data.tagline}</p>
+  </section>
+
+  <div class="proj-body container">
+    <article class="proj-content">
+      <Content />
+    </article>
+    <TechPills tech={data.tech} />
+    <ProjectCTA repo={data.repo} demo={data.demo} />
+  </div>
+</Layout>
+
+<style>
+  .proj-hero { padding-block: var(--space-16) var(--space-8); }
+  .proj-breadcrumb { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); text-decoration: none; }
+  .proj-hero__tags { display: flex; gap: var(--space-2); margin-block: var(--space-4); }
+  .tag { font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-2); text-decoration: none; color: var(--ink-soft); }
+  .proj-hero__subtitle { color: var(--ink-soft); max-width: 640px; margin-top: var(--space-4); }
+  .proj-body { padding-block: var(--space-8) var(--space-24); }
+  .proj-content :global(h2) { margin-top: var(--space-12); font-size: 1.75rem; }
+  .proj-content :global(ul) { padding-left: var(--space-6); }
+</style>
