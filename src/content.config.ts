@@ -25,7 +25,8 @@ const research = defineCollection({
     tagline: z.string(),
     tags: z.array(z.string()),
     topic,
-    date: z.coerce.date(),
+    date: z.coerce.date().optional(),
+    order: z.number(),
     metrics: z
       .array(z.object({ label: z.string(), value: z.string() }))
       .default([]),
