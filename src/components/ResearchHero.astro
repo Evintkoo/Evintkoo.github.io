@@ -10,8 +10,10 @@ interface Props {
   pdf?: string;
   externalLink?: string;
   repoLink?: string;
+  pairedLink?: string;
+  pairedLinkLabel?: string;
 }
-const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink } = Astro.props;
+const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink, pairedLink, pairedLinkLabel } = Astro.props;
 ---
 <section class="research-hero container">
   <h1>{title}</h1>
@@ -31,7 +33,7 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
       ))}
     </div>
   )}
-  {(metaLabel && metaValue) || pdf || externalLink || repoLink ? (
+  {(metaLabel && metaValue) || pdf || externalLink || repoLink || pairedLink ? (
     <div class="research-hero__paper">
       {metaLabel && metaValue && (
         <p class="research-hero__meta-line"><strong>{metaLabel}:</strong> {metaValue}</p>
@@ -44,6 +46,7 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
             </a>
           )}
       {repoLink && <a href={repoLink} target="_blank" rel="noopener" class="btn btn--secondary">View Code</a>}
+      {pairedLink && <a href={pairedLink} class="btn btn--secondary">{pairedLinkLabel || 'Companion paper'}</a>}
     </div>
   ) : null}
 </section>

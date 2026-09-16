@@ -54,6 +54,13 @@ const research = defineCollection({
     // separate from the unused `date` field above, which stays untouched.
     metaLabel: z.string().optional(),
     metaValue: z.string().optional(),
+    // Internal cross-link to a paired/companion paper (e.g. the
+    // keynesian-abm-fiscal <-> keynesian-abm-coordination pair, Task 24).
+    // Site-relative path, not a full URL — same rationale as `pdf` above.
+    // Rendered as an extra secondary button in ResearchHero.astro,
+    // alongside (not instead of) pdf/externalLink/repoLink.
+    pairedLink: z.string().optional(),
+    pairedLinkLabel: z.string().optional(),
     simpleSummary: z.string().optional(),
     // Serializable chart data/config only (Task 20's ResearchChartConfig).
     // formatX/formatY/formatValue are functions and cannot survive a

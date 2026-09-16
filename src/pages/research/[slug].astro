@@ -47,7 +47,7 @@ const mindmapData = {
 };
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
-  <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} authors={data.authors} affiliation={data.affiliation} metaLabel={data.metaLabel} metaValue={data.metaValue} pdf={data.pdf} externalLink={data.externalLink} repoLink={data.repoLink} />
+  <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} authors={data.authors} affiliation={data.affiliation} metaLabel={data.metaLabel} metaValue={data.metaValue} pdf={data.pdf} externalLink={data.externalLink} repoLink={data.repoLink} pairedLink={data.pairedLink} pairedLinkLabel={data.pairedLinkLabel} />
   <section id="overview" class="mindmap-section container">
     <p class="mindmap-section__heading">Concept Overview</p>
     <div id="mindmapContainer"></div>
@@ -144,6 +144,15 @@ const mindmapData = {
       // formatX: signed lag + 'm', formatY: v.toFixed(2)
       cfg.formatX = (x) => `${Number(x) > 0 ? '+' : ''}${x}m`;
       cfg.formatY = (v) => v.toFixed(2);
+    } else if (format === 'grn-accuracy-bar') {
+      // grn-modular-vs-monolithic.html's original inline chart script:
+      // formatX: index into ['Balanced acc', '5:1 acc'], formatValue: v.toFixed(1)
+      cfg.formatX = (_, i) => ['Balanced acc', '5:1 acc'][i];
+      cfg.formatValue = (v) => v.toFixed(1);
+    } else if (format === 'abm-quarters') {
+      // keynesian-abm-coordination.html's original inline chart script:
+      // formatX: 'Q' + x (formatY left at default Math.round, matching source)
+      cfg.formatX = (x) => `Q${x}`;
     }
     initResearchChart(chartEl, cfg);
   }
