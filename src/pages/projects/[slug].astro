@@ -15,6 +15,7 @@ const { Content, headings } = await render(entry);
 const { data } = entry;
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
+  {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}
   <FeatureGrid />
   <section class="proj-hero container">
     <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
