@@ -1,0 +1,25 @@
+---
+title: "PyTorch Inference Framework"
+tagline: "Production-ready inference with TensorRT acceleration. Handles batching, model versioning, and GPU memory management. Built under Kolosal AI."
+tags: ["Open Source", "Infrastructure"]
+topic: "infra"
+tech: ["PyTorch", "TensorRT", "FastAPI", "Docker", "CUDA", "Python"]
+repo: "https://github.com/KolosalAI/torch-inference"
+featured: false
+order: 2
+---
+
+## Overview
+
+Running PyTorch models in production is messy: GPU memory leaks, no batching, manual versioning, and no API layer. This framework wraps all of that into a clean, deployable service.
+
+Built as part of the Kolosal AI open-source toolchain, it compiles models with TensorRT for maximum GPU throughput, exposes them via a FastAPI endpoint, and ships in Docker so deployment is a single command.
+
+## Features
+
+- **TensorRT Acceleration** — Compiles PyTorch models to TensorRT engines for maximum GPU throughput with minimal latency.
+- **Dynamic Batching** — Automatically groups incoming requests into optimal batch sizes to saturate GPU compute.
+- **Model Versioning** — Register and serve multiple model versions simultaneously, with instant rollback support.
+- **GPU Memory Management** — Pools and recycles GPU memory across requests to prevent OOM errors under load.
+- **FastAPI Endpoints** — Auto-generated REST API with async support, health checks, and OpenAPI docs.
+- **Docker-ready** — Ships as a Docker image. Deploy to any GPU-enabled environment with a single command.
