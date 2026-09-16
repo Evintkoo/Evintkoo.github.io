@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ResearchHero from '../../components/ResearchHero.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('research');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+---
+<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
+  <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} />
+  <div class="research-body container">
+    <div class="research-tags">
+      {data.tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+    <article class="research-content">
+      <Content />
+    </article>
+    <a href="/research" class="back-to-portfolio">Back to Research</a>
+  </div>
+</Layout>
+
+<style>
+  .research-body { padding-block: var(--space-8) var(--space-24); }
+  .research-tags { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); }
+  .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
+  .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
+</style>

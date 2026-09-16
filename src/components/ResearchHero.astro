@@ -1,0 +1,26 @@
+---
+interface Props { title: string; tagline: string; metrics: { label: string; value: string }[] }
+const { title, tagline, metrics } = Astro.props;
+---
+<section class="research-hero container">
+  <h1>{title}</h1>
+  <p class="research-hero__tagline">{tagline}</p>
+  {metrics.length > 0 && (
+    <div class="research-hero__metrics">
+      {metrics.map((m) => (
+        <div class="hero-metric">
+          <span class="hero-metric__value">{m.value}</span>
+          <span class="hero-metric__label">{m.label}</span>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
+<style>
+  .research-hero { padding-block: var(--space-16) var(--space-8); }
+  .research-hero__tagline { color: var(--ink-soft); max-width: 700px; margin-top: var(--space-4); }
+  .research-hero__metrics { display: flex; gap: var(--space-8); margin-top: var(--space-8); }
+  .hero-metric { display: flex; flex-direction: column; }
+  .hero-metric__value { font-family: var(--font-display); font-size: 2rem; }
+  .hero-metric__label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); }
+</style>
