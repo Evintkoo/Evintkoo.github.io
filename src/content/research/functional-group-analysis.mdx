@@ -103,7 +103,7 @@ Four research questions frame the analysis:
 3. **Cluster Substructure** — Does unsupervised clustering resolve interpretable FG-level substructure? What is the relationship between aromatic character and drug-likeness?
 4. **Entailed vs. Empirical** — To what extent are QED-stratified patterns artefacts of QED's construction versus genuine chemical signals? Addressed through counterfactual QED decomposition, the study's primary methodological contribution.
 
-## Methods
+## Methodology
 
 1. **Dataset & Molecular Graph Construction** — 249,455 drug-like molecules from ZINC15 (Lipinski-compliant, commercially available), deduplicated by canonical SMILES. Each molecule represented as undirected graph G = (V, E) with **29-dimensional node features** (atom type one-hot, degree, charge, hybridisation, aromaticity, ring membership, atomic mass, chirality) and **9-dimensional edge features** (bond type, conjugation, ring membership, stereochemistry). Mean graph size: 23.2 atoms, 24.9 bonds; totalling 5.78M atoms and 6.21M bonds. `tags: ZINC15, 249,455 Molecules, 29-dim Node Features, 9-dim Edge Features`
 2. **Functional Group Detection** — Substructure pattern matching identifies **22 functional group types** across six categories: oxygen-containing (hydroxyl, carboxyl, ester, ether, ketone, aldehyde, epoxide), nitrogen-containing (primary/secondary/tertiary amine, amide, nitro, nitrile, imine), sulfur-containing (thiol, thioether, sulfonyl, sulfoxide), halogens, ring systems (phenyl, heterocycle), and phosphorus (phosphate). Priority-based two-pass algorithm resolves overlapping substructures. **Validated at 96.3% agreement with RDKit** (range: 91.8% ketone to 99.7% nitro). `tags: 22 FG Types, Two-Pass Matching, 96.3% RDKit Agreement`
@@ -174,7 +174,7 @@ This work contributes an integrated analysis pipeline (graph-level variational e
 
 The study is descriptive; no bioactivity validation was performed. The critical next step is overlaying ChEMBL bioactivity data to test whether the structural organisation identified here predicts shared pharmacological activity. Additional priorities include extending to the COCONUT natural product database, incorporating 3D conformer generation, and using stratified SOM centroids as conditioning variables for constrained molecular generation.
 
-### References
+## References
 
 1. **Bickerton, G. R., Paolini, G. V., Besnard, J., Muresan, S., & Hopkins, A. L. (2012).** Quantifying the chemical beauty of drugs. *Nature Chemistry*, 4(2), 90–98.
 2. **Lipinski, C. A., Lombardo, F., Dominy, B. W., Feeney, P. J. (1997).** Experimental and computational approaches to estimate solubility and permeability in drug discovery. *Advanced Drug Delivery Reviews*, 23(1–3), 3–25.
