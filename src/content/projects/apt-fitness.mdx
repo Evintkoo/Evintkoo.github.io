@@ -1,6 +1,7 @@
 ---
 title: "APT Fitness Assistant"
 tagline: "Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations: your AI gym partner, running locally from your webcam."
+ogDescription: "Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations."
 tags: ["Open Source", "Computer Vision"]
 topic: null
 tech: ["Python", "MediaPipe", "OpenCV", "Streamlit", "NumPy"]
@@ -9,13 +10,13 @@ featured: false
 order: 5
 ---
 
-## Overview
+## What is it?
 
 Most people lift alone without feedback on their form, and bad form leads to injury. APT (Automated Personal Trainer) uses your webcam and MediaPipe's pose landmark detection to give you real-time, frame-by-frame feedback on movement quality.
 
 It counts reps by tracking joint angles through the full range of motion, flags form breaks with visual overlays, and suggests adjustments. Everything runs locally, with no cloud, no subscription, and no data leaving your device. Built as a Streamlit app so setup is a single `pip install`.
 
-## Features
+## What it does
 
 - **Pose Estimation** — MediaPipe detects 33 body landmarks per frame in real time: shoulders, elbows, hips, knees, and more.
 - **Form Correction** — Compares your joint angles against reference ranges and flags deviations with on-screen cues.

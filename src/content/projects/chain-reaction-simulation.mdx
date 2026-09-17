@@ -1,6 +1,7 @@
 ---
 title: "Chain Reaction Simulation"
 tagline: "A high-performance nuclear chain reaction simulator written in Rust: GPU-accelerated particle physics, real-time 3D visualization, and a 150+ isotope library drawn from ENDF/B-VIII.0 nuclear data."
+ogDescription: "High-performance nuclear chain reaction simulator in Rust with GPU-accelerated physics and real-time 3D visualization."
 tags: ["Open Source", "Physics"]
 topic: null
 tech: ["Rust", "wgpu", "winit", "Vulkan / Metal / DX12", "ENDF/B-VIII.0"]
@@ -9,13 +10,13 @@ featured: false
 order: 6
 ---
 
-## Overview
+## What is it?
 
 Most nuclear simulation tools are either too high-level to be educational or too specialized to be accessible. This project bridges that gap: a fully configurable simulator that runs real nuclear physics (fission, neutron capture, decay chains) at interactive speeds using GPU compute shaders.
 
 Built in Rust with wgpu for cross-platform GPU acceleration (Vulkan, Metal, DX12), it ships both a real-time 3D renderer for visualization and a headless mode for batch experiments and CI. The nuclear data comes from ENDF/B-VIII.0, with point-wise cross-sections and log-log interpolation replacing crude 2-point approximations.
 
-## Features
+## What it does
 
 - **Nuclear Physics Engine** — Fission, neutron capture, and radioactive decay with energy-dependent cross-sections, asymmetric fission product yields, and full decay chain tracking.
 - **ENDF/B-VIII.0 Data** — ~1000 energy points per isotope with log-log interpolation packed into a compact binary .ndb database, replacing crude 2-point cross-section models.

@@ -18,6 +18,11 @@ const projects = defineCollection({
     ctaSubtitle: z.string().optional(),
     ctaLink: z.string().url().optional(),
     ctaLabel: z.string().optional(),
+    // Legacy per-page og:description copy where it genuinely differs from
+    // `tagline` (final-review.md I1) — og:title never differed from
+    // `${title} | Evint Leovonzko` on any project page, so no ogTitle field
+    // is needed here.
+    ogDescription: z.string().optional(),
     featured: z.boolean().default(false),
     hasPlayground: z.boolean().default(false),
     order: z.number(),
@@ -41,6 +46,12 @@ const research = defineCollection({
     hasPlayground: z.boolean().default(false),
     authors: z.string().optional(),
     affiliation: z.string().optional(),
+    // Legacy per-page og:title/og:description copy where it genuinely
+    // differs from `title`/`tagline` (final-review.md I1) — e.g. grasp's
+    // og:title is "GRASP: Autonomous Spectral Clustering" while its <title>
+    // is the full "GRASP: Graph-Routed Adaptive Spectral Partitioning".
+    ogTitle: z.string().optional(),
+    ogDescription: z.string().optional(),
     metrics: z
       .array(z.object({ label: z.string(), value: z.string() }))
       .default([]),

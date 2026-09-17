@@ -14,13 +14,13 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const { data } = entry;
 ---
-<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline}>
+<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogDescription={data.ogDescription}>
   {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}
   <FeatureGrid />
   <section class="proj-hero container">
     <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
     <div class="proj-hero__tags">
-      {data.tags.map((t) => <a class="tag" href={`/projects?tag=${encodeURIComponent(t)}`}>{t}</a>)}
+      {data.tags.map((t) => <span class="tag">{t}</span>)}
     </div>
     <h1>{data.title}</h1>
     <p class="proj-hero__subtitle">{data.tagline}</p>
@@ -75,7 +75,12 @@ const { data } = entry;
         </div>
       </div>
     )}
-    <TechPills tech={data.tech} />
+    {data.tech.length > 0 && (
+      <>
+        <h2 class="proj-tech-heading">Built with</h2>
+        <TechPills tech={data.tech} />
+      </>
+    )}
     <ProjectCTA
       repo={data.repo}
       demo={data.demo}
@@ -105,6 +110,7 @@ const { data } = entry;
   .proj-body { padding-block: var(--space-8) var(--space-24); }
   .proj-content :global(h2) { margin-top: var(--space-12); font-size: 1.75rem; }
   .proj-content :global(ul) { padding-left: var(--space-6); }
+  .proj-tech-heading { margin-top: var(--space-12); font-size: 1.75rem; }
 
   /* ── SOM playground (som-plus; also reused by the som-tsk research page) ──
      All markup below (.pg and descendants) is rendered directly by this

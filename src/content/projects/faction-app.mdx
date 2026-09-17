@@ -1,6 +1,7 @@
 ---
 title: "Faction: Stock Analysis App"
 tagline: "A desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 1.5B LLM. No cloud, no subscriptions, fully private."
+ogDescription: "Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM. No cloud required."
 tags: ["Open Source", "Finance"]
 topic: "fin"
 tech: ["Tauri v2", "Rust", "React", "TypeScript", "candle (HuggingFace)", "Qwen2.5 1.5B", "Metal / CPU"]
@@ -9,13 +10,13 @@ featured: false
 order: 7
 ---
 
-## Overview
+## What is it?
 
 Most stock analysis tools are either cloud-dependent, subscription-gated, or black boxes. Faction is a fully local alternative: a Tauri desktop app that scores stocks on both technical (price action, candlestick patterns, momentum) and fundamental (ROE, FCF, debt/equity) dimensions using Keras models loaded directly via a pure-Rust HDF5 reader.
 
 The AI chat feature runs Qwen2.5 1.5B locally via Hugging Face's *candle* inference library, Metal-accelerated on Apple Silicon, CPU elsewhere. Market data comes from Yahoo Finance with Tiingo as a fallback. Everything stays on your machine.
 
-## Features
+## What it does
 
 - **Technical Analysis** — Scores stocks based on price action (candlestick patterns, momentum indicators) using a trained Keras model running entirely on-device.
 - **Fundamental Analysis** — Evaluates financial health through key ratios (ROE, free cash flow, debt/equity) scored by a second on-device ML model.
