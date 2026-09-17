@@ -4,6 +4,7 @@ import Layout from '../../components/Layout.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
 import TechPills from '../../components/TechPills.astro';
 import ProjectCTA from '../../components/ProjectCTA.astro';
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('projects');
@@ -77,7 +78,7 @@ const { data } = entry;
     )}
     {data.tech.length > 0 && (
       <>
-        <h2 class="proj-tech-heading">Built with</h2>
+        <ProjSectionHeading label="Stack">Built with</ProjSectionHeading>
         <TechPills tech={data.tech} />
       </>
     )}
@@ -108,9 +109,7 @@ const { data } = entry;
   .proj-hero__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-4); }
   .proj-hero__subtitle { color: var(--ink-soft); max-width: 640px; margin-top: var(--space-4); }
   .proj-body { padding-block: var(--space-8) var(--space-24); }
-  .proj-content :global(h2) { margin-top: var(--space-12); font-size: 1.75rem; }
   .proj-content :global(ul) { padding-left: var(--space-6); }
-  .proj-tech-heading { margin-top: var(--space-12); font-size: 1.75rem; }
 
   /* ── SOM playground (som-plus; also reused by the som-tsk research page) ──
      All markup below (.pg and descendants) is rendered directly by this

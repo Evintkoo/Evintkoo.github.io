@@ -11,13 +11,15 @@ featured: false
 order: 10
 ---
 
-## What is it?
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
 
 TRIBE v2 is a neural encoding playground that bridges cognitive neuroscience and modern AI. Given a stimulus (a passage of text, an image, or an audio clip), the tool predicts which cortical regions activate and by how much, then renders the result as real-time BOLD signal intensity on an interactive 3D brain model.
 
 The prediction pipeline uses multimodal encoders: LLaMA for language, CLIP for vision, and Wav2Vec for audio. A Rust backend handles model weights and inference via the `tribe-downloader` module, while a Three.js frontend renders the brain geometry (loaded from a compressed `.obj.gz` mesh) with per-region color overlays driven by live predictions.
 
-## What it does
+<ProjSectionHeading label="Features">What it does</ProjSectionHeading>
 
 - **3D Brain Visualization** — Interactive Three.js rendering of a volumetric brain mesh with real-time BOLD signal colormap overlays across six cortical regions, rotatable from lateral, medial, and dorsal perspectives.
 - **Multimodal Stimulus Input** — Accepts text (narrative, poetry, technical, isolated sentences), images (natural scenes, faces, objects, abstract), and audio (podcast, music, ambient, speech-in-noise) as prediction inputs.

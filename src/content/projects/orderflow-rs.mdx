@@ -10,13 +10,15 @@ featured: false
 order: 11
 ---
 
-## What is it?
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
 
 orderflow-rs is a research pipeline for studying high-frequency limit order book dynamics. It grows out of a companion paper, *Predictability of High-Frequency Limit Order Book Dynamics*, and runs reproducibly from raw Dukascopy tick data all the way to ranked IC reports without any external ML framework.
 
 The pipeline covers four research phases: synthetic LOB simulation to validate OFI signal properties (P4), real FX data evaluation across ten currency pairs (P5), walk-forward backtesting with realistic transaction costs (P6), and a technical indicator IC sweep across 1s–300s horizons (P7). Every phase produces CSV reports you can reproduce locally.
 
-## What the data says
+<ProjSectionHeading label="Research Results">What the data says</ProjSectionHeading>
 
 - **P4: Simulation** — OFI_1 predicts synthetic price moves with IC 0.15–0.33. Hypothesis validated in controlled LOB environment.
 - **P5: Real FX Data** — Partial signal: OFI_1 predicts returns on 5 of 10 currency pairs with IC 0.04–0.10. Pair-dependent predictability.
@@ -25,7 +27,7 @@ The pipeline covers four research phases: synthetic LOB simulation to validate O
 - **87 Indicators** — Momentum, mean-reversion, trend, volatility, microstructure, and market-impact measures, all ranked by Spearman IC.
 - **Zero-dependency core** — Core analysis compiles with no async deps. Optional feature flags for `ingest`, `io` (Parquet), and `sim`.
 
-## How it works
+<ProjSectionHeading label="Pipeline">How it works</ProjSectionHeading>
 
 The pipeline is driven by a single CLI binary with subcommands for each phase. Data flows from raw Dukascopy LOB tick files through feature extraction, simulation, backtesting, and finally IC report generation. All intermediate artifacts are Parquet files; final reports are CSV.
 

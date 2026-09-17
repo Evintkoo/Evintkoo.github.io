@@ -10,13 +10,15 @@ featured: false
 order: 7
 ---
 
-## What is it?
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
 
 Most stock analysis tools are either cloud-dependent, subscription-gated, or black boxes. Faction is a fully local alternative: a Tauri desktop app that scores stocks on both technical (price action, candlestick patterns, momentum) and fundamental (ROE, FCF, debt/equity) dimensions using Keras models loaded directly via a pure-Rust HDF5 reader.
 
 The AI chat feature runs Qwen2.5 1.5B locally via Hugging Face's *candle* inference library, Metal-accelerated on Apple Silicon, CPU elsewhere. Market data comes from Yahoo Finance with Tiingo as a fallback. Everything stays on your machine.
 
-## What it does
+<ProjSectionHeading label="Features">What it does</ProjSectionHeading>
 
 - **Technical Analysis** — Scores stocks based on price action (candlestick patterns, momentum indicators) using a trained Keras model running entirely on-device.
 - **Fundamental Analysis** — Evaluates financial health through key ratios (ROE, free cash flow, debt/equity) scored by a second on-device ML model.

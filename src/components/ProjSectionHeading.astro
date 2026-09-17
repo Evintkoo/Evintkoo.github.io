@@ -1,0 +1,33 @@
+---
+// Restores the legacy two-line project section header: a small uppercase
+// eyebrow label ("Overview", "Features", "Stack", ...) followed by the
+// actual section title as an <h2>. Legacy markup was
+// `<p class="proj-section__label">…</p><h2 class="proj-section__title">…</h2>`
+// (see projects/<slug>.html at e741f9c5). Self-contained (own h2 sizing)
+// so it renders identically whether used from MDX content (inside
+// .proj-content) or directly from [slug].astro (the "Built with" section,
+// which sits outside .proj-content).
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+<p class="proj-section__label">{label}</p>
+<h2 class="proj-section__title"><slot /></h2>
+
+<style>
+  .proj-section__label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-3);
+  }
+  .proj-section__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.75rem;
+  }
+</style>

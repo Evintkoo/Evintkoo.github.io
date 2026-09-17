@@ -46,8 +46,13 @@
   /* WCAG AA fix (final-review.md I3): the previous #6f6d61 was 3.74:1 on
      --paper. This is the legacy dark theme's --text-tertiary value, which
      cleared AA there (4.69:1 on #0c0b09) and clears it here too (~4.64:1 on
-     #0e0d0b). */
-  --ink-faint: #807b76;
+     #0e0d0b). Re-review residual R3: #807b76 still failed AA (4.328:1) against
+     --paper-raised (#17160f), used as the background for .about-card__role,
+     .pub-item__desc, .stat-box__label, .about-cta__sub, .edu-card__program,
+     and .award-sub. Lightened by the smallest uniform RGB step (+3) that
+     clears 4.5:1 against both backgrounds: ~4.83:1 on --paper, ~4.51:1 on
+     --paper-raised. */
+  --ink-faint: #837e79;
   --accent: #5b7fff;
   --accent-ink: #0e0d0b;
   --border: #2a2820;
