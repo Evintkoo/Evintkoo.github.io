@@ -7,12 +7,26 @@
 //  morphing wireframe blob, unchanged.
 // ─────────────────────────────────────────────
 
+// @ts-expect-error - imported directly from a CDN URL (no local types
+// package); a faithful port of the legacy assets/js/hero-scene.js pattern
+// (see final-review.md Minor #14), intentionally left unpinned/untyped.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js';
 
 export interface GraphData {
   topics: Array<{ id: string; label: string }>;
   projects: Array<{ id: string; label: string; topic: string | null; href: string }>;
   research: Array<{ id: string; label: string; topic: string; href: string }>;
+}
+
+// Shared shape of a single graph node (project or research entry) once
+// merged and filtered to only those with a topic — used by buildGraphData()
+// below so TS can track it through .concat()/.filter()/.map() instead of
+// widening to `never[]` under strict mode.
+interface GraphItem {
+  id: string;
+  label: string;
+  topic: string | null;
+  href: string;
 }
 
 export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData): void {
@@ -64,7 +78,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   scene.add(group);
 
   // ── Shared: organic displacement noise ──
-  function displace(x, y, z, t) {
+  function displace(x: number, y: number, z: number, t: number): number {
     let d = Math.sin(x * 1.2 + t * 0.6) * Math.cos(y * 1.3 + t * 0.4) * 0.35;
     d += Math.sin(y * 2.0 + t * 0.5 + 1.0) * Math.sin(z * 1.8 + t * 0.7) * 0.2;
     d += Math.cos(z * 3.0 + x * 2.5 + t * 0.9) * 0.1;
@@ -73,7 +87,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   }
 
   // ── Shared: ambient background particles ──
-  function addAmbientParticles(spreadRadius) {
+  function addAmbientParticles(spreadRadius: number) {
     const ambCount = isMobile ? 60 : 160;
     const ambGeo = new THREE.BufferGeometry();
     const ambArr = new Float32Array(ambCount * 3);
@@ -91,14 +105,14 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     const points = new THREE.Points(ambGeo, ambMat);
     group.add(points);
 
-    const pData = [];
+    const pData: { spd: number; ph: number; amp: number; bx: number; by: number; bz: number }[] = [];
     for (let i = 0; i < ambCount; i++) {
       pData.push({
         spd: 0.1 + Math.random() * 0.3, ph: Math.random() * Math.PI * 2, amp: 0.3 + Math.random() * 0.8,
         bx: ambArr[i * 3], by: ambArr[i * 3 + 1], bz: ambArr[i * 3 + 2],
       });
     }
-    function update(time) {
+    function update(time: number) {
       const aPos = ambGeo.attributes.position;
       for (let i = 0; i < ambCount; i++) {
         const p = pData[i], ix = i * 3;
@@ -111,8 +125,8 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     return { mat: ambMat, update: update };
   }
 
-  function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
-  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOutQuart(t: number) { return 1 - Math.pow(1 - t, 4); }
+  function easeInOutCubic(t: number) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
   // ── Shared animation state ──
   const clock = new THREE.Clock();
@@ -126,7 +140,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   let isDragging = false;
   let dragOffX = 0, dragOffY = 0;
 
-  let frameUpdate = function (dt, t) {};
+  let frameUpdate = function (dt: number, t: number) {};
   let onThemeChange = function () {};
 
   // ── Mode dispatch ──
@@ -272,12 +286,12 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   //  (index.html only)
   // ═══════════════════════════════════════════
 
-  function hashStr(s) {
+  function hashStr(s: string) {
     let h = 0;
     for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
     return h >>> 0;
   }
-  function seededDir(id) {
+  function seededDir(id: string) {
     const h = hashStr(id);
     const a = Math.abs(Math.sin(h * 12.9898)) % 1;
     const b = Math.abs(Math.sin(h * 78.233)) % 1;
@@ -285,11 +299,14 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     const v = new THREE.Vector3(a - 0.5, b - 0.5, c - 0.5);
     return v.lengthSq() > 1e-6 ? v.normalize() : new THREE.Vector3(1, 0, 0);
   }
-  function seededScalar01(id) {
+  function seededScalar01(id: string) {
     return Math.abs(Math.sin(hashStr(id) * 53.171)) % 1;
   }
-  function fibonacciSphere(n, r) {
-    const pts = [];
+  function fibonacciSphere(n: number, r: number) {
+    // THREE's types are unavailable (see the @ts-expect-error import note
+    // above), so Vector3 instances are typed as `any` here — same
+    // situation as buildGraphData()'s `data: any` below.
+    const pts: any[] = [];
     if (n <= 0) return pts;
     if (n === 1) { pts.push(new THREE.Vector3(r, 0, 0)); return pts; }
     const golden = Math.PI * (3 - Math.sqrt(5));
@@ -303,12 +320,14 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   }
 
   function buildGraphData() {
-    const data: any = graphData || {};
+    const data: Partial<GraphData> = graphData || {};
     const topics = data.topics || [];
-    const items = [].concat(data.projects || [], data.research || []).filter(function (it) { return it.topic; });
+    const items: GraphItem[] = ([] as GraphItem[])
+      .concat(data.projects || [], data.research || [])
+      .filter(function (it): it is GraphItem { return !!it.topic; });
 
-    const byTopic = {};
-    items.forEach(function (it) { (byTopic[it.topic] = byTopic[it.topic] || []).push(it); });
+    const byTopic: Record<string, GraphItem[]> = {};
+    items.forEach(function (it) { (byTopic[it.topic as string] = byTopic[it.topic as string] || []).push(it); });
     const activeTopics = topics.filter(function (t) { return byTopic[t.id] && byTopic[t.id].length; });
 
     const R_HUB = isMobile ? 2.0 : 2.5;
@@ -316,14 +335,14 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
 
     const hubPos = fibonacciSphere(activeTopics.length, R_HUB);
     const hubs = activeTopics.map(function (t, i) { return { id: t.id, label: t.label, base: hubPos[i] }; });
-    const hubIndex = {};
+    const hubIndex: Record<string, number> = {};
     hubs.forEach(function (h, i) { hubIndex[h.id] = i; });
 
     const leaves = items.map(function (it) {
-      const hub = hubs[hubIndex[it.topic]];
+      const hub = hubs[hubIndex[it.topic as string]];
       const mag = R_LEAF * (0.65 + 0.35 * seededScalar01(it.id));
       const base = hub.base.clone().add(seededDir(it.id).multiplyScalar(mag));
-      return { id: it.id, label: it.label, href: it.href, hubIdx: hubIndex[it.topic], base: base };
+      return { id: it.id, label: it.label, href: it.href, hubIdx: hubIndex[it.topic as string], base: base };
     });
 
     return { hubs: hubs, leaves: leaves, R_HUB: R_HUB };
@@ -350,7 +369,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     const leafJitterDir = graph.leaves.map(function (l) { return seededDir(l.id + ':jit'); });
     const JITTER_AMT = isReduced ? 0 : 0.18;
 
-    function updateNodePositions(t) {
+    function updateNodePositions(t: number) {
       for (let i = 0; i < hubCount; i++) {
         const b = graph.hubs[i].base;
         const d = JITTER_AMT ? displace(b.x, b.y, b.z, t) * JITTER_AMT : 0;
@@ -455,7 +474,10 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
       canvas.style.cursor = '';
     });
 
-    const labelsContainer = document.getElementById('heroGraphLabels');
+    // Non-null: Layout.astro always renders #heroGraphLabels/#heroGraphBackdrop/
+    // #heroGraphBack unconditionally (see src/components/Layout.astro), so
+    // these lookups can't actually fail at runtime.
+    const labelsContainer = document.getElementById('heroGraphLabels')!;
     const hubLabelEls = graph.hubs.map(function (h) {
       const el = document.createElement('div');
       el.className = 'hero-graph-label hero-graph-label--hub';
@@ -476,7 +498,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     const camSpaceVec = new THREE.Vector3();
     const centerCamSpace = new THREE.Vector3();
     const screenPos = { x: 0, y: 0, camZ: 0 };
-    function projectToScreen(x, y, z, target) {
+    function projectToScreen(x: number, y: number, z: number, target: { x: number; y: number; camZ: number }) {
       scratchVec.set(x, y, z).applyMatrix4(group.matrixWorld);
       camSpaceVec.copy(scratchVec).applyMatrix4(camera.matrixWorldInverse);
       scratchVec.project(camera);
@@ -510,8 +532,8 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
 
     const CAM_Z_EXPANDED = isMobile ? 14 : 11; // tune visually if graph edges clip off-screen
     const TWEEN_DUR = 0.7;
-    const backdropEl = document.getElementById('heroGraphBackdrop');
-    const backBtn = document.getElementById('heroGraphBack');
+    const backdropEl = document.getElementById('heroGraphBackdrop')!;
+    const backBtn = document.getElementById('heroGraphBack')!;
 
     let mode = 'collapsed'; // 'collapsed' | 'expanding' | 'expanded' | 'collapsing'
     let tweenT = 0;
@@ -522,7 +544,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
       mode = 'expanding';
       tweenT = 0;
       canvas.classList.add('hero-graph--expanded');
-      canvas.parentElement.classList.add('hero-graph--expanded');
+      canvas.parentElement!.classList.add('hero-graph--expanded');
       backdropEl.classList.add('active');
       document.body.classList.add('no-scroll');
     }
@@ -573,7 +595,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
       }
     });
 
-    function updateExpandTween(dt) {
+    function updateExpandTween(dt: number) {
       tweenT = Math.min(tweenT + dt / TWEEN_DUR, 1);
       const e = easeInOutCubic(tweenT);
       if (mode === 'expanding') {
@@ -590,7 +612,7 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
         if (tweenT >= 1) {
           mode = 'collapsed';
           canvas.classList.remove('hero-graph--expanded');
-          canvas.parentElement.classList.remove('hero-graph--expanded');
+          canvas.parentElement!.classList.remove('hero-graph--expanded');
           backdropEl.classList.remove('active');
           document.body.classList.remove('no-scroll');
         }
