@@ -1,128 +1,160 @@
 # AGENTS.md
 
 Guidance for AI agents working in this repository. A static personal portfolio + research
-showcase — **vanilla HTML/CSS/JS, no build step, no framework, no test suite.**
+showcase, built with **Astro** (`astro@^7.3.2`, `@astrojs/mdx`) — static output, no client
+framework, no test suite.
 
 ## Commands
 
-There is no build, test, or lint tooling. The only thing you need is a local static server:
-
 ```bash
-python3 -m http.server 8080   # open http://localhost:8080
+npm install
+npm run dev       # dev server
+npm run build     # production build (must succeed, 28 pages)
+npm run preview   # preview the production build
 ```
 
-There is no CI. **Deployment is automatic: this is a GitHub Pages user site
-(`Evintkoo.github.io`), so pushing to `main` publishes to production.** Verify changes locally
-before committing.
+There is no CI test/lint step. **Deployment is automatic:** `.github/workflows/deploy.yml`
+builds with `npm run build` and deploys `dist/` to GitHub Pages via the native
+`actions/upload-pages-artifact` + `actions/deploy-pages` flow on every push to `main`. Verify
+changes locally (`npm run build`) before committing.
+
+**Worktree note:** bare `git` commands are refused by a hook in this worktree — the hook
+misidentifies which repo/root a plain `git` invocation targets from inside a worktree checkout.
+Prefix every git invocation with `/usr/bin/env` (e.g. `/usr/bin/env git status`) to bypass it.
+This was re-verified as still necessary as of this writing (a bare `git status` in this worktree
+still fails with a "refusing to run it" error) — re-check if you hit something different.
 
 ## Critical gotchas (read first)
 
-### 1. Project/research metadata exists in up to THREE places
+### 1. Content lives in exactly ONE place
 
-When adding, renaming, or editing a project or paper, you must keep these in sync — there is no
-single source of truth:
+Every project and research entry is a single `.mdx` file in `src/content/projects/` or
+`src/content/research/`, validated against the Zod schemas in `src/content.config.ts` (Astro
+Content Collections). This replaced the old vanilla site's 3-location drift problem
+(`assets/js/data.js` + hand-written HTML cards + a separate recommendations array) — there is
+now exactly one source of truth per entry, and the two dynamic templates
+(`src/pages/projects/[slug].astro`, `src/pages/research/[slug].astro`) are the single rendering
+path for every project/research page. A new project or paper is added purely as a new `.mdx`
+file — never by writing new template code. That's what makes "every project/research page
+follows the same structure" guaranteed rather than manually maintained.
 
-- **`assets/js/data.js`** (`window.SITE_DATA`) — structured records (id, topic, tags, href, repo).
-  Feeds the homepage hero graph (`hero-scene.js`) and topic mindmap (`mindmap.js`). The `topic`
-  field drives the graph; `null`-topic items are intentionally excluded from the graph.
-- **Static HTML cards** on `index.html` (`.project-card`, `[data-research-item]`) and on
-  `projects.html` / `research.html` — hand-curated marketing copy. `explore.js` (the search/tag
-  filter on the homepage) indexes **these DOM nodes in place**, NOT `data.js`. The copy and tags
-  you write in the HTML are what search sees.
-- **`assets/js/research-recommendations.js`** (`PAPERS` array) — drives the "related papers"
-  widget on every `research/*.html` detail page. A new paper must be added here too.
+### 2. Asset paths are root-relative everywhere (verified, not assumed)
 
-`projects.html` does **not** load `data.js` (90 hand-written cards) — it is fully static.
+The old site's `assets/...` (root pages) vs `../assets/...` (nested `projects/`/`research/`
+pages) split is gone. Astro's file-based routing means every page — root or nested — references
+assets the same way, from the site root: `Layout.astro` uses `/favicon.png`, `Nav.astro` links
+use `/`, `/projects`, `/research`, `/about`, and `about.astro` loads `/assets/images/profile.png`.
+There is no relative-prefix bookkeeping to get wrong when copying markup between page depths.
 
-### 2. The live animation module is `assets/js/animations.js`
+### 3. Islands: vanilla TypeScript, no hydration directives
 
-There used to be an `assets/js/main.js` (`PortfolioApp` class) that was never loaded by any page
-(dead code). Its genuinely-useful research-page behaviors — section fade-in, performance-table row
-hover, reading-time badge, and paper-hero parallax — were migrated into `main-theme.js`'s
-`initResearchEnhancements()` and `main.js` was deleted. The remaining dead bits in it (project
-filter buttons, hexagonal tech-stack) belonged to UIs that were redesigned away. The live
-animation module is `assets/js/animations.js` (`PortfolioAnimations`, with per-paper classes like
-`CircRNAAnimations`, `P53Animations`), loaded on `about.html` and the research detail pages.
+Interactive behavior lives in `src/islands/*.ts` as plain TypeScript modules — there's no
+`client:load`/`client:visible` hydration-directive framework here. Each Astro component or page
+wires up the island(s) it needs with a small inline `<script>` block: import the `init*`
+function, look up the DOM node(s) with `document.getElementById`/`querySelector`, and guard with
+`if (el)` before calling in. See `Nav.astro`'s theme-toggle wiring or `about.astro`'s
+scroll-reveal wiring for the pattern. Because the guard is manual, a page that doesn't render the
+expected element silently no-ops instead of erroring — but it also means a typo'd selector fails
+silently, so double-check element IDs/selectors match between the island and the markup.
 
-### 3. `graphify-out/` is generated and gitignored
+### 4. Theme toggle / caveman-mode pre-paint scripts
+
+Still exist, still critical for avoiding FOUC. They are the first two inline `<script is:inline>`
+blocks in `src/components/Layout.astro`'s `<head>` (lines 21–33 as of this writing): the first
+reads `localStorage['theme']` and sets `data-theme` on `<html>` before first paint; the second
+reads `localStorage['caveman']` and adds the `caveman` class the same way. Keep both first in
+`<head>`, before the Google Fonts `<link>` and before anything that could paint. Persisting
+changes to `localStorage` is handled by `src/islands/theme-toggle.ts` and
+`src/islands/caveman-mode.ts` respectively, not by these pre-paint scripts.
+
+### 5. Schema convention: add an optional field, don't fork the template
+
+When a page needs to deviate from a shared template's default rendering, the established pattern
+across this project is to add an optional field to the collection schema rather than branching
+the template or writing a one-off page. Examples already in `src/content.config.ts`:
+
+- `ProjectCTA`'s `ctaHeading` / `ctaSubtitle` / `ctaLink` / `ctaLabel` — override the default
+  "See the code" CTA copy/link on a per-project basis.
+- `ResearchHero`'s `pdf` / `externalLink` / `repoLink` / `metaLabel` / `metaValue` / `snapshot` /
+  `pairedLink` / `pairedLinkLabel` — cover per-paper variations (a PDF vs. an external link, a
+  secondary repo button, a paired/companion paper cross-link, a "Research Snapshot" aside) without
+  branching `ResearchHero.astro` itself.
+
+Follow this pattern for new variation needs: extend the schema with an optional field, default to
+existing behavior when it's absent, and keep the one shared component per content type.
+
+### 6. `:global()` for client-created DOM
+
+Astro scopes `<style>` blocks to the component's own template markup. Elements created at
+runtime by an island (SVGs from the mindmap module, research chart SVGs, hero-graph overlay
+elements) are NOT part of that scoped markup, so styles targeting them need `:global()` or they
+silently don't apply. This has bitten this project multiple times during development. See the
+inline comments and rules in `src/pages/index.astro` (`.activity-feed :global(...)`,
+`#mindmapContainer :global(svg)`), `src/pages/research/[slug].astro`
+(`.research-content :global(.chart...)`, `:global(#mindmapContainer svg)`), and
+`src/pages/projects/[slug].astro` for worked examples — including cases explicitly noted as NOT
+needing `:global()` because that particular markup is rendered by Astro itself (e.g. Canvas-based
+2D contexts that never call `document.createElement`).
+
+### 7. `graphify-out/` is generated and gitignored
 
 The `graphify-out/` directory (a code-knowledge-graph visualization) is auto-generated and
 gitignored. Ignore it; never edit it.
 
-### 4. Cache-busting query strings on every asset
-
-All `<link>` / `<script>` asset URLs carry a `?v=N` cache-buster (e.g. `main-theme.css?v=20`,
-`hero-scene.js?v=13`). **When you change an asset, bump its version number in every HTML file
-that references it**, or browsers will serve the stale cached copy. Version numbers are
-per-asset and independent — they are not global.
-
-### 5. Asset paths differ by page depth
-
-Root pages (`index.html`, `projects.html`, `research.html`, `about.html`) use `assets/...`.
-Sub-pages in `projects/` and `research/` use `../assets/...` (and link back with `../index.html`).
-Copy-pasting a `<script>` tag between the two without fixing the prefix is a common break.
-
 ## Architecture
 
-### Per-page script loading
+### Content collections
 
-Scripts are included per-page, not globally. The two constants are:
+`src/content.config.ts` defines two collections, `projects` and `research`, loaded via
+`astro/loaders`' `glob()` against `src/content/{projects,research}/*.mdx`. Schemas are Zod
+objects — required fields (`title`, `tagline`, `tags`, etc.) plus the growing set of optional
+per-entry overrides described in gotcha #5. Read the schema comments before adding a new field;
+several fields have adjacent-but-distinct siblings (e.g. `metrics` vs. `snapshot.highlights`,
+`tags` vs. `snapshot.tags`) that were deliberately kept separate after an audit found them
+non-redundant — don't collapse them without checking the comment explaining why they coexist.
 
-- **`main-theme.js`** — loaded on every page. Owns all global behavior: theme toggle, mobile nav,
-  smooth-scroll, `IntersectionObserver` scroll-reveal (elements with `data-reveal` get
-  `fade-in-up`/`visible`), research sidebar (`#rsb`), reading-progress bar, "caveman" (simple)
-  mode toggle, scroll-to-top, project carousel, category filter, card tilt, hero parallax, and the
-  custom cursor (`#cursorDot` / `#cursorRing`). It runs a **single shared rAF-throttled scroll
-  dispatcher** (`_scrollCbs`) — push new scroll handlers onto that array rather than adding new
-  `scroll` listeners. Guarded everywhere with `if (el)` so it no-ops on pages missing elements.
-- **`hero-scene.js`** (`type="module"`) — the Three.js background. See below.
+### Pages
 
-Optional modules: `animations.js` (about + research detail), `data.js` + `mindmap.js` +
-`explore.js` (homepage only), `activity-feed.js` (homepage only, GitHub feed),
-`research-recommendations.js` (every research detail page), `chart.js` (research pages with
-charts), `som-playground.js` (`research/som-tsk.html` + `projects/som-plus.html`).
+- `src/pages/index.astro`, `about.astro` — standalone pages.
+- `src/pages/projects/index.astro`, `research/index.astro` — listing pages, driven by the
+  content collections.
+- `src/pages/projects/[slug].astro`, `research/[slug].astro` — the single dynamic template per
+  content type (see gotcha #1). All structural consistency across entries comes from routing
+  every entry through one of these two files.
 
-### `hero-scene.js` — dual mode (critical constraint)
+### Islands (`src/islands/*.ts`)
 
-Imports Three.js r162 directly from the jsdelivr CDN as an ES module (no bundler). It runs in
-**two mutually exclusive modes**, decided at load time by whether `window.SITE_DATA` exists:
-
-- **Graph mode (homepage only):** renders `SITE_DATA` as a topic/article node graph that expands
-  to a fullscreen clickable explorer on click.
-- **Legacy blob (every other page):** an abstract morphing icosahedron.
-
-**Homepage-only is a hard constraint:** the graph must never render on non-homepage pages, and the
-legacy blob must stay pixel/behavior identical everywhere else. If you touch this file, verify
-both modes after every change. Theme colors are read from `documentElement[data-theme]` and the
-module exposes an `onThemeChange` hook — respect both light and dark palettes.
+`theme-toggle.ts`, `caveman-mode.ts`, `scroll-reveal.ts`, `hero-scene.ts`, `mindmap.ts`,
+`research-chart.ts`, `som-playground.ts`, `activity-feed.ts`. Each is wired via a per-page/
+per-component inline `<script>` block (gotcha #3), not loaded globally.
 
 ### Theme system
 
-- Default theme is **dark**. Set synchronously by an IIFE at the very top of `main-theme.js`
-  (reads `localStorage['theme']`) to prevent a flash of unstyled content — keep that IIFE first.
-- Driven by the `data-theme` attribute on `<html>` (values `light` / `dark`). Dark-mode CSS lives
-  under the `[data-theme="dark"]` selector in `main-theme.css`.
-- **"Caveman" mode** (branding: "Simple mode") swaps formal research prose for a plain-English
-  rewrite via the `html.caveman` class. Research detail pages include a small pre-paint inline
-  `<script>` to apply the class before first paint (avoids a flash); persisting it to
-  `localStorage['caveman']` is handled in `main-theme.js`.
+- Default theme is **dark**. Set synchronously before first paint by the first inline script in
+  `Layout.astro`'s `<head>` (gotcha #4), reading `localStorage['theme']`.
+- Driven by the `data-theme` attribute on `<html>` (`light` / `dark`). Dark-mode tokens are
+  defined under `:root[data-theme='dark']` in `src/styles/tokens.css`.
+- **"Caveman" mode** ("Simple mode" in the UI) swaps formal research prose for a plain-English
+  rewrite via the `html.caveman` class, applied pre-paint by the second inline script in
+  `Layout.astro`'s `<head>` (gotcha #4); persistence to `localStorage['caveman']` is handled by
+  `src/islands/caveman-mode.ts`.
 
 ### Design tokens
 
-All visual primitives are CSS custom properties defined once in `assets/css/main-theme.css`
-(`:root` = light, `[data-theme="dark"]` = dark). **Use the tokens; do not hardcode colors,
-spacing, radii, or font sizes.** Notably: `--accent-warm` (rose/magenta), `--accent-sage`
-(violet), `--font-display` (Instrument Serif), `--font-body` (Plus Jakarta Sans),
-`--font-mono` (JetBrains Mono), the `--space-*` scale, `--radius-*`, and `--ease-*` /
-`--transition-*`. Max content width is `--max-width` (1200px). Responsive breakpoints: 1023,
-767, 639, 479px.
+All visual primitives are CSS custom properties defined once in `src/styles/tokens.css`
+(`:root` = light, `:root[data-theme='dark']` = dark). **Use the tokens; do not hardcode colors,
+spacing, radii, or font sizes.** Notably: `--paper` / `--paper-raised` / `--ink` / `--ink-soft` /
+`--ink-faint` / `--accent` / `--accent-ink` / `--border`, `--font-display` (Instrument Serif),
+`--font-body` (Plus Jakarta Sans), `--font-mono` (JetBrains Mono — used for nav, labels, and
+metadata), the `--space-*` scale, `--radius-*`, and `--ease-out` / `--transition-base`. Max
+content width is `--max-width` (1200px). Responsive breakpoints: 1023, 767, 639, 479px, unchanged
+from the old site.
 
-### CSS files (by responsibility)
+### CSS
 
-`main-theme.css` (design system + layout + components, loaded everywhere) · `components.css`
-(shared UI) · `research.css` (research detail pages) · `project.css`, `playground.css`,
-`chart.css`, `activity.css`, `explore.css` (section/page-specific). Class naming is **BEM-ish**
-(`block__element--modifier`).
+`src/styles/global.css` holds shared layout/typography/component styles loaded via
+`Layout.astro`. Component- and page-specific styles live in scoped `<style>` blocks in their
+own `.astro` files (see gotcha #6 for the client-created-DOM exception).
 
 ## Conventions
 
@@ -131,7 +163,6 @@ spacing, radii, or font sizes.** Notably: `--accent-warm` (rose/magenta), `--acc
 - **External links:** always `target="_blank" rel="noopener noreferrer"`.
 - **Icons:** inline SVG, stroke-based, `aria-hidden="true"` on decorative ones; match the existing
   `stroke-width` / `viewBox="0 0 24 24"` house style.
-- **Lazy images:** use `data-src` (the theme swaps it to `src` via `IntersectionObserver`).
 - **Accessibility:** decorative elements get `aria-hidden`; interactive controls get `aria-label`
   / `aria-pressed`.
 
