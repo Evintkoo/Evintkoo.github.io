@@ -5,7 +5,11 @@
   --paper-raised: #ffffff;
   --ink: #14130f;
   --ink-soft: #4a483f;
-  --ink-faint: #8a8779;
+  /* WCAG AA fix (final-review.md I3): the previous #8a8779 was 3.34:1 on
+     --paper, below the 4.5:1 floor for normal text. This is the legacy
+     site's own --text-tertiary value, which cleared AA there (5.46:1 on
+     #faf9f7) and clears it here too (~5.33:1 on #f7f6f3). */
+  --ink-faint: #6b655e;
   --accent: #2952e3;        /* electric blue signal color */
   --accent-ink: #ffffff;
   --border: #e2e0d8;
@@ -39,7 +43,11 @@
   --paper-raised: #17160f;
   --ink: #f2f1ea;
   --ink-soft: #b8b6a8;
-  --ink-faint: #6f6d61;
+  /* WCAG AA fix (final-review.md I3): the previous #6f6d61 was 3.74:1 on
+     --paper. This is the legacy dark theme's --text-tertiary value, which
+     cleared AA there (4.69:1 on #0c0b09) and clears it here too (~4.64:1 on
+     #0e0d0b). */
+  --ink-faint: #807b76;
   --accent: #5b7fff;
   --accent-ink: #0e0d0b;
   --border: #2a2820;
