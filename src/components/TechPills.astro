@@ -3,7 +3,7 @@ interface Props { tech: string[] }
 const { tech } = Astro.props;
 ---
 <div class="proj-tech-pills">
-  {tech.map((t) => <a class="proj-tech-pill" href={`/projects?tag=${encodeURIComponent(t)}`}>{t}</a>)}
+  {tech.map((t) => <span class="proj-tech-pill">{t}</span>)}
 </div>
 <style>
   .proj-tech-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-8); }
