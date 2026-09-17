@@ -1,0 +1,147 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import TechPills from '../../components/TechPills.astro';
+import ProjectCTA from '../../components/ProjectCTA.astro';
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+import Tag from '../../components/Tag.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { data } = entry;
+---
+<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogDescription={data.ogDescription}>
+  {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}
+  <FeatureGrid />
+  <section class="proj-hero container">
+    <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
+    <div class="proj-hero__tags">
+      {data.tags.map((t) => <Tag label={t} />)}
+    </div>
+    <h1>{data.title}</h1>
+    <p class="proj-hero__subtitle">{data.tagline}</p>
+  </section>
+
+  <div class="proj-body container">
+    <article class="proj-content">
+      <Content />
+    </article>
+    {data.hasPlayground && (
+      <div class="pg" id="somPlayground">
+        <div class="pg__grid">
+          <div class="pg__stage">
+            <div class="pg__canvas-wrap">
+              <canvas class="pg__canvas" id="somCanvas" aria-label="Self-organizing map visualization"></canvas>
+            </div>
+          </div>
+          <div class="pg__panel">
+            <div class="pg__controls">
+              <div class="pg__control">
+                <label for="somData">Dataset</label>
+                <select id="somData">
+                  <option value="blobs">Three blobs</option>
+                  <option value="rings">Concentric rings</option>
+                  <option value="moons">Two moons</option>
+                </select>
+              </div>
+              <div class="pg__control">
+                <label for="somGrid">Grid size <span id="somGridVal">6</span></label>
+                <input type="range" id="somGrid" min="4" max="10" step="1" value="6" />
+              </div>
+              <div class="pg__control">
+                <label for="somLr">Learning rate <span id="somLrVal">0.30</span></label>
+                <input type="range" id="somLr" min="0.05" max="0.6" step="0.05" value="0.30" />
+              </div>
+              <div class="pg__control">
+                <label for="somRad">Neighbourhood <span id="somRadVal">3</span></label>
+                <input type="range" id="somRad" min="1" max="5" step="1" value="3" />
+              </div>
+              <div class="pg__control">
+                <label for="somEp">Epochs <span id="somEpVal">40</span></label>
+                <input type="range" id="somEp" min="10" max="80" step="5" value="40" />
+              </div>
+            </div>
+            <div class="pg__buttons">
+              <button class="pg__btn pg__btn--primary" id="somRun" type="button">Run</button>
+              <button class="pg__btn" id="somReset" type="button">Reset</button>
+            </div>
+            <p class="pg__hint">Epoch <span id="somEpoch">0 / 40</span></p>
+            <p class="pg__hint">Pure in-browser SOM — no server, no build step.</p>
+          </div>
+        </div>
+      </div>
+    )}
+    {data.tech.length > 0 && (
+      <>
+        <ProjSectionHeading label="Stack">Built with</ProjSectionHeading>
+        <TechPills tech={data.tech} />
+      </>
+    )}
+    <ProjectCTA
+      repo={data.repo}
+      demo={data.demo}
+      paperLink={data.paperLink}
+      ctaHeading={data.ctaHeading}
+      ctaSubtitle={data.ctaSubtitle}
+      ctaLink={data.ctaLink}
+      ctaLabel={data.ctaLabel}
+    />
+  </div>
+</Layout>
+
+<script>
+  import { initSomPlayground } from '../../islands/som-playground';
+  const el = document.getElementById('somPlayground');
+  if (el) initSomPlayground(el);
+</script>
+
+<style>
+  .proj-hero { padding-block: var(--space-16) var(--space-8); }
+  @media (max-width: 767px) {
+    .proj-hero { padding-block: var(--space-12) var(--space-6); }
+  }
+  .proj-breadcrumb { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); text-decoration: none; }
+  .proj-hero__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-4); }
+  .proj-hero__subtitle { color: var(--ink-soft); max-width: 640px; margin-top: var(--space-4); }
+  .proj-body { padding-block: var(--space-8) var(--space-24); }
+  .proj-content :global(ul) { padding-left: var(--space-6); }
+
+  /* ── SOM playground (som-plus; also reused by the som-tsk research page) ──
+     All markup below (.pg and descendants) is rendered directly by this
+     template, so Astro's scoped data-astro-cid-* attribute reaches every
+     element. The island (src/islands/som-playground.ts) only reads/writes
+     existing elements via container.querySelector and draws on the canvas'
+     2D context — it never calls document.createElement — so no :global()
+     is required anywhere in this block. */
+  .pg { margin-top: var(--space-6); }
+  .pg__grid { display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap; }
+  .pg__stage { flex: 1 1 380px; min-width: 280px; }
+  .pg__canvas-wrap { background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-3); }
+  .pg__canvas { width: 100%; height: auto; display: block; border-radius: var(--radius-sm); }
+  .pg__panel { flex: 0 1 280px; display: flex; flex-direction: column; gap: var(--space-4); }
+  .pg__controls { display: flex; flex-direction: column; gap: var(--space-3); }
+  .pg__control { display: flex; flex-direction: column; gap: 4px; }
+  .pg__control label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); display: flex; justify-content: space-between; align-items: baseline; }
+  .pg__control label span { color: var(--accent); font-weight: 600; }
+  .pg__control input[type='range'] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .pg__control select { font-family: var(--font-mono); font-size: 0.875rem; padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--paper); color: var(--ink); cursor: pointer; }
+  .pg__buttons { display: flex; gap: var(--space-3); }
+  .pg__btn { font-family: var(--font-body); font-size: 0.875rem; font-weight: 600; padding: var(--space-2) var(--space-6); border-radius: 999px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--ink); transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base); }
+  .pg__btn:hover { border-color: var(--accent); color: var(--accent); }
+  .pg__btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .pg__btn--primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); opacity: 0.85; }
+  .pg__hint { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); margin: 0; }
+
+  @media (max-width: 767px) {
+    .pg__panel { flex: 1 1 100%; }
+  }
+  @media (max-width: 639px) {
+    .pg__stage { min-width: 0; flex-basis: 100%; }
+  }
+</style>

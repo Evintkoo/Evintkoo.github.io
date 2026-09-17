@@ -1,0 +1,28 @@
+---
+title: "APT Fitness Assistant"
+tagline: "Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations: your AI gym partner, running locally from your webcam."
+ogDescription: "Real-time pose estimation with MediaPipe for form correction, rep counting, and personalized workout recommendations."
+tags: ["Open Source", "Computer Vision"]
+topic: null
+tech: ["Python", "MediaPipe", "OpenCV", "Streamlit", "NumPy"]
+repo: "https://github.com/Evintkoo/APT-Fitness-Assistant"
+featured: false
+order: 5
+---
+
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
+
+Most people lift alone without feedback on their form, and bad form leads to injury. APT (Automated Personal Trainer) uses your webcam and MediaPipe's pose landmark detection to give you real-time, frame-by-frame feedback on movement quality.
+
+It counts reps by tracking joint angles through the full range of motion, flags form breaks with visual overlays, and suggests adjustments. Everything runs locally, with no cloud, no subscription, and no data leaving your device. Built as a Streamlit app so setup is a single `pip install`.
+
+<ProjSectionHeading label="Features">What it does</ProjSectionHeading>
+
+- **Pose Estimation** — MediaPipe detects 33 body landmarks per frame in real time: shoulders, elbows, hips, knees, and more.
+- **Form Correction** — Compares your joint angles against reference ranges and flags deviations with on-screen cues.
+- **Rep Counting** — Tracks range-of-motion completion per exercise to count reps accurately without manual input.
+- **Workout Recommendations** — Suggests follow-up exercises based on session data: progressive overload, muscle balance, recovery.
+- **Streamlit UI** — Clean browser interface with live video feed, landmark overlay, and stats panel, with no frontend code needed.
+- **Fully Local** — All processing happens on your machine. No video data sent anywhere, so your privacy stays intact.

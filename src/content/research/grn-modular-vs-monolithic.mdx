@@ -1,0 +1,260 @@
+---
+title: "Modular vs Monolithic Architectures for GRN Edge Prediction"
+tagline: "Gradient Stability Analysis and a Controlled Cross-Architecture Comparison. A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference. We diagnose three critical gradient failures in the two-tower design and demonstrate that the cross-encoder outperforms it, especially under class imbalance."
+ogDescription: "Modular Versus Monolithic Architectures for GRN Edge Prediction: Gradient Stability Analysis - Research by Evint Leovonzko"
+recSubtitle: "Computational Biology · Research"
+recDescription: "Diagnosed three critical gradient failures in two-tower GRN models — cross-encoder achieves AUROC 0.904 vs 0.810 with far greater imbalance robustness."
+tags: ["Cross-Encoder", "Gradient Failure", "AUROC"]
+topic: "bio"
+order: 6
+externalLink: "https://github.com/Evintkoo/grn-encoder-comparison/blob/main/paper/main_v2.pdf"
+repoLink: "https://github.com/Evintkoo/grn-encoder-comparison"
+metrics:
+  - label: "Cross-encoder AUROC"
+    value: "0.904"
+  - label: "Cross-encoder accuracy"
+    value: "83.03%"
+  - label: "Two-tower imbalance drop"
+    value: "−6.87 pp"
+chart:
+  type: "bar"
+  height: 320
+  xs: [0, 1]
+  series:
+    - name: "Cross-encoder"
+      values: [83.03, 81.47]
+    - name: "Two-tower"
+      values: [80.90, 74.03]
+snapshot:
+  summary: "Architecture comparison, gradient failure analysis, and imbalance robustness results."
+  highlights:
+    - value: "0.904"
+      label: "Cross-encoder AUROC"
+    - value: "0.810"
+      label: "Two-tower AUROC"
+    - value: "3"
+      label: "Gradient failures found"
+  details:
+    - label: "Author"
+      value: "Evint Leovonzko"
+    - label: "Dataset"
+      value: "Human brain single-cell RNA-seq: 47,388 TF–gene pairs, balanced and 5:1 imbalanced."
+    - label: "Implementation"
+      value: "Pure Rust with per-batch Adam, gradient clipping (threshold: 5.0), stable backward pass."
+  tags: ["Gradient Stability", "Cross-Encoder", "scRNA-seq", "Rust"]
+mindmapNote: 'After fixing three hidden gradient failures in <inode id="/research/grn-two-tower/">the pure-Rust two-tower architecture introduced in a companion paper</inode>, this controlled comparison shows a monolithic cross-encoder still beats it, 0.904 vs 0.810 AUROC — a finding later sharpened into <inode id="/research/grn-dual-vs-cross-encoder/">a rigorous parameter-matched study with ablation and imbalance testing</inode>.'
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      Should you build one big AI model, or two smaller ones that work
+      side by side? This paper looks at where the "two smaller ones"
+      approach quietly breaks — and how much of its bad reputation is
+      really just buggy code rather than a bad idea.
+
+      After fixing three hidden bugs in the split-design model, the single
+      bigger model still wins clearly, especially once you test it on
+      realistic, lopsided data where true gene-control links are rare.
+  - heading: "Introduction"
+    body: |-
+      Cells decide what they do based on which genes are switched on. A
+      transcription factor is a gene whose job is to flip other genes on
+      or off, and the map of who controls whom is called a gene regulatory
+      network, or GRN. This paper tests two ways for an AI to predict
+      these control links. The "two-tower" approach looks at each gene by
+      itself, then asks whether the two descriptions seem to match. The
+      "cross-encoder" approach looks at both genes together from the
+      start.
+
+      Two-tower models are popular because each tower can describe its own
+      input in advance, which makes searching for matches fast later. The
+      trade-off is that the two towers never truly meet — they can't pick
+      up on the back-and-forth between a pair, and in biology that
+      back-and-forth is often where the real answer lives. The open
+      question this paper asks: is the two-tower design held back by its
+      split structure, or has it just been let down by buggy code that,
+      once fixed, would let it catch up?
+  - heading: "Methods"
+    body: |-
+      Before comparing the two designs fairly, the researchers had to fix
+      the two-tower model's learning signal. AI models learn by nudging
+      themselves in tiny steps during training, and three bugs were found
+      quietly breaking those nudges: the model squashed its own learning
+      signal twice (leaving almost nothing to learn from), it used a shaky
+      math shortcut that produced noisy nudges, and it never capped how
+      large a nudge could grow, so some blew up and derailed training.
+      Any one of these bugs alone was enough to crash accuracy down to
+      about 50% — a coin flip.
+
+      After fixing all three, both models were tested on real single-cell
+      gene-expression data from the human brain (47,388 transcription
+      factor–gene pairs), under two conditions: a fair 1-to-1 mix of real
+      and fake pairs, and a harder 5-to-1 mix that looks more like real
+      biology, where true links are much rarer than false ones. Each test
+      was run five times and scored on accuracy, F1, and AUROC (a ranking
+      quality score), with confidence ranges reported.
+  - heading: "Results"
+    body: |-
+      Even after fixing the two-tower's bugs, the cross-encoder (the
+      single bigger model) wins on every measure. It reaches 83.03%
+      accuracy versus the two-tower's 80.90%, and an AUROC of 0.904 versus
+      0.810.
+
+      The gap grows once real pairs become rarer: at the harder 5-to-1
+      mix, the two-tower loses 6.87 percentage points of accuracy, while
+      the cross-encoder only loses 1.56 points. And confirming how
+      damaging they were, each of the three learning-signal bugs, tested
+      individually, was enough on its own to crash training down to
+      roughly 50% accuracy.
+  - heading: "Discussion"
+    body: |-
+      A lot of the two-tower's poor reputation really did come from those
+      three bugs rather than the underlying idea — but fixing them doesn't
+      close the gap entirely. Looking at both genes together from the
+      start is simply a better fit for this problem than judging each gene
+      alone and then comparing notes afterward, because the cross-encoder
+      can spot patterns in how two genes switch on and off together that
+      the two-tower is structurally blind to.
+
+      This matters for real-world use: actual gene networks are heavily
+      lopsided, since most random gene pairs don't actually control each
+      other, so true regulatory links are rare. The two-tower's accuracy
+      drop at even a mild 5-to-1 ratio is a warning sign that it isn't
+      ready for production biology use without real design changes, where
+      the imbalance is far worse than 5-to-1.
+  - heading: "Conclusion"
+    body: |-
+      For predicting which genes control which, the single bigger
+      (cross-encoder) model beats the split-into-two-pieces (two-tower)
+      model — it's more accurate, and it holds up far better when true
+      links are rare, which is exactly what real biology looks like.
+
+      This work offers two practical takeaways: a checklist of
+      learning-signal bugs (double squashing, shaky math, no step-size
+      cap) that anyone hand-building a two-tower model can check for, and
+      evidence that letting a model look at both genes together from the
+      start beats studying each one alone. The next open question is
+      whether the two-tower's speed advantage (pre-computable descriptions)
+      can be kept while still closing the accuracy gap — perhaps by
+      letting the two towers "compare notes" once more at the very end of
+      the process.
+breakdown:
+  center: "GRN Encoder Comparison"
+  centerDescription: 'A controlled comparison showing that, once three hidden gradient bugs are fixed, <inode id="cross-encoder-monolithic-mlp">a monolithic cross-encoder</inode> still beats <inode id="two-tower-modular-mlp">a modular two-tower model</inode> at predicting TF–gene regulatory links.'
+  branches:
+    - label: "Gradient Failure Diagnosis"
+      description: "Three implementation bugs were found in the two-tower's backward pass, each individually collapsing accuracy to roughly 50%."
+      nodes:
+        - title: "Double-Sigmoid Vanishing Gradients"
+          description: "The model squashed its own learning signal twice in the backward pass, leaving almost nothing left to learn from."
+        - title: "Unstable Gradient Estimator"
+          description: "A numerically shaky math shortcut produced noisy, unreliable gradient updates during training."
+        - title: "Missing Gradient Clipping"
+          id: "gradient-clipping-fix"
+          description: "Updates had no cap on how large they could grow, so some blew up and derailed training entirely."
+    - label: "Architecture Definitions"
+      description: 'Defines the two competing designs evaluated under identical, <inode id="shared-training-setup">corrected training conditions</inode>.'
+      nodes:
+        - title: "Two-Tower (Modular MLP)"
+          id: "two-tower-modular-mlp"
+          description: "Separate entity and expression encoders combined via dot-product similarity, allowing precomputed representations for fast retrieval."
+        - title: "Cross-Encoder (Monolithic MLP)"
+          id: "cross-encoder-monolithic-mlp"
+          description: "Concatenates TF and gene features up front and processes the pair jointly through a shared MLP."
+        - title: "Shared Training Setup"
+          id: "shared-training-setup"
+          description: 'Both architectures use per-batch Adam with <inode id="gradient-clipping-fix">gradient clipping at a threshold of 5.0</inode> and stable numerics, isolating architecture as the only remaining variable.'
+    - label: "Controlled Evaluation"
+      description: 'Both corrected architectures are tested on <inode id="human-brain-scrna-seq">real biological data</inode> under <inode id="balanced-vs-imbalanced-training">two class-balance regimes</inode>.'
+      nodes:
+        - title: "Human Brain scRNA-seq Dataset"
+          id: "human-brain-scrna-seq"
+          description: "47,388 transcription factor–gene pairs drawn from single-cell RNA-seq data of the human brain."
+        - title: "Balanced vs 5:1 Imbalanced Training"
+          id: "balanced-vs-imbalanced-training"
+          description: "A fair 1:1 positive:negative split is compared against a harder 5:1 split that mirrors how rare true regulatory links are in real biology."
+        - title: "Metrics and Seeds"
+          description: "Accuracy, F1, and AUROC are measured over five random seeds with bootstrap confidence intervals."
+    - label: "Results and Robustness Gap"
+      description: 'The cross-encoder outperforms the corrected two-tower on every measure, and <inode id="imbalance-degradation">the gap widens under class imbalance</inode>.'
+      nodes:
+        - title: "Balanced Accuracy and AUROC"
+          description: 'Under the <inode id="balanced-vs-imbalanced-training">fair 1:1 positive:negative split</inode>, the cross-encoder reaches 83.03% accuracy and 0.904 AUROC versus the two-tower''s 80.90% accuracy and 0.810 AUROC.'
+        - title: "Imbalance Degradation"
+          id: "imbalance-degradation"
+          description: 'At the <inode id="balanced-vs-imbalanced-training">harder 5:1 imbalanced split</inode> the two-tower loses 6.87 percentage points of accuracy, while the cross-encoder loses only 1.56 points.'
+        - title: "Architecture, Not Bugs, Drives the Remaining Gap"
+          description: "After correcting all three gradient bugs, the cross-encoder's joint processing of TF-gene pairs still wins, showing the gap is architectural, not just buggy code."
+---
+
+## Abstract
+
+**Introduction** — This paper investigates the design trade-offs between modular two-tower models (using separate pathways and similarity scoring) and monolithic cross-encoders (processing pairs jointly through MLPs) for predicting transcription factor–gene interactions in gene regulatory networks.
+
+**Methods** — Three critical gradient failures in the original two-tower implementation are identified and corrected: double-sigmoid in the backward pass, unstable gradient estimators, and missing gradient clipping. Both architectures are then evaluated on balanced and 5:1 imbalanced training configurations using accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals.
+
+**Results** — After gradient correction, the cross-encoder achieves **83.03% accuracy** vs the two-tower's 80.90%, with AUROC **0.904** vs 0.810 under balanced training. Under 5:1 imbalance, the two-tower degrades −6.87 pp while the cross-encoder degrades only −1.56 pp. Each gradient failure alone collapses training accuracy to ~50%.
+
+**Discussion** — The gradient failures explain a substantial portion of the two-tower's underperformance relative to the cross-encoder. Even after correction, the cross-encoder's joint processing of TF–gene pairs provides a fundamentally better inductive bias for interaction prediction than independent encoding followed by similarity scoring.
+
+**Conclusion** — For GRN link prediction, monolithic cross-encoders outperform modular two-tower models on both accuracy and imbalance robustness, particularly in realistic biological settings where negative examples far outnumber positives.
+
+## Introduction
+
+Two-tower (dual-encoder) models are attractive for link prediction tasks because they can independently encode entities and support efficient nearest-neighbor retrieval at inference time. However, their modular design limits the model's ability to capture joint interactions between input pairs, which may be critical for biological link prediction.
+
+> **Key Question**
+>
+> Does the modular separation of a two-tower model fundamentally limit its expressivity for GRN inference, or can the gap be closed by correcting implementation-level gradient failures?
+
+This study diagnoses three previously unreported gradient failures in a state-of-the-art two-tower GRN model, corrects them, and then conducts a controlled comparison against a monolithic cross-encoder to isolate the effect of architecture from implementation bugs.
+
+## Methods
+
+1. **Gradient Failure Diagnosis** — Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy. <span class="tag">Gradient Analysis</span> <span class="tag">Numerical Stability</span> <span class="tag">Debugging</span>
+2. **Architecture Definitions** — The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics. <span class="tag">Two-Tower</span> <span class="tag">Cross-Encoder</span> <span class="tag">Adam</span>
+3. **Controlled Evaluation** — Both architectures are evaluated on human brain scRNA-seq data (47,388 TF–gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals. <span class="tag">Bootstrap CI</span> <span class="tag">Imbalance Testing</span> <span class="tag">5 Seeds</span>
+
+## Results
+
+After gradient correction, the cross-encoder consistently outperforms the corrected two-tower across all metrics and both training regimes.
+
+<figure class="chart-figure" data-reveal>
+  <figcaption class="chart-figure__caption">
+    <span class="chart-figure__title">Reported accuracy: cross-encoder vs two-tower</span>
+    <span class="chart-figure__note">Test accuracy (%) on human-brain scRNA-seq (47,388 TF–gene pairs). The 5:1 bar is derived from the paper's reported balanced accuracy minus its imbalance drop (−1.56 pp vs −6.87 pp).</span>
+  </figcaption>
+  <div class="chart-figure__panel">
+    <div class="chart" id="research-chart" data-chart-format="grn-accuracy-bar" role="img" aria-label="Bar chart comparing cross-encoder and two-tower accuracy under balanced and 5:1 imbalance training"></div>
+  </div>
+</figure>
+
+**Architecture Comparison (Balanced Training)** — Cross-encoder vs two-tower on human brain scRNA-seq, both with corrected gradients.
+
+| Model | Accuracy | AUROC | Imbalance Drop (5:1) |
+| --- | --- | --- | --- |
+| Cross-Encoder (Monolithic MLP) | 83.03% | 0.904 | −1.56 pp |
+| Two-Tower — corrected (Modular MLP) | 80.90% | 0.810 | −6.87 pp |
+
+The cross-encoder's joint input processing provides a fundamentally stronger inductive bias for GRN link prediction, remaining stable under the class imbalance ratios typical in real biological datasets.
+
+> **Gradient Failure Impact**
+>
+> Each of the three gradient failures individually collapsed training to approximately **50% accuracy**, no better than random guessing. Diagnosing and correcting all three was a prerequisite for a fair architecture comparison.
+
+## Discussion
+
+The gradient stability analysis reveals that a substantial portion of the two-tower's apparent underperformance in prior work was attributable to implementation bugs rather than architectural limitations. After correction, the performance gap narrows but persists.
+
+> **Imbalance as a Practical Concern**
+>
+> Real GRN datasets are highly imbalanced. Regulatory interactions are sparse against the vast space of non-interacting pairs. The two-tower's −6.87 pp degradation at a mild 5:1 ratio suggests it is poorly suited for production biological applications without significant modifications.
+
+The cross-encoder's monolithic joint processing naturally captures TF–gene co-expression patterns that the two-tower's independence assumption prevents. This architectural difference, not implementation quality, ultimately drives the AUROC gap of 0.094.
+
+## Conclusion
+
+This study provides two contributions: a gradient failure diagnosis applicable to any two-tower model implemented without automatic differentiation, and a controlled architectural comparison showing that monolithic cross-encoders outperform modular two-tower models for GRN link prediction.
+
+For practitioners, the gradient failure checklist (double-sigmoid, unstable estimator, missing clipping) is directly applicable to other Rust or custom-framework implementations. For researchers designing GRN inference architectures, the results favor joint encoding over independent encoding followed by similarity scoring.
+
+Future work should examine whether the two-tower's efficiency advantages (precomputed entity representations) can be retained while closing the AUROC gap through architectural modifications such as late interaction or cross-attention scoring.

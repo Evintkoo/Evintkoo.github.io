@@ -1,0 +1,690 @@
+/* src/styles/global.css */
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+@media (max-width: 767px) {
+  .container { padding-inline: var(--space-4); }
+}
+
+/*
+ * #heroGraphBack lives in Layout.astro (rendered on every page) but is only
+ * meaningful in hero-scene.ts's graph mode, which itself only runs on the
+ * homepage. hero-scene.ts toggles a `.visible` class on it during
+ * expand()/collapse() and never touches display directly, so the default
+ * (no `.visible`) state must be hidden here — otherwise the button (and its
+ * unsized <svg>, which browsers default to ~300x150px) renders visible
+ * above <Nav> on every page load, including legacy-blob-mode pages where
+ * it's inert. `display: none` also removes it from the tab order and a11y
+ * tree, so no extra markup/aria is needed for the default-inert state.
+ */
+#heroGraphBack {
+  display: none;
+}
+
+#heroGraphBack.visible {
+  display: inline-flex;
+}
+
+/*
+ * ── Hero scene canvas + graph-mode overlay ──
+ * Ported from assets/css/main-theme.css (.scene-bg, #heroCanvas.hero-graph--expanded,
+ * .hero-graph-backdrop, .hero-graph-back, .hero-graph-labels/.hero-graph-label —
+ * lines ~866-3157 of the old stylesheet). None of this had been ported into src/
+ * through Task 26 (confirmed via grep — Task 11's report flags it explicitly as
+ * deferred), so both the persistent full-page 3D canvas background (.scene-bg,
+ * used by every page's hero-scene.ts blob/graph mode) and the graph-mode overlay
+ * UI (only reachable on the homepage) were completely unstyled. Token mapping
+ * follows the same precedent set elsewhere in this codebase (e.g. src/pages/
+ * index.astro's activity-feed icon-tone collapse): --bg-secondary -> --paper-raised, --border-primary ->
+ * --border, --text-primary -> --ink, --text-secondary -> --ink-soft,
+ * --accent-warm -> --accent (single-accent token set), #fff -> --accent-ink.
+ */
+.scene-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scene-bg canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#heroCanvas.hero-graph--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.scene-bg.hero-graph--expanded {
+  z-index: 1000;
+}
+
+.hero-graph-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+  /*
+   * Fix round 1 (Task 27 review): hints the browser to promote this element
+   * to its own compositing layer ahead of time, rather than only doing so
+   * lazily when `.active` first toggles opacity. Addresses an intermittent
+   * Chromium race (reproduced ~3/6 trials in review) where the
+   * backdrop-filter blur transiently failed to composite on the very first
+   * paint after expand() — most notably right after a same-tick theme
+   * switch, when the WebGL canvas resize and the blur layer's own
+   * compositing setup were contending for the same frame. Always-on
+   * because this element is already `display:none`-by-default-adjacent
+   * (`.hero-graph-backdrop` itself has no display toggle — it's always in
+   * the DOM at opacity:0 — see the `#heroGraphBack` comment above for the
+   * analogous pattern), so the memory/layer cost is paid once per page
+   * load, not per expand(), and only on the homepage (this element only
+   * ever gets `.active` toggled by hero-scene.ts's graph mode).
+   */
+  will-change: backdrop-filter, opacity;
+}
+
+.hero-graph-backdrop.active {
+  opacity: 1;
+}
+
+/* Layout/visual styling for the back button — the display:none/.visible
+   toggle above stays untouched; this layers position, size, and theming
+   on top of it. */
+.hero-graph-back {
+  position: fixed;
+  top: var(--space-8);
+  left: var(--space-8);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base),
+    transform var(--transition-base), background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.hero-graph-back.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hero-graph-back:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.hero-graph-back svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-graph-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+/* hero-scene.ts's initGraphMode() creates these label <div>s via
+   document.createElement and positions each with inline style.left/top
+   (see updateLabels()) — no width/height, just absolute positioning
+   relative to the fixed .hero-graph-labels container. */
+.hero-graph-label {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.15s ease;
+}
+
+.hero-graph-label svg {
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+}
+
+.hero-graph-label.is-visible {
+  opacity: 1;
+}
+
+.hero-graph-label--hub {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.hero-graph-label--leaf {
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.hero-graph-label--leaf.is-visible {
+  pointer-events: auto;
+}
+
+.hero-graph-label--leaf:hover,
+.hero-graph-label--leaf.is-hovered {
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .hero-graph-label--hub { font-size: 11px; }
+  .hero-graph-label--leaf { font-size: 9px; }
+  .hero-graph-back { top: var(--space-4); left: var(--space-4); width: 40px; height: 40px; }
+}
+
+@media (max-width: 479px) {
+  .hero-graph-back { top: var(--space-3); left: var(--space-3); width: 36px; height: 36px; }
+  .hero-graph-back svg { width: 18px; height: 18px; }
+}
+
+/*
+ * ── Mindmap leaf note cards ──
+ * src/islands/mindmap.ts embeds these as HTML (via <foreignObject>) inside
+ * the mindmap's SVG so titles/descriptions get real text wrapping — plain
+ * SVG <text> can't line-wrap or line-clamp. Shared here (rather than
+ * duplicated as scoped styles on src/pages/index.astro and
+ * src/pages/research/[slug].astro, which both render a #mindmapContainer)
+ * since the note styling is identical on both pages.
+ */
+/* Card anatomy ported from PlanOut's own note node (flow-note-node.tsx +
+   flow-note-node-header.tsx): a tinted header strip (rounded top corners)
+   holding the title, sitting above a separately-bordered body panel that
+   holds the description — not one flat single-surface box. Recolored for
+   this site's dark theme instead of PlanOut's white-card/pastel-header
+   palette, since a literal white card would clash with every other surface
+   on the page. */
+#mindmapContainer .mindmap-note {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  box-shadow: 0 8px 16px -10px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-body);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  overflow: hidden;
+}
+#mindmapContainer .mindmap-note--clickable {
+  cursor: pointer;
+}
+/* No `transform` here (e.g. a hover lift) on purpose: this card lives
+   inside an SVG <foreignObject>, and Chromium has a long-standing bug
+   where a `transform` on HTML content inside a foreignObject can blow past
+   its declared clip bounds on repaint — it doesn't just lift, it
+   intermittently renders at several times its real size, overlapping
+   neighboring cards (reported live: the "Dual-Encoder vs Cross-Encoder"
+   card rendering ~3x oversized). box-shadow-only hover/active states don't
+   trigger it. */
+#mindmapContainer .mindmap-note--clickable:hover,
+#mindmapContainer .mindmap-note--clickable:focus-visible {
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+#mindmapContainer .mindmap-note--active {
+  box-shadow: 0 0 0 1.5px var(--accent), 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+}
+#mindmapContainer .mindmap-note__header {
+  flex: none;
+  padding: 5px 10px;
+  background: color-mix(in srgb, var(--accent) 16%, var(--paper-raised));
+  border-bottom: 1px solid var(--border);
+}
+/* No line-clamp/truncation anywhere in this card, title or description:
+   every note's foreignObject height is measured from its real text before
+   it's even drawn (see `estimateNoteHeight` in src/islands/mindmap.ts), so
+   there's always exactly enough room for what's actually written — never
+   less. */
+#mindmapContainer .mindmap-note__title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+#mindmapContainer .mindmap-note__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+#mindmapContainer .mindmap-note__desc {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  line-height: 1.4;
+}
+#mindmapContainer .mindmap-note-anim {
+  animation: mindmap-line-in 0.3s ease-out both;
+}
+/* Hub notes (topic categories, e.g. "ML"/"Biology") — same card, more
+   strongly accent-tinted so they read as a level above the leaf notes
+   branching off them. Never clickable (topics aren't pages). */
+#mindmapContainer .mindmap-note--hub .mindmap-note__header {
+  background: color-mix(in srgb, var(--accent) 30%, var(--paper-raised));
+}
+#mindmapContainer .mindmap-note--hub .mindmap-note__title {
+  color: var(--accent);
+  font-size: 12.5px;
+}
+/* Root note (the map's center topic) — was previously a large stroked
+   circle with the topic name as plain SVG text, the one node on the canvas
+   that wasn't an actual note card. PlanOut has no such "circle" node type;
+   every node, root included, is the same card (`flow-note-node.tsx`). This
+   is the same card anatomy as every other node, just the strongest accent
+   treatment since it anchors the whole map. */
+#mindmapContainer .mindmap-note--root .mindmap-note__header {
+  background: var(--accent);
+  border-bottom-color: var(--accent);
+}
+#mindmapContainer .mindmap-note--root .mindmap-note__title {
+  color: var(--accent-ink);
+  font-size: 13px;
+}
+
+/* Inline cross-note connection — PlanOut's own pattern: the linked phrase
+   is written straight into the description's sentence (see `appendNote`'s
+   `<inode id="...">` parsing in src/islands/mindmap.ts), not a separate
+   "Related:" row. The dashed line from this span to the target leaf's dot
+   is drawn in JS (`wireInlineConnections`) once layout settles, since the
+   span's on-screen position depends on how the description text actually
+   wraps. `color`/`text-decoration-color` here are just the pre-JS fallback
+   (e.g. a no-script render) — `wireInlineConnections` overrides both
+   inline per span with that connector's own color from `INODE_COLORS`. */
+#mindmapContainer .mindmap-inode {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+#mindmapContainer .mindmap-inode:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+#mindmapContainer .mindmap-note--focused {
+  box-shadow: 0 0 0 2px var(--accent), 0 12px 24px -8px rgba(0, 0, 0, 0.45);
+}
+#mindmapContainer .mindmap-inode-connector,
+#mindmapContainer .mindmap-inode-arrowhead,
+#mindmapContainer .mindmap-inode-handle {
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease;
+}
+#mindmapContainer .mindmap-inode-connector.is-active,
+#mindmapContainer .mindmap-inode-arrowhead.is-active,
+#mindmapContainer .mindmap-inode-handle.is-active {
+  opacity: 0.85;
+}
+#mindmapContainer .mindmap-inode-connector.is-active {
+  stroke-width: 1.5;
+}
+
+/* "Go to page" confirm popup (src/islands/mindmap.ts's `createGoToPopup`):
+   now that the map is a pan/zoom canvas, a plain click on a card explores
+   the canvas rather than immediately leaving the page — this is the actual
+   navigation affordance, shown next to whichever card was last clicked. */
+#mindmapContainer {
+  position: relative;
+}
+
+/* Fullscreen toggle (src/islands/mindmap.ts's `setupFullscreenButton`) —
+   top-right corner of the canvas, same raised-surface treatment as the
+   "Go to page" popup below so both controls read as the same UI family. */
+.mindmap-fullscreen-btn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.mindmap-fullscreen-btn:hover,
+.mindmap-fullscreen-btn:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.mindmap-fullscreen-btn svg {
+  width: 15px;
+  height: 15px;
+}
+#mindmapContainer.mindmap-is-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border-radius: 0;
+}
+
+/* Reset-positions toggle (`setupNodeDrag`) — same raised-surface button as
+   the fullscreen toggle, sitting just to its left. */
+.mindmap-reset-btn {
+  position: absolute;
+  top: var(--space-3);
+  right: calc(var(--space-3) + 30px + 6px);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.mindmap-reset-btn:hover,
+.mindmap-reset-btn:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.mindmap-reset-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.mindmap-goto-popup {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 220px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+.mindmap-goto-popup.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mindmap-goto-popup--above {
+  transform: translate(-50%, -100%);
+}
+.mindmap-goto-popup__label {
+  font-size: 11px;
+  color: var(--ink-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mindmap-goto-popup__link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.mindmap-goto-popup__link:hover {
+  text-decoration: underline;
+}
+.mindmap-goto-popup__link svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Moved here from src/pages/research/[slug].astro's scoped styles so both
+   it and src/pages/index.astro's mindmap share one entrance animation
+   (previously duplicated on the research page only — the homepage's
+   mindmap had no entrance animation as a result). */
+@keyframes mindmap-line-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Pan/zoom canvas (see `setupPanZoom` in src/islands/mindmap.ts) — ported
+   from PlanOut's `<Background size={2} color="#dadada" />`, recolored dim
+   for the dark theme. `touch-action: none` hands pinch/pan gestures to our
+   own pointer/wheel handlers instead of the browser's default page-scroll
+   and pinch-zoom. */
+#mindmapContainer svg {
+  touch-action: none;
+  cursor: grab;
+}
+#mindmapContainer svg.is-panning {
+  cursor: grabbing;
+}
+#mindmapContainer .mindmap-grid-dot {
+  fill: var(--ink-faint);
+  opacity: 0.35;
+}
+/* Cards are draggable (see `setupNodeDrag`) — grab/grabbing is the same
+   affordance the canvas itself uses for panning, applied per-card instead.
+   Only the card's position moves; its content is never editable. */
+#mindmapContainer .mindmap-note {
+  cursor: grab;
+}
+#mindmapContainer .mindmap-note--dragging {
+  cursor: grabbing;
+}
+
+/*
+ * ── Micro-interactions (src/islands/micro-interactions.ts) ──
+ * Ported from assets/css/main-theme.css's glass-light/film-grain/
+ * scroll-to-top/reading-progress rules, none of which survived the
+ * rebrand. The custom bear cursor was ported here too but removed per
+ * live-preview QA feedback — this also restores the native OS cursor
+ * (the custom-cursor rules had set `cursor: none` site-wide to hide it in
+ * favor of the bear). Colors use --accent (single-accent token set)
+ * instead of legacy's --accent-warm, matching the simplification already
+ * applied throughout src/islands/.
+ */
+
+/* Glass light hover tint (cards) */
+.glass-light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Film grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+:root[data-theme='dark'] body::after {
+  opacity: 0.04;
+}
+
+/* Scroll-to-top button */
+.scroll-to-top {
+  position: fixed;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transition-base), visibility var(--transition-base),
+    transform var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-to-top:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.scroll-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 767px) {
+  .scroll-to-top { bottom: calc(var(--space-6) + 56px); }
+}
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 61;
+}
+
+/* Scroll-reveal system ([data-reveal]/[data-stagger], set on some MDX
+   figures — see src/content/research's `data-reveal` attributes) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+[data-stagger].revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reading-time badge (research pages) */
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+.reading-time svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Card click ripple */
+.card-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  transform: scale(0);
+  animation: card-ripple 600ms ease-out forwards;
+}
+@keyframes card-ripple {
+  to { transform: scale(1); opacity: 0; }
+}

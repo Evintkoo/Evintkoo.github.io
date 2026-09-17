@@ -1,0 +1,196 @@
+---
+import Tag from './Tag.astro';
+interface Props {
+  title: string;
+  tagline: string;
+  metrics: { label: string; value: string }[];
+  authors?: string;
+  affiliation?: string;
+  metaLabel?: string;
+  metaValue?: string;
+  pdf?: string;
+  externalLink?: string;
+  repoLink?: string;
+  pairedLink?: string;
+  pairedLinkLabel?: string;
+  snapshot?: {
+    summary?: string;
+    highlights?: { value: string; label: string }[];
+    details?: { label: string; value: string }[];
+    tags?: string[];
+  };
+}
+const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf, externalLink, repoLink, pairedLink, pairedLinkLabel, snapshot } = Astro.props;
+---
+<section class="research-hero container">
+  <h1>{title}</h1>
+  <p class="research-hero__tagline">{tagline}</p>
+  {authors && (
+    <p class="research-hero__byline">
+      {authors}{affiliation && <>. {affiliation}</>}
+    </p>
+  )}
+  {metrics.length > 0 && (
+    <div class="research-hero__metrics">
+      {metrics.map((m) => (
+        <div class="hero-metric">
+          <span class="hero-metric__value">{m.value}</span>
+          <span class="hero-metric__label">{m.label}</span>
+        </div>
+      ))}
+    </div>
+  )}
+  {(metaLabel && metaValue) || pdf || externalLink || repoLink || pairedLink ? (
+    <div class="research-hero__paper">
+      {metaLabel && metaValue && (
+        <p class="research-hero__meta-line"><strong>{metaLabel}:</strong> {metaValue}</p>
+      )}
+      {pdf
+        ? <a href={pdf} target="_blank" rel="noopener" class="btn btn--primary">View Full Paper</a>
+        : externalLink && (
+            <a href={externalLink} target="_blank" rel="noopener" class="btn btn--primary">
+              {externalLink.includes('github.com') ? 'View on GitHub' : 'View Full Paper'}
+            </a>
+          )}
+      {repoLink && <a href={repoLink} target="_blank" rel="noopener" class="btn btn--secondary">View Code</a>}
+      {pairedLink && <a href={pairedLink} class="btn btn--secondary">{pairedLinkLabel || 'Companion paper'}</a>}
+    </div>
+  ) : null}
+  {snapshot && (
+    <div class="research-hero__snapshot">
+      <h2 class="research-hero__snapshot-heading">Research Snapshot</h2>
+      {snapshot.summary && <p class="research-hero__snapshot-summary">{snapshot.summary}</p>}
+      {snapshot.highlights && snapshot.highlights.length > 0 && (
+        <div class="research-hero__snapshot-highlights">
+          {snapshot.highlights.map((h) => (
+            <div class="snapshot-highlight">
+              <span class="snapshot-highlight__value">{h.value}</span>
+              <span class="snapshot-highlight__label">{h.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {snapshot.details && snapshot.details.length > 0 && (
+        <dl class="research-hero__snapshot-details">
+          {snapshot.details.map((d) => (
+            <>
+              <dt>{d.label}</dt>
+              <dd>{d.value}</dd>
+            </>
+          ))}
+        </dl>
+      )}
+      {snapshot.tags && snapshot.tags.length > 0 && (
+        <div class="research-hero__snapshot-tags">
+          <span class="research-hero__snapshot-tags-label">Tagged</span>
+          <div class="research-hero__snapshot-tags-list">
+            {snapshot.tags.map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+      )}
+    </div>
+  )}
+</section>
+<style>
+  .research-hero { padding-block: var(--space-16) var(--space-8); }
+  .research-hero__tagline { color: var(--ink-soft); max-width: 700px; margin-top: var(--space-4); }
+  .research-hero__byline { color: var(--ink-faint); font-size: 0.95rem; max-width: 700px; margin-top: var(--space-2); }
+  .research-hero__metrics { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-8); }
+  .hero-metric { display: flex; flex-direction: column; }
+  .hero-metric__value { font-family: var(--font-display); font-size: 2rem; }
+  .hero-metric__label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); }
+
+  .research-hero__paper { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-8); }
+  .research-hero__meta-line { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); margin: 0; }
+  .research-hero__meta-line strong { color: var(--ink); }
+  /* Same .btn/.btn--primary convention as src/components/ProjectCTA.astro
+     (Astro scoped styles don't leak across component files, so this is
+     redefined here rather than shared). */
+  .btn { display: inline-block; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; }
+  .btn--primary { background: var(--accent); color: var(--accent-ink); }
+  .btn--secondary { border: 1px solid var(--border); color: var(--ink); }
+
+  /* "Research Snapshot" card (source's paper-meta-snapshot aside, Task 24
+     fix-round). A secondary summary block distinct from the primary
+     hero metrics above — smaller highlight values keep it visually
+     subordinate to the page's headline numbers. */
+  .research-hero__snapshot {
+    margin-top: var(--space-12);
+    max-width: 700px;
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+  }
+  .research-hero__snapshot-heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin: 0 0 var(--space-3);
+  }
+  .research-hero__snapshot-summary { margin: 0 0 var(--space-5); color: var(--ink-soft); }
+  .research-hero__snapshot-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+  .snapshot-highlight { display: flex; flex-direction: column; }
+  .snapshot-highlight__value { font-family: var(--font-display); font-size: 1.25rem; }
+  .snapshot-highlight__label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-faint); }
+  .research-hero__snapshot-details {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    margin: 0;
+  }
+  .research-hero__snapshot-details dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .research-hero__snapshot-details dd { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
+
+  /* Snapshot's own finer-grained tag pills (source's paper-meta-tags
+     footer) — kept visually separate from the page's main .research-tags
+     row ([slug].astro) via the "Tagged" micro-label and its position
+     inside this card, since verified per-page (Task 24 fix round 2) that
+     these are a genuinely distinct, non-redundant vocabulary, not a
+     duplicate of the top-level `tags` array. */
+  .research-hero__snapshot-tags { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border); }
+  .research-hero__snapshot-tags-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-2);
+  }
+  .research-hero__snapshot-tags-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+  /* ── Responsive (spec breakpoints: 1023/767/639/479) ──
+     Hero metrics/snapshot-highlights already flex-wrap above; below 767 the
+     hero padding is trimmed and below 479 the row gaps and metric value type
+     scale shrink so 3+ metric/highlight items never force a horizontally
+     scrolling row (the risk case: 3 metric items with long mono labels and
+     var(--space-8) gaps at a ~447px content width — verified against the
+     research collection's real metrics arrays, which run 2-3 items deep). */
+  @media (max-width: 767px) {
+    .research-hero { padding-block: var(--space-12) var(--space-6); }
+    .research-hero__metrics { gap: var(--space-6); }
+  }
+  @media (max-width: 479px) {
+    .research-hero__metrics { gap: var(--space-4); }
+    .hero-metric__value { font-size: 1.5rem; }
+    .research-hero__snapshot { padding: var(--space-4); }
+    .research-hero__snapshot-highlights { gap: var(--space-4); }
+    .snapshot-highlight__value { font-size: 1.1rem; }
+    .research-hero__snapshot-details { grid-template-columns: 1fr; row-gap: var(--space-3); }
+    .research-hero__snapshot-details dt { white-space: normal; }
+  }
+</style>

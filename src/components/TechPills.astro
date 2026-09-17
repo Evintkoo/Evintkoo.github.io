@@ -1,0 +1,13 @@
+---
+import { getTagIconSvg } from '../lib/tag-icons';
+interface Props { tech: string[] }
+const { tech } = Astro.props;
+---
+<div class="proj-tech-pills">
+  {tech.map((t) => <span class="proj-tech-pill"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
+</div>
+<style>
+  .proj-tech-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-8); }
+  .proj-tech-pill { display: inline-flex; align-items: center; gap: 0.35em; font-family: var(--font-mono); font-size: 0.8rem; border: 1px solid var(--border); border-radius: 999px; padding: var(--space-1) var(--space-3); text-decoration: none; color: var(--ink-soft); }
+  .proj-tech-pill :global(svg) { width: 0.85em; height: 0.85em; flex-shrink: 0; }
+</style>

@@ -1,0 +1,239 @@
+---
+title: "Dual-Encoder vs Cross-Encoder for Transductive GRN Link Prediction"
+tagline: "A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction: ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation."
+ogDescription: "Dual-Encoder versus Cross-Encoder Neural Architectures for Transductive Gene Regulatory Link Prediction: An Empirical Comparison Under Parameter-Matched Conditions"
+recSubtitle: "Computational Biology · IEEE TNNLS"
+recDescription: "Parameter-matched comparison of dual-encoder and cross-encoder architectures across four imbalance regimes — submitted to IEEE TNNLS."
+tags: ["Deep Learning", "GRN Inference", "IEEE TNNLS"]
+topic: "bio"
+order: 5
+externalLink: "https://github.com/Evintkoo/grn-encoder-comparison/blob/main/paper/paper_tnnls.pdf"
+repoLink: "https://github.com/Evintkoo/grn-encoder-comparison"
+metrics:
+  - label: "Cross-encoder AUROC"
+    value: "0.9025"
+  - label: "Matched parameters"
+    value: "5.58M"
+  - label: "AUROC advantage"
+    value: "10.84 pp"
+snapshot:
+  summary: "Parameter-matched comparison with ablation, pruning, and cold-start evaluation."
+  highlights:
+    - value: "0.9025"
+      label: "Cross-encoder AUROC"
+    - value: "0.7941"
+      label: "Dual-encoder AUROC"
+    - value: "≥60%"
+      label: "Pruning tolerance"
+  details:
+    - label: "Author"
+      value: "Evint Leovonzko (Independent researcher)"
+    - label: "Venue"
+      value: "Submitted to IEEE Transactions on Neural Networks and Learning Systems (TNNLS)."
+    - label: "Evaluation"
+      value: "Four imbalance regimes (1:1, 5:1, 10:1, 50:1), structured pruning, ablation, cold-start."
+  tags: ["IEEE TNNLS", "Neural Architecture", "Pruning", "scRNA-seq"]
+mindmapNote: 'A parameter-matched (5.58M params each) rerun of <inode id="/research/grn-modular-vs-monolithic/">the earlier gradient-corrected two-tower vs cross-encoder comparison</inode>, adding four imbalance regimes, ablation, pruning, and cold-start evaluation to show 95% of the cross-encoder''s advantage comes from joint encoding itself.'
+breakdown:
+  center: "Dual- vs Cross-Encoder GRN"
+  centerDescription: 'Parameter-matched comparison (5.58M params each) showing the cross-encoder beats the dual-encoder by <inode id="balanced-baseline">10.84pp AUROC</inode>, with the gap widening sharply under <inode id="severe-imbalance">realistic class imbalance</inode>.'
+  branches:
+    - label: "Parameter-Matched Architectures"
+      description: "Both models are fixed at exactly 5.58M parameters so any performance gap reflects design, not capacity."
+      nodes:
+        - title: "Dual-encoder (two-tower)"
+          id: "dual-encoder-two-tower"
+          description: "Encodes each TF and gene independently, then scores the pair via cosine similarity of the two encodings."
+        - title: "Cross-encoder"
+          id: "cross-encoder-joint"
+          description: "Concatenates TF-gene features and processes them jointly through shared layers before scoring, allowing direct feature interaction."
+    - label: "Imbalance Robustness Testing"
+      description: 'Both architectures are evaluated across four negative-sampling ratios, from <inode id="balanced-baseline">artificially balanced</inode> to <inode id="severe-imbalance">realistically sparse</inode>.'
+      nodes:
+        - title: "Balanced (1:1) baseline"
+          id: "balanced-baseline"
+          description: 'Cross-encoder scores 0.9025 AUROC versus 0.7941 for the dual-encoder, a 10.84pp gap even with identical parameter counts — later traced by <inode id="joint-encoding-ablation">ablation to joint encoding itself</inode> rather than any specific interaction term.'
+        - title: "Moderate imbalance (5:1, 10:1)"
+          description: "The dual-encoder degrades to roughly 0.694 and 0.658 AUROC while the cross-encoder stays near 0.911, widening the gap to over 25pp at 10:1."
+        - title: "Severe imbalance (50:1)"
+          id: "severe-imbalance"
+          description: "The dual-encoder collapses entirely at this realistic ratio, while the cross-encoder remains stable, a critical difference for real regulatory databases dominated by non-interacting pairs."
+    - label: "Ablation & Pruning Studies"
+      description: '<inode id="joint-encoding-ablation">Component removal</inode> and <inode id="structured-pruning">structured sparsity experiments</inode> isolate what drives the cross-encoder''s advantage and how much capacity is redundant.'
+      nodes:
+        - title: "Joint encoding vs interaction term"
+          id: "joint-encoding-ablation"
+          description: "Ablation shows 95% of the cross-encoder's AUROC advantage comes from processing the pair jointly, with only 5% attributable to the element-wise product interaction term."
+        - title: "Structured neuron pruning"
+          id: "structured-pruning"
+          description: "Both architectures tolerate at least 60% neuron removal without post-hoc performance loss, indicating substantial over-parameterization at 5.58M."
+        - title: "Effective rank analysis"
+          description: "Measures the intrinsic dimensionality of each model's learned representations to gauge representational efficiency."
+    - label: "Cold-Start & Classical Baselines"
+      description: 'Tests how each architecture generalizes to <inode id="cold-start-eval">entities unseen during training</inode>, and how neural components compare to <inode id="expression-baseline">simple feature matching</inode>.'
+      nodes:
+        - title: "Cold-start evaluation"
+          id: "cold-start-eval"
+          description: 'The dual-encoder''s <inode id="dual-encoder-two-tower">independently encoded TF and gene representations</inode> give it a modest edge generalizing to unseen TFs or genes, since it doesn''t rely solely on pair-specific learning.'
+        - title: "Transductive limitation"
+          description: 'The cross-encoder''s <inode id="cross-encoder-joint">joint processing of concatenated TF-gene features</inode> is inherently transductive, but this rarely matters in practice since most GRN inference tasks already know the entities involved.'
+        - title: "Expression-only baseline"
+          id: "expression-baseline"
+          description: "A feature-based baseline with no learned embeddings contextualizes how much the neural architectures contribute over simple expression matching."
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      Cells contain master-switch genes (called transcription factors) that
+      turn other genes on or off. Mapping who controls whom would help
+      biologists understand disease and design drugs. This paper compares
+      two AI designs on that prediction task, with their internal "dial"
+      count held perfectly equal (5.58 million parameters each), so any
+      difference in skill comes from the design, not the size.
+
+      One design ("dual-encoder") reads each gene on its own, then checks
+      if the pair matches. The other ("cross-encoder") reads the pair
+      together from the start. The joint reader wins clearly, and the gap
+      gets worse the more realistic the test gets.
+  - heading: "Introduction"
+    body: |-
+      There are two common ways to build an AI that scores whether two
+      things go together. One way encodes each item separately and then
+      compares the two encodings — fast, because you can pre-compute and
+      reuse each item's encoding. The other reads both items together from
+      the start, which is slower but lets the model notice how the two
+      specifically relate to each other.
+
+      No one had tested these two designs on gene-regulation prediction
+      while forcing them to have exactly the same amount of "brainpower."
+      Without that control, you can't tell whether one design wins because
+      it's smarter, or just because it happens to be bigger. This paper
+      closes that gap by matching both models at 5.58 million parameters.
+  - heading: "Methods"
+    body: |-
+      Both models were built to have precisely the same size (5.58M
+      parameters) so the comparison is fair. They were trained and tested
+      on real single-cell gene-expression data from human brain tissue.
+
+      Because most gene pairs in real biology are NOT connected, the
+      models were tested under four different mixes of "unconnected pairs"
+      to "connected pairs": 1-to-1 (artificially easy and balanced), 5-to-1,
+      10-to-1, and 50-to-1 (the most realistic and hardest, since real
+      regulatory connections are rare). The researchers also switched off
+      parts of each model one at a time to see which parts actually
+      mattered, trimmed away neurons to see how much of each model was
+      redundant, and tested both models on genes they'd never seen during
+      training to check how well they generalize.
+  - heading: "Results"
+    body: |-
+      The model that reads gene pairs together scored 0.9025 on the
+      standard accuracy scale (AUROC, where 1.0 is perfect and 0.5 is a
+      coin flip). The model that reads genes separately scored 0.7941 — a
+      10.84-point gap in the joint reader's favor, even with identical
+      model sizes.
+
+      That gap gets much worse once the test becomes more realistic: at a
+      10-to-1 imbalance the separate reader drops to roughly 0.658 while
+      the joint reader barely moves (about 0.911), and at 50-to-1 the
+      separate reader collapses completely while the joint reader stays
+      stable. When the researchers switched off pieces of the winning
+      design, they found that 95% of its advantage simply comes from
+      reading the pair together — only 5% comes from a specific internal
+      math trick.
+  - heading: "Discussion"
+    body: |-
+      Both models could have more than 60% of their internal neurons
+      removed without losing accuracy, meaning both designs carry a lot of
+      unused capacity — there's room to shrink them.
+
+      The separate-reader design does have one edge: it generalizes
+      slightly better to genes it has never seen before, because it builds
+      an independent representation for each gene rather than only
+      learning about specific pairs. But in practice this barely matters,
+      because most real gene-regulation prediction tasks already know which
+      genes they're working with — and even where it does apply, that small
+      edge can't make up for the separate reader's much larger accuracy
+      shortfall. The separate reader's collapse under realistic imbalance
+      (50-to-1) is also a serious practical problem, since real regulatory
+      databases are dominated by non-connected gene pairs.
+  - heading: "Conclusion"
+    body: |-
+      With model sizes held perfectly equal, the joint-reader design
+      clearly wins at predicting which genes control which. The
+      separate-reader's small edge on brand-new genes can't make up for its
+      much lower accuracy on the main task. The lesson: how a model looks
+      at a pair of genes matters more than how big the model is.
+
+      Future work could explore whether separate-reader models can be
+      taught to "peek" at pairs together late in the process to close the
+      gap while keeping their speed advantage, and whether the unused
+      capacity found here (60%+ prunable) can be trimmed away without any
+      loss in accuracy.
+---
+
+## Abstract
+
+**Introduction** — This paper presents a rigorous, parameter-matched comparison of dual-encoder (two-tower) and cross-encoder neural architectures for predicting transcription factor–gene regulatory relationships from single-cell RNA-seq data. Both models contain exactly 5.58M parameters but differ fundamentally in how they process input pairs.
+
+**Methods** — Both architectures are evaluated across four negative sampling regimes (1:1, 5:1, 10:1, 50:1), with ablation studies isolating individual architectural components, structured neuron pruning experiments testing sparsity tolerance, effective rank analysis measuring representational efficiency, and cold-start evaluation probing inductive generalization.
+
+**Results** — The cross-encoder achieves AUROC **0.9025** vs 0.7941 for the dual-encoder under balanced training, a 10.84-point gap. The dual-encoder degrades severely with imbalance (AUROC −13.6 pp at 10:1, complete collapse at 50:1) while the cross-encoder remains stable (≈0.911 at 10:1). Ablation reveals 95% of the gap stems from joint encoding itself, with only 5% from the element-wise product interaction term.
+
+**Discussion** — Pruning experiments show both architectures tolerate ≥60% neuron removal without post-hoc performance loss, suggesting substantial over-parameterization. Cold-start evaluation reveals that the dual-encoder's independent representations provide slightly better generalization to unseen entities, while the cross-encoder's joint processing is inherently transductive.
+
+**Conclusion** — Under parameter-matched conditions, the cross-encoder dominates on transductive GRN link prediction. The dual-encoder's only advantage is modest cold-start generalization, which is insufficient to overcome its 10.84-point AUROC deficit on the primary task. Joint encoding is the decisive architectural factor.
+
+## Introduction
+
+Dual-encoder models score interactions by computing a similarity function over independently encoded representations, enabling efficient large-scale retrieval. Cross-encoders process pairs jointly, allowing direct feature interaction at the cost of linear inference complexity. For GRN link prediction, the choice between these paradigms has significant implications for both accuracy and scalability.
+
+> **Novelty of this Study**
+>
+> Prior comparisons between dual-encoder and cross-encoder architectures for biological link prediction have not controlled for parameter count, leaving open the question of whether performance gaps reflect architectural differences or capacity differences. This paper closes that gap.
+
+This study enforces strict parameter matching at 5.58M parameters across both architectures and evaluates dual-encoder vs cross-encoder trade-offs for GRN inference across ablation, pruning, effective rank analysis, and cold-start evaluation.
+
+## Methods
+
+1. **Parameter-Matched Architectures** — Both models are sized to exactly 5.58M parameters. The dual-encoder scores interactions via cosine similarity of independent encodings; the cross-encoder processes concatenated TF–gene features through shared layers before scoring. <span class="tag">5.58M Parameters</span> <span class="tag">Dual-Encoder</span> <span class="tag">Cross-Encoder</span>
+2. **Imbalance Robustness Testing** — Four negative sampling ratios are evaluated: 1:1, 5:1, 10:1, and 50:1. This range spans from artificially balanced training to highly realistic biological conditions where regulatory interactions are sparse. <span class="tag">1:1 Ratio</span> <span class="tag">5:1 Ratio</span> <span class="tag">10:1 Ratio</span> <span class="tag">50:1 Ratio</span>
+3. **Ablation & Pruning Studies** — Ablation systematically removes architectural components to isolate their contributions. Structured neuron pruning removes low-importance neurons across sparsity levels (10–90%) to identify each model's redundancy budget. Effective rank analysis measures intrinsic dimensionality of learned representations. <span class="tag">Ablation</span> <span class="tag">Neuron Pruning</span> <span class="tag">Effective Rank</span>
+4. **Cold-Start & Classical Baselines** — Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching. <span class="tag">Cold-Start</span> <span class="tag">Inductive</span> <span class="tag">Expression-Only Baseline</span>
+
+## Results
+
+Under parameter-matched conditions, the cross-encoder outperforms the dual-encoder across every evaluation setting except cold-start generalization.
+
+**AUROC Across Imbalance Regimes** — Both architectures at 5.58M parameters on human brain scRNA-seq.
+
+| Regime | Cross-Encoder | Dual-Encoder | Gap |
+| --- | --- | --- | --- |
+| Balanced (1:1) | 0.9025 | 0.7941 | +10.84 pp |
+| 5:1 Imbalance | ≈0.911 | ≈0.694 | +21.7 pp |
+| 10:1 Imbalance | ≈0.911 | ≈0.658 | +25.3 pp |
+| 50:1 Imbalance | Stable | Collapse | — |
+
+The dual-encoder collapses entirely at 50:1 imbalance, while the cross-encoder remains stable, a critical advantage for real biological datasets where positive regulatory interactions are rare.
+
+> **Ablation: What Drives the Gap?**
+>
+> Ablation reveals that **95% of the AUROC gap** stems from joint encoding itself. The element-wise product interaction term within the cross-encoder accounts for only 5%. The decisive factor is whether inputs are processed jointly or independently.
+
+## Discussion
+
+By matching parameters exactly at 5.58M, this study eliminates capacity as a confounding variable. The 10.84-point AUROC gap at balanced training (growing to >25 points at severe imbalance) is attributable to architectural choice alone.
+
+> **Pruning Tolerance**
+>
+> Both architectures tolerate ≥60% structured neuron pruning without post-hoc performance loss, suggesting both are substantially over-parameterized at 5.58M for the dataset size. Leaner models deserve investigation.
+
+The dual-encoder's only advantage is a modest improvement in cold-start generalization to unseen entities, a consequence of its independent representations. However, this advantage is practically limited by the transductive nature of GRN inference. In most scenarios, TF and gene identities are known at training time, making the cross-encoder's inductive limitation irrelevant.
+
+The 50:1 collapse of the dual-encoder is a critical practical concern. Real regulatory databases have far more non-interacting TF–gene pairs than interacting ones, making the dual-encoder unsuitable for production GRN inference without significant modifications.
+
+## Conclusion
+
+This paper provides the first parameter-matched empirical comparison of dual-encoder and cross-encoder architectures for transductive GRN link prediction, submitted to IEEE Transactions on Neural Networks and Learning Systems (TNNLS).
+
+The results are unambiguous: for transductive GRN link prediction from single-cell RNA-seq data, cross-encoders outperform dual-encoders by a large margin (10.84 pp AUROC at balanced training, growing catastrophically under imbalance). The decisive factor is joint encoding, not any secondary architectural feature.
+
+Future directions include investigating whether dual-encoders can be augmented with late interaction mechanisms to recover the AUROC gap while retaining their retrieval efficiency, and exploring whether the 60% pruning tolerance enables significant model compression without accuracy loss.

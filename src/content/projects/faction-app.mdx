@@ -1,0 +1,28 @@
+---
+title: "Faction: Stock Analysis App"
+tagline: "A desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 1.5B LLM. No cloud, no subscriptions, fully private."
+ogDescription: "Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM. No cloud required."
+tags: ["Open Source", "Finance"]
+topic: "fin"
+tech: ["Tauri v2", "Rust", "React", "TypeScript", "candle (HuggingFace)", "Qwen2.5 1.5B", "Metal / CPU"]
+repo: "https://github.com/Evintkoo/FactionApp"
+featured: false
+order: 7
+---
+
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
+
+Most stock analysis tools are either cloud-dependent, subscription-gated, or black boxes. Faction is a fully local alternative: a Tauri desktop app that scores stocks on both technical (price action, candlestick patterns, momentum) and fundamental (ROE, FCF, debt/equity) dimensions using Keras models loaded directly via a pure-Rust HDF5 reader.
+
+The AI chat feature runs Qwen2.5 1.5B locally via Hugging Face's *candle* inference library, Metal-accelerated on Apple Silicon, CPU elsewhere. Market data comes from Yahoo Finance with Tiingo as a fallback. Everything stays on your machine.
+
+<ProjSectionHeading label="Features">What it does</ProjSectionHeading>
+
+- **Technical Analysis** — Scores stocks based on price action (candlestick patterns, momentum indicators) using a trained Keras model running entirely on-device.
+- **Fundamental Analysis** — Evaluates financial health through key ratios (ROE, free cash flow, debt/equity) scored by a second on-device ML model.
+- **Local AI Chat** — Ask questions about any stock using Qwen2.5 1.5B running locally via candle: Metal-accelerated on Apple Silicon, CPU on everything else.
+- **Dashboard** — Combined view of technical and fundamental scores with an optional AI insight strip for a quick read on any ticker.
+- **Fully Offline** — All inference runs on your machine. No cloud API keys needed. Market data via Yahoo Finance (Tiingo as fallback), model runs locally.
+- **Pure-Rust ML Backend** — Keras .h5 models loaded directly via the hdf5 crate and ndarray: no Python runtime, no PyTorch, just native Rust inference.

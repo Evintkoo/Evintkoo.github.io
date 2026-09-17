@@ -1,0 +1,269 @@
+---
+title: "Individual Optimality and Collective Failure: Survival-Maximising Strategies in a Keynesian Agent-Based Model"
+tagline: "Grid Search over Agent Decision Rules Reveals a Structural Coordination Failure Attractor. Using a grid search over key decision parameters for households, firms, and banks, this paper identifies survival-maximising rules empirically, without imposing theoretical equilibrium conditions. When all agent types simultaneously follow their individually-optimal strategies, aggregate outcomes diverge sharply: GDP growth falls 65%, firm bankruptcies rise 17-fold, and mean firm profit turns negative."
+ogTitle: "Individual Optimality and Collective Failure | Evint Leovonzko"
+ogDescription: "Grid search over agent decision rules reveals that survival-maximising strategies produce a coordination failure attractor: GDP growth −65%, firm bankruptcies 17x higher, mean profit negative."
+recSubtitle: "Computational Economics · Coordination Failure"
+recDescription: "Grid search identifies survival-maximising strategies for households, firms, and banks. The all-best economy produces GDP growth −65% and firm bankruptcies 17× higher."
+tags: ["Coordination Failure", "Grid Search", "Survivability Optimisation", "Decentralised Equilibrium", "Keynesian ABM"]
+topic: "econ"
+order: 2
+pdf: "/files/keynesian_abm_paper2.pdf"
+pairedLink: "/research/keynesian-abm-fiscal/"
+pairedLinkLabel: "← Read Paper 1"
+mindmapNote: 'A grid search over agent decision rules reveals a structural coordination-failure attractor: GDP growth falls 65% and firm bankruptcies rise 17× when every agent type plays individually optimal. Built on <inode id="/research/keynesian-abm-fiscal/">the same baseline Keynesian ABM used to study fiscal stabilisers and Minsky dynamics</inode> in a companion paper.'
+breakdown:
+  center: "Survival-Optimal Strategies"
+  centerDescription: 'A grid search finds each agent type''s <inode id="best-scoring-point">individually best-for-itself strategy</inode>, then shows that <inode id="simultaneous-activation">switching all of them on together</inode> produces a structural <inode id="all-best-outcome">coordination-failure attractor</inode> rather than a healthier economy.'
+  branches:
+    - label: "Composite Survivability Score"
+      description: "Each agent type is scored on a single index combining survival, wealth or profit, and financial stability, benchmarked against the bounded-rational baseline."
+      nodes:
+        - title: "Household Score"
+          id: "household-score"
+          description: "Weights survival rate, median wealth, and consumption stability, with a baseline reference score of 0.61."
+        - title: "Firm Score"
+          description: "Weights survival rate, mean profit, and employment, with a baseline reference score of 0.58."
+        - title: "Bank Score"
+          description: "Weights survival rate, capital adequacy, and net interest income, with a baseline reference score of 0.55."
+    - label: "Grid Search Protocol"
+      description: 'A discrete grid over each agent type''s four most consequential decision parameters is evaluated across 10-year runs to find its <inode id="best-scoring-point">survival-optimal rule</inode>.'
+      nodes:
+        - title: "Household Parameters"
+          id: "household-parameters"
+          description: "Savings propensity, risk aversion, habit, and wage decay are swept, for example savings propensity from 0.05 to 0.20 and risk aversion from 0.20 to 0.70."
+        - title: "Firm and Bank Parameters"
+          id: "firm-bank-parameters"
+          description: "Analogous grids cover firm investment, R&D, and hiring rules, and bank risk premium, lending appetite, and capital-adequacy floor."
+        - title: "Best-Scoring Point"
+          id: "best-scoring-point"
+          description: "The grid point with the highest composite score for that agent type is designated its survival-optimal strategy."
+    - label: "The All-Best Economy"
+      description: 'Survival-optimal rules found for households, firms, and banks in isolation are <inode id="simultaneous-activation">switched on together</inode> and <inode id="50-seed-monte-carlo">simulated across many random seeds</inode>.'
+      nodes:
+        - title: "Simultaneous Activation"
+          id: "simultaneous-activation"
+          description: "All three agent types adopt their individually best-found parameter vectors at once, forming the all-best economy."
+        - title: "50-Seed Monte Carlo"
+          id: "50-seed-monte-carlo"
+          description: "The all-best economy is simulated for 10 years across 50 Halton-seed draws to confirm the result is a stable pattern rather than a one-off run."
+        - title: "Decentralised Equilibrium"
+          description: "The resulting aggregate statistics define a second stable attractor, compared against the bounded-rational baseline and the companion paper's coordination failure."
+    - label: "Two Attractor States"
+      description: 'The <inode id="all-best-outcome">all-best economy</inode> produces starkly worse aggregate outcomes than the <inode id="bounded-rational-baseline">bounded-rational baseline</inode> even though every agent is <inode id="per-agent-best-strategies">optimising individually</inode>.'
+      nodes:
+        - title: "Coordinated Equilibrium"
+          id: "bounded-rational-baseline"
+          description: "Bounded-rational baseline: GDP growth 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20."
+        - title: "Decentralised Equilibrium"
+          id: "all-best-outcome"
+          description: "All-best economy: GDP growth falls to 1.60%/yr (−65%), unemployment rises to 1.29%, bankruptcy surges to 4.73%/yr (17.5x), and mean profit turns to −$9.21."
+        - title: "Per-Agent Best Strategies"
+          id: "per-agent-best-strategies"
+          description: 'Households <inode id="household-parameters">raise savings and risk aversion</inode>, firms cut investment while raising R&D, and banks <inode id="firm-bank-parameters">cut risk premium but contract lending appetite</inode> and raise the capital floor.'
+        - title: "Household Wealth Paradox"
+          description: 'Median household wealth rises 76% to $6,757 in the all-best economy, lifting the very <inode id="household-score">wealth measure that anchors the household survivability score</inode> — showing the failure is one of collective, not individual, welfare.'
+    - label: "Historical Validation"
+      description: "Three real-world slumps show the same pattern of individually rational caution producing collective demand deficiency."
+      nodes:
+        - title: "Japan's Lost Decades (1991-2003)"
+          description: "Precautionary household saving, bank credit contraction, and firm investment cuts after the asset-bubble collapse produced a decade of roughly 0.5%/yr growth and deflation despite the zero lower bound."
+        - title: "Euro-Area Periphery (2010-2015)"
+          description: "Austerity-driven caution among households, banks, and firms in Greece, Portugal, and Spain produced a 6-26% cumulative GDP contraction."
+        - title: "US Balance-Sheet Recession (2008-2012)"
+          description: 'Household deleveraging, bank credit contraction, and firm investment cuts after the housing crash — the same <inode id="per-agent-best-strategies">combination of household caution, bank pullback, and firm retrenchment</inode> that defines the all-best economy''s strategy mix — produced the deepest post-war US recession, reversed only by large fiscal transfers.'
+metrics:
+  - label: "GDP growth drop"
+    value: "−65%"
+  - label: "firm bankruptcy increase"
+    value: "17×"
+  - label: "mean firm profit"
+    value: "−$9.21"
+chart:
+  xs: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200]
+  series:
+    - name: "Decentralised equilibrium"
+      values: [100, 103.25, 105.8, 107.11, 106.96, 105.47, 103.1, 100.52, 98.46, 97.51, 98, 99.89, 102.82, 106.17, 109.19, 111.25, 111.94, 111.17, 109.22, 106.67, 104.24, 102.6, 102.25, 103.37, 105.78, 108.98, 112.27, 114.95, 116.44, 116.48, 115.15, 112.86, 110.27, 108.1, 106.98, 107.27, 108.99, 111.82, 115.15, 118.26, 120.48]
+    - name: "All-best strategies"
+      values: [100, 99.46, 98.68, 97.76, 96.74, 95.65, 94.48, 93.26, 91.98, 90.65, 89.28, 87.86, 86.41, 84.92, 83.4, 81.84, 80.25, 78.63, 76.98, 75.3, 73.6, 71.87, 70.12, 68.34, 66.54, 64.72, 62.87, 61.01, 59.12, 57.21, 55.28, 53.33, 51.37, 49.38, 47.38, 45.36, 43.32, 41.26, 39.19, 37.1, 35]
+    - name: "Survival-optimal (mixed)"
+      values: [100, 102.45, 103.69, 103.08, 100.84, 97.97, 95.76, 95.2, 96.47, 98.94, 101.38, 102.58, 101.92, 99.65, 96.78, 94.61, 94.08, 95.4, 97.88, 100.3, 101.46, 100.76, 98.46, 95.6, 93.45, 92.97, 94.33, 96.83, 99.23, 100.35, 99.6, 97.27, 94.41, 92.29, 91.86, 93.26, 95.77, 98.15, 99.23, 98.43, 96.08]
+snapshot:
+  summary: "Two attractor states, grid search design, and key welfare comparisons."
+  highlights:
+    - value: "4.60%"
+      label: "GDP CAGR (baseline)"
+    - value: "1.60%"
+      label: "GDP CAGR (all-best)"
+    - value: "+76%"
+      label: "median household wealth"
+  details:
+    - label: "Target journal"
+      value: "Journal of Economic Dynamics and Control"
+    - label: "Key finding"
+      value: "Two stable attractor states: coordinated equilibrium (GDP 4.60%, bankruptcy 0.27%/yr) vs. decentralised equilibrium (GDP 1.60%, bankruptcy 4.73%/yr, profit −$9.21)."
+    - label: "Historical validation"
+      value: "Japan 1991–2003, Euro-area periphery 2010–2015, US balance-sheet recession 2008–2012 each confirm the demand-deficiency mechanism."
+  tags: ["Coordination Failure", "Grid Search", "Survivability Optimisation", "Keynesian ABM", "Decentralised Equilibrium"]
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      This paper asks what happens if a household, a firm, and a bank each
+      try only to protect themselves as much as possible — and then what
+      happens to the economy as a whole when everyone does that at the
+      same time, inside a computer simulation.
+
+      The surprising finding: when every group plays it as safe as
+      possible for itself, the economy as a whole does worse, not better.
+      Growth slows, far more firms go bankrupt, and the average firm
+      starts losing money — even though every household, firm, and bank
+      is doing exactly what's best for it individually.
+  - heading: "Introduction"
+    body: |-
+      One of the oldest questions in economics is whether everyone acting
+      smart for themselves adds up to a healthy economy as a whole. This
+      paper builds on an earlier companion paper that set up a basic
+      simulated economy (an "agent-based model" — meaning fake
+      households, firms, and banks, each making their own small
+      decisions) and showed interest rates could get stuck at zero.
+
+      Here the question is different: what if, instead of using normal
+      rule-of-thumb behavior, every household, firm, and bank instead
+      adopts whatever strategy best protects its own survival? It turns
+      out the simulation can settle into two very different stable
+      states — a healthy one where everyone uses ordinary habits, and a
+      broken one where everyone optimizes only for itself — and both are
+      equally stable over many repeated runs, meaning the bad outcome
+      isn't a rough patch, it's a genuine trap.
+  - heading: "Methods"
+    body: |-
+      To find each group's "best for itself" strategy, the researchers
+      gave each type of agent (households, firms, banks) a single
+      scorecard combining how well it survives, how much wealth or profit
+      it builds, and how financially stable it stays. They then tried
+      many combinations of decision rules — like how much to save, or how
+      cautious to be — over a 10-year simulated run, and kept whichever
+      combination scored highest for that group.
+
+      Once each group had its own personal-best playbook, all three were
+      switched on together to see what happens to the economy as a
+      whole. The whole thing was then run 50 times with different random
+      starting conditions, so the results are a stable pattern rather
+      than a one-off fluke.
+  - heading: "Results"
+    body: |-
+      When households, firms, and banks each follow their own personal
+      best strategy at once, the whole economy shrinks: growth drops
+      sharply, unemployment rises, far more firms go bankrupt, and the
+      average firm flips from making a profit to losing money.
+      Households end up saving much more and acting far more cautiously,
+      firms cut back on investing, and banks lend less and take fewer
+      risks.
+
+      Strangely, individual households actually end up wealthier in this
+      "everyone plays it safe" economy — no single person made a bad
+      decision. The problem is that when everyone pulls back spending and
+      lending at the same time, there isn't enough demand left to keep
+      businesses, and eventually the whole economy, healthy.
+  - heading: "Historical Case Studies"
+    body: |-
+      This isn't just a quirk of the computer simulation — three real
+      economic slumps show the same pattern. In Japan's "Lost Decades"
+      after its property bubble burst in the 1990s, families saved more,
+      banks lent less, and companies invested less. Each choice was
+      sensible on its own, but together they caused a decade of
+      near-zero growth.
+
+      In Southern Europe during the 2010–2015 debt crisis (Greece,
+      Portugal, Spain), the same combination of cautious households,
+      cautious banks, and cautious firms produced deep recessions. And in
+      the US after the 2008 housing crash, families paid down debt, banks
+      pulled back lending, and firms cut investment — all reasonable
+      moves individually, but together they produced the worst US
+      recession since World War II, fixed only by large government
+      spending.
+  - heading: "Conclusion"
+    body: |-
+      The takeaway is that the "messy," imperfect habits people normally
+      use aren't just a shortcut researchers use to keep their models
+      simple — they're actually part of what holds a real economy
+      together. Replace those normal habits with everyone purely
+      optimizing for their own survival, and the whole system can
+      collapse, even though no one is being irrational or making a
+      mistake.
+
+      The paper suggests future work should explore what happens if
+      everyone keeps adjusting their strategy in response to what
+      everyone else is doing, to see whether the economy eventually
+      settles somewhere healthier or stays stuck in the bad outcome.
+---
+
+## Abstract
+
+**Question** — This paper investigates what decision rules maximise the individual survivability and welfare of each agent type in a single-sector Keynesian agent-based model, and what aggregate outcome emerges when all agent types simultaneously follow their individually-optimal strategies. Using a grid search over key decision parameters for households, firms, and banks, survival-maximising rules are identified empirically, without imposing theoretical equilibrium conditions.
+
+**Approach** — For each agent type in isolation, a grid search identifies the parameter combination that maximises a composite survivability score (incorporating survival rate, wealth accumulation, profit, and financial stability) against the bounded-rational baseline economy. The survival-optimal rules for households, firms, and banks are then activated simultaneously to form the "all-best economy", whose aggregate outcomes are compared to the baseline and to the coordination failure documented in the companion paper.
+
+**Result** — The all-best economy produces aggregate outcomes that diverge markedly from the bounded-rational baseline: GDP growth is lower (1.60% vs. 4.60%), unemployment is higher (1.29% vs. 0.24%), and mean firm profit turns negative (−$9.21 vs. +$4.20) despite each agent following individually-optimal rules. Paradoxically, zero lower bound frequency declines as credit demand collapses rather than as a result of improved monetary traction.
+
+**Implication** — The coordination failure identified in the companion paper does not depend on the theoretical-optimality assumption; it is a structural property of decentralised individual optimisation in a Keynesian economy. Bounded rationality acts not merely as a modelling convenience, but as a structural stabiliser maintaining the consumption and credit flows required for aggregate coherence. JEL codes: C63, E12, E32, C61.
+
+## Introduction
+
+A central question in macroeconomics is whether individually rational behaviour aggregates to socially desirable outcomes. In Keynesian models with strategic complementarities, the answer is generically no. But the mechanism and severity of the failure depend critically on the decision rules agents actually use.
+
+> **Two Attractor States**
+>
+> The simulation identifies two stable attractor states: a **coordinated equilibrium** under bounded-rational rules (GDP 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20) and a **decentralised equilibrium** under survival-optimal rules (GDP 1.60%/yr, unemployment 1.29%, firm bankruptcy 4.73%/yr, mean profit −$9.21). Both states are stable across 50 Monte Carlo seeds: the coordination failure is a genuine long-run attractor, not a transitional trajectory.
+
+This paper builds directly on the companion paper ([Paper 1](/research/keynesian-abm-fiscal/)), which established the baseline model and documented the persistent ZLB result. The present paper asks a different question: what happens when, instead of bounded-rational heuristics, each agent type adopts the strategy that best serves its own survival? The grid search methodology identifies these strategies empirically, without imposing Nash equilibrium or rational-expectations conditions.
+
+The result connects to three strands of literature: Diamond's (1982) multiplicity of equilibria in search economies, the coordination failure literature following Cooper and John (1988), and the recent macro-ABM literature documenting bounded rationality as a stabiliser (Dosi et al. 2010, 2013, 2015; Fagiolo and Roventini 2017).
+
+## Methods
+
+1. **Composite Survivability Score** — Each agent type is evaluated by a composite score that aggregates multiple welfare dimensions: household score weights survival rate, median wealth, and consumption stability; firm score weights survival rate, mean profit, and employment; bank score weights survival rate, capital adequacy, and net interest income. All components are normalised to [0,1] and combined with equal weights. The composite score at the bounded-rational baseline is used as the reference (score = 0.61 for households, 0.58 for firms, 0.55 for banks). <span class="tag">Multi-objective Welfare</span> <span class="tag">Normalised Score</span> <span class="tag">Empirical Optimisation</span>
+2. **Grid Search Protocol** — For each agent type, a discrete grid is constructed over the four most consequential decision parameters. For households: savings propensity σ ∈ `{0.05, 0.10, 0.15, 0.20}`, risk aversion ρ ∈ `{0.20, 0.40, 0.60, 0.70}`, habit η ∈ `{0.50, 0.70}`, wage decay δ_W ∈ `{0.02, 0.05}`. Each grid point is evaluated over a 10-year simulation run against the bounded-rational baseline economy. The grid point achieving the highest composite score is identified as the survival-optimal strategy. <span class="tag">4-parameter Grid</span> <span class="tag">10-year Evaluation</span> <span class="tag">Against Baseline Economy</span>
+3. **The All-Best Economy** — After identifying survival-optimal rules for each agent type in isolation, all three agent types are simultaneously assigned their best-found parameter vectors. This "all-best economy" is then simulated for 10 years across 50 Halton-seed Monte Carlo draws, producing stable aggregate statistics that characterise the decentralised equilibrium. The result is compared to the bounded-rational baseline and to the theoretical-optimal coordination failure documented in Paper 1. <span class="tag">Simultaneous Optimisation</span> <span class="tag">50-seed Monte Carlo</span> <span class="tag">Decentralised Equilibrium</span>
+
+## Results
+
+The grid search identifies survival-maximising strategies for each agent type that are individually coherent but collectively destructive when activated simultaneously.
+
+<figure class="chart-figure" data-reveal>
+  <figcaption class="chart-figure__caption">
+    <span class="chart-figure__title">GDP under three strategy regimes</span>
+    <span class="chart-figure__note">Indexed GDP (start = 100) over simulation quarters. The "all-best" economy collapses (≈−65%), the core coordination-failure result. Representative shapes — illustrative.</span>
+  </figcaption>
+  <div class="chart-figure__panel">
+    <div class="chart" id="research-chart" data-chart-format="abm-quarters" role="img" aria-label="Line chart of representative GDP trajectories under three strategy regimes over 200 simulation quarters"></div>
+  </div>
+</figure>
+
+> **Per-Agent Best Strategies**
+>
+> **Households** raise savings propensity fourfold (σ = 0.20 vs. 0.05), triple risk aversion (ρ = 0.70 vs. 0.20), and halve reservation-wage decay (δ_W = 0.02 vs. 0.05). **Firms** cut investment 70% (χ = 0.03 vs. 0.10), raise R&D tenfold (φ = 0.05 vs. 0.005), and loosen hiring threshold. **Banks** cut risk premium 80% (ζ_B = 0.10 vs. 0.50), contract lending appetite (0.50 vs. 0.80), and raise CAR floor to 12%.
+
+**All-best aggregate outcomes:** When all three agent types adopt survival-optimal rules simultaneously, GDP growth falls from 4.60%/yr to 1.60%/yr (−65.2%), unemployment rises from 0.24% to 1.29%, firm bankruptcy rate surges from 0.27% to 4.73%/yr (a 17.5× increase), and mean firm profit turns negative (−$9.21 vs. +$4.20). The decentralised equilibrium is stable across all 50 Monte Carlo seeds.
+
+> **The Paradox: Household Wealth Rises**
+>
+> Median household wealth rises 76% in the all-best economy (from $3,842 to $6,757), confirming that the failure is not one of individual welfare but of social welfare aggregated across all agent types. Households rationally defect from the coordinated consumption path; the cost is borne collectively by firms and, in the long run, by households themselves as the productive base that supports their income erodes. ZLB frequency paradoxically declines as credit demand collapses rather than as a result of improved monetary traction.
+
+## Historical Case Studies
+
+Three historical episodes confirm that the demand-deficiency mechanism identified computationally is not a model artefact but a recurring structural feature of advanced economies.
+
+**Japan's Lost Decades (1991–2003):** Following the asset bubble collapse, Japanese households dramatically raised savings rates (precautionary motive), banks contracted credit despite near-zero interest rates, and firms slashed investment. Each decision was individually rational given the environment. The aggregate result was a decade of stagnation with GDP growth averaging 0.5%/yr and deflation despite the ZLB, matching the all-best attractor closely.
+
+**Euro-area periphery (2010–2015):** Under fiscal austerity conditionality, households in Greece, Portugal, and Spain cut consumption simultaneously, banks tightened credit in response to sovereign risk, and firms reduced investment. Each decision was individually rational given sovereign risk premia. The aggregate result was a 6–26% cumulative GDP contraction, precisely the demand-deficiency mechanism the model isolates.
+
+**US balance-sheet recession (2008–2012):** Following the housing collapse, US households deleveraged rapidly (individually rational given negative equity), banks contracted credit (individually rational given regulatory pressure and NPL uncertainty), and firms cut investment (individually rational given demand uncertainty). The aggregate result was the deepest post-war US recession, recovered only by large fiscal transfers, consistent with the model's prediction that the decentralised equilibrium requires external coordination to escape.
+
+## Conclusion
+
+Three conclusions emerge from the analysis. First, coordination failure is structural: the all-best economy produces markedly worse aggregate outcomes than the bounded-rational baseline even though every agent type is following individually-optimal rules. Second, the failure mechanism here differs from the companion paper: rather than credit surge and ZLB lock-in, the channel is demand deficiency: conservative household savings and bank credit rationing suppress the consumption and investment flows that sustain firm viability. Third, bounded rationality is a structural stabiliser, not a modelling convenience.
+
+The result establishes that the bounded-rational behaviour documented in heterogeneous-agent macro models is not a modelling simplification but a stabilising feature. Replacing bounded rationality with survival-maximising rules, even without imposing theoretical equilibrium conditions, is sufficient to produce coordination failure. The economy possesses two stable attractor states: the coordinated equilibrium under bounded rationality and the decentralised equilibrium under survival-optimal rules.
+
+Future work should investigate whether an iterative best-response dynamic (each agent type updating its strategy in response to others' strategies) converges to a stable Nash equilibrium or cycles, and whether the resulting equilibrium is closer to the bounded-rational baseline or to the all-best outcome documented here. See [Paper 1](/research/keynesian-abm-fiscal/) for the companion study on the baseline model, ZLB dynamics, and Minsky dynamics.

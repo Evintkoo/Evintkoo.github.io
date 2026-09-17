@@ -1,0 +1,282 @@
+---
+title: "GRASP: Graph-Routed Adaptive Spectral Partitioning"
+tagline: "GRASP is a parameter-free clustering pipeline that constructs a topological fingerprint of any dataset, estimates the natural cluster count automatically, and dispatches to the most suitable specialist algorithm without requiring labels, validation data, or user-specified hyperparameters."
+ogTitle: "GRASP: Autonomous Spectral Clustering | Evint Leovonzko"
+ogDescription: "A parameter-free clustering pipeline that identifies geometric structure, estimates k automatically, and routes to the optimal specialist algorithm."
+recSubtitle: "Machine Learning · Clustering"
+recDescription: "Autonomous topology-aware clustering pipeline: GNG topology → normalised spectral gap → oracle routing to 6 specialist algorithms. Parameter-free, processes 50K points in 140ms."
+tags: ["Spectral Clustering", "GNG", "Parameter-Free"]
+topic: "ml"
+order: 4
+pdf: "/files/grasp_paper.pdf"
+repoLink: "https://github.com/Evintkoo/SOMplus_clustering"
+mindmapNote: 'GRASP builds a topology map of a dataset before routing it to one of six specialist clustering algorithms, and its own future work proposes folding in <inode id="/research/som-tsk/">SOM-TSK''s multi-start seeding</inode> as a replacement for KMeans++ within that specialist roster.'
+metrics:
+  - label: "benchmark datasets"
+    value: "26"
+  - label: "for 50K points"
+    value: "140 ms"
+  - label: "specialist algorithms"
+    value: "6"
+snapshot:
+  summary: "Pipeline architecture, benchmark scope, and performance characteristics."
+  highlights:
+    - value: "26"
+      label: "Benchmark datasets"
+    - value: "140 ms"
+      label: "50K-point throughput"
+    - value: "49 / 49"
+      label: "Unit tests passing"
+  details:
+    - label: "Pipeline"
+      value: "7 stages: Convex probe → GNG → Laplacian → Eigengap → Nyström → 6 specialists → Oracle routing"
+    - label: "Baselines"
+      value: "KMeans++, DBSCAN (ARI 0.000), HDBSCAN (ARI 0.055), KnnSpectral (ARI 0.234)"
+    - label: "Key result"
+      value: "ARI 0.378 on interlocking rings vs GRASP, a 14× improvement over DBSCAN and 7× over HDBSCAN."
+  tags: ["Spectral Clustering", "Growing Neural Gas", "Nyström Approximation", "Oracle Routing", "Parameter-Free"]
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      When trying to automatically group unlabeled data into clusters,
+      there's no single algorithm that works best for every dataset — the
+      right choice depends on the shape of the data, which is exactly
+      what you don't know when the data has no labels. GRASP is a fully
+      automatic clustering pipeline that first maps out the shape of a
+      dataset, estimates how many groups it should have, and then hands
+      the actual grouping job to whichever of six specialist algorithms
+      is best suited to that shape, without requiring a person to fiddle
+      with settings.
+
+      Tested on 26 different benchmark datasets, GRASP handled tricky
+      shapes (like interlocking rings) far better than standard methods,
+      passed all of its internal correctness tests, and processed 50,000
+      data points in about 140 milliseconds.
+  - heading: "Introduction"
+    body: |-
+      The core challenge in automatic clustering is that the best
+      algorithm to use depends on properties of the data (its shape,
+      density, and spread) that you can't know in advance without
+      labels. In practice, people often just try several algorithms and
+      pick whichever one looks best by eye, or use whatever labeled
+      validation data they happen to have — but neither option is
+      available when you're doing truly unsupervised analysis on
+      brand-new data.
+
+      GRASP is built around three ideas that set it apart from older
+      approaches: first, it builds a rough topological map of the data's
+      shape before deciding how to cluster it; second, it picks which
+      clustering algorithm to use based on that shape, not on guesswork;
+      and third, it only resorts to expensive, heavyweight math when the
+      shape of the data actually calls for it, keeping it fast in the
+      common case. This matters because the traditional "gold standard"
+      method for high-quality clustering (spectral clustering) becomes
+      far too slow and memory-hungry once a dataset has more than about
+      10,000 points; GRASP's approach avoids that bottleneck while
+      retaining similar clustering quality.
+  - heading: "Pipeline"
+    body: |-
+      GRASP works in stages. First, it takes a small random sample of the
+      data and does an extremely cheap quick check: if a simple algorithm
+      (KMeans++) already produces a clean, well-separated grouping on
+      that sample, GRASP skips all the expensive steps and clusters the
+      whole dataset that way immediately — this shortcut alone was
+      enough to fully solve 16 of the 26 test datasets in under 22
+      milliseconds.
+
+      If the data looks more complicated, GRASP instead builds a
+      lightweight network map of the data's shape using a technique
+      called a Growing Neural Gas, which lays down connected points that
+      trace out the data's actual structure. From that map, GRASP
+      estimates how many natural groups the data likely has using a
+      mathematical measure of how cleanly the map splits apart. It then
+      converts each data point into a compact numerical representation
+      based on that map, a technique that avoids the huge computational
+      cost of full spectral clustering.
+
+      Finally, GRASP hands off the actual clustering decision to
+      whichever of six specialist algorithms best matches the diagnosed
+      shape of the data — for example, a fast, simple algorithm for
+      roughly round clusters, or a more sophisticated shape-aware
+      algorithm for oddly-shaped or intertwined clusters — with a
+      built-in "routing" decision-maker choosing the right specialist
+      based on diagnostic signals collected earlier in the pipeline.
+  - heading: "Results"
+    body: |-
+      GRASP was tested across 26 benchmark datasets covering deliberately
+      tricky shapes (like moons, spirals, and interlocking rings),
+      standard academic benchmarks, real-world data (like iris flowers,
+      wine chemistry, and handwritten digits), and very large datasets to
+      test speed. On one of the hardest tests — interlocking rings, where
+      cluster boundaries are tangled together — GRASP scored dramatically
+      better than standard methods like DBSCAN, roughly a 14-times
+      improvement.
+
+      Across all the deliberately tricky, non-round-shaped datasets,
+      GRASP consistently outperformed a standard baseline algorithm. On
+      simpler, more standard datasets with roughly round, overlapping
+      clusters, GRASP correctly recognized when the cheap shortcut was
+      appropriate and used it, while still slightly outperforming the
+      baseline even on the hardest of those cases.
+
+      On speed, the most computation-heavy parts of GRASP's pipeline
+      don't grow with the number of data points at all, meaning the
+      pipeline scales up gracefully — it clustered 50,000 points in about
+      140 milliseconds, hundreds of times faster than what a standard
+      high-quality spectral clustering approach would need at that scale.
+  - heading: "Theoretical Analysis"
+    body: |-
+      The paper also proves, mathematically, why GRASP's design should be
+      expected to work. Under reasonable assumptions about how
+      well-separated the true clusters are, the underlying math
+      guarantees that GRASP's topology map will correctly capture the
+      true group structure.
+
+      There's also a mathematical guarantee bounding how much accuracy is
+      lost by using GRASP's cheaper approximation instead of the full,
+      expensive spectral clustering computation, and that error shrinks
+      as the clusters become more clearly separated — exactly when GRASP
+      chooses to use its more sophisticated specialist algorithm.
+      Finally, the authors show that as the amount of data grows very
+      large, GRASP's automatic algorithm-picking step becomes
+      increasingly likely to pick the single best-performing specialist
+      for that dataset.
+  - heading: "Conclusion"
+    body: |-
+      GRASP shows that it's possible to build a clustering tool that
+      requires no manual tuning by using principled reasoning about a
+      dataset's shape, rather than combining many algorithms and hoping
+      for the best. Its three-part design makes it faster than
+      traditional high-quality spectral methods, more reliable than
+      simple density-based methods on oddly-shaped data, and more
+      accurate than basic clustering on datasets that aren't simple round
+      blobs.
+
+      Its built-in fast-path shortcut solves the majority of everyday
+      clustering datasets almost instantly, while the full pipeline still
+      comfortably handles very large datasets. Future work includes
+      teaching the routing decision-maker to use a small trained model
+      instead of hand-built rules, and testing GRASP on biological data
+      like single-cell gene sequencing, where the true cluster structure
+      has real biological meaning.
+breakdown:
+  center: "GRASP"
+  centerDescription: 'A parameter-free clustering pipeline that <inode id="growing-neural-gas">maps a dataset''s topology first</inode>, then routes it to whichever of <inode id="six-specialists">six specialist algorithms</inode> best matches that shape.'
+  branches:
+    - label: "Convex-Bypass Probe"
+      description: 'A <inode id="kmeans-silhouette-check">cheap pre-check</inode> that <inode id="fast-path-coverage">resolves easy datasets</inode> before any topology work begins.'
+      nodes:
+        - title: "KMeans++ Silhouette Check"
+          id: "kmeans-silhouette-check"
+          description: "On an 800-point subsample, two KMeans++ restarts test whether the mean silhouette exceeds 0.55; if so, all points are assigned by nearest-centroid immediately."
+        - title: "Fast-Path Coverage"
+          id: "fast-path-coverage"
+          description: "This shortcut alone fully solves 16 of the 26 benchmark datasets in 2-22ms, letting GRASP skip the rest of the pipeline entirely."
+    - label: "Topology & Spectral Diagnosis"
+      description: 'Builds a <inode id="growing-neural-gas">topology map of the data</inode> and uses it to <inode id="eigengap-k-estimation">estimate the cluster count</inode> without labels.'
+      nodes:
+        - title: "Growing Neural Gas"
+          id: "growing-neural-gas"
+          description: "Trains a GNG on up to 8000 points over 50 epochs; the Competitive Hebbian Learning theorem guarantees its edge set is a subgraph of the Delaunay triangulation of the neuron positions."
+        - title: "Graph Laplacian"
+          id: "graph-laplacian"
+          description: 'Builds a sparse affinity matrix from <inode id="growing-neural-gas">the GNG''s edge lengths</inode> (bandwidth set to their median) and computes the normalised Laplacian L = I - D^(-1/2) A D^(-1/2).'
+        - title: "Eigengap k* Estimation"
+          id: "eigengap-k-estimation"
+          description: 'Estimates the cluster count k* by maximising the normalised spectral gap between <inode id="graph-laplacian">consecutive eigenvalues of the normalised Laplacian</inode>, a quantity that is robust to spectral scale by construction.'
+    - label: "Nystrom Embedding & Specialists"
+      description: 'Converts the topology map into <inode id="nystrom-extension">point embeddings</inode> and hands the clustering decision to <inode id="six-specialists">one of six specialist algorithms</inode>.'
+      nodes:
+        - title: "Nystrom Extension"
+          id: "nystrom-extension"
+          description: "Embeds each point using the GNG's eigenvectors, cutting cost from full spectral clustering's O(n^2)/O(n^3) down to O(nmk) via landmarks that concentrate in proportion to data density."
+        - title: "Six Specialists"
+          id: "six-specialists"
+          description: "Instantiates KMeans++, TopSOM, GNG-DenSom, WardAgglom, KnnSpectral, and RandNystrom, each suited to a different geometric regime from roughly Gaussian blobs to intertwined, non-convex shapes."
+    - label: "Oracle Routing"
+      description: 'A rule-based decision layer that <inode id="case-based-routing">picks the best specialist</inode> from <inode id="diagnostic-signals">diagnostic signals</inode> gathered earlier in the pipeline.'
+      nodes:
+        - title: "Diagnostic Signals"
+          id: "diagnostic-signals"
+          description: "Combines the TopoSOM silhouette, the KMeans silhouette, and a spectral advantage score (the gap between them) to characterise the data's geometry."
+        - title: "Case-Based Routing"
+          id: "case-based-routing"
+          description: "Encodes four routing cases: for example, high-confidence Gaussian data routes to KMeans, while a large spectral advantage with statistical significance routes to TopoSOM."
+    - label: "Theory & Benchmarks"
+      description: 'Formal proofs and <inode id="interlocking-rings-result">empirical results</inode> backing the pipeline''s design choices.'
+      nodes:
+        - title: "Spectral Cluster Recovery"
+          description: "Proves that when true clusters are sufficiently separated and the GNG's mean edge length is small relative to that separation, the Laplacian has exactly k zero eigenvalues spanning an orthogonal cluster-indicator subspace."
+        - title: "Nystrom Error Bound"
+          description: 'Bounds the approximation error introduced by the Nystrom extension and shows it shrinks as <inode id="eigengap-k-estimation">the spectral gap widens</inode>, precisely the regime where GRASP routes to TopoSOM.'
+        - title: "Interlocking Rings Result"
+          id: "interlocking-rings-result"
+          description: 'GRASP scores ARI 0.378 on the interlocking rings benchmark via <inode id="case-based-routing">TopoSOM routing</inode>, a 14x improvement over DBSCAN''s 0.000 and a 60% improvement over KnnSpectral''s 0.234.'
+---
+
+## Abstract
+
+**Problem** — No single clustering algorithm is universally optimal. The No Free Lunch Theorem formalises this. The optimal choice depends critically on the geometric and statistical properties of the dataset, which are precisely unknown in unsupervised settings. Existing approaches either require user-specified hyperparameters or rely on heuristic ensemble methods.
+
+**Approach** — GRASP presents a parameter-free autonomous pipeline that identifies the input distribution's geometric structure, estimates k via normalised spectral gap, and delegates the final assignment to one of six specialists (KMeans++, TopSOM, NnSom, WardAgglom, KnnSpectral, or RandNystrom) chosen by an oracle that maps topological and Euclidean diagnostic signals to the algorithm most likely to achieve Bayes-optimal partitioning.
+
+**Results** — Evaluated on 26 benchmark datasets spanning non-convex shapes, SIPU S-sets and A-sets, UCI real-world data, and high-dimensional settings. GRASP achieves ARI 0.378 on interlocking rings against DBSCAN's ARI 0.000, passes all 49 unit tests, and processes 50,000 points within 140ms including full GNG training and Nyström embedding.
+
+**Contribution** — A topology-prior partitioning principle, geometry-adaptive oracle routing, and selective spectral deployment: three design principles that together produce an interpretable, parameter-free system whose oracle converges to the Bayes-optimal specialist as n → ∞.
+
+## Introduction
+
+The fundamental difficulty in clustering is that the optimal algorithm depends on geometric and statistical properties of the dataset that are precisely unknown in the unsupervised setting. In practice, practitioners execute several algorithms in succession, selecting among them via visual inspection or labelled validation data, neither of which is available in genuinely unsupervised analysis.
+
+> **The Normalised Spectral Gap**
+>
+> A topology-faithful graph makes cluster structure computationally accessible. The normalised spectral gap `δ_k = λ_(k+1)/λ_(k+2)` is large when the graph decomposes cleanly into well-separated subgraphs, and small when cluster boundaries are topologically entangled. GRASP uses this gap to both estimate k and calibrate the oracle's routing decisions.
+
+GRASP's three design principles separate it from existing methods. First, topology-prior partitioning constructs a topology map before committing to any partitioning strategy, at cost O(nm) independent of k. Second, geometry-adaptive routing selects the specialist on the basis of diagnostics extracted from the topology map, not heuristics external to the pipeline. Third, selective spectral deployment applies full spectral computation only when topological evidence indicates Euclidean methods are insufficient, keeping the typical cost at O(nm).
+
+Full spectral clustering incurs O(n²) memory for the kernel matrix and O(n³) for eigendecomposition, prohibitive at n ≥ 10,000. GRASP's Nyström extension with GNG landmarks reduces this to O(nmk) with data-proportional coverage, enabling spectral-quality clustering at linear cost.
+
+## Pipeline
+
+1. **Stage 1: Convex-Bypass Probe** — On a random subsample X̂ of size `n_s = 800`, GRASP runs `r = 2` independent KMeans++ restarts with `k = k_hint`, computes the best mean silhouette ŝ on the best labelling. If ŝ > 0.55, all n points are assigned by nearest-centroid and the pipeline terminates at cost `O(n_s · k · d)`. This fast convex-bypass saves 16 of 26 benchmark datasets, completing in 2–22ms. <span class="tag">Silhouette Probe</span> <span class="tag">O(n_s k d)</span> <span class="tag">Fast Bypass</span>
+2. **Stage 2: Growing Neural Gas Topology** — GRASP trains a GNG on X using min(n, 8000) points for `T = 50` epochs. GNG inserts new neurons at locations of maximal quantisation error, yielding a topology map whose connectivity emerges from data. The Competitive Hebbian Learning theorem guarantees the GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions, providing a formal topological fidelity guarantee. Edges older than `d_max` are pruned every λ steps. <span class="tag">Growing Neural Gas</span> <span class="tag">Delaunay Subgraph</span> <span class="tag">O(nmT)</span>
+3. **Stage 3 & 4: Graph Laplacian & Eigengap k\*** — The bandwidth `σ = median({‖w_i − w_j‖})` is estimated from GNG edge lengths. The sparse affinity matrix `A_ij = exp(−‖w_i − w_j‖² / 2σ²)` is built, and the normalised Laplacian `L = I − D^(−1/2) A D^(−1/2)` is computed at constant cost in m. GRASP then estimates k* via the normalised gap `δ_i = (λ_(i+1) − λ_i) / max(λ_(k+1), ε)`, setting `k* = arg max_i δ_i` (robust to spectral scale by construction). <span class="tag">Normalised Laplacian</span> <span class="tag">Eigengap</span> <span class="tag">Automatic k</span>
+4. **Stage 5: Nyström Embedding** — Given GNG eigenvectors `U ∈ ℝ^(m×k*)`, each data point x is embedded as `φ(x) = Σ(i=1..m) K(x, w_i) / √(D_x · d_i) · U_ij`. Each row of φ(x) is ℓ²-normalised. Because GNG neurons concentrate in proportion to data density, they systematically cover all cluster regions, whereas random landmarks may miss thin or low-density structures. The Rust implementation distributes the loop across all cores via Rayon. <span class="tag">Nyström Extension</span> <span class="tag">GNG Landmarks</span> <span class="tag">O(nmk)</span>
+5. **Stage 6: Six Specialist Sub-Algorithms** — GRASP instantiates six specialists, each targeting a different geometric regime: KMeans++ (`O(nkd)`, on original features, best for approximately Gaussian clusters); TopSOM (`O(nm²)`, Laplacian → Eigengap → Nyström → KMeans, full spectral pipeline on GNG topology); GNG-DenSom (`O(nm)`, density-watershed segmentation on the GNG graph); WardAgglom (`O(n²)`, n ≤ 1000, Ward linkage on the Nyström embedding); KnnSpectral (full k-NN spectral clustering on original features); RandNystrom (`O(nm)`, Nyström with GNG landmarks, KMeans final step). <span class="tag">6 Specialists</span> <span class="tag">Spectral & Euclidean</span> <span class="tag">Density-Based</span>
+6. **Stage 7: Routing Oracle** — The oracle maps three diagnostic signals to an algorithm choice: `s_ts` (TopoSOM silhouette), `s_km` (KMeans silhouette), and spectral advantage Δ. The routing logic encodes four cases: Case 2.5 (high-confidence Gaussian, ρ > 0.70 and `s_km` > 0.60 → KMeans); Case 2 (low ARI signals non-convex geometry → KnnSpectral/WardAgglom/TopoSOM); Cases 3a/3a′ (explicit spectral advantage → TopoSOM for large graphs); Case 3b (silhouette fallback → max(`s_ts`, `s_km`, `s_rn`)). Spectral advantage `Δ = s_TopoSOM − s_KMeans`; Δ > 0.20 with p > 0.05 routes to TopoSOM. <span class="tag">Oracle Routing</span> <span class="tag">Silhouette Signals</span> <span class="tag">Asymptotic Consistency</span>
+
+## Results
+
+GRASP was evaluated on 26 benchmark datasets in six categories: non-convex shapes (moons, circles, spirals, interlocking rings, swiss_roll_2d, anisotropic, varied_density; n = 150–1000), SIPU S-sets s1–s4, A-sets a1–a3, UCI real-world (Iris, Wine, Breast Cancer, Digits), and scalability datasets at n = 50,000.
+
+> **Interlocking Rings: GRASP ARI 0.378**
+>
+> On the interlocking rings benchmark where cluster boundaries are maximally topologically entangled: DBSCAN ARI 0.055, HDBSCAN ARI 0.055, KnnSpectral ARI 0.234. GRASP achieves ARI 0.378 via TopoSOM routing, a 14× improvement over DBSCAN and 60% over KnnSpectral.
+
+**Non-convex benchmarks** show the clearest advantage: GNG correctly captures the ring and spiral topology, the Laplacian eigengap identifies k = 2 or k = 3, and the oracle routes to TopoSOM which recovers the true partition via spectral embedding. KMeans++ achieves mean ARI 0.188 on these datasets; GRASP achieves 0.376.
+
+**A-sets and S-sets** (overlapping Gaussian clusters): The convex-bypass probe correctly activates on S4 (tight clusters, silhouette > 0.55) and routes to KMeans on A1 (ρ = 0.862). On A3 (heavily overlapping, k = 50), GRASP routes to KMeans++ and achieves ARI 0.216 vs KMeans++ at 0.188.
+
+**Scalability**: GNG, Laplacian, and eigendecomposition stages collectively incur O(m³) operations, entirely independent of n. The sole n-dependent step is the Nyström extension O(nmk); at n = 50,000 this completes in ~140ms. Standard SC requires O(n²d) — at n = 10,000 this is 10¹² operations. GRASP's O(nm) is a 500× reduction at comparable quality.
+
+## Theoretical Analysis
+
+GRASP's three main theoretical results establish conditions under which each component achieves its design goal.
+
+> **Theorem 2: Spectral Cluster Recovery**
+>
+> If X is drawn from k distributions with compact support satisfying `min(j≠l) d(C_j, C_l) ≥ Δ > 0`, and the GNG mean edge length σ < Δ/2, then L has exactly k zero eigenvalues whose eigenvectors span a subspace in which the k cluster indicator vectors are mutually orthogonal.
+
+**Theorem 3 (Nyström error)**: For rank-m Nyström approximation K̃ with GNG landmarks, `‖K − K̃‖_F ≤ λ_(m+1)(K) √(n − m)`. The eigenvector error for the leading k components is `O(λ_(k+1) / (λ_k − λ_(k+1)))`, which diminishes as the spectral gap increases, exactly the regime where GRASP routes to TopSOM.
+
+**Theorem 4 (Delaunay subgraph, Frötzke 2009)**: The GNG edge set is a subgraph of the Delaunay triangulation of the neuron positions. Hence any topologically separable cluster boundary present in the data's Delaunay structure is also represented in the GNG graph, bounding the Nyström approximation quality from below.
+
+**Proposition 5 (Oracle consistency)**: As n → ∞ with fixed cluster counts, the routing oracle selects the Bayes-optimal specialist with probability approaching 1. The oracle uses ARI estimate ρ, silhouette coefficients, and spectral advantage Δ, all of which converge by law of large numbers, and eigenvector stability of symmetric operators stabilises at a fixed label corresponding to the asymptotically optimal specialist.
+
+## Conclusion
+
+GRASP demonstrates that autonomous, parameter-free clustering is achievable through principled geometric diagnosis rather than heuristic ensemble voting. The three-principle architecture (topology prior, geometry-adaptive routing, selective spectral deployment) produces a system that is simultaneously faster than full spectral methods, more robust than density methods on complex topology, and more accurate than KMeans++ on non-convex structure.
+
+The fast convex-bypass terminates 16 of 26 benchmarks in under 22ms. For the remaining 10, the full pipeline achieves state-of-the-art accuracy while processing 50,000 points within 140ms, scaling as O(nm) in n, independent of the O(m³) topology computation which depends only on the GNG size m.
+
+Future directions include extending GRASP's routing oracle with learned diagnostic features via a small neural classifier trained on the topology signals, integrating SOM-TSK's multi-start seeding as a replacement for KMeans++ in the KMeans specialist, and evaluating GRASP on single-cell RNA-seq datasets where cluster topology is biologically meaningful and ground truth is available via cell-type markers.

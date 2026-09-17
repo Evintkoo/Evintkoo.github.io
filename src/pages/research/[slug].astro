@@ -1,0 +1,474 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ResearchHero from '../../components/ResearchHero.astro';
+import { getRelatedResearch } from '../../lib/related-research';
+import Tag from '../../components/Tag.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('research');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+
+// ── Server-side topic mindmap (replaces old client-side buildMindmap()) ──
+const TOPICS = [
+  { id: 'ml', label: 'ML', description: 'Clustering, deep learning, and unsupervised methods.' },
+  { id: 'bio', label: 'Biology', description: 'Gene regulatory networks, RNA, and genomics.' },
+  { id: 'fin', label: 'Finance', description: 'Portfolio optimization, market timing, and risk.' },
+  { id: 'econ', label: 'Economics', description: 'Agent-based models and macroeconomic simulation.' },
+  { id: 'infra', label: 'AI Infra', description: 'Inference servers, AutoML, and AI tooling.' },
+  { id: 'neuro', label: 'Neuro', description: 'fMRI encoding and cortical activation modeling.' },
+] as const;
+
+const [allProjects, allResearch] = await Promise.all([
+  getCollection('projects'),
+  getCollection('research'),
+]);
+
+const relatedResearch = getRelatedResearch(entry, allResearch);
+
+interface MindmapLeafData { title: string; description: string; href: string }
+const byTopic: Record<string, MindmapLeafData[]> = {};
+for (const t of TOPICS) byTopic[t.id] = [];
+for (const p of allProjects) {
+  if (p.data.topic && byTopic[p.data.topic]) {
+    byTopic[p.data.topic].push({ title: p.data.title, description: p.data.tagline, href: `/projects/${p.id}/` });
+  }
+}
+for (const r of allResearch) {
+  // Companion-paper pairing: when `mindmapNote` is written, it's a full
+  // sentence with the linking phrase(s) wrapped in
+  // `<inode id="HREF">...</inode>`, each rendered as its own highlighted
+  // connection point in place inside the description — see index.astro's
+  // identical block and src/islands/mindmap.ts's
+  // `appendNote`/`wireInlineConnections`.
+  if (r.data.topic && byTopic[r.data.topic]) {
+    byTopic[r.data.topic].push({
+      title: r.data.shortTitle ?? r.data.title,
+      description: r.data.mindmapNote ?? r.data.tagline,
+      href: `/research/${r.id}/`,
+    });
+  }
+}
+
+// Prefer this paper's OWN breakdown (its methodology/components, authored
+// per-entry in frontmatter — see content.config.ts's `breakdown` field)
+// over the site-wide topic map: every paper showing the identical global
+// map on its own page read as broken/undifferentiated. Papers not yet
+// authored with one fall back to the global map so nothing goes blank.
+const mindmapData = data.breakdown ?? {
+  center: 'Build & Research',
+  centerDescription: 'Open-source systems and published research, mapped by domain.',
+  branches: TOPICS.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter(
+    (b) => b.nodes.length > 0,
+  ),
+};
+---
+<Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogTitle={data.ogTitle} ogDescription={data.ogDescription}>
+  <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} authors={data.authors} affiliation={data.affiliation} metaLabel={data.metaLabel} metaValue={data.metaValue} pdf={data.pdf} externalLink={data.externalLink} repoLink={data.repoLink} pairedLink={data.pairedLink} pairedLinkLabel={data.pairedLinkLabel} snapshot={data.snapshot} />
+  <section id="overview" class="mindmap-section container">
+    <p class="mindmap-section__heading">Concept Overview</p>
+    <div id="mindmapContainer"></div>
+  </section>
+  <div class="research-body container">
+    <div class="research-tags-row">
+      <div class="research-tags">
+        {data.tags.map((t) => <Tag label={t} />)}
+      </div>
+      {data.simpleSections && data.simpleSections.length > 0 && (
+        <button
+          type="button"
+          id="cavemanToggle"
+          class="caveman-toggle"
+          aria-label="Toggle simple mode"
+          title="Simple mode: plain-English rewrite of every section"
+        >
+          <svg class="caveman-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2.5" y="5" width="19" height="14" rx="2.5" ry="2.5"></rect>
+            <path d="M7 11.5h2.5M7 14.5h3M13.5 11.5h3.5M13.5 14.5h3"></path>
+          </svg>
+          <span class="caveman-toggle__label">Simple mode</span>
+        </button>
+      )}
+    </div>
+    <article class="research-content">
+      <Content />
+    </article>
+    {data.hasPlayground && (
+      <div class="pg" id="somPlayground">
+        <div class="pg__grid">
+          <div class="pg__stage">
+            <div class="pg__canvas-wrap">
+              <canvas class="pg__canvas" id="somCanvas" aria-label="Self-organizing map visualization"></canvas>
+            </div>
+          </div>
+          <div class="pg__panel">
+            <div class="pg__controls">
+              <div class="pg__control">
+                <label for="somData">Dataset</label>
+                <select id="somData">
+                  <option value="blobs">Three blobs</option>
+                  <option value="rings">Concentric rings</option>
+                  <option value="moons">Two moons</option>
+                </select>
+              </div>
+              <div class="pg__control">
+                <label for="somGrid">Grid size <span id="somGridVal">6</span></label>
+                <input type="range" id="somGrid" min="4" max="10" step="1" value="6" />
+              </div>
+              <div class="pg__control">
+                <label for="somLr">Learning rate <span id="somLrVal">0.30</span></label>
+                <input type="range" id="somLr" min="0.05" max="0.6" step="0.05" value="0.30" />
+              </div>
+              <div class="pg__control">
+                <label for="somRad">Neighbourhood <span id="somRadVal">3</span></label>
+                <input type="range" id="somRad" min="1" max="5" step="1" value="3" />
+              </div>
+              <div class="pg__control">
+                <label for="somEp">Epochs <span id="somEpVal">40</span></label>
+                <input type="range" id="somEp" min="10" max="80" step="5" value="40" />
+              </div>
+            </div>
+            <div class="pg__buttons">
+              <button class="pg__btn pg__btn--primary" id="somRun" type="button">Run</button>
+              <button class="pg__btn" id="somReset" type="button">Reset</button>
+            </div>
+            <p class="pg__hint">Epoch <span id="somEpoch">0 / 40</span></p>
+            <p class="pg__hint">Pure in-browser SOM — no server, no build step.</p>
+          </div>
+        </div>
+      </div>
+    )}
+    {data.simpleSections && data.simpleSections.length > 0 && (
+      <div class="simple-summary">
+        {data.simpleSections.map((section) => (
+          <section class="simple-summary__section">
+            <h3 class="simple-summary__heading">{section.heading}</h3>
+            {section.body.split('\n\n').map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </section>
+        ))}
+      </div>
+    )}
+    {relatedResearch.length > 0 && (
+      <section class="cards" aria-labelledby="related-papers-heading">
+        <p id="related-papers-heading" class="cards__heading">Related papers</p>
+        <div class="cards__grid">
+          {relatedResearch.map((r) => (
+            <a class="cards__card" href={`/research/${r.id}/`}>
+              {r.data.recSubtitle && <p class="cards__label">{r.data.recSubtitle}</p>}
+              <h3 class="cards__title">{r.data.title}</h3>
+              <p class="cards__tagline">{r.data.recDescription ?? r.data.tagline}</p>
+              {r.data.tags.length > 0 && (
+                <div class="cards__tags">
+                  {r.data.tags.slice(0, 3).map((t) => <span class="cards__tag">{t}</span>)}
+                </div>
+              )}
+              <span class="cards__link">
+                Read Paper
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+    <a href="/research" class="back-to-portfolio">Back to Research</a>
+  </div>
+  <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
+  {data.chart && (
+    <script type="application/json" id="chart-data" set:html={JSON.stringify(data.chart)} />
+  )}
+</Layout>
+
+<script>
+  import { initMindmap } from '../../islands/mindmap';
+  const el = document.getElementById('mindmapContainer');
+  const dataEl = document.getElementById('mindmap-data');
+  if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
+</script>
+
+<script>
+  import { initCavemanToggle } from '../../islands/caveman-mode';
+  const cavemanBtn = document.getElementById('cavemanToggle');
+  if (cavemanBtn) initCavemanToggle(cavemanBtn);
+</script>
+
+<script>
+  import { initSomPlayground } from '../../islands/som-playground';
+  const somEl = document.getElementById('somPlayground');
+  if (somEl) initSomPlayground(somEl);
+</script>
+
+<script>
+  // Chart container lives inside the MDX body content itself (each entry's
+  // <div id="research-chart"> sits wherever the source page's chart figure
+  // actually appeared — see bitcoin-portfolio-allocation.mdx/
+  // crypto-stock-timing.mdx), not in this template — so there's at most one
+  // per rendered page. The `chart` frontmatter field only carries
+  // serializable data (height/logY/type/xs/series); formatX/formatY are
+  // functions and can't survive the JSON round-trip, so they're
+  // reconstructed here from the container's data-chart-format attribute,
+  // matching each source page's actual original chart-init script.
+  import { initResearchChart, type ResearchChartConfig } from '../../islands/research-chart';
+
+  const chartEl = document.getElementById('research-chart') as HTMLElement | null;
+  const chartDataEl = document.getElementById('chart-data');
+  if (chartEl && chartDataEl) {
+    const cfg = JSON.parse(chartDataEl.textContent || '{}') as ResearchChartConfig;
+    const format = chartEl.dataset.chartFormat;
+    if (format === 'btc-allocation') {
+      // bitcoin-portfolio-allocation.html's original inline chart script:
+      // formatX: x + '%', formatY: v.toFixed(0)
+      cfg.formatX = (x) => `${x}%`;
+      cfg.formatY = (v) => v.toFixed(0);
+    } else if (format === 'lead-lag') {
+      // crypto-stock-timing.html's original inline chart script:
+      // formatX: signed lag + 'm', formatY: v.toFixed(2)
+      cfg.formatX = (x) => `${Number(x) > 0 ? '+' : ''}${x}m`;
+      cfg.formatY = (v) => v.toFixed(2);
+    } else if (format === 'grn-accuracy-bar') {
+      // grn-modular-vs-monolithic.html's original inline chart script:
+      // formatX: index into ['Balanced acc', '5:1 acc'], formatValue: v.toFixed(1)
+      cfg.formatX = (_, i) => ['Balanced acc', '5:1 acc'][i];
+      cfg.formatValue = (v) => v.toFixed(1);
+    } else if (format === 'abm-quarters') {
+      // keynesian-abm-coordination.html's original inline chart script:
+      // formatX: 'Q' + x (formatY left at default Math.round, matching source)
+      cfg.formatX = (x) => `Q${x}`;
+    }
+    initResearchChart(chartEl, cfg);
+  }
+</script>
+
+<style>
+  .research-body { padding-block: var(--space-8) var(--space-24); }
+  .research-tags-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8); }
+  .research-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .caveman-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base);
+  }
+  .caveman-toggle:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .caveman-icon { width: 16px; height: 16px; }
+  html.caveman .caveman-toggle { color: var(--accent); border-color: var(--accent); }
+
+  .research-content { display: block; }
+  .simple-summary { display: none; }
+  html.caveman .research-content { display: none; }
+  html.caveman .simple-summary { display: block; }
+  .simple-summary p { margin-bottom: var(--space-4); line-height: 1.7; }
+  .simple-summary__section { margin-top: var(--space-12); }
+  .simple-summary__section:first-child { margin-top: 0; }
+  .simple-summary__heading {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 var(--space-3);
+  }
+
+  .research-content :global(h2) { margin-top: var(--space-16); font-size: 1.75rem; border-top: 1px solid var(--border); padding-top: var(--space-8); }
+  .back-to-portfolio { display: inline-block; margin-top: var(--space-16); font-family: var(--font-mono); text-decoration: none; color: var(--ink-soft); }
+
+  /* ── SOM playground (som-tsk; same markup/behaviour as src/pages/projects/
+     [slug].astro's som-plus block, Task 19) ── All markup below (.pg and
+     descendants) is rendered directly by this template, so Astro's scoped
+     data-astro-cid-* attribute reaches every element. The island
+     (src/islands/som-playground.ts) only reads/writes existing elements via
+     container.querySelector and draws on the canvas' 2D context — it never
+     calls document.createElement — so no :global() is required anywhere in
+     this block. */
+  .pg { margin-top: var(--space-6); }
+  .pg__grid { display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap; }
+  .pg__stage { flex: 1 1 380px; min-width: 280px; }
+  .pg__canvas-wrap { background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-3); }
+  .pg__canvas { width: 100%; height: auto; display: block; border-radius: var(--radius-sm); }
+  .pg__panel { flex: 0 1 280px; display: flex; flex-direction: column; gap: var(--space-4); }
+  .pg__controls { display: flex; flex-direction: column; gap: var(--space-3); }
+  .pg__control { display: flex; flex-direction: column; gap: 4px; }
+  .pg__control label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); display: flex; justify-content: space-between; align-items: baseline; }
+  .pg__control label span { color: var(--accent); font-weight: 600; }
+  .pg__control input[type='range'] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .pg__control select { font-family: var(--font-mono); font-size: 0.875rem; padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--paper); color: var(--ink); cursor: pointer; }
+  .pg__buttons { display: flex; gap: var(--space-3); }
+  .pg__btn { font-family: var(--font-body); font-size: 0.875rem; font-weight: 600; padding: var(--space-2) var(--space-6); border-radius: 999px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--ink); transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base); }
+  .pg__btn:hover { border-color: var(--accent); color: var(--accent); }
+  .pg__btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .pg__btn--primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); opacity: 0.85; }
+  .pg__hint { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); margin: 0; }
+
+  @media (max-width: 767px) {
+    .pg__panel { flex: 1 1 100%; }
+  }
+  @media (max-width: 639px) {
+    .pg__stage { min-width: 0; flex-basis: 100%; }
+  }
+
+  /* Research chart (Task 23) — ported from assets/css/chart.css, current
+     token names (see Task 20's port-decision notes: --text-tertiary ->
+     --ink-faint, --border-primary -> --border, --bg-primary/--bg-secondary
+     -> --paper-raised). :global() is required throughout: this markup
+     lives inside the rendered MDX <Content /> (a different compiled
+     component with its own scope hash) or is created client-side via
+     research-chart.ts's createElementNS/createElement calls, so it never
+     receives this file's data-astro-cid-* scope attribute — same
+     reasoning as `.research-content :global(h2)` above and the mindmap
+     precedent in src/islands/mindmap.ts. */
+  .research-content :global(.chart-figure) { margin: var(--space-16) 0 0; }
+  .research-content :global(.chart-figure__caption) { display: flex; flex-direction: column; gap: 2px; margin-bottom: var(--space-4); }
+  .research-content :global(.chart-figure__title) { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); }
+  .research-content :global(.chart-figure__note) { font-size: 0.75rem; color: var(--ink-faint); font-style: italic; line-height: 1.5; }
+  .research-content :global(.chart-figure__panel) { background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-8) var(--space-4) var(--space-4); }
+  .research-content :global(.chart) { position: relative; width: 100%; }
+  .research-content :global(.chart__svg) { width: 100%; height: auto; display: block; overflow: visible; }
+  .research-content :global(.chart__legend) { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+  .research-content :global(.chart__chip) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: opacity var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  }
+  .research-content :global(.chart__chip:hover) { border-color: var(--accent); color: var(--accent); }
+  .research-content :global(.chart__chip.is-muted) { opacity: 0.4; }
+  .research-content :global(.chart__swatch) { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .research-content :global(.chart__tooltip) {
+    position: absolute;
+    pointer-events: none;
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+    min-width: 150px;
+    line-height: 1.5;
+  }
+  .research-content :global(.chart__tiphead) { font-weight: 600; margin-bottom: var(--space-1); color: var(--ink-soft); }
+  .research-content :global(.chart__tiprow) { display: flex; align-items: center; gap: var(--space-2); }
+  .research-content :global(.chart__tiprow .chart__dot) { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .research-content :global(.chart__tiprow .chart__tipname) { color: var(--ink-soft); }
+  .research-content :global(.chart__tiprow .chart__tipval) { margin-left: auto; font-weight: 600; }
+  @media (max-width: 639px) {
+    .research-content :global(.chart__chip) { font-size: 0.65rem; }
+  }
+
+  .cards { margin-top: var(--space-16); }
+  .cards__heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-4);
+  }
+  .cards__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+  }
+  @media (max-width: 639px) {
+    .cards__grid { grid-template-columns: 1fr; }
+  }
+  .cards__card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    background: var(--paper-raised);
+    transition: border-color var(--transition-base);
+  }
+  .cards__card:hover { border-color: var(--ink-soft); }
+  .cards__label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin: 0 0 var(--space-2);
+  }
+  .cards__title { font-size: 1rem; margin-bottom: var(--space-2); }
+  .cards__tagline { font-size: 0.875rem; color: var(--ink-soft); margin: 0 0 var(--space-3); }
+  .cards__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .cards__tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+  }
+  .cards__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .cards__card:hover .cards__link { text-decoration: underline; }
+
+  .mindmap-section { padding-top: var(--space-8); }
+  .mindmap-section__heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-4);
+  }
+  /* A fixed-height, clipped viewport (not "grow to fit the whole graph")
+     is what makes this a canvas you pan/zoom around in — see
+     `setupPanZoom` in src/islands/mindmap.ts, ported from PlanOut's own
+     fixed-viewport ReactFlow canvas. */
+  #mindmapContainer {
+    width: 100%;
+    height: clamp(420px, 60vh, 640px);
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  /* :global() is required here: the <svg> is created client-side via
+     document.createElementNS (src/islands/mindmap.ts), so it never receives
+     Astro's data-astro-cid-* scope attribute and a scoped selector would
+     never match it. Direct child only (`>`) — the descendant form also
+     matched the "Go to page" popup's own tiny arrow icon (also an <svg>,
+     nested a few levels deeper in the same container), stretching it to
+     100% of its flex-item box and rendering it as a giant arrow. */
+  :global(#mindmapContainer > svg) { width: 100%; height: 100%; display: block; }
+  /* mindmap-node/mindmap-line/mindmap-note-anim keyframes + animations now
+     live in src/styles/global.css, shared with src/pages/index.astro's
+     mindmap (previously duplicated here only — the homepage's mindmap had
+     no entrance animation at all as a result). */
+</style>

@@ -1,0 +1,59 @@
+/* src/styles/tokens.css */
+:root {
+  /* Technical Editorial — light */
+  --paper: #f7f6f3;
+  --paper-raised: #ffffff;
+  --ink: #14130f;
+  --ink-soft: #4a483f;
+  /* WCAG AA fix (final-review.md I3): the previous #8a8779 was 3.34:1 on
+     --paper, below the 4.5:1 floor for normal text. This is the legacy
+     site's own --text-tertiary value, which cleared AA there (5.46:1 on
+     #faf9f7) and clears it here too (~5.33:1 on #f7f6f3). */
+  --ink-faint: #6b655e;
+  --accent: #2952e3;        /* electric blue signal color */
+  --accent-ink: #ffffff;
+  --border: #e2e0d8;
+
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 200ms var(--ease-out);
+
+  --max-width: 1200px;
+}
+
+:root[data-theme='dark'] {
+  --paper: #0e0d0b;
+  --paper-raised: #17160f;
+  --ink: #f2f1ea;
+  --ink-soft: #b8b6a8;
+  /* WCAG AA fix (final-review.md I3): the previous #6f6d61 was 3.74:1 on
+     --paper. This is the legacy dark theme's --text-tertiary value, which
+     cleared AA there (4.69:1 on #0c0b09) and clears it here too (~4.64:1 on
+     #0e0d0b). Re-review residual R3: #807b76 still failed AA (4.328:1) against
+     --paper-raised (#17160f), used as the background for .about-card__role,
+     .pub-item__desc, .stat-box__label, .about-cta__sub, .edu-card__program,
+     and .award-sub. Lightened by the smallest uniform RGB step (+3) that
+     clears 4.5:1 against both backgrounds: ~4.83:1 on --paper, ~4.51:1 on
+     --paper-raised. */
+  --ink-faint: #837e79;
+  --accent: #5b7fff;
+  --accent-ink: #0e0d0b;
+  --border: #2a2820;
+}
