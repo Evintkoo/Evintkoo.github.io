@@ -1,6 +1,7 @@
 ---
 title: "What Does the Internet Do to the Brain?"
 tagline: "Activation Cartography maps 3,008 natural language stimuli across 13 internet content categories against predictions from TRIBE v2 (a 177M-parameter deep neural encoder trained on real fMRI recordings), revealing statistically significant, category-level differences in predicted cortical recruitment."
+ogDescription: "Mapping cortical activation fingerprints across 13 digital content categories using TRIBE v2, a 177M-parameter deep fMRI encoder."
 tags: ["fMRI Encoding", "Cortical Mapping", "TRIBE v2"]
 topic: "neuro"
 order: 13
@@ -84,9 +85,9 @@ Four neuroscientific frameworks are evaluated against the activation patterns: G
 
 ## Methods
 
-1. **Stimulus Construction** — 3,008 stimuli drawn from established NLP benchmarks and live internet sources, distributed across 13 content categories: ThreatSafety, News, Social, Scientific, Narrative, Emotional, AudioText, ImageVisual, Educational, Persuasive, Humour, Instructional, and Commerce. Each stimulus is a short natural language passage (1–3 sentences). `tags: 3,008 Stimuli, 13 Categories, NLP Benchmarks`
-2. **TRIBE v2 Encoder** — TRIBE v2 is a 177-million-parameter deep neural encoder trained on real functional MRI recordings. Given a text input, it predicts a whole-cortex haemodynamic response across 20,484 cortical surface points. Two encoding modes are used: hash-mode (fast, token-level) and semantic-mode (LLaMA-3.2-3B embeddings, N = 390 replication sample). `tags: 177M Parameters, 20,484 Cortical Points, LLaMA-3.2-3B`
-3. **Statistical Analysis** — Each stimulus's 20,484-point activation profile is summarised into six anatomical regions. A one-way ANOVA tests the main effect of content type on mean global activation. Effect sizes reported as η² and Cohen's d. Principal component analysis across category mean profiles identifies dominant cortical gradients. `tags: One-way ANOVA, Cohen's d, PCA`
+1. **Stimulus Construction** — 3,008 stimuli drawn from established NLP benchmarks and live internet sources, distributed across 13 content categories: ThreatSafety, News, Social, Scientific, Narrative, Emotional, AudioText, ImageVisual, Educational, Persuasive, Humour, Instructional, and Commerce. Each stimulus is a short natural language passage (1–3 sentences). <span class="tag">3</span> <span class="tag">008 Stimuli</span> <span class="tag">13 Categories</span> <span class="tag">NLP Benchmarks</span>
+2. **TRIBE v2 Encoder** — TRIBE v2 is a 177-million-parameter deep neural encoder trained on real functional MRI recordings. Given a text input, it predicts a whole-cortex haemodynamic response across 20,484 cortical surface points. Two encoding modes are used: hash-mode (fast, token-level) and semantic-mode (LLaMA-3.2-3B embeddings, N = 390 replication sample). <span class="tag">177M Parameters</span> <span class="tag">20</span> <span class="tag">484 Cortical Points</span> <span class="tag">LLaMA-3.2-3B</span>
+3. **Statistical Analysis** — Each stimulus's 20,484-point activation profile is summarised into six anatomical regions. A one-way ANOVA tests the main effect of content type on mean global activation. Effect sizes reported as η² and Cohen's d. Principal component analysis across category mean profiles identifies dominant cortical gradients. <span class="tag">One-way ANOVA</span> <span class="tag">Cohen's d</span> <span class="tag">PCA</span>
 
 ## Results
 

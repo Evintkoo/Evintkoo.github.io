@@ -1,6 +1,7 @@
 ---
 title: "Modular vs Monolithic Architectures for GRN Edge Prediction"
 tagline: "Gradient Stability Analysis and a Controlled Cross-Architecture Comparison. A controlled comparison of modular two-tower models against monolithic cross-encoders for GRN inference. We diagnose three critical gradient failures in the two-tower design and demonstrate that the cross-encoder outperforms it, especially under class imbalance."
+ogDescription: "Modular Versus Monolithic Architectures for GRN Edge Prediction: Gradient Stability Analysis - Research by Evint Leovonzko"
 tags: ["Cross-Encoder", "Gradient Failure", "AUROC"]
 topic: "bio"
 order: 6
@@ -178,9 +179,9 @@ This study diagnoses three previously unreported gradient failures in a state-of
 
 ## Methods
 
-1. **Gradient Failure Diagnosis** — Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy. `tags: Gradient Analysis, Numerical Stability, Debugging`
-2. **Architecture Definitions** — The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics. `tags: Two-Tower, Cross-Encoder, Adam`
-3. **Controlled Evaluation** — Both architectures are evaluated on human brain scRNA-seq data (47,388 TF–gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals. `tags: Bootstrap CI, Imbalance Testing, 5 Seeds`
+1. **Gradient Failure Diagnosis** — Three critical failures were identified in the original two-tower backward pass: (1) double-sigmoid producing vanishing gradients, (2) numerically unstable gradient estimator, and (3) missing gradient clipping causing explosive updates. Each failure individually collapses training to ~50% accuracy. <span class="tag">Gradient Analysis</span> <span class="tag">Numerical Stability</span> <span class="tag">Debugging</span>
+2. **Architecture Definitions** — The corrected two-tower model uses separate entity and expression encoders combined via dot-product similarity. The cross-encoder concatenates TF and gene features before processing through a shared MLP. Both use per-batch Adam with gradient clipping (threshold: 5.0) and stable numerics. <span class="tag">Two-Tower</span> <span class="tag">Cross-Encoder</span> <span class="tag">Adam</span>
+3. **Controlled Evaluation** — Both architectures are evaluated on human brain scRNA-seq data (47,388 TF–gene pairs) under two training regimes: balanced (1:1 positive:negative) and imbalanced (5:1). Metrics include accuracy, F1, and AUROC over five random seeds with bootstrap confidence intervals. <span class="tag">Bootstrap CI</span> <span class="tag">Imbalance Testing</span> <span class="tag">5 Seeds</span>
 
 ## Results
 

@@ -9,7 +9,7 @@ import Layout from '../../components/Layout.astro';
 // Task 7 controller ruling).
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Layout title="Research | Evint Leovonzko" description="First-author research by Evint Leovonzko in ML, computational biology, quantitative finance, and computational economics.">
+<Layout title="Research | Evint Leovonzko" description="First-author research by Evint Leovonzko in ML, computational biology, quantitative finance, and computational economics." ogDescription="First-author research in ML, computational biology, quantitative finance, and computational economics.">
   <section class="listing-hero container">
     <h1>Research</h1>
     <p class="listing-hero__subtitle">First-author research in ML, computational biology, quantitative finance, and computational economics</p>

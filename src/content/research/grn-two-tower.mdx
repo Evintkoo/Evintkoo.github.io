@@ -2,6 +2,7 @@
 title: "Two-Tower Hybrid Embedding Networks for GRN Inference"
 shortTitle: "Two-Tower Networks for GRN Inference"
 tagline: "A pure-Rust two-tower MLP that learns entity embeddings and cell-type expression profiles to predict transcription factor–gene interactions: 83% ensemble accuracy, CPU-trainable without any deep learning framework."
+ogDescription: "Two-Tower Hybrid Embedding Networks for Gene Regulatory Network Inference from Single-Cell Transcriptomics - Research by Evint Leovonzko"
 tags: ["Two-Tower MLP", "scRNA-seq", "Rust"]
 topic: "bio"
 order: 7
@@ -88,10 +89,10 @@ This paper presents a two-tower architecture that separately encodes TF and gene
 
 ## Methods
 
-1. **Dataset & Regulatory Priors** — Human brain single-cell RNA-seq data was paired with regulatory ground truth from the DoRothEA and TRRUST databases, yielding 47,388 TF–gene pairs split 70/15/15 for training, validation, and testing. `tags: DoRothEA, TRRUST, scRNA-seq`
-2. **Two-Tower Architecture** — Each tower consists of three fully connected layers with batch normalization and dropout. The entity tower processes 512-dimensional learnable embeddings for TFs and genes; the expression tower processes 11-dimensional cell-type mean expression profiles. `tags: MLP, Batch Normalization, Dropout`
-3. **Similarity Scoring & Training** — Tower outputs are combined via temperature-scaled dot-product similarity (τ = 0.05) with sigmoid activation. Training uses Adam optimizer with L2 regularization (λ = 0.01), learning rate 5×10³, and early stopping with 10-epoch patience. `tags: Adam, L2 Regularization, Early Stopping`
-4. **Ensemble & Evaluation** — Five independently trained models are aggregated by averaging predicted probabilities. Cross-seed evaluation across five random initializations measures variance (CV = 2.06%). Metrics include accuracy, F1, AUROC, and a comparison against GCAN (cross-attention baseline). `tags: Ensemble, AUROC, Cross-seed`
+1. **Dataset & Regulatory Priors** — Human brain single-cell RNA-seq data was paired with regulatory ground truth from the DoRothEA and TRRUST databases, yielding 47,388 TF–gene pairs split 70/15/15 for training, validation, and testing. <span class="tag">DoRothEA</span> <span class="tag">TRRUST</span> <span class="tag">scRNA-seq</span>
+2. **Two-Tower Architecture** — Each tower consists of three fully connected layers with batch normalization and dropout. The entity tower processes 512-dimensional learnable embeddings for TFs and genes; the expression tower processes 11-dimensional cell-type mean expression profiles. <span class="tag">MLP</span> <span class="tag">Batch Normalization</span> <span class="tag">Dropout</span>
+3. **Similarity Scoring & Training** — Tower outputs are combined via temperature-scaled dot-product similarity (τ = 0.05) with sigmoid activation. Training uses Adam optimizer with L2 regularization (λ = 0.01), learning rate 5×10³, and early stopping with 10-epoch patience. <span class="tag">Adam</span> <span class="tag">L2 Regularization</span> <span class="tag">Early Stopping</span>
+4. **Ensemble & Evaluation** — Five independently trained models are aggregated by averaging predicted probabilities. Cross-seed evaluation across five random initializations measures variance (CV = 2.06%). Metrics include accuracy, F1, AUROC, and a comparison against GCAN (cross-attention baseline). <span class="tag">Ensemble</span> <span class="tag">AUROC</span> <span class="tag">Cross-seed</span>
 
 ## Results
 

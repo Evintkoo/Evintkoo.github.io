@@ -2,6 +2,8 @@
 title: "Clustering Global GDP Trajectories: Patterns and Policy Insights (1980–2024)"
 shortTitle: "GDP Trajectory Clustering"
 tagline: "190 countries, 45 years, four distinct development trajectories. Machine learning clustering reveals why some economies surge while others stagnate, and what policymakers can do about it."
+ogTitle: "Clustering Global GDP Trajectories (1980–2024)"
+ogDescription: "Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko"
 tags: ["Unsupervised Clustering", "Macroeconomics", "K-Means"]
 topic: "econ"
 order: 10
@@ -117,20 +119,20 @@ Understanding these divergent economic trajectories is crucial for policymakers,
 
 ## Methodology
 
-1. **Data Source** — World Bank & IMF GDP data (1980-2024, constant 2015 US$) for 190 countries, providing a comprehensive view of global economic development over four and a half decades. `tags: World Bank, IMF, 190 Countries`
-2. **Dimensionality Reduction** — UMAP (Uniform Manifold Approximation and Projection) was used to reduce the high-dimensional time series data while preserving the global structure of GDP trajectories. `tags: UMAP, Time Series`
-3. **Clustering Algorithm** — Self-Organizing Map (SOM) clustering was applied to identify distinct patterns in the reduced dimensional space, resulting in four coherent economic trajectory clusters. `tags: SOM, Clustering`
-4. **Validation** — Cluster stability was validated through bootstrap resampling and economic interpretation was verified against known historical patterns and policy frameworks. `tags: Bootstrap, Validation`
+1. **Data Source** — World Bank & IMF GDP data (1980-2024, constant 2015 US$) for 190 countries, providing a comprehensive view of global economic development over four and a half decades. <span class="tag">World Bank</span> <span class="tag">IMF</span> <span class="tag">190 Countries</span>
+2. **Dimensionality Reduction** — UMAP (Uniform Manifold Approximation and Projection) was used to reduce the high-dimensional time series data while preserving the global structure of GDP trajectories. <span class="tag">UMAP</span> <span class="tag">Time Series</span>
+3. **Clustering Algorithm** — Self-Organizing Map (SOM) clustering was applied to identify distinct patterns in the reduced dimensional space, resulting in four coherent economic trajectory clusters. <span class="tag">SOM</span> <span class="tag">Clustering</span>
+4. **Validation** — Cluster stability was validated through bootstrap resampling and economic interpretation was verified against known historical patterns and policy frameworks. <span class="tag">Bootstrap</span> <span class="tag">Validation</span>
 
 ## The Four Clusters
 
-**Cluster 1: Sustained High Growth Economies** — **Characteristics:** Uninterrupted upward GDP trends, accelerating in 1990s-2000s. **Examples:** China, South Korea, Taiwan, Singapore, Malaysia, India, Botswana, Ireland. `tags: Long-term convergence, Growth-oriented policies, Shock resilience, Asia-dominated`
+**Cluster 1: Sustained High Growth Economies** — **Characteristics:** Uninterrupted upward GDP trends, accelerating in 1990s-2000s. **Examples:** China, South Korea, Taiwan, Singapore, Malaysia, India, Botswana, Ireland. <span class="tag">Long-term convergence</span> <span class="tag">Growth-oriented policies</span> <span class="tag">Shock resilience</span> <span class="tag">Asia-dominated</span>
 
-**Cluster 0: Boom-Bust and Volatile Economies** — **Characteristics:** Highly volatile performance with rapid growth followed by severe contractions. **Examples:** Russia, Argentina, Brazil, Nigeria, Iraq, Venezuela. `tags: External shocks, Commodity dependence, Policy volatility`
+**Cluster 0: Boom-Bust and Volatile Economies** — **Characteristics:** Highly volatile performance with rapid growth followed by severe contractions. **Examples:** Russia, Argentina, Brazil, Nigeria, Iraq, Venezuela. <span class="tag">External shocks</span> <span class="tag">Commodity dependence</span> <span class="tag">Policy volatility</span>
 
-**Cluster 3: Post-Transition and Recovery Economies** — **Characteristics:** Initial decline followed by lengthy recovery and growth. **Examples:** Poland, Romania, Hungary, Baltic states, Vietnam, Chile, Peru. `tags: Economic transition, Market reforms, EU integration`
+**Cluster 3: Post-Transition and Recovery Economies** — **Characteristics:** Initial decline followed by lengthy recovery and growth. **Examples:** Poland, Romania, Hungary, Baltic states, Vietnam, Chile, Peru. <span class="tag">Economic transition</span> <span class="tag">Market reforms</span> <span class="tag">EU integration</span>
 
-**Cluster 2: Stagnant or Slow-Growth Economies** — **Characteristics:** Weak, sluggish growth or near stagnation over four decades. **Examples:** Liberia, Burundi, Central African Republic, Democratic Republic of Congo, Haiti, Zimbabwe. `tags: Structural traps, Weak institutions, External vulnerability`
+**Cluster 2: Stagnant or Slow-Growth Economies** — **Characteristics:** Weak, sluggish growth or near stagnation over four decades. **Examples:** Liberia, Burundi, Central African Republic, Democratic Republic of Congo, Haiti, Zimbabwe. <span class="tag">Structural traps</span> <span class="tag">Weak institutions</span> <span class="tag">External vulnerability</span>
 
 <figure class="chart-figure" data-reveal>
   <figcaption class="chart-figure__caption">
@@ -146,13 +148,13 @@ Understanding these divergent economic trajectories is crucial for policymakers,
 
 Each cluster requires distinct policy approaches based on their unique economic characteristics and challenges. The following recommendations are tailored to help countries within each cluster optimize their growth strategies and avoid common pitfalls.
 
-**Sustained Growers: Strategic Focus** — Focus on innovation, education, managing aging populations, and transitioning to knowledge-based economies while maintaining competitive advantages. `tags: R&D Investment, Higher Education, Innovation Ecosystems, Trade Competitiveness`
+**Sustained Growers: Strategic Focus** — Focus on innovation, education, managing aging populations, and transitioning to knowledge-based economies while maintaining competitive advantages. <span class="tag">R&D Investment</span> <span class="tag">Higher Education</span> <span class="tag">Innovation Ecosystems</span> <span class="tag">Trade Competitiveness</span>
 
-**Boom-Bust Economies: Stabilization Priority** — Implement stabilization policies, economic diversification, and countercyclical fiscal frameworks to reduce volatility and build resilience. `tags: Sovereign Wealth Funds, Economic Diversification, Countercyclical Policies, Strong Institutions`
+**Boom-Bust Economies: Stabilization Priority** — Implement stabilization policies, economic diversification, and countercyclical fiscal frameworks to reduce volatility and build resilience. <span class="tag">Sovereign Wealth Funds</span> <span class="tag">Economic Diversification</span> <span class="tag">Countercyclical Policies</span> <span class="tag">Strong Institutions</span>
 
-**Transitional Economies: Consolidation Focus** — Consolidate institutional reforms, move up the value chain, and avoid the middle-income trap through continued structural improvements. `tags: Rule of Law, Industrial Upgrading, Education Quality, Competitiveness`
+**Transitional Economies: Consolidation Focus** — Consolidate institutional reforms, move up the value chain, and avoid the middle-income trap through continued structural improvements. <span class="tag">Rule of Law</span> <span class="tag">Industrial Upgrading</span> <span class="tag">Education Quality</span> <span class="tag">Competitiveness</span>
 
-**Stagnant Economies: Foundation Building** — Establish peace and stability, invest in human development, and implement basic governance improvements to create conditions for growth. `tags: Political Stability, Basic Infrastructure, Health & Education, Effective Institutions`
+**Stagnant Economies: Foundation Building** — Establish peace and stability, invest in human development, and implement basic governance improvements to create conditions for growth. <span class="tag">Political Stability</span> <span class="tag">Basic Infrastructure</span> <span class="tag">Health & Education</span> <span class="tag">Effective Institutions</span>
 
 ## Key Macroeconomic Insights
 

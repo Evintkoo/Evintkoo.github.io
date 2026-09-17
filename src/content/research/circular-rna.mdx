@@ -1,6 +1,7 @@
 ---
 title: "Deep Learning for Circular RNA Classification"
 tagline: "A lightweight ANN pipeline that turns circAtlas k-mer frequencies into reliable disease predictions: fast enough for real-time screening, accurate enough for clinical relevance."
+ogDescription: "Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko"
 tags: ["circRNA", "ANN", "Disease Classification"]
 topic: "bio"
 order: 8
@@ -82,10 +83,10 @@ The rapid development of machine learning has enhanced the prediction of circRNA
 
 The model uses a 5-layer ANN with 256 input nodes for k-mers features.
 
-1. **Dataset Collection** — Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA). `tags: Python, circAtlas, RNA Sequences`
-2. **Feature Extraction with K-mers** — K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula: `k = log_k(average of l)` (where l is the length of sequences). For k = 4, there are 4-mers obtained, e.g., `{ACGT, GTAA, CGTT}` which were then processed. `tags: K-mer Analysis, Feature Engineering`
-3. **Gaussian Blur Implementation** — Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula: `f(x) = 1/(σ√(2π)) · e^(−1/2((x−μ)/σ)²)` (the value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment). `tags: Data Preprocessing, Gaussian Blur, Signal Processing`
-4. **Model Architecture** — The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons. `tags: Neural Network, Deep Learning, Leaky ReLU, Dropout`
+1. **Dataset Collection** — Data was collected from circAtlas (https://ngdc.cncb.ac.cn/circatlas/links1.php) and processed with Python programming language. The data consisted of the sequences of non-coding circular RNA & non-coding non-circular RNA (mRNA). <span class="tag">Python</span> <span class="tag">circAtlas</span> <span class="tag">RNA Sequences</span>
+2. **Feature Extraction with K-mers** — K-mer counting is the method of counting the number of subsequences with a length of "k" within a set of RNA sequences dataset. The length was chosen by the user (k = 4) based on this formula: `k = log_k(average of l)` (where l is the length of sequences). For k = 4, there are 4-mers obtained, e.g., `{ACGT, GTAA, CGTT}` which were then processed. <span class="tag">K-mer Analysis</span> <span class="tag">Feature Engineering</span>
+3. **Gaussian Blur Implementation** — Blurring is one of the techniques in data processing to smoothen the collected values in the dataset. This study implemented a Gaussian function to smoothen the vectorized non-coding RNA sequence using this formula: `f(x) = 1/(σ√(2π)) · e^(−1/2((x−μ)/σ)²)` (the value of sigma was 1 because it provides a moderate amount of blurring, computational efficiency, and flexibility for adjustment). <span class="tag">Data Preprocessing</span> <span class="tag">Gaussian Blur</span> <span class="tag">Signal Processing</span>
+4. **Model Architecture** — The Artificial Neural Network (ANN) structure is arranged into an input layer (length: 256 nodes), 5 hidden layers, and an output layer. Every hidden layer was followed by a dropout layer to prevent overfitting and a Leaky ReLU for adding non-linearity in the neurons. <span class="tag">Neural Network</span> <span class="tag">Deep Learning</span> <span class="tag">Leaky ReLU</span> <span class="tag">Dropout</span>
 
 ## Results
 

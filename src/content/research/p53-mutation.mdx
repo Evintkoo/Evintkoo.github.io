@@ -1,6 +1,7 @@
 ---
 title: "Cancer Leading Mutation DNA of P-53 Gene"
 tagline: 'Closed-loop genetic algorithms surface the earliest mutation signatures that destabilise P-53 (the "guardian of the genome") before malignant cascades take hold. Award-winning research that connects evolutionary computation and cancer genomics.'
+ogDescription: "Genetic Algorithms Analysis of P-53 Tumor Suppressor Gene Mutations in Cancer Development - Research by Evint Leovonzko"
 tags: ["P-53", "Genetic Algorithms", "Cancer Genomics"]
 topic: "bio"
 order: 14
@@ -29,11 +30,11 @@ Combining genetic algorithms with self-organizing maps to trace deterministic pa
 
 ## Research Methods
 
-1. **Dataset Assembly** — Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs. `tags: NCBI Database, 25 DNA Strands, Data Preprocessing`
-2. **Generative Mitosis Tree** — Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth. `tags: Binary Tree, 14 Generations, Mitosis Simulation`
-3. **Mutation Path Scoring** — Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes. `tags: Levenshtein Distance, Path Analysis, Drift Scoring`
-4. **k-mer Encoding** — Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows. `tags: k-mer Analysis, Feature Vectors, 73.5k Rows`
-5. **SOM Clustering** — Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion. `tags: Self-Organizing Maps, 1×6 Grid, Clustering`
+1. **Dataset Assembly** — Curated 25 wild-type and cancerous P-53 DNA strands (2,509 bases each) from the NCBI repository. Pre-processed to remove non-nucleotide characters and aligned pathological/parental pairs. <span class="tag">NCBI Database</span> <span class="tag">25 DNA Strands</span> <span class="tag">Data Preprocessing</span>
+2. **Generative Mitosis Tree** — Spawned a binary tree representing mitotic bifurcation. Each node stores generation index, DNA composition, and malignancy state. Recursion continues to generation 14 to emulate tumour initiation depth. <span class="tag">Binary Tree</span> <span class="tag">14 Generations</span> <span class="tag">Mitosis Simulation</span>
+3. **Mutation Path Scoring** — Depth-first traversal extracts generational paths, evaluates mismatch rates via Levenshtein similarity, and flags the highest-drift ancestors preceding malignant nodes. <span class="tag">Levenshtein Distance</span> <span class="tag">Path Analysis</span> <span class="tag">Drift Scoring</span>
+4. **k-mer Encoding** — Calculated log₄(L) to choose k = 4, transforming each strand into a 1×1024 feature vector representing nucleotide frequency. Result: 73,475 length-adjusted rows. <span class="tag">k-mer Analysis</span> <span class="tag">Feature Vectors</span> <span class="tag">73.5k Rows</span>
+5. **SOM Clustering** — Applied SOM grids ranging 1×2 to 1×11. Correlation analysis reduced dimensional redundancy before finalising a 1×6 lattice that maximised separation with minimal distortion. <span class="tag">Self-Organizing Maps</span> <span class="tag">1×6 Grid</span> <span class="tag">Clustering</span>
 
 ## Key Findings
 

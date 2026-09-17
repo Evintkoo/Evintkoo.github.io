@@ -1,44 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
+import FeaturedProjectCard from '../../components/FeaturedProjectCard.astro';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Layout title="Projects | Evint Leovonzko" description="Open-source tools, platforms, and applications built by Evint Leovonzko, spanning ML infrastructure, quantitative finance, neuroscience, and community platforms.">
+<Layout title="Projects | Evint Leovonzko" description="Open-source tools, platforms, and applications built by Evint Leovonzko, spanning ML infrastructure, quantitative finance, neuroscience, and community platforms." ogDescription="Open-source tools, platforms, and applications built by Evint Leovonzko.">
   <section class="listing-hero container">
     <h1>Projects</h1>
     <p class="listing-hero__subtitle">Open-source tools, platforms, and applications</p>
   </section>
 
   <section class="container">
-    <!--
-      Featured platform card — the source site's Kolosal AI card links to the
-      external kolosal.ai product site, not a /projects/<id>/ detail page, so
-      it isn't (and can't be) a content-collection entry. Hardcoded here to
-      preserve the source's facts/links (spec §11 content parity) without
-      touching the shared projects schema in src/content.config.ts.
-    -->
-    <article class="project-featured">
-      <div class="project-featured__body">
-        <div class="project-featured__tags">
-          <span class="tag tag--featured">Featured</span>
-          <span class="tag">Co-Founder</span>
-          <span class="tag">MLOps</span>
-        </div>
-        <h2 class="project-featured__title">Kolosal AI</h2>
-        <p class="project-featured__desc">
-          Open-source platform for running large language models locally, so your data stays private and inference stays fast. Custom training and production-ready inference at scale.
-        </p>
-        <div class="project-featured__tech">
-          <span class="tag">Python</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">FastAPI</span>
-          <span class="tag">Docker</span>
-          <span class="tag">CUDA</span>
-        </div>
-      </div>
-      <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform &nearr;</a>
-    </article>
+    <FeaturedProjectCard headingLevel="h2" />
 
     <ul class="project-grid">
       {projects.map((p) => (
@@ -68,17 +42,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   .listing-hero__subtitle { color: var(--ink-soft); margin-top: var(--space-4); }
 
   .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
-  .tag--featured { color: var(--accent); border-color: var(--accent); }
   .tag--tech { color: var(--ink-faint); }
-
-  /* ── Featured platform card ── */
-  .project-featured { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); background: var(--paper-raised); margin-bottom: var(--space-8); }
-  .project-featured__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
-  .project-featured__title { font-size: 1.75rem; margin-bottom: var(--space-3); }
-  .project-featured__desc { color: var(--ink-soft); max-width: 640px; margin-bottom: var(--space-4); }
-  .project-featured__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .project-featured__link { flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
-  .project-featured__link:hover { text-decoration: underline; }
 
   .project-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   .project-grid > li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
@@ -98,6 +62,5 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   }
   @media (max-width: 639px) {
     .project-grid { grid-template-columns: 1fr; }
-    .project-featured { flex-direction: column; align-items: flex-start; }
   }
 </style>

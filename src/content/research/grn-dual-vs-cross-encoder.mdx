@@ -1,6 +1,7 @@
 ---
 title: "Dual-Encoder vs Cross-Encoder for Transductive GRN Link Prediction"
 tagline: "A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction: ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation."
+ogDescription: "Dual-Encoder versus Cross-Encoder Neural Architectures for Transductive Gene Regulatory Link Prediction: An Empirical Comparison Under Parameter-Matched Conditions"
 tags: ["Deep Learning", "GRN Inference", "IEEE TNNLS"]
 topic: "bio"
 order: 5
@@ -93,10 +94,10 @@ This study enforces strict parameter matching at 5.58M parameters across both ar
 
 ## Methods
 
-1. **Parameter-Matched Architectures** — Both models are sized to exactly 5.58M parameters. The dual-encoder scores interactions via cosine similarity of independent encodings; the cross-encoder processes concatenated TF–gene features through shared layers before scoring. `tags: 5.58M Parameters, Dual-Encoder, Cross-Encoder`
-2. **Imbalance Robustness Testing** — Four negative sampling ratios are evaluated: 1:1, 5:1, 10:1, and 50:1. This range spans from artificially balanced training to highly realistic biological conditions where regulatory interactions are sparse. `tags: 1:1 Ratio, 5:1 Ratio, 10:1 Ratio, 50:1 Ratio`
-3. **Ablation & Pruning Studies** — Ablation systematically removes architectural components to isolate their contributions. Structured neuron pruning removes low-importance neurons across sparsity levels (10–90%) to identify each model's redundancy budget. Effective rank analysis measures intrinsic dimensionality of learned representations. `tags: Ablation, Neuron Pruning, Effective Rank`
-4. **Cold-Start & Classical Baselines** — Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching. `tags: Cold-Start, Inductive, Expression-Only Baseline`
+1. **Parameter-Matched Architectures** — Both models are sized to exactly 5.58M parameters. The dual-encoder scores interactions via cosine similarity of independent encodings; the cross-encoder processes concatenated TF–gene features through shared layers before scoring. <span class="tag">5.58M Parameters</span> <span class="tag">Dual-Encoder</span> <span class="tag">Cross-Encoder</span>
+2. **Imbalance Robustness Testing** — Four negative sampling ratios are evaluated: 1:1, 5:1, 10:1, and 50:1. This range spans from artificially balanced training to highly realistic biological conditions where regulatory interactions are sparse. <span class="tag">1:1 Ratio</span> <span class="tag">5:1 Ratio</span> <span class="tag">10:1 Ratio</span> <span class="tag">50:1 Ratio</span>
+3. **Ablation & Pruning Studies** — Ablation systematically removes architectural components to isolate their contributions. Structured neuron pruning removes low-importance neurons across sparsity levels (10–90%) to identify each model's redundancy budget. Effective rank analysis measures intrinsic dimensionality of learned representations. <span class="tag">Ablation</span> <span class="tag">Neuron Pruning</span> <span class="tag">Effective Rank</span>
+4. **Cold-Start & Classical Baselines** — Cold-start evaluation holds out entities unseen during training to probe inductive generalization. Expression-only feature baselines (no learned embeddings) provide context for quantifying the contribution of neural components over simple feature matching. <span class="tag">Cold-Start</span> <span class="tag">Inductive</span> <span class="tag">Expression-Only Baseline</span>
 
 ## Results
 

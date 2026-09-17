@@ -6,8 +6,25 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  // Per-page Open Graph / Twitter Card overrides. The legacy site hand-wrote
+  // distinct og:title/og:description copy on most pages (shorter or
+  // differently-worded than the <title>/<meta description>) — see
+  // final-review.md I1. These fall back to title/description when a page
+  // doesn't set them explicitly, so most pages need no changes at all.
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
 }
-const { title, description } = Astro.props;
+const { title, description, ogTitle, ogDescription, ogImage } = Astro.props;
+
+const resolvedOgTitle = ogTitle ?? title;
+const resolvedOgDescription = ogDescription ?? description;
+// The legacy site's og:image pointed at a `logos/logo-light.png` asset that
+// no longer exists in this rebuild's public/ tree; favicon.png is the only
+// brand image available, so it's the honest default rather than a fabricated
+// path. Astro.site is the canonical origin (astro.config.mjs).
+const resolvedOgImage = ogImage ?? new URL('/favicon.png', Astro.site).toString();
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +33,17 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={resolvedOgTitle} />
+  <meta property="og:description" content={resolvedOgDescription} />
+  <meta property="og:image" content={resolvedOgImage} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalUrl} />
+  <meta property="twitter:title" content={resolvedOgTitle} />
+  <meta property="twitter:description" content={resolvedOgDescription} />
+  <meta property="twitter:image" content={resolvedOgImage} />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <script is:inline>
