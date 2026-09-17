@@ -1,4 +1,5 @@
 ---
+import Tag from './Tag.astro';
 interface Props {
   title: string;
   tagline: string;
@@ -83,7 +84,7 @@ const { title, tagline, metrics, authors, affiliation, metaLabel, metaValue, pdf
         <div class="research-hero__snapshot-tags">
           <span class="research-hero__snapshot-tags-label">Tagged</span>
           <div class="research-hero__snapshot-tags-list">
-            {snapshot.tags.map((t) => <span class="tag">{t}</span>)}
+            {snapshot.tags.map((t) => <Tag label={t} />)}
           </div>
         </div>
       )}

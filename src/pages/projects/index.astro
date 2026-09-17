@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import FeaturedProjectCard from '../../components/FeaturedProjectCard.astro';
+import { getTagIconSvg } from '../../lib/tag-icons';
+import { ARROW_RIGHT, ARROW_EXTERNAL } from '../../lib/arrow-icons';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -18,19 +20,19 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       {projects.map((p) => (
         <li>
           <div class="project-grid__tags">
-            {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+            {p.data.tags.map((t) => <span class="tag"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
           </div>
           <h2><a href={`/projects/${p.id}/`}>{p.data.title}</a></h2>
           <p>{p.data.tagline}</p>
           {p.data.tech.length > 0 && (
             <div class="project-grid__tech">
-              {p.data.tech.map((t) => <span class="tag tag--tech">{t}</span>)}
+              {p.data.tech.map((t) => <span class="tag tag--tech"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
             </div>
           )}
           <div class="project-grid__links">
-            <a href={`/projects/${p.id}/`} class="project-grid__link">Learn More &rarr;</a>
-            {p.data.paperLink && <a href={p.data.paperLink} class="project-grid__link">Read Paper &rarr;</a>}
-            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer" class="project-grid__link">Repo &nearr;</a>}
+            <a href={`/projects/${p.id}/`} class="project-grid__link">Learn More <Fragment set:html={ARROW_RIGHT} /></a>
+            {p.data.paperLink && <a href={p.data.paperLink} class="project-grid__link">Read Paper <Fragment set:html={ARROW_RIGHT} /></a>}
+            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer" class="project-grid__link">Repo <Fragment set:html={ARROW_EXTERNAL} /></a>}
           </div>
         </li>
       ))}
@@ -41,21 +43,43 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   .listing-hero { padding-block: var(--space-16) var(--space-8); }
   .listing-hero__subtitle { color: var(--ink-soft); margin-top: var(--space-4); }
 
-  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 0.35em; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
   .tag--tech { color: var(--ink-faint); }
+  .tag :global(svg) { width: 0.85em; height: 0.85em; flex-shrink: 0; }
 
-  .project-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
-  .project-grid > li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
+  /* Same fix as src/pages/research/index.astro's grid: cards vary a lot in
+     tagline length and how many tech pills they show, so without a
+     stretched, clamped card, one long/tech-heavy card next to short ones
+     produced wildly uneven card heights ("card grids are not aligned").
+     Stretching `<li>` to fill its grid row, clamping the tagline, and
+     pinning the links row to the bottom keeps every card in a row the same
+     height and its action links aligned on the same baseline. */
+  .project-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); align-items: stretch; }
+  .project-grid > li { display: flex; flex-direction: column; height: 100%; box-sizing: border-box; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
   .project-grid > li:hover { border-color: var(--ink-soft); }
   .project-grid a { text-decoration: none; color: inherit; }
   .project-grid h2 a:hover { color: var(--accent); }
   .project-grid__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
   .project-grid h2 { font-size: 1.5rem; margin-bottom: var(--space-2); }
-  .project-grid p { color: var(--ink-soft); margin: 0 0 var(--space-4); }
+  .project-grid p {
+    color: var(--ink-soft);
+    margin: 0 0 var(--space-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .project-grid__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
-  .project-grid__links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
-  .project-grid__link { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+  .project-grid__links { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: auto; padding-top: var(--space-2); }
+  .project-grid__link { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
   .project-grid__link:hover { text-decoration: underline; }
+  /* :global() is required: the arrow icon is injected as a raw HTML string
+     via `Fragment set:html={ARROW_RIGHT/ARROW_EXTERNAL}`
+     (src/lib/arrow-icons.ts), so it never receives Astro's data-astro-cid-*
+     scope attribute — a scoped selector silently never matches it, and the
+     SVG renders at the browser's unconstrained intrinsic size instead of
+     14px. */
+  .project-grid__link :global(svg) { width: 14px; height: 14px; flex-shrink: 0; }
 
   @media (max-width: 767px) {
     .listing-hero { padding-block: var(--space-12) var(--space-6); }

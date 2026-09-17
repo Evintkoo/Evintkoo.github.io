@@ -3,12 +3,71 @@ title: "Fiscal Stabilisers, Minsky Dynamics, and Distributional Outcomes in a Ke
 tagline: "A daily-frequency, single-sector Keynesian ABM of 10,000 households, 1,000 firms, and 10 commercial banks reproduces four stylised macroeconomic facts and documents persistent zero lower bound binding, a novel result in the K+S ABM literature mirroring post-1998 Japan and post-2013 Euro-area experience."
 ogTitle: "Fiscal Stabilisers & Minsky Dynamics in a Keynesian ABM | Evint Leovonzko"
 ogDescription: "Daily-frequency, 10,000-agent Keynesian ABM: 4.6% GDP CAGR, persistent ZLB (93.7% of periods), Minsky dynamics, and fiscal stabilisers in a closed economy."
+recSubtitle: "Computational Economics · Agent-Based Modelling"
+recDescription: "Daily-frequency, 10,000-agent closed-economy ABM reproducing four stylised macroeconomic facts. Novel result: ZLB binds in 93.7% of simulation periods, mirroring post-1998 Japan and post-2013 Euro-area."
 tags: ["Keynesian ABM", "Monte Carlo", "Rust"]
 topic: "econ"
 order: 1
 pdf: "/files/keynesian_abm_paper1.pdf"
 pairedLink: "/research/keynesian-abm-coordination/"
 pairedLinkLabel: "Read Paper 2 →"
+mindmapNote: 'A daily-frequency Keynesian ABM of 10,000 households, firms, and banks reproducing four stylised macroeconomic facts, with persistent zero lower bound binding. The same baseline model also powers <inode id="/research/keynesian-abm-coordination/">a grid-search coordination-failure analysis in a companion paper</inode>, where individually-optimal agent strategies collapse GDP growth by 65%.'
+breakdown:
+  center: "Fiscal Stabilisers & Minsky Dynamics in a Keynesian ABM"
+  centerDescription: 'A daily-frequency, 10,000-agent single-sector Keynesian ABM reproduces four stylised macroeconomic facts and documents <inode id="zlb-frequency">a persistent zero lower bound</inode>, a novel result in the K+S ABM literature.'
+  branches:
+    - label: "Model Architecture"
+      description: "Four agent types interacting in a daily-frequency closed economy over 3,650 simulated days."
+      nodes:
+        - title: "Households (10,000)"
+          description: "Supply labour inelastically, consume via a habit-adjusted function (savings propensity 0.05, habit 0.70), and search for jobs with a reservation wage that decays at 0.05 during unemployment."
+        - title: "Firms (1,000)"
+          id: "firms-tfp-rd"
+          description: "Produce a single consumption good, invest in R&D to raise TFP (rate 0.005), set mark-up prices over unit labour cost, and go bankrupt when equity turns negative."
+        - title: "Commercial Banks (10)"
+          id: "commercial-banks"
+          description: "Intermediate deposits and credit, charge a leverage-based risk premium over the policy rate, and hold an 8% capital adequacy ratio floor that can trigger a credit freeze."
+        - title: "Fiscal & Monetary Authorities"
+          description: "A flat-tax, unemployment-benefit government acts as an automatic stabiliser while a Taylor-rule central bank sets rates subject to the zero lower bound."
+    - label: "Matched Stylised Facts"
+      description: "Four of twelve Dosi et al. (2013) benchmarks are reproduced in the 10-year, 50-seed baseline."
+      nodes:
+        - title: "GDP Growth (4.6% CAGR)"
+          description: "The baseline run produces a nominal GDP CAGR of 4.6% (Monte Carlo median 4.5%), matching the targeted growth benchmark."
+        - title: "Negatively Skewed Growth"
+          description: "Annual growth fluctuations show the empirically realistic asymmetry, with skewness of -0.59, meaning downturns are sharper than upswings."
+        - title: "Wage Share of GDP (72.8%)"
+          description: "Labour's share of total income settles at 72.8%, consistent with the empirical target for this stylised fact."
+    - label: "Persistent Zero Lower Bound"
+      description: 'The paper''s headline, novel-to-the-literature finding: <inode id="zlb-frequency">the policy rate is pinned at zero for most of the simulation</inode>.'
+      nodes:
+        - title: "93.7% MC-Median ZLB Frequency"
+          id: "zlb-frequency"
+          description: "Across 50 Halton-seed Monte Carlo draws, the nominal interest rate binds at zero in a median 93.7% of periods, with a wide 95% CI of 6.0% to 96.1%."
+        - title: "Bimodal TFP-Variance Effect"
+          description: "The wide confidence interval reflects genuine bimodality: low-TFP-variance seeds escape the ZLB for meaningful stretches, while high-TFP-variance seeds stay pinned at zero throughout."
+        - title: "Supply-Side Deflation Mechanism"
+          description: 'Continuous <inode id="firms-tfp-rd">TFP growth from firm R&D investment</inode> lowers unit production costs faster than nominal wages adjust, creating chronic mild deflation that the Taylor rule responds to by driving rates to zero.'
+    - label: "Structural Departures & Hierarchy Proposition"
+      description: 'Five empirical misses are traced to the single-sector design and unified under <inode id="hierarchy-proposition">one testable prediction</inode>.'
+      nodes:
+        - title: "Near-Zero Unemployment (0.24%)"
+          id: "near-zero-unemployment"
+          description: "Unemployment falls far below the empirical 5-10% range because the single-sector design has no capital-goods industry competing for labour."
+        - title: "Suppressed Volatility & Autocorrelation"
+          description: 'Growth volatility (0.12% vs. empirical 2-5%) and growth autocorrelation (-0.18 vs. empirical above 0.70) are muted because <inode id="firms-tfp-rd">recalibrated firm R&D parameters</inode> yield near-deterministic TFP growth.'
+        - title: "Compressed Wealth Inequality (Gini 0.15)"
+          description: "Wealth inequality comes in far below the empirical 0.40-0.70 range, another downstream consequence of near-full employment."
+        - title: "Hierarchy Proposition"
+          id: "hierarchy-proposition"
+          description: 'A single testable prediction: correcting <inode id="near-zero-unemployment">near-zero unemployment</inode>, via a wage floor or a labour-competing capital-goods sector, should simultaneously resolve four of the five structural departures.'
+    - label: "Shock Experiments"
+      description: "Two exogenous shocks test the model's dynamic response away from its baseline path."
+      nodes:
+        - title: "Demand Shock (Day 500)"
+          description: "A demand shock produces an 8.2% temporary GDP contraction that fully recovers within 90 days."
+        - title: "Banking Crisis & Minsky Reversal (Day 1,200)"
+          description: 'A banking-crisis shock triggers a Minsky-style reversal: <inode id="commercial-banks">bank credit contracts 34% as lenders defend their capital buffers</inode>, firm bankruptcies spike from 0.27% to 4.1% per year, and GDP falls 12.3% before fiscal stabilisers arrest the decline and the economy recovers within 18 months.'
 metrics:
   - label: "agents"
     value: "10,000"
@@ -33,38 +92,102 @@ snapshot:
     - label: "Implementation"
       value: "Rust: a 10-year, 10,000-agent run completes in under 30 seconds, enabling high-throughput Monte Carlo experiments."
   tags: ["Agent-Based Model", "Keynesian Macroeconomics", "Zero Lower Bound", "Minsky Dynamics", "Fiscal Policy", "Rust"]
-simpleSummary: |-
-  We built a small, simulated economy on a computer. Every household, firm,
-  and bank makes its own decisions day by day. The simulation includes
-  10,000 households, 1,000 firms, 10 banks, a government, and a central bank
-  that follows a standard interest-rate rule. We ran it for 10 years, about
-  3,650 simulated days. The result matched real-world data on four of twelve
-  checkpoints: the economy grew at 4.6% per year, bad years were worse than
-  good years were good (γ₁ = −0.59), and wages made up 72.8% of total
-  income.
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      This paper builds a small simulated economy inside a computer, where
+      10,000 fake households, 1,000 fake firms, and 10 fake banks each
+      make their own day-to-day decisions (this kind of simulation is
+      called an "agent-based model"). Run for a simulated 10 years, it
+      correctly reproduces 4 of the 12 real-world economic patterns that
+      economists usually check simulations against — for example, the
+      economy grows at a realistic rate and wages make up a realistic
+      share of total income.
 
-  The central bank's interest rate hits zero on day one and stays stuck
-  there: the zero lower bound, or ZLB. Run the simulation 50 times with
-  different starting conditions, and the rate is stuck at zero for 93.7% of
-  the time on average (95% CI: 6.0%–96.1%). That matches what happened in
-  Japan after 1998 and the Euro area after 2013, and nobody had documented
-  it in this kind of model before. The wide range reflects two distinct
-  outcomes: some runs escape the zero floor part of the time, while others
-  never leave it.
+      The standout finding: the simulated central bank's interest rate
+      gets stuck at zero (called the "zero lower bound," or ZLB) for the
+      vast majority of the simulated time — something that also happened
+      in real life in Japan after 1998 and the Eurozone after 2013, but
+      had never been shown in this type of model before.
+  - heading: "Introduction"
+    body: |-
+      The 2007–09 financial crisis showed that older economic models,
+      which assume the economy quickly settles into one "correct"
+      balanced state, don't capture how real economies actually behave.
+      Agent-based models take a different approach: instead of assuming
+      an answer, they simulate many individual households, firms, and
+      banks each making their own imperfect decisions, and see what kind
+      of economy-wide behavior emerges naturally from all those small
+      decisions interacting.
 
-  The simulation also misses real-world data in five clear ways: nearly
-  everyone has a job, prices fall instead of rise, the economy is too
-  steady, the rich and poor are too close together, and interest rates stay
-  stuck at zero. Each miss traces back to a specific design choice we made.
-  Two of the misses come from making productivity growth too smooth and
-  predictable: the economy moves only 0.12% per year (real economies move
-  2–5%), and good years tend to follow bad ones instead of clustering (ρ₁ =
-  −0.18 vs. real-world above 0.70).
+      This paper deliberately builds the simplest possible version of
+      such a model — just one type of good being produced, no separate
+      capital-goods sector — so that whatever it gets wrong tells you
+      exactly what a more realistic, richer model still needs to add.
+  - heading: "Methods"
+    body: |-
+      The simulated economy has four kinds of players. Households earn
+      wages, spend based on habit and savings, and search for jobs,
+      accepting a job once it pays enough. Firms produce goods, invest in
+      improving their own productivity over time, set prices with a
+      standard markup, and go bankrupt if they run out of money. Banks
+      sit between household savings and firm borrowing, charging riskier
+      firms more interest, and are required to keep a safety cushion of
+      capital. A government taxes income and pays unemployment benefits,
+      while a central bank sets interest rates using a standard rule
+      economists call a Taylor rule, similar to what real central banks
+      use.
 
-  A stripped-down model with only one sector shows, by what it can't do,
-  which features of the real economy need a richer two-sector design. It
-  pinpoints exactly when boom-and-bust cycles return as we add complexity
-  back in. JEL codes: C63, E12, E32, E44, E62, G01.
+      The whole simulation runs for 3,650 simulated days (10 years), and
+      is repeated 50 times with different random starting conditions to
+      make sure the results are a genuine pattern rather than a fluke of
+      one particular run.
+  - heading: "Results"
+    body: |-
+      Out of 12 standard real-world economic patterns researchers check
+      simulations against, this one matches 4: it grows at a realistic
+      rate, bad economic years tend to be worse than good years are good
+      (a real-world asymmetry), and wages make up a realistic share of
+      total income.
+
+      The most interesting result is that the central bank's interest
+      rate gets stuck at zero for the vast majority of simulated time —
+      matching what actually happened in Japan after 1998 and the
+      Eurozone after 2013. The simulation also produces a "Minsky-style"
+      credit crunch: after a simulated banking-crisis shock, banks pull
+      back lending sharply, firm bankruptcies spike, and the economy
+      shrinks before government support programs help it recover.
+  - heading: "Discussion"
+    body: |-
+      The paper finds that nearly everyone in the simulated economy has a
+      job — unrealistically full employment — and traces this back to one
+      root cause: because this simple model only has one type of good
+      being produced, there's no competition for workers from a separate
+      capital-goods industry, so labor demand stays artificially high.
+      Fixing this one design choice would likely also fix several of the
+      simulation's other unrealistic results at the same time, since they
+      all stem from the same missing piece.
+
+      The "stuck at zero interest rates" result happens because
+      productivity keeps improving smoothly, which pushes production
+      costs down faster than wages adjust, creating constant mild
+      deflation that keeps pulling interest rates back to zero. A richer,
+      two-sector version of the model would likely make this a rare event
+      rather than the constant default state seen here.
+  - heading: "Conclusion"
+    body: |-
+      The single most notable result is that this simple simulated
+      economy gets stuck with zero interest rates for the vast majority
+      of the time, mirroring what actually happened in Japan and the
+      Eurozone in real life — something not previously shown in this type
+      of model.
+
+      Of the 12 standard economic patterns checked, 4 come out realistic
+      even in this stripped-down, one-sector version, while the other 8
+      point to specific missing ingredients (like a separate capital-goods
+      sector, or more varied demand) that a fuller version of the model
+      would need to add. This makes the simple model a useful stepping
+      stone toward building a more complete, realistic one.
 ---
 
 ## Abstract

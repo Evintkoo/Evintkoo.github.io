@@ -3,171 +3,198 @@ title: "Leading or Lagging? Equity and Crypto Timing Analysis"
 shortTitle: "Crypto vs Stock Timing"
 tagline: "Do equity markets still lead recessions, or has crypto changed the playbook? Empirical analysis of cross-asset dynamics across five business cycles."
 ogDescription: "A Comparative Study of Equity and Crypto Timing Around Recessions and Recoveries - Research by Evint Leovonzko"
+recSubtitle: "Finance · Analysis"
+recDescription: "Cross-correlation and Granger causality analysis across five business cycles — do crypto markets lead or lag equities around recessions?"
 tags: ["Bitcoin", "Cross-Correlation", "Granger Causality"]
 topic: "fin"
 order: 11
 pdf: "/files/crypto-stock-timing-paper.pdf"
 metaLabel: "Published"
 metaValue: "July 2025"
+mindmapNote: 'Finds equity markets lead cryptocurrency markets by roughly 27 trading days around recession onsets and recoveries, with correlation regimes swinging from 0.018 to 0.968. That same BTC-equity correlation instability underpins the correlation-regime trigger rules in <inode id="/research/bitcoin-portfolio-allocation/">a companion risk-budget sizing analysis</inode>, which cuts Bitcoin exposure once rolling correlation breaks its historical range.'
 chart:
   height: 320
   xs: [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   series:
     - name: "Correlation (BTC vs equities)"
       values: [-0.049907, -0.04952, -0.047911, -0.042354, -0.02646, 0.010962, 0.082793, 0.193309, 0.324974, 0.436079, 0.48, 0.436079, 0.324974, 0.193309, 0.082793, 0.010962, -0.02646, -0.042354, -0.047911, -0.04952, -0.049907, -0.049985, -0.049998, -0.05, -0.05]
-simpleSummary: |-
-  If you watch both stocks and crypto, which one warns you first when a
-  recession is coming? We checked five business cycles to find out.
+breakdown:
+  center: "Crypto vs Stock Timing"
+  centerDescription: 'Multi-method analysis across five business cycles finding that equity markets lead cryptocurrency markets by roughly <inode id="cross-correlation">27 trading days</inode> around <inode id="hazard-window">recession onsets</inode> and <inode id="recovery-window">recoveries</inode>.'
+  branches:
+    - label: "Business-Cycle Labeling"
+      description: 'Turns <inode id="nber-indicator">NBER recession dates</inode> into machine-readable trading-day windows used to test each hypothesis.'
+      nodes:
+        - title: "NBER Recession Indicator"
+          id: "nber-indicator"
+          description: "A binary flag marks every trading day 1 if it falls inside an official NBER peak-to-trough recession period, 0 otherwise."
+        - title: "Recovery Window"
+          id: "recovery-window"
+          description: "The first six months (about 126 trading days) after an NBER trough, used to test whether crypto leads equities during recoveries (H2)."
+        - title: "Pre-Recession Hazard Window"
+          id: "hazard-window"
+          description: "The 30 trading days immediately before an NBER peak, used to test which market gives the earlier recession warning (H1)."
+    - label: "Lead-Lag Detection Toolkit"
+      description: "Three complementary statistical tools measure timing and directionality between the two markets."
+      nodes:
+        - title: "Cross-Correlation Function"
+          id: "cross-correlation"
+          description: "Slides equity and crypto returns against each other across lags of minus 60 to plus 60 trading days; the tightest match lands at lag -27 with a correlation of 0.4215."
+        - title: "Granger Causality (VAR)"
+          id: "granger-causality"
+          description: "Tests whether lagged values of one market predict the other; neither direction was statistically significant (Stock to Crypto F=0.8296, p=0.5061; Crypto to Stock F=0.8882, p=0.4700)."
+        - title: "Transfer Entropy"
+          description: 'An information-theoretic measure that checks for non-linear predictive relationships the <inode id="granger-causality">linear Granger causality test</inode> could miss.'
+    - label: "Frequency & Regime Analysis"
+      description: 'Looks beyond a single fixed correlation to see how the relationship shifts across <inode id="wavelet-coherence">timescales</inode> and <inode id="regime-clustering">market moods</inode>.'
+      nodes:
+        - title: "Wavelet Coherence"
+          id: "wavelet-coherence"
+          description: "Decomposes returns into time-frequency space to find lead-lag phase differences separately at short (2-8 day) and longer (8-32 day) cycles."
+        - title: "Gaussian Mixture Regimes"
+          id: "regime-clustering"
+          description: "Clustering uncovers four distinct joint regimes: synchronized bull markets (10.3% of days, corr 0.968), crypto collapse with modest stock losses (35.9%, corr 0.018), explosive high-volatility gains (12.6%, corr 0.874), and moderate positive returns (41.2%, corr 0.452)."
+    - label: "Predictive Classification"
+      description: 'Reframes the question as forecasting, comparing <inode id="logistic-benchmark">simple</inode> and <inode id="lstm-network">neural</inode> models on equity-only, crypto-only, and combined inputs.'
+      nodes:
+        - title: "Logistic Regression Benchmark"
+          id: "logistic-benchmark"
+          description: "A simple statistical classifier used as the baseline for predicting recession onset from market data."
+        - title: "LSTM Neural Network"
+          id: "lstm-network"
+          description: 'A recurrent neural network compared against the <inode id="logistic-benchmark">logistic regression benchmark</inode> on equity-only, crypto-only, and combined feature sets using AUROC and Precision-Recall curves.'
+        - title: "Gradient Boosting for Crypto Returns"
+          description: "Predicts crypto returns from lagged stock indicators, reaching a cross-validated R-squared of 0.880, ahead of Random Forest (0.858) and Elastic Net (near zero)."
+    - label: "Validation & Robustness"
+      description: 'Guards against <inode id="rolling-windows">fixed-snapshot bias</inode> and <inode id="fdr-correction">false positives across the many hypotheses tested</inode>.'
+      nodes:
+        - title: "Rolling 5-Year Windows"
+          id: "rolling-windows"
+          description: "Every model is re-estimated on both expanding and 1260-day (5-year) sliding windows rather than a single fixed period."
+        - title: "Newey-West Standard Errors"
+          description: "Robust standard errors correct for heteroskedasticity and autocorrelation in the time-series estimates."
+        - title: "Benjamini-Hochberg FDR Correction"
+          id: "fdr-correction"
+          description: "Controls the false discovery rate given the large number of hypotheses tested, with January 2021 through June 2025 held out as a clean out-of-sample test period."
+simpleSections:
+  - heading: "Introduction"
+    body: |-
+      If you watch both stocks and crypto, which one warns you first when a
+      recession is coming? We checked five business cycles to find out.
+      Spotting a recession early matters — jobs, savings, and entire
+      businesses are on the line, and a good early-warning signal gives
+      policymakers and investors time to react before the damage is done.
 
-  Spotting a recession early matters. Jobs, savings, and entire businesses
-  are on the line. A good early-warning signal gives policymakers time to
-  react, and gives you time to reposition your portfolio before the damage
-  is done. For decades, the stock market has been Wall Street's favorite
-  crystal ball. The logic is simple: a stock price is a bet on a company's
-  future profits, so the market reacts to bad news fast. When the S&P 500
-  starts sliding, a recession often follows soon after, as later confirmed
-  by the official scorekeeper, the NBER. Then crypto showed up and changed
-  the picture. What started as a hobby project for coders is now a
-  multi-trillion-dollar market that big institutions trade every day.
-  Markets look different than they did a generation ago. Since Bitcoin
-  launched in 2009, digital assets have ballooned from a fringe experiment
-  into a multi-trillion-dollar arena where everyday retail traders and
-  giant institutions now meet. Researchers are still arguing about what
-  crypto really is. One camp says it is pure speculation: mood and hype,
-  not fundamentals. The other camp says crypto has grown up enough to
-  actually tell us something useful about the economy, liquidity, and how
-  brave investors feel. This paper answers one clean question: "When a
-  recession hits and then ends, does the stock market move first, or does
-  crypto?" We test three guesses. They can all be partly true at the same
-  time. H₁ (Stocks warn first): The stock market has more money, more pros,
-  and better research desks. That means it should pick up bad news faster
-  than crypto, and start falling first when a recession is coming. H₂
-  (Crypto recovers first): Crypto is full of risk-hungry retail traders who
-  jump on a recovery fast. So when the economy starts to heal, crypto
-  should turn up before stocks do. H₃ (Regime Dependence): Which market
-  leads is not fixed. It shifts with the market mood: bull or bear, calm or
-  stormy, expansion or recession.
+      For decades, the stock market has been Wall Street's favorite crystal
+      ball: a stock price is a bet on a company's future profits, so the
+      market reacts to bad news fast, and recessions often follow soon after
+      the market starts sliding. Then crypto showed up and changed the
+      picture — what started as a hobby project for coders is now a
+      multi-trillion-dollar market that big institutions trade every day.
+      Researchers still argue about what crypto really is: one camp says it's
+      pure speculation, mood and hype, not fundamentals; the other says
+      crypto has grown up enough to actually tell us something useful about
+      the economy, liquidity, and how brave investors feel.
 
-  We attack the question from several angles. We start by measuring how the
-  two markets move together, then ask which one actually predicts the
-  other, and finally try to forecast recessions outright. Three lenses, one
-  answer. First, we tag every trading day as either "recession" or "not
-  recession" using the official NBER dates. A simple flag: 1 if the economy
-  was in a recession that day, 0 if it was not. To check the recovery
-  question, we zoom in on the six months right after each recession ends,
-  roughly 126 trading days. To check the warning question, we zoom in on
-  the 30 days right before each recession begins. We slide one market's
-  daily returns against the other's, shifting by up to 60 trading days in
-  each direction. Wherever the match is tightest, that gap tells us how
-  many days one market moves ahead of the other. Next we run a Granger
-  causality test, a fancy way of asking whether yesterday's stock moves
-  help us guess today's crypto moves better than chance. If they do, stocks
-  are leading. Some links between markets are not a straight line. So we
-  use transfer entropy, a tool from information theory, to measure how much
-  knowing one market's past cuts down the guesswork about the other
-  market's future. Sometimes markets sync up on short cycles but not long
-  ones, or the other way around. Wavelet analysis lets us check different
-  time scales at once, so we can see day-by-day, week-by-week, and
-  month-by-month patterns separately. The main result is a "phase" reading
-  that shows, at every moment in time, which market is dancing ahead of the
-  other, and over what time horizon (think a couple of days versus a couple
-  of months). Finally we flip the question around: can we actually
-  forecast a recession? We train a handful of models (a simple statistical
-  one and a more advanced neural network called an LSTM) to call the next
-  downturn. We feed each model three different diets (stocks only, crypto
-  only, and both together) and grade them with two standard scoring tools
-  (AUROC and Precision-Recall Curves) to see which inputs forecast best.
-  Markets evolve, so we never trust a single fixed snapshot. Every model is
-  re-run on rolling 5-year windows of data (about 1,260 trading days), with
-  a standard correction (Newey-West, 1987) to keep our error bars honest.
-  When you run many tests, a few will look "significant" by sheer luck. We
-  use a well-known correction (Benjamini-Hochberg, 1995) to filter out the
-  flukes. We also save 2021 through mid-2025 as a clean test set the models
-  never saw during training.
+      This paper answers one clean question: "When a recession hits and then
+      ends, does the stock market move first, or does crypto?" We test three
+      guesses, which can all be partly true at once. H₁ (stocks warn first):
+      the stock market has more money, more pros, and better research desks,
+      so it should pick up bad news faster and start falling first. H₂
+      (crypto recovers first): crypto is full of risk-hungry retail traders
+      who jump on a recovery fast, so it should turn up before stocks do when
+      the economy starts healing. H₃ (regime dependence): which market leads
+      isn't fixed — it shifts with the market mood, whether bull or bear,
+      calm or stormy.
+  - heading: "Methodology"
+    body: |-
+      We attack the question from several angles: first measuring how the two
+      markets move together, then asking which one actually predicts the
+      other, and finally trying to forecast recessions outright. We tag every
+      trading day as "recession" or "not recession" using the official NBER
+      dates, zoom in on the six months right after each recession ends to
+      check the recovery question, and zoom in on the 30 days right before
+      each recession begins to check the warning question.
 
-  Day to day, stocks and crypto move together about 42% in lockstep
-  (correlation of 0.4199). That is a real connection, but not a tight one.
-  Two other ways of measuring the link agree (Spearman ρ = 0.3894; Kendall
-  τ = 0.2724). But that average hides wild swings. Look at any 60-day
-  window, and the link between stocks and crypto can flip from slightly
-  negative (-0.19) to almost perfectly synced (0.98). The biggest jumps
-  come when the economy is in trouble. Here is the headline. The stock
-  market moves first, and crypto follows about 27 trading days later,
-  roughly a month. That is where the strongest match shows up (correlation
-  of 0.4215 at a 27-day lag). Markets do not have one personality. They
-  have several. Using a clustering tool, we sort all the data into four
-  distinct market moods that stocks and crypto live in together. Plain
-  correlations can miss messier patterns. So we let machine learning models
-  try to predict tomorrow's crypto returns using yesterday's stock data, in
-  case the relationship is not a straight line.
+      We slide one market's daily returns against the other's by up to 60
+      trading days in each direction — wherever the match is tightest tells
+      us how many days one market moves ahead. We also run a Granger
+      causality test (a way of asking whether yesterday's stock moves help
+      predict today's crypto moves better than chance), transfer entropy (a
+      tool that catches relationships that aren't a straight line), and
+      wavelet analysis (which checks day-by-day, week-by-week, and
+      month-by-month patterns separately, since markets can sync up on short
+      cycles but not long ones).
 
-  Why does stocks-leads-crypto by a month make sense? The textbook answer:
-  the stock market simply digests news faster and more thoroughly than
-  crypto. Recent studies, using the same wavelet tools we use here, back
-  this up across multiple time horizons. Think of those 27 days as the
-  time it takes a story to travel. Stocks react this week. Research notes
-  get written. Funds rebalance monthly. Compliance teams sign off. By the
-  time the dust settles, crypto has caught up. Behavioral finance offers
-  another clean explanation. Crypto is mostly retail traders, who can only
-  pay attention to so many things at once. Big stock-market institutions
-  have whole teams reading the news all day. So pros react first; everyone
-  else catches up later. The result is what researchers call an "attention
-  cascade": the news rolls slowly from one crowd of investors to the next,
-  over about four weeks: Weeks 1-2: Wall Street pros spot the signal in
-  stocks first. Weeks 2-3: Financial news outlets pick up the story and
-  spread it to everyday investors. Weeks 3-4: Retail traders start buying
-  or selling in response. Week 4: Crypto prices have finally caught up to
-  what stocks were saying a month ago. The link between stocks and crypto
-  has not stood still. During COVID-19, it strengthened 17-fold. Bitcoin's
-  tie to the S&P 500 jumped from basically zero (0.01 in 2017-2019) to a
-  meaningful 0.36 in 2020-2021. Against the NASDAQ, it reached 0.50. Crypto
-  is no longer trading in its own universe. Knowing which market leads has
-  real money behind it. Trading strategies built on lead-lag effects have
-  earned more than 20% a year, on average, across several decades of
-  academic studies. Hedging (protecting one bet with another) has changed
-  too. Futures prices move 0 to 5 minutes before spot prices, which sounds
-  like easy money. In reality, it is brutal: trading costs, sudden market
-  mood swings, and execution slip-ups can eat the edge alive. News does not
-  flow through markets in just one pipe. The Bitcoin spot market actually
-  leads the new Bitcoin ETFs in pricing in fresh information. The story is
-  messier when comparing Bitcoin futures to spot. Researchers still
-  disagree on who moves first. COVID-19 rewired how shocks spread across
-  markets. The link between stocks and crypto turned out to be lopsided:
-  bad news travels harder and faster than good news, and the whole web of
-  relationships shifts during a crisis.
+      Finally, we flip the question around and try to actually forecast a
+      recession, training a simple statistical model and a more advanced
+      neural network (an LSTM) on stocks only, crypto only, and both
+      together, to see which inputs forecast best. Every model is re-run on
+      rolling 5-year windows so we never trust a single fixed snapshot, with
+      standard statistical corrections to keep our error bars honest and
+      filter out lucky flukes, and we save 2021 through mid-2025 as a clean
+      test set the models never saw during training.
+  - heading: "Results"
+    body: |-
+      Day to day, stocks and crypto move together about 42% in lockstep — a
+      real connection, but not a tight one, and it hides wild swings: over
+      any 60-day window the link can flip from slightly negative to almost
+      perfectly synced. The biggest jumps come when the economy is in
+      trouble.
 
-  This is the first full study of the basic question: when a recession is
-  on the way (or on its way out) does the stock market move first, or does
-  crypto? With several methods checking each other's work, the answer
-  comes through clearly. Bottom line: The stock market moves first. Crypto
-  follows roughly 27 trading days later (about a month) at recessions and
-  at recoveries (correlation of 0.4215 at a 27-day lag). Here is the
-  scorecard on our three opening guesses: H₁ (Stocks warn first): Clear
-  yes. The stock market pulls crypto down into recessions because it
-  digests bad news faster. H₂ (Crypto recovers first): No. We did not find
-  a reliable pattern of crypto turning up before stocks when the economy
-  starts healing. H₃ (It depends on the mood): Strong yes. We found four
-  distinct market moods, with links between stocks and crypto ranging from
-  almost zero (0.018) to nearly perfect lockstep (0.968). The 27-day gap is
-  not just a number. It is real-world evidence for how markets actually
-  digest news. Wall Street pros read the signal in stocks, then everyday
-  investors hear about it, then crypto catches up. For professional
-  investors, this is practical. Knowing stocks lead crypto by a month opens
-  the door to smarter hedges and asset mixes, especially in stormy markets,
-  when usual ways to spread risk stop working. Regulators need to take
-  notice too. Crypto used to be treated as a separate sandbox. Our results
-  show it is now stitched into the broader financial system, especially in
-  a crisis. Ignoring that link is no longer an option. There is plenty left
-  to explore. Future work can add social media sentiment, regulatory news,
-  and adoption data into the mix, build live dashboards that track whether
-  the link is holding up, and look at how it behaves on different time
-  scales. The answer is clear: stocks lead crypto. And that 27-day gap is
-  more than a stat in a paper. It reveals how differently the pro-driven
-  stock market and the retail-driven crypto market actually digest the
-  world around them. As crypto keeps growing up and fusing with
-  traditional finance, knowing who moves first matters more, not less.
-  Investors, regulators, and policymakers all need to keep this rhythm in
-  mind.
+      Here's the headline: the stock market moves first, and crypto follows
+      about 27 trading days later, roughly a month — that's where the
+      strongest match shows up. Markets also don't have one personality; they
+      have several. Sorting the data with a clustering tool reveals four
+      distinct market moods that stocks and crypto live in together, and
+      machine learning models confirm crypto returns can be predicted from
+      yesterday's stock data reasonably well, in case the relationship isn't
+      a straight line.
+  - heading: "Discussion"
+    body: |-
+      Why does stocks-leads-crypto by a month make sense? The textbook
+      answer: the stock market simply digests news faster and more
+      thoroughly than crypto. Think of those 27 days as the time it takes a
+      story to travel — stocks react this week, research notes get written,
+      funds rebalance monthly, compliance teams sign off, and by the time the
+      dust settles, crypto has caught up. Behavioral finance adds another
+      explanation: crypto is mostly retail traders with limited attention,
+      while big stock-market institutions have whole teams reading the news
+      all day, so pros react first and everyone else catches up over roughly
+      four weeks — an "attention cascade" from Wall Street, to financial
+      media, to retail traders, to crypto prices finally adjusting.
+
+      The link between stocks and crypto hasn't stood still, either. During
+      COVID-19 it strengthened roughly 17-fold, and crypto is no longer
+      trading in its own universe. Knowing which market leads has real money
+      behind it: trading strategies built on lead-lag effects have earned
+      more than 20% a year on average across decades of academic studies,
+      though in practice trading costs and execution slip-ups eat much of
+      that edge. News also doesn't flow through markets in just one pipe —
+      for example the Bitcoin spot market tends to lead new Bitcoin ETFs in
+      pricing in fresh information, and COVID-19 rewired how shocks spread
+      across markets, with bad news traveling harder and faster than good
+      news.
+  - heading: "Conclusion"
+    body: |-
+      This is the first full study of the basic question: when a recession is
+      on the way (or on its way out), does the stock market move first, or
+      does crypto? With several methods checking each other's work, the
+      answer comes through clearly: the stock market moves first, and crypto
+      follows roughly 27 trading days later at both recessions and
+      recoveries. On our three opening guesses — H₁ (stocks warn first):
+      clear yes. H₂ (crypto recovers first): no, we found no reliable pattern
+      of crypto turning up before stocks during recovery. H₃ (it depends on
+      the mood): strong yes, with four distinct market moods found.
+
+      This matters in practice. For professional investors, knowing stocks
+      lead crypto by a month opens the door to smarter hedges and asset mixes,
+      especially in stormy markets when usual ways to spread risk stop
+      working. Regulators should take notice too — crypto used to be treated
+      as a separate sandbox, but it's now stitched into the broader financial
+      system, especially in a crisis. As crypto keeps growing up and fusing
+      with traditional finance, knowing who moves first matters more, not
+      less.
 ---
 
 ## Introduction

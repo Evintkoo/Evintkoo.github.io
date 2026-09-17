@@ -5,32 +5,36 @@
 // src/pages/index.astro and src/pages/projects/index.astro so the fact/copy
 // only lives in one place (final-review.md I4) — the two call sites
 // previously duplicated this verbatim, differing only in heading level.
+import { getTagIconSvg } from '../lib/tag-icons';
+import { ARROW_EXTERNAL } from '../lib/arrow-icons';
 interface Props {
   headingLevel?: 'h2' | 'h3';
 }
 const { headingLevel = 'h3' } = Astro.props;
 const Heading = headingLevel;
+const roleTags = ['Featured', 'Co-Founder', 'MLOps'];
+const techTags = ['Python', 'PyTorch', 'FastAPI', 'Docker', 'CUDA'];
 ---
 <article class="project-featured">
   <div class="project-featured__body">
     <div class="project-featured__tags">
-      <span class="tag tag--featured">Featured</span>
-      <span class="tag">Co-Founder</span>
-      <span class="tag">MLOps</span>
+      {roleTags.map((t, i) => (
+        <span class={`tag ${i === 0 ? 'tag--featured' : ''}`.trim()}>
+          <Fragment set:html={getTagIconSvg(t)} />{t}
+        </span>
+      ))}
     </div>
     <Heading class="project-featured__title">Kolosal AI</Heading>
     <p class="project-featured__desc">
       Open-source platform for running large language models locally, so your data stays private and inference stays fast. Custom training and production-ready inference at scale.
     </p>
     <div class="project-featured__tech">
-      <span class="tag">Python</span>
-      <span class="tag">PyTorch</span>
-      <span class="tag">FastAPI</span>
-      <span class="tag">Docker</span>
-      <span class="tag">CUDA</span>
+      {techTags.map((t) => (
+        <span class="tag"><Fragment set:html={getTagIconSvg(t)} />{t}</span>
+      ))}
     </div>
   </div>
-  <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform &nearr;</a>
+  <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform <Fragment set:html={ARROW_EXTERNAL} /></a>
 </article>
 <style>
   .project-featured { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); background: var(--paper-raised); margin-bottom: var(--space-8); }
@@ -38,11 +42,18 @@ const Heading = headingLevel;
   .project-featured__title { font-size: 1.75rem; margin-bottom: var(--space-3); }
   .project-featured__desc { color: var(--ink-soft); max-width: 640px; margin-bottom: var(--space-4); }
   .project-featured__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .project-featured__link { flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
+  .project-featured__link { display: inline-flex; align-items: center; gap: 0.3em; flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
   .project-featured__link:hover { text-decoration: underline; }
+  /* :global() is required: the arrow icon is injected as a raw HTML string
+     via `Fragment set:html={ARROW_EXTERNAL}` (src/lib/arrow-icons.ts), so
+     it never receives Astro's data-astro-cid-* scope attribute — a scoped
+     selector silently never matches it, and the SVG renders at the
+     browser's unconstrained intrinsic size instead of 15px. */
+  .project-featured__link :global(svg) { width: 15px; height: 15px; flex-shrink: 0; }
 
-  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 0.35em; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
   .tag--featured { color: var(--accent); border-color: var(--accent); }
+  .tag :global(svg) { width: 0.85em; height: 0.85em; flex-shrink: 0; }
 
   @media (max-width: 639px) {
     .project-featured { flex-direction: column; align-items: flex-start; }

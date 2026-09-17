@@ -5,6 +5,7 @@ import FeatureGrid from '../../components/FeatureGrid.astro';
 import TechPills from '../../components/TechPills.astro';
 import ProjectCTA from '../../components/ProjectCTA.astro';
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+import Tag from '../../components/Tag.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('projects');
@@ -21,7 +22,7 @@ const { data } = entry;
   <section class="proj-hero container">
     <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
     <div class="proj-hero__tags">
-      {data.tags.map((t) => <span class="tag">{t}</span>)}
+      {data.tags.map((t) => <Tag label={t} />)}
     </div>
     <h1>{data.title}</h1>
     <p class="proj-hero__subtitle">{data.tagline}</p>

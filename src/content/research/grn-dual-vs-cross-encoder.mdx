@@ -2,6 +2,8 @@
 title: "Dual-Encoder vs Cross-Encoder for Transductive GRN Link Prediction"
 tagline: "A rigorous parameter-matched comparison of dual-encoder and cross-encoder architectures for gene regulatory network link prediction: ablation studies, pruning experiments, imbalance robustness, and cold-start evaluation."
 ogDescription: "Dual-Encoder versus Cross-Encoder Neural Architectures for Transductive Gene Regulatory Link Prediction: An Empirical Comparison Under Parameter-Matched Conditions"
+recSubtitle: "Computational Biology · IEEE TNNLS"
+recDescription: "Parameter-matched comparison of dual-encoder and cross-encoder architectures across four imbalance regimes — submitted to IEEE TNNLS."
 tags: ["Deep Learning", "GRN Inference", "IEEE TNNLS"]
 topic: "bio"
 order: 5
@@ -31,43 +33,141 @@ snapshot:
     - label: "Evaluation"
       value: "Four imbalance regimes (1:1, 5:1, 10:1, 50:1), structured pruning, ablation, cold-start."
   tags: ["IEEE TNNLS", "Neural Architecture", "Pruning", "scRNA-seq"]
-simpleSummary: |-
-  Cells contain master-switch genes (called transcription factors) that
-  turn other genes on or off. Mapping who controls whom would help
-  biologists understand disease and design drugs. We compare two AI
-  designs on this prediction task. One reads each gene on its own, then
-  checks if the pair matches. The other reads the pair together from the
-  start. Both models have exactly 5.58M parameters (their internal
-  "dials"), so any difference in skill comes from the design, not the
-  size.
+mindmapNote: 'A parameter-matched (5.58M params each) rerun of <inode id="/research/grn-modular-vs-monolithic/">the earlier gradient-corrected two-tower vs cross-encoder comparison</inode>, adding four imbalance regimes, ablation, pruning, and cold-start evaluation to show 95% of the cross-encoder''s advantage comes from joint encoding itself.'
+breakdown:
+  center: "Dual- vs Cross-Encoder GRN"
+  centerDescription: 'Parameter-matched comparison (5.58M params each) showing the cross-encoder beats the dual-encoder by <inode id="balanced-baseline">10.84pp AUROC</inode>, with the gap widening sharply under <inode id="severe-imbalance">realistic class imbalance</inode>.'
+  branches:
+    - label: "Parameter-Matched Architectures"
+      description: "Both models are fixed at exactly 5.58M parameters so any performance gap reflects design, not capacity."
+      nodes:
+        - title: "Dual-encoder (two-tower)"
+          id: "dual-encoder-two-tower"
+          description: "Encodes each TF and gene independently, then scores the pair via cosine similarity of the two encodings."
+        - title: "Cross-encoder"
+          id: "cross-encoder-joint"
+          description: "Concatenates TF-gene features and processes them jointly through shared layers before scoring, allowing direct feature interaction."
+    - label: "Imbalance Robustness Testing"
+      description: 'Both architectures are evaluated across four negative-sampling ratios, from <inode id="balanced-baseline">artificially balanced</inode> to <inode id="severe-imbalance">realistically sparse</inode>.'
+      nodes:
+        - title: "Balanced (1:1) baseline"
+          id: "balanced-baseline"
+          description: 'Cross-encoder scores 0.9025 AUROC versus 0.7941 for the dual-encoder, a 10.84pp gap even with identical parameter counts — later traced by <inode id="joint-encoding-ablation">ablation to joint encoding itself</inode> rather than any specific interaction term.'
+        - title: "Moderate imbalance (5:1, 10:1)"
+          description: "The dual-encoder degrades to roughly 0.694 and 0.658 AUROC while the cross-encoder stays near 0.911, widening the gap to over 25pp at 10:1."
+        - title: "Severe imbalance (50:1)"
+          id: "severe-imbalance"
+          description: "The dual-encoder collapses entirely at this realistic ratio, while the cross-encoder remains stable, a critical difference for real regulatory databases dominated by non-interacting pairs."
+    - label: "Ablation & Pruning Studies"
+      description: '<inode id="joint-encoding-ablation">Component removal</inode> and <inode id="structured-pruning">structured sparsity experiments</inode> isolate what drives the cross-encoder''s advantage and how much capacity is redundant.'
+      nodes:
+        - title: "Joint encoding vs interaction term"
+          id: "joint-encoding-ablation"
+          description: "Ablation shows 95% of the cross-encoder's AUROC advantage comes from processing the pair jointly, with only 5% attributable to the element-wise product interaction term."
+        - title: "Structured neuron pruning"
+          id: "structured-pruning"
+          description: "Both architectures tolerate at least 60% neuron removal without post-hoc performance loss, indicating substantial over-parameterization at 5.58M."
+        - title: "Effective rank analysis"
+          description: "Measures the intrinsic dimensionality of each model's learned representations to gauge representational efficiency."
+    - label: "Cold-Start & Classical Baselines"
+      description: 'Tests how each architecture generalizes to <inode id="cold-start-eval">entities unseen during training</inode>, and how neural components compare to <inode id="expression-baseline">simple feature matching</inode>.'
+      nodes:
+        - title: "Cold-start evaluation"
+          id: "cold-start-eval"
+          description: 'The dual-encoder''s <inode id="dual-encoder-two-tower">independently encoded TF and gene representations</inode> give it a modest edge generalizing to unseen TFs or genes, since it doesn''t rely solely on pair-specific learning.'
+        - title: "Transductive limitation"
+          description: 'The cross-encoder''s <inode id="cross-encoder-joint">joint processing of concatenated TF-gene features</inode> is inherently transductive, but this rarely matters in practice since most GRN inference tasks already know the entities involved.'
+        - title: "Expression-only baseline"
+          id: "expression-baseline"
+          description: "A feature-based baseline with no learned embeddings contextualizes how much the neural architectures contribute over simple expression matching."
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      Cells contain master-switch genes (called transcription factors) that
+      turn other genes on or off. Mapping who controls whom would help
+      biologists understand disease and design drugs. This paper compares
+      two AI designs on that prediction task, with their internal "dial"
+      count held perfectly equal (5.58 million parameters each), so any
+      difference in skill comes from the design, not the size.
 
-  In real biology, most gene pairs are not connected. So we trained each
-  model with different mixes of "non-pairs" to "real pairs": 1:1, 5:1,
-  10:1, 50:1. The last mix is the most realistic and the hardest. We also
-  turned off parts of each model one at a time to see which parts
-  mattered, trimmed away neurons to see how much was redundant, and tested
-  each model on genes it had never seen during training.
+      One design ("dual-encoder") reads each gene on its own, then checks
+      if the pair matches. The other ("cross-encoder") reads the pair
+      together from the start. The joint reader wins clearly, and the gap
+      gets worse the more realistic the test gets.
+  - heading: "Introduction"
+    body: |-
+      There are two common ways to build an AI that scores whether two
+      things go together. One way encodes each item separately and then
+      compares the two encodings — fast, because you can pre-compute and
+      reuse each item's encoding. The other reads both items together from
+      the start, which is slower but lets the model notice how the two
+      specifically relate to each other.
 
-  The model that reads pairs together scored 0.9025 on the standard
-  accuracy measure (AUROC, where 1.0 is perfect and 0.5 is a coin flip).
-  The model that reads inputs separately scored 0.7941, a 10.84-point gap.
-  When real-world imbalance was added, the separate-reader fell apart
-  (−13.6 pp at 10:1, complete collapse at 50:1). The joint-reader held
-  steady at ≈0.911 at 10:1. When we turned off parts of the winner, 95% of
-  its advantage came from simply reading the pair together. Only 5% came
-  from a specific math trick inside it.
+      No one had tested these two designs on gene-regulation prediction
+      while forcing them to have exactly the same amount of "brainpower."
+      Without that control, you can't tell whether one design wins because
+      it's smarter, or just because it happens to be bigger. This paper
+      closes that gap by matching both models at 5.58 million parameters.
+  - heading: "Methods"
+    body: |-
+      Both models were built to have precisely the same size (5.58M
+      parameters) so the comparison is fair. They were trained and tested
+      on real single-cell gene-expression data from human brain tissue.
 
-  We could remove more than 60% of each model's internal neurons without
-  hurting accuracy, which means both have a lot of unused capacity. On
-  genes never seen during training, the separate-reader generalized a
-  little better. The joint-reader, by design, only works on gene pairs it
-  has met before.
+      Because most gene pairs in real biology are NOT connected, the
+      models were tested under four different mixes of "unconnected pairs"
+      to "connected pairs": 1-to-1 (artificially easy and balanced), 5-to-1,
+      10-to-1, and 50-to-1 (the most realistic and hardest, since real
+      regulatory connections are rare). The researchers also switched off
+      parts of each model one at a time to see which parts actually
+      mattered, trimmed away neurons to see how much of each model was
+      redundant, and tested both models on genes they'd never seen during
+      training to check how well they generalize.
+  - heading: "Results"
+    body: |-
+      The model that reads gene pairs together scored 0.9025 on the
+      standard accuracy scale (AUROC, where 1.0 is perfect and 0.5 is a
+      coin flip). The model that reads genes separately scored 0.7941 — a
+      10.84-point gap in the joint reader's favor, even with identical
+      model sizes.
 
-  With model sizes held equal, the joint-reader clearly wins at predicting
-  gene-control links it has seen the players for. The separate-reader's
-  small edge on brand-new genes can't make up for its 10.84-point accuracy
-  shortfall on the main task. The lesson: how the model looks at the pair
-  matters more than how big it is.
+      That gap gets much worse once the test becomes more realistic: at a
+      10-to-1 imbalance the separate reader drops to roughly 0.658 while
+      the joint reader barely moves (about 0.911), and at 50-to-1 the
+      separate reader collapses completely while the joint reader stays
+      stable. When the researchers switched off pieces of the winning
+      design, they found that 95% of its advantage simply comes from
+      reading the pair together — only 5% comes from a specific internal
+      math trick.
+  - heading: "Discussion"
+    body: |-
+      Both models could have more than 60% of their internal neurons
+      removed without losing accuracy, meaning both designs carry a lot of
+      unused capacity — there's room to shrink them.
+
+      The separate-reader design does have one edge: it generalizes
+      slightly better to genes it has never seen before, because it builds
+      an independent representation for each gene rather than only
+      learning about specific pairs. But in practice this barely matters,
+      because most real gene-regulation prediction tasks already know which
+      genes they're working with — and even where it does apply, that small
+      edge can't make up for the separate reader's much larger accuracy
+      shortfall. The separate reader's collapse under realistic imbalance
+      (50-to-1) is also a serious practical problem, since real regulatory
+      databases are dominated by non-connected gene pairs.
+  - heading: "Conclusion"
+    body: |-
+      With model sizes held perfectly equal, the joint-reader design
+      clearly wins at predicting which genes control which. The
+      separate-reader's small edge on brand-new genes can't make up for its
+      much lower accuracy on the main task. The lesson: how a model looks
+      at a pair of genes matters more than how big the model is.
+
+      Future work could explore whether separate-reader models can be
+      taught to "peek" at pairs together late in the process to close the
+      gap while keeping their speed advantage, and whether the unused
+      capacity found here (60%+ prunable) can be trimmed away without any
+      loss in accuracy.
 ---
 
 ## Abstract

@@ -3,11 +3,67 @@ title: "Two-Tower Hybrid Embedding Networks for GRN Inference"
 shortTitle: "Two-Tower Networks for GRN Inference"
 tagline: "A pure-Rust two-tower MLP that learns entity embeddings and cell-type expression profiles to predict transcription factor–gene interactions: 83% ensemble accuracy, CPU-trainable without any deep learning framework."
 ogDescription: "Two-Tower Hybrid Embedding Networks for Gene Regulatory Network Inference from Single-Cell Transcriptomics - Research by Evint Leovonzko"
+recSubtitle: "Computational Biology · scRNA-seq"
+recDescription: "Pure-Rust two-tower MLP learning entity embeddings and cell-type expression profiles to predict TF–gene interactions — 83.06% ensemble accuracy, CPU-trainable."
 tags: ["Two-Tower MLP", "scRNA-seq", "Rust"]
 topic: "bio"
 order: 7
 externalLink: "https://github.com/Evintkoo/grn-encoder-comparison/blob/main/paper/main.pdf"
 repoLink: "https://github.com/Evintkoo/grn-encoder-comparison"
+mindmapNote: 'A pure-Rust two-tower MLP reaching 83.06% ensemble accuracy at predicting TF-gene regulatory links from human brain single-cell RNA-seq. This same architecture is later diagnosed for hidden gradient failures and benchmarked against a joint cross-encoder in <inode id="/research/grn-modular-vs-monolithic/">a follow-up controlled comparison</inode>.'
+breakdown:
+  center: "Two-Tower Networks for GRN Inference"
+  centerDescription: 'A pure-Rust two-tower MLP that learns <inode id="entity-tower">TF/gene embeddings</inode> and <inode id="expression-tower">cell-type expression profiles</inode> to predict regulatory interactions, reaching <inode id="five-model-ensemble">83.06% ensemble accuracy</inode> with no deep learning framework.'
+  branches:
+    - label: "Dataset & Regulatory Priors"
+      description: 'Regulatory ground truth from <inode id="dorothea-trrust-priors">DoRothEA and TRRUST</inode> is paired with human brain single-cell RNA-seq to build <inode id="tf-gene-pairs">the labeled TF-gene interaction set</inode>.'
+      nodes:
+        - title: "47,388 TF-gene pairs"
+          id: "tf-gene-pairs"
+          description: "Human brain scRNA-seq data paired with regulatory ground truth, split 70/15/15 into training, validation, and test sets."
+        - title: "DoRothEA & TRRUST priors"
+          id: "dorothea-trrust-priors"
+          description: "Two curated transcription-factor-target databases supply the ground-truth regulatory links used as labels for the prediction task."
+    - label: "Two-Tower Architecture"
+      description: 'Two separate encoder towers process <inode id="entity-tower">entity identity</inode> and <inode id="expression-tower">expression context</inode> before their outputs are compared.'
+      nodes:
+        - title: "Entity tower (512-d embeddings)"
+          id: "entity-tower"
+          description: "Learns a 512-dimensional embedding for each transcription factor and gene, passed through three fully connected layers with batch normalization and dropout."
+        - title: "Expression tower (11-d profiles)"
+          id: "expression-tower"
+          description: "Encodes an 11-dimensional cell-type mean expression profile through the same three-layer structure, capturing cell-type-specific activity."
+    - label: "Similarity Scoring & Training"
+      description: 'Tower outputs are compared via <inode id="temp-scaled-dot-product">a tuned similarity function</inode>, and the whole system is <inode id="adam-l2-training">trained</inode> and <inode id="pure-rust-implementation">implemented entirely in Rust</inode>.'
+      nodes:
+        - title: "Temperature-scaled dot product (tau = 0.05)"
+          id: "temp-scaled-dot-product"
+          description: "Interaction scores come from a dot-product similarity between tower outputs, scaled by a temperature of 0.05 and passed through a sigmoid."
+        - title: "Adam optimizer + L2 regularization"
+          id: "adam-l2-training"
+          description: "Trained with the Adam optimizer, L2 regularization (lambda = 0.01), and early stopping with 10-epoch patience."
+        - title: "Pure-Rust implementation"
+          id: "pure-rust-implementation"
+          description: "Built from scratch without PyTorch, TensorFlow, or any deep learning framework, forcing explicit numerical decisions that aided reproducibility."
+    - label: "Ensemble & Robustness"
+      description: 'Five independently trained models are <inode id="five-model-ensemble">combined</inode> and checked for <inode id="cross-seed-variance">stability across random seeds</inode>.'
+      nodes:
+        - title: "5-model ensemble"
+          id: "five-model-ensemble"
+          description: "Averaging predicted probabilities across five independently trained models lifts accuracy from 80.14% to 83.06%."
+        - title: "Cross-seed variance (CV = 2.06%)"
+          id: "cross-seed-variance"
+          description: 'Re-running training from different random initializations produced only 2.06% coefficient of variation, a stability the <inode id="pure-rust-implementation">pure-Rust, framework-free numerics</inode> likely helped enforce.'
+        - title: "Hyperparameter tuning (+16.1 pp)"
+          description: "Careful hyperparameter tuning alone accounted for 77% of the total accuracy improvement, more than any architectural change."
+    - label: "Results vs. GCAN"
+      description: 'Benchmarked against <inode id="gcan-accuracy-f1-paradox">a cross-attention baseline</inode>, revealing an accuracy-F1 mismatch on imbalanced data.'
+      nodes:
+        - title: "83.06% accuracy, 0.844 AUROC"
+          description: 'The <inode id="five-model-ensemble">five-model ensemble</inode> reaches 83.06% accuracy and an AUROC of 0.844 on the 47,388-pair human brain test set.'
+        - title: "GCAN's accuracy-F1 paradox"
+          id: "gcan-accuracy-f1-paradox"
+          description: "GCAN, a cross-attention baseline, scores a higher 91% accuracy but only a 0.692 F1-score, missing many true regulatory links due to poor recall on imbalanced data."
 metrics:
   - label: "Ensemble accuracy"
     value: "83.06%"
@@ -32,37 +88,93 @@ snapshot:
     - label: "Implementation"
       value: "Pure Rust without PyTorch or TensorFlow, enabling deterministic CPU training."
   tags: ["Gene Regulatory Networks", "Two-Tower MLP", "scRNA-seq", "Rust"]
-simpleSummary: |-
-  Cells are run by genes that switch each other on and off. Mapping those
-  switches from single-cell data is a hard, central puzzle in biology. We
-  try a simple setup: two small neural networks (one reads the controlling
-  gene, one reads the gene being controlled), and they meet in the middle
-  to score whether one likely controls the other. The model also takes in
-  how active each gene is across different cell types.
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      Cells are run by genes that switch each other on and off, and
+      mapping those switches from single-cell data is a hard, central
+      puzzle in biology. This paper tries a fairly simple AI setup —
+      two small neural networks that read gene identities and cell
+      activity, then compare notes — and finds it does surprisingly well,
+      training on nothing more than a regular laptop CPU.
+  - heading: "Introduction"
+    body: |-
+      A gene regulatory network is the map of which "controller" genes
+      (transcription factors) switch which other genes on or off.
+      Rebuilding that map from single-cell data is hard because the
+      measurements are enormous, sparse, and vary a lot between cell
+      types.
 
-  Each gene gets a numerical fingerprint, a list of 512 numbers the model
-  learns on its own. Each cell type gets a smaller 11-number profile of
-  gene activity. Both pass through three layers of a small neural network
-  that smooths and stabilizes the signal. To check if one gene likely
-  controls another, we measure how aligned the two fingerprints are, with
-  a tuning knob (τ = 0.05) that sharpens the comparison. Everything runs
-  in Rust, with no PyTorch or TensorFlow.
+      Most prior work on this problem reaches for complicated graph neural
+      networks or attention-based AI. This paper asks a simpler question:
+      can a well-tuned, ordinary neural network close the gap instead —
+      with the bonus of running fully on a CPU, without needing any
+      existing deep-learning software framework?
+  - heading: "Methods"
+    body: |-
+      The model uses a "two-tower" setup: one small neural network reads
+      the controlling gene, one reads the gene being controlled, and they
+      meet in the middle to score whether one likely controls the other.
+      It also factors in how active each gene is across different cell
+      types.
 
-  We test on 47,388 gene pairings from human brain data. One model gets
-  80.14% right, with a quality score of 0.844 out of 1. Averaging 5 models
-  pushes that to 83.06% accuracy. Most of the improvement (77%, or +16.1
-  percentage points) came from carefully tuning the model's settings, not
-  fancy new tricks. Results barely shift when we re-run with different
-  starting points (variance of 2.06%), so the model is steady.
+      Each gene gets a numerical fingerprint — a list of 512 numbers the
+      model learns on its own — while each cell type gets a smaller
+      11-number profile of gene activity. Both pass through three layers
+      of a small neural network that smooths and stabilizes the signal.
+      To judge whether one gene likely controls another, the model
+      measures how closely aligned the two fingerprints are, using a
+      tuning knob that sharpens the comparison. The whole system was
+      built from scratch in Rust, without relying on PyTorch, TensorFlow,
+      or any other deep-learning framework.
+  - heading: "Results"
+    body: |-
+      Tested on 47,388 real gene pairings from human brain data, a single
+      model gets 80.14% of predictions right, with a quality score
+      (AUROC) of 0.844 out of a possible 1.0. Averaging together 5 models
+      trained independently pushes accuracy up to 83.06%.
 
-  A rival model, GCAN, looks better at first glance with 91% accuracy. But
-  its F1 score (which measures how well it actually catches real cases) is
-  only 0.692. It misses too many true regulatory links. So a flashy
-  accuracy number can hide a model that fails when the data is uneven.
+      Most of that improvement — 77%, or +16.1 percentage points — came
+      simply from carefully tuning the model's settings, not from any
+      fancy new architectural trick. Results barely shifted when the
+      model was re-run from different random starting points, showing the
+      approach is steady and reliable.
 
-  A plain, well-tuned neural network hits 83% on this task and trains on a
-  regular laptop CPU. That pushes back on the idea that you need fancy,
-  complicated models to do this well.
+      A rival model called GCAN looks better at first glance, with 91%
+      accuracy. But its F1 score — a measure of how well it actually
+      catches real regulatory links rather than just guessing "no link" —
+      is only 0.692, meaning it misses a lot of true cases. A flashy
+      headline accuracy number can hide a model that quietly fails
+      whenever the data is uneven.
+  - heading: "Discussion"
+    body: |-
+      These results push back against the idea that you need increasingly
+      complicated architectures to do well at this task. A carefully
+      tuned, ordinary two-tower network — with no fancy attention
+      mechanisms — is competitive with much more elaborate designs.
+
+      The GCAN comparison is a useful cautionary tale: its high accuracy
+      is inflated by the fact that most gene pairs are NOT truly
+      connected, so a model that leans toward predicting "no link" can
+      look accurate while still missing most of the real connections.
+      Building the whole system in pure Rust (with no automatic
+      differentiation library and no GPU assumed) also forced explicit,
+      careful numerical decisions that likely contributed to how stable
+      and reproducible the results turned out to be.
+  - heading: "Conclusion"
+    body: |-
+      A standard, well-tuned neural network, implemented entirely in
+      Rust with no deep-learning framework, reaches 83% ensemble accuracy
+      on this gene-regulation prediction task — competitive with far more
+      complex alternatives, and trainable on an ordinary CPU.
+
+      Since careful tuning contributed far more than architectural
+      complexity did, future work on this kind of problem should
+      prioritize thorough tuning before reaching for more elaborate
+      models. The accuracy/F1 mismatch seen in the GCAN comparison is
+      also a broader lesson for this field: headline accuracy on
+      imbalanced biological data can be misleading, and more balanced
+      scores like F1 and AUROC should be trusted first.
 ---
 
 ## Abstract

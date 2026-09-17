@@ -4,6 +4,8 @@ shortTitle: "GDP Trajectory Clustering"
 tagline: "190 countries, 45 years, four distinct development trajectories. Machine learning clustering reveals why some economies surge while others stagnate, and what policymakers can do about it."
 ogTitle: "Clustering Global GDP Trajectories (1980–2024) | Evint Leovonzko"
 ogDescription: "Analysis of 190 countries reveals four distinct GDP trajectory patterns over 45 years - Research by Evint Leovonzko"
+recSubtitle: "Economics · Analysis"
+recDescription: "Unsupervised clustering of 190 countries over 45 years reveals four distinct economic paths — from stagnation to exponential growth."
 tags: ["Unsupervised Clustering", "Macroeconomics", "K-Means"]
 topic: "econ"
 order: 10
@@ -22,75 +24,175 @@ chart:
       values: [100, 98.84, 96.12, 91.86, 87.46, 84.35, 82.74, 81.46, 79.14, 75.42, 71.22, 75.6, 79.38, 83.35, 87.52, 91.89, 96.49, 101.31, 106.38, 111.7, 117.28, 123.14, 129.3, 135.77, 142.56, 149.68, 157.17, 165.03, 173.28, 181.94, 191.04, 200.59, 210.62, 221.15, 232.21, 243.82, 256.01, 268.81, 282.25, 296.36, 311.18, 326.74, 343.08, 360.23, 378.24]
     - name: "Cluster 2 · Stagnant"
       values: [100, 103.38, 105.49, 105.74, 104.7, 103.74, 104.21, 106.65, 110.4, 113.98, 116.01, 116.02, 114.79, 113.87, 114.7, 117.67, 121.87, 125.64, 127.54, 127.27, 125.85, 125.05, 126.31, 129.85, 134.52, 138.44, 140.16, 139.58, 137.99, 137.36, 139.14, 143.32, 148.46, 152.48, 153.97, 153.05, 151.33, 150.96, 153.34, 158.21, 163.81, 167.89, 169.09, 167.8, 165.98]
-simpleSummary: |-
-  Countries don't all grow the same way. We looked at 190 of them over 45
-  years and found just four patterns. Some boom for decades. Others stay
-  stuck. Here's why, and what leaders can actually do about it.
+breakdown:
+  center: "GDP Trajectory Clustering"
+  centerDescription: 'Unsupervised clustering of <inode id="wb-imf-gdp-data">190 countries'' 45-year GDP paths</inode> into four distinct trajectory archetypes, each requiring a different policy response.'
+  branches:
+    - label: "Data & Preprocessing"
+      description: 'Constant-dollar <inode id="wb-imf-gdp-data">GDP series for 190 countries across 1980-2024</inode>, made comparable across decades and economies.'
+      nodes:
+        - title: "World Bank & IMF GDP data"
+          id: "wb-imf-gdp-data"
+          description: "Inflation-adjusted (constant 2015 US$) annual GDP figures for 190 countries spanning 1980 to 2024."
+        - title: "Trajectory as time series"
+          description: "Each country's growth history is treated as a long sequence of yearly values, too high-dimensional to compare directly country by country."
+    - label: "Dimensionality Reduction & Clustering"
+      description: 'A two-stage pipeline that first <inode id="umap-embedding">compresses each country''s growth shape</inode>, then <inode id="som-clustering">groups similar shapes together</inode>.'
+      nodes:
+        - title: "UMAP embedding"
+          id: "umap-embedding"
+          description: "Uniform Manifold Approximation and Projection compresses each country's 45-year trajectory into a 2D position, placing similarly-shaped growth paths near each other while preserving global structure."
+        - title: "Self-Organizing Map clustering"
+          id: "som-clustering"
+          description: "A SOM is applied to the reduced 2D space to sort countries into natural groups, yielding four coherent trajectory clusters with no preset target count."
+        - title: "Bootstrap validation"
+          description: "Cluster stability was checked by re-running the analysis on thousands of randomly resampled subsets of the data and cross-checking each group against known economic history."
+    - label: "The Four Clusters"
+      description: "Four qualitatively distinct 45-year GDP shapes emerged from the clustering, each with representative countries."
+      nodes:
+        - title: "Cluster 1 · Sustained High Growth"
+          id: "cluster-sustained-growth"
+          description: "China, South Korea, Taiwan, Singapore, and India show steady, accelerating growth with strong resilience to shocks."
+        - title: "Cluster 0 · Boom-Bust"
+          id: "cluster-boom-bust"
+          description: "Russia, Argentina, Brazil, Nigeria, and Venezuela show rapid growth followed by severe crashes, typically tied to dependence on a narrow set of commodities."
+        - title: "Cluster 3 · Post-Transition Recovery"
+          id: "cluster-transition-recovery"
+          description: "Poland, Romania, Hungary, the Baltic states, and Vietnam show an initial decline followed by a long, steady recovery linked to economic reforms or EU integration."
+        - title: "Cluster 2 · Stagnant"
+          id: "cluster-stagnant"
+          description: "Liberia, Burundi, Central African Republic, DR Congo, Haiti, and Zimbabwe show weak or flat growth across all four decades, often held back by conflict or weak governance."
+    - label: "Policy Implications by Cluster"
+      description: "Each cluster needs a distinct policy playbook rather than one-size-fits-all prescriptions."
+      nodes:
+        - title: "Sustained growers: innovation focus"
+          description: 'Prioritize R&D, higher education, and managing aging populations to extend the <inode id="cluster-sustained-growth">steady, accelerating growth</inode> already underway, while staying competitive in global trade.'
+        - title: "Boom-bust: diversification & buffers"
+          description: 'Diversify away from the single commodities behind the <inode id="cluster-boom-bust">rapid growth followed by severe crashes</inode>, build sovereign wealth funds for lean years, and adopt countercyclical fiscal policy.'
+        - title: "Transitional: consolidation"
+          description: 'Consolidate the institutional reforms behind the <inode id="cluster-transition-recovery">long, steady recovery</inode> and move up the value chain to avoid getting stuck in the middle-income trap.'
+        - title: "Stagnant: foundation building"
+          description: 'Establish political stability and functioning institutions to address the <inode id="cluster-stagnant">conflict or weak governance</inode> holding growth back, and invest in health and education before more advanced growth strategies can take hold.'
+    - label: "Cross-Cutting Macroeconomic Drivers"
+      description: "Patterns that recur across clusters and help explain why some countries climb while others stall."
+      nodes:
+        - title: "Commodity & trade dependence"
+          description: "Countries overly reliant on a narrow set of exports are far more vulnerable to price swings and sudden stops in foreign investment than diversified economies."
+        - title: "Debt dynamics"
+          description: "Prudent debt management tracks closely with sustained growth, while heavy borrowing without matching economic growth repeatedly produced debt crises."
+        - title: "Institutional quality"
+          description: "Strong institutions and rule of law consistently accompany sustained growth, while weak governance tends to perpetuate stagnation."
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      This study groups 190 countries by the shape of their economic
+      growth over the past 45 years (1980–2024) to understand why some
+      economies grow steadily while others stall or crash. Using machine
+      learning to spot patterns in the data, the analysis reveals four
+      distinct growth stories, and offers policy lessons for each. The
+      key message: which group a country falls into isn't permanent —
+      the right policies can shift it into a better trajectory.
+  - heading: "Introduction"
+    body: |-
+      Since 1980, the gap between rich and poor countries has widened
+      dramatically: an average South Korean is now 32 times richer than
+      in 1950, a Romanian 20 times richer, and a Chinese citizen 16 times
+      richer, while many countries have barely grown at all over the same
+      period. Understanding why some countries take off while others
+      stagnate matters enormously to policymakers, international lending
+      institutions, and investors alike.
 
-  Since 1980, the gap between economies has gotten wild. The average South
-  Korean is 32-times richer than in 1950. A Romanian, 20-times. A Chinese
-  citizen, 16-times. Meanwhile, plenty of countries are barely better off
-  than they were 45 years ago. We grouped 190 countries by their growth
-  stories to figure out what separates the winners from the stuck.
+      This study uses machine learning (software that automatically
+      finds patterns in large datasets) to sort 190 countries by the
+      shape of their growth path, in order to understand what separates
+      the economies that climb from the ones that get stuck.
+  - heading: "Methodology"
+    body: |-
+      The team pulled GDP figures for 190 countries from 1980 to 2024
+      from the World Bank and IMF, adjusted for inflation so the numbers
+      are comparable across decades. Since each country's growth history
+      is a long list of yearly numbers, hard to compare directly, they
+      used a technique called UMAP to compress each country's growth
+      story down to a simple 2D position, placing countries with
+      similarly-shaped growth paths near each other — similar to
+      flattening a globe onto a flat map without losing its overall
+      geography.
 
-  Look at 190 countries over 45 years and the noise collapses into four
-  clear stories. The gap between the best and worst is staggering: some
-  nations got 16-32x richer per person, while others basically stood still.
+      They then used a Self-Organizing Map (another pattern-finding
+      algorithm) to sort the countries into natural groups based on
+      those growth shapes, and checked the resulting groups were real
+      and not just a fluke by re-running the analysis on thousands of
+      randomly resampled subsets of the data (bootstrapping) and
+      cross-checking each group against known economic history.
+  - heading: "The Four Clusters"
+    body: |-
+      Four clear growth patterns emerged, and no one told the algorithm
+      to look for exactly four — that's simply where the data naturally
+      settled.
 
-  If you set policy, lend money, or invest across borders, these patterns
-  matter. We used machine learning (software that finds patterns in big
-  piles of data) to sort countries by their growth shape and ask the
-  obvious question: what makes some economies climb steadily, and what
-  traps others?
+      Cluster 1, "Sustained High Growth" (countries like China, South
+      Korea, Taiwan, Singapore, and India), shows steady, accelerating
+      growth with strong resilience to shocks. Cluster 0, "Boom-Bust"
+      (Russia, Argentina, Brazil, Nigeria, Venezuela), shows wild
+      swings — rapid growth followed by severe crashes, typically tied to
+      dependence on a narrow set of commodities like oil. Cluster 3,
+      "Post-Transition Recovery" (Poland, Romania, Hungary, the Baltic
+      states, Vietnam), shows an initial decline followed by a long,
+      steady recovery, often linked to major economic reforms or joining
+      bigger trade blocs like the EU. Cluster 2, "Stagnant" (Liberia,
+      Burundi, Central African Republic, DR Congo, Haiti, Zimbabwe),
+      shows weak or flat growth across all four decades, often held back
+      by conflict or weak governance.
+  - heading: "Policy Implications by Cluster"
+    body: |-
+      Each of the four groups needs a different policy playbook.
+      Sustained-growth countries should focus on innovation, higher
+      education, and managing aging populations while staying
+      competitive globally. Boom-bust countries need to diversify their
+      economies away from single commodities, build savings buffers
+      (like sovereign wealth funds) for lean years, and adopt policies
+      that dampen boom-and-bust swings rather than amplify them.
 
-  We pulled GDP figures (the total value of everything a country produces
-  in a year) from the World Bank and IMF. That's 190 countries, every year
-  from 1980 to 2024, in constant 2015 US dollars so inflation doesn't muddy
-  the picture.
+      Post-transition economies should keep consolidating their
+      institutional reforms and move up the value chain to avoid getting
+      stuck as a "middle-income" economy that can no longer compete on
+      cheap labor but hasn't yet developed high-value industries.
+      Stagnant economies need to start with the basics: political
+      stability, functioning institutions, and investment in health and
+      education, before more advanced growth strategies can take hold.
+  - heading: "Key Macroeconomic Insights"
+    body: |-
+      Several patterns cut across the clusters. Countries overly
+      dependent on a narrow set of exports or commodities are far more
+      vulnerable to price swings and sudden stops in foreign investment,
+      while diversified economies weather shocks better. Prudent debt
+      management tracks closely with sustained growth, while countries
+      that borrowed heavily without matching growth in their economies
+      repeatedly fell into debt crises.
 
-  Each country's growth story is a long row of numbers, hard to compare
-  side by side. We used a tool called UMAP to squash those long rows into a
-  2D map, so similar-shaped growth stories sit near each other. Think of it
-  as flattening a globe onto a page without losing the geography.
+      Countries that engaged successfully with global trade and
+      developed more sophisticated export industries grew faster and
+      more consistently than those that stayed isolated or dependent on
+      a single export. And strong institutions and the rule of law
+      consistently show up alongside sustained growth, while weak
+      governance tends to perpetuate stagnation.
+  - heading: "Conclusion"
+    body: |-
+      The overall pattern is that countries which grew steadily did the
+      unglamorous, hard work: building solid institutions, educating
+      their populations, opening up to global trade, and avoiding the
+      buildup of unmanaged risk. Boom-bust countries typically
+      over-relied on a single commodity or borrowed too aggressively
+      without safety nets, while stagnant countries were held back by
+      conflict, weak governance, or a lack of basic human capital.
 
-  Then we let a Self-Organizing Map (another pattern-finding algorithm)
-  sort the countries into natural groups based on the shape of their
-  growth. Four clean clusters fell out. No one told it to find four;
-  that's just where the data settled.
-
-  Are these groups real or just a lucky pattern in the data? We re-ran the
-  analysis on thousands of randomized samples (a stress test called
-  bootstrapping) and cross-checked each cluster against actual economic
-  history. The four groups held up.
-
-  One playbook doesn't work for every country. Each cluster faces a
-  different problem, so it needs a different fix. Here's what tends to
-  work for each group, and the traps to dodge.
-
-  The pattern is pretty clear. Countries that grew steadily did the boring,
-  hard stuff: built solid institutions, educated their people, opened up
-  to global trade, and didn't let risks pile up. Boom-bust countries
-  leaned too hard on one commodity or borrowed too much without a safety
-  net. Stagnant countries were dragged down by conflict, weak government,
-  or a lack of skills and health.
-
-  A country's cluster isn't a life sentence. With the right choices,
-  nations can climb upward: Cluster 2 → Cluster 3 → Cluster 1, from stuck,
-  to recovering, to thriving. They can also slide back. Smart policy and
-  strong institutions can beat a rough starting hand.
-
-  For organizations like the IMF, these patterns sharpen their playbook.
-  For investors, they're a lens for spotting risky borrowers. For
-  governments, they're a chance to learn from countries that faced the
-  same crossroads. And as climate change and the digital shift reshape
-  every economy, knowing which group you're in (and how to move up)
-  matters more than ever.
-
-  Where you start matters, but it doesn't decide where you end up. The
-  countries that pulled off real transformations over these 45 years did
-  three things at once: reformed broadly, kept inflation and debt under
-  control, and invested in their people. The recipe is known. The hard
-  part is sticking to it.
+      Crucially, a country's current cluster isn't a permanent sentence —
+      with the right choices, countries can climb from stagnant to
+      recovering to thriving, though they can also slide backward
+      without continued good policy. As climate change and digital
+      transformation reshape every economy, understanding which growth
+      pattern a country is following, and how to move to a better one,
+      matters more than ever.
 ---
 
 ## Abstract

@@ -1,0 +1,13 @@
+---
+import { getTagIconSvg } from '../lib/tag-icons';
+interface Props { label: string; class?: string; iconSource?: string }
+const { label, class: className, iconSource } = Astro.props;
+const icon = getTagIconSvg(iconSource ?? label);
+---
+<span class={`tag ${className ?? ''}`.trim()}>
+  <Fragment set:html={icon} />{label}
+</span>
+<style>
+  .tag { display: inline-flex; align-items: center; gap: 0.35em; }
+  .tag :global(svg) { width: 0.85em; height: 0.85em; flex-shrink: 0; }
+</style>

@@ -12,6 +12,19 @@
 // (see final-review.md Minor #14), intentionally left unpinned/untyped.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js';
 
+// Fullscreen explorer label icons, keyed by the fixed topic taxonomy (mirrors
+// src/pages/index.astro's `topics` list: ml/bio/fin/econ/infra/neuro). Leaves
+// use their parent hub's icon so the whole topic group reads consistently —
+// per live-preview QA feedback asking for icons on every graph label field.
+const TOPIC_ICONS: Record<string, string> = {
+  ml: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>',
+  bio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6L4 20a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2L15 8V2M9 15h6"/></svg>',
+  fin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 6"/><polyline points="15 6 21 6 21 12"/></svg>',
+  econ: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="17" y="3" width="4" height="17"/></svg>',
+  infra: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="6" rx="1.5"/><rect x="2" y="15" width="20" height="6" rx="1.5"/><path d="M6 8v.01M6 18v.01"/></svg>',
+  neuro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="1.6"/><circle cx="19" cy="6" r="1.6"/><circle cx="5" cy="18" r="1.6"/><circle cx="19" cy="18" r="1.6"/><path d="M12 9V6.5M12 15v2.5M9.7 10.3 6.3 7M14.3 10.3 17.7 7M9.7 13.7 6.3 17M14.3 13.7 17.7 17"/></svg>',
+};
+
 export interface GraphData {
   topics: Array<{ id: string; label: string }>;
   projects: Array<{ id: string; label: string; topic: string | null; href: string }>;
@@ -53,12 +66,20 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
   camera.position.z = CAM_Z_HERO;
 
   // ── Theme Colors ──
+  // Legacy site used a two-tone pink+purple accent pair here (0xf43f7a /
+  // 0xe11d64 / 0xa78bfa / 0x7c3aed) that predates the "Technical Editorial"
+  // single-blue-accent redesign (src/styles/tokens.css's --accent) — this
+  // 3D scene was a faithful byte-for-byte port of the OLD palette and was
+  // never updated when the new palette was defined, so it kept rendering in
+  // the legacy pink/red tone everywhere .scene-bg is visible (every page).
+  // Collapsed to the single accent token, same simplification already
+  // applied to the mindmap/chart islands.
   function getThemeColors() {
     const dk = document.documentElement.getAttribute('data-theme') !== 'light';
     return {
-      wire: dk ? 0xf43f7a : 0xe11d64,
-      point: dk ? 0xa78bfa : 0x7c3aed,
-      glow: dk ? 0xf43f7a : 0xe11d64,
+      wire: dk ? 0x5b7fff : 0x2952e3,
+      point: dk ? 0x5b7fff : 0x2952e3,
+      glow: dk ? 0x5b7fff : 0x2952e3,
       wireAlpha: dk ? 0.15 : 0.18,
       pointAlpha: dk ? 0.50 : 0.55,
       pointSz: dk ? 2.5 : 2.2,
@@ -461,11 +482,24 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
 
     window.addEventListener('pointerup', function () {
       if (pointerDown && !pointerMoved) {
-        // Only treat a click as "open the explorer" while the hero is
-        // still substantially in view — this canvas is a persistent
-        // full-page background, and we don't want a stray click on
-        // empty whitespace far down the page to pop the fullscreen graph.
-        if (window.pageYOffset < window.innerHeight * 0.9) {
+        if (mode === 'expanded') {
+          if (hoveredLeaf >= 0) {
+            // Clicking directly on a leaf point navigates too, not just its
+            // label — matches the mindmap's node dots being clickable
+            // alongside their note cards.
+            window.location.href = graph.leaves[hoveredLeaf].href;
+          } else {
+            // Clicking anywhere else in the expanded view (not on a node)
+            // closes the explorer — the fullscreen canvas covers the whole
+            // viewport, so this is the "click outside" a normal modal would
+            // get for free.
+            collapse();
+          }
+        } else if (window.pageYOffset < window.innerHeight * 0.9) {
+          // Only treat a click as "open the explorer" while the hero is
+          // still substantially in view — this canvas is a persistent
+          // full-page background, and we don't want a stray click on
+          // empty whitespace far down the page to pop the fullscreen graph.
           expand();
         }
       }
@@ -477,18 +511,29 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     // Non-null: Layout.astro always renders #heroGraphLabels/#heroGraphBackdrop/
     // #heroGraphBack unconditionally (see src/components/Layout.astro), so
     // these lookups can't actually fail at runtime.
+    // The icon markup below (TOPIC_ICONS) is a fixed, trusted string this
+    // file owns; node labels are content-derived (project/research titles),
+    // so they're set via textContent on a separate span rather than
+    // concatenated into innerHTML.
+    function makeGraphLabel(className: string, topicId: string, label: string): HTMLDivElement {
+      const el = document.createElement('div');
+      el.className = className;
+      if (TOPIC_ICONS[topicId]) el.innerHTML = TOPIC_ICONS[topicId];
+      const span = document.createElement('span');
+      span.textContent = label;
+      el.appendChild(span);
+      return el;
+    }
+
     const labelsContainer = document.getElementById('heroGraphLabels')!;
     const hubLabelEls = graph.hubs.map(function (h) {
-      const el = document.createElement('div');
-      el.className = 'hero-graph-label hero-graph-label--hub';
-      el.textContent = h.label;
+      const el = makeGraphLabel('hero-graph-label hero-graph-label--hub', h.id, h.label);
       labelsContainer.appendChild(el);
       return el;
     });
     const leafLabelEls = graph.leaves.map(function (l) {
-      const el = document.createElement('div');
-      el.className = 'hero-graph-label hero-graph-label--leaf';
-      el.textContent = l.label;
+      const hubId = graph.hubs[l.hubIdx] ? graph.hubs[l.hubIdx].id : '';
+      const el = makeGraphLabel('hero-graph-label hero-graph-label--leaf', hubId, l.label);
       el.addEventListener('click', function () { window.location.href = l.href; });
       labelsContainer.appendChild(el);
       return el;
@@ -507,22 +552,73 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
       target.camZ = camSpaceVec.z;
     }
 
+    // Rough monospace glyph-width estimate (JetBrains Mono) — cheap enough to
+    // compute every frame without the layout-thrash cost of getBoundingClientRect
+    // on every label. Only needs to be good enough for collision *culling*, not
+    // pixel-perfect.
+    function estimateLabelBox(text: string, fontSize: number) {
+      return { w: text.length * fontSize * 0.62, h: fontSize + 3 };
+    }
+    interface PlacedBox { x: number; y: number; w: number; h: number }
+    function overlaps(a: PlacedBox, b: PlacedBox, pad: number) {
+      return Math.abs(a.x - b.x) * 2 < a.w + b.w + pad * 2
+        && Math.abs(a.y - b.y) * 2 < a.h + b.h + pad * 2;
+    }
+    // Reused across frames to avoid an allocation per call.
+    const placedBoxes: PlacedBox[] = [];
+    const leafOrder: number[] = [];
+
     function updateLabels() {
       centerCamSpace.set(0, 0, 0).applyMatrix4(group.matrixWorld).applyMatrix4(camera.matrixWorldInverse);
       const centerZ = centerCamSpace.z;
+      placedBoxes.length = 0;
+
+      // Hubs (only ~6, the topic taxonomy) always win the collision contest —
+      // they're the structural anchors of the graph, so leaves yield to them,
+      // never the other way round.
       for (let i = 0; i < hubCount; i++) {
         projectToScreen(hubPosAttr.array[i * 3], hubPosAttr.array[i * 3 + 1], hubPosAttr.array[i * 3 + 2], screenPos);
         const el = hubLabelEls[i];
         el.style.left = screenPos.x + 'px';
         el.style.top = screenPos.y + 'px';
-        el.classList.toggle('is-visible', screenPos.camZ >= centerZ);
+        const visible = screenPos.camZ >= centerZ;
+        el.classList.toggle('is-visible', visible);
+        if (visible) {
+          const box = estimateLabelBox(el.textContent || '', 13);
+          placedBoxes.push({ x: screenPos.x, y: screenPos.y, w: box.w, h: box.h });
+        }
       }
+
+      // Leaves: project all of them first, then place nearest-to-camera first
+      // (front labels win) with simple AABB collision culling against
+      // everything already placed. A label that would overlap an already-
+      // shown one fades out instead of rendering garbled text on top of it —
+      // as the graph slowly rotates, different leaves cycle into view.
+      leafOrder.length = 0;
+      for (let i = 0; i < leafCount; i++) leafOrder.push(i);
+      const leafScreens: { x: number; y: number; camZ: number; visible: boolean }[] = [];
       for (let i = 0; i < leafCount; i++) {
         projectToScreen(leafPosAttr.array[i * 3], leafPosAttr.array[i * 3 + 1], leafPosAttr.array[i * 3 + 2], screenPos);
+        leafScreens.push({ x: screenPos.x, y: screenPos.y, camZ: screenPos.camZ, visible: screenPos.camZ >= centerZ });
+      }
+      leafOrder.sort(function (a, b) { return leafScreens[b].camZ - leafScreens[a].camZ; });
+
+      const LEAF_PAD = 3;
+      for (let k = 0; k < leafOrder.length; k++) {
+        const i = leafOrder[k];
         const el = leafLabelEls[i];
-        el.style.left = screenPos.x + 'px';
-        el.style.top = screenPos.y + 'px';
-        el.classList.toggle('is-visible', screenPos.camZ >= centerZ);
+        const s = leafScreens[i];
+        el.style.left = s.x + 'px';
+        el.style.top = s.y + 'px';
+        if (!s.visible) { el.classList.remove('is-visible'); continue; }
+        const box = estimateLabelBox(el.textContent || '', 11);
+        const candidate = { x: s.x, y: s.y, w: box.w, h: box.h };
+        let collides = false;
+        for (let j = 0; j < placedBoxes.length; j++) {
+          if (overlaps(candidate, placedBoxes[j], LEAF_PAD)) { collides = true; break; }
+        }
+        el.classList.toggle('is-visible', !collides);
+        if (!collides) placedBoxes.push(candidate);
       }
     }
 
@@ -562,6 +658,23 @@ export function initHeroScene(canvas: HTMLCanvasElement, graphData?: GraphData):
     window.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && mode === 'expanded') collapse();
     });
+
+    // Zoom (camera dolly), matching PlanOut's own canvas — clamped so the
+    // explorer can't be scrolled inside-out or off into the distance.
+    // Scoped to expanded mode only: while collapsed this canvas is a
+    // full-page ambient background sitting in normal page flow, so a wheel
+    // event there has to stay a page scroll, not get hijacked into a zoom.
+    const CAM_Z_MIN = CAM_Z_EXPANDED * 0.55;
+    const CAM_Z_MAX = CAM_Z_EXPANDED * 1.7;
+    canvas.addEventListener(
+      'wheel',
+      function (e) {
+        if (mode !== 'expanded') return;
+        e.preventDefault();
+        camera.position.z = Math.min(CAM_Z_MAX, Math.max(CAM_Z_MIN, camera.position.z + e.deltaY * 0.01));
+      },
+      { passive: false },
+    );
 
     const raycaster = new THREE.Raycaster();
     raycaster.params.Points.threshold = 0.12;

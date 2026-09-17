@@ -1,5 +1,38 @@
 ---
 import Layout from '../components/Layout.astro';
+import { getTagIconSvg } from '../lib/tag-icons';
+
+const skillGroups = [
+  {
+    title: 'Languages',
+    skills: [
+      { name: 'Rust', accent: true },
+      { name: 'Python', accent: true },
+      { name: 'TypeScript' },
+      { name: 'C++' },
+      { name: 'React' },
+    ],
+  },
+  {
+    title: 'Machine Learning & Deep Learning',
+    skills: ['PyTorch', 'TensorFlow', 'CUDA', 'TensorRT', 'MLflow', 'Optuna', 'MediaPipe', 'OpenCV'].map((name) => ({ name })),
+  },
+  {
+    title: 'Infrastructure & Tools',
+    skills: ['Docker', 'FastAPI', 'AWS', 'wgpu', 'Tauri', 'Streamlit', 'Gradio', 'Weaviate'].map((name) => ({ name })),
+  },
+  {
+    title: 'Research domains',
+    skills: [
+      'Computational Biology',
+      'Gene Regulatory Networks',
+      'Clustering / Unsupervised ML',
+      'Agent-Based Modelling',
+      'Keynesian Macroeconomics',
+      'Time Series / Finance',
+    ].map((name) => ({ name })),
+  },
+];
 ---
 <Layout title="About | Evint Leovonzko" description="UBC researcher, Co-founder of Kolosal AI, and first-author in computational biology, ML, and economics. Based in Vancouver, BC." ogTitle="About Evint Leovonzko" ogDescription="UBC researcher, Co-founder of Kolosal AI. Computational biology, ML systems, macroeconomics, and the occasional trail in Vancouver.">
   <!-- ── Hero ── -->
@@ -214,8 +247,8 @@ import Layout from '../components/Layout.astro';
 
         <div class="timeline-item">
           <div class="timeline-date">
-            <span class="timeline-date__year">2023</span>
-            <span class="timeline-date__range">Present</span>
+            <span class="timeline-date__year">2022</span>
+            <span class="timeline-date__range">2026</span>
           </div>
           <div class="timeline-spine">
             <div class="timeline-spine__dot"></div>
@@ -274,7 +307,7 @@ import Layout from '../components/Layout.astro';
       <h2 class="ab-section-title">Education</h2>
       <div class="edu-grid">
         <div class="edu-card">
-          <span class="edu-card__badge">2023 to Present</span>
+          <span class="edu-card__badge">2022 to 2026</span>
           <div class="edu-card__school">University of British Columbia</div>
           <div class="edu-card__program">BSc Computer Science &middot; Vancouver, BC</div>
           <p class="edu-card__detail">
@@ -427,53 +460,18 @@ import Layout from '../components/Layout.astro';
       </div>
       <h2 class="ab-section-title">What I work with</h2>
       <div class="skills-section">
-        <div class="skill-group">
-          <div class="skill-group__title">Languages</div>
-          <div class="skill-pills">
-            <span class="skill-pill skill-pill--accent">Rust</span>
-            <span class="skill-pill skill-pill--accent">Python</span>
-            <span class="skill-pill">TypeScript</span>
-            <span class="skill-pill">C++</span>
-            <span class="skill-pill">React</span>
+        {skillGroups.map((group) => (
+          <div class="skill-group">
+            <div class="skill-group__title">{group.title}</div>
+            <div class="skill-pills">
+              {group.skills.map((s) => (
+                <span class={`skill-pill ${s.accent ? 'skill-pill--accent' : ''}`.trim()}>
+                  <Fragment set:html={getTagIconSvg(s.name)} />{s.name}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group__title">Machine Learning &amp; Deep Learning</div>
-          <div class="skill-pills">
-            <span class="skill-pill">PyTorch</span>
-            <span class="skill-pill">TensorFlow</span>
-            <span class="skill-pill">CUDA</span>
-            <span class="skill-pill">TensorRT</span>
-            <span class="skill-pill">MLflow</span>
-            <span class="skill-pill">Optuna</span>
-            <span class="skill-pill">MediaPipe</span>
-            <span class="skill-pill">OpenCV</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group__title">Infrastructure &amp; Tools</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Docker</span>
-            <span class="skill-pill">FastAPI</span>
-            <span class="skill-pill">AWS</span>
-            <span class="skill-pill">wgpu</span>
-            <span class="skill-pill">Tauri</span>
-            <span class="skill-pill">Streamlit</span>
-            <span class="skill-pill">Gradio</span>
-            <span class="skill-pill">Weaviate</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group__title">Research domains</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Computational Biology</span>
-            <span class="skill-pill">Gene Regulatory Networks</span>
-            <span class="skill-pill">Clustering / Unsupervised ML</span>
-            <span class="skill-pill">Agent-Based Modelling</span>
-            <span class="skill-pill">Keynesian Macroeconomics</span>
-            <span class="skill-pill">Time Series / Finance</span>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 
@@ -611,9 +609,10 @@ import Layout from '../components/Layout.astro';
   .skills-section { display: flex; flex-direction: column; gap: var(--space-8); }
   .skill-group__title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-3); }
   .skill-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .skill-pill { font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-2) var(--space-4); text-decoration: none; transition: color var(--transition-base), border-color var(--transition-base); }
+  .skill-pill { display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-2) var(--space-4); text-decoration: none; transition: color var(--transition-base), border-color var(--transition-base); }
   .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
   .skill-pill--accent { background: color-mix(in srgb, var(--accent) 10%, transparent); border-color: color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent); }
+  .skill-pill :global(svg) { width: 0.9em; height: 0.9em; flex-shrink: 0; }
 
   /* ── Stats row ── */
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }

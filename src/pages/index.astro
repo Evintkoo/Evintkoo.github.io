@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
 import FeaturedProjectCard from '../components/FeaturedProjectCard.astro';
+import Tag from '../components/Tag.astro';
+import { ARROW_RIGHT, ARROW_EXTERNAL } from '../lib/arrow-icons';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
@@ -10,49 +12,117 @@ const research = (await getCollection('research')).sort((a, b) => a.data.order -
 // truth for the pre-migration site). Only `id`/`label` are consumed by
 // hero-scene.ts's buildGraphData(); unlike projects/research these topics
 // aren't backed by a content collection, so they're hardcoded here.
+// `description` doubles as this topic's own mindmap hub-card body — same
+// `<inode id="HREF">phrase</inode>` cross-reference markup as a leaf's own
+// `mindmapNote` (see `mindmapData` below), so a hub node follows the exact
+// same "every connection is a highlighted phrase with its own arrow, never
+// a bare node-to-node line" rule as every other node on the map, not just
+// leaves. Only `id`/`label` feed hero-scene.ts's buildGraphData(); the
+// plain (unmarked-up) `description` there is untouched.
 const topics = [
-  { id: 'ml', label: 'ML' },
-  { id: 'bio', label: 'Biology' },
-  { id: 'fin', label: 'Finance' },
-  { id: 'econ', label: 'Economics' },
-  { id: 'infra', label: 'AI Infra' },
-  { id: 'neuro', label: 'Neuro' },
+  {
+    id: 'ml',
+    label: 'ML',
+    description:
+      'This branch spans <inode id="/research/som-tsk/">clustering</inode>, <inode id="/research/functional-group-analysis/">deep learning</inode>, and <inode id="/research/grasp/">unsupervised methods</inode>.',
+  },
+  {
+    id: 'bio',
+    label: 'Biology',
+    description:
+      'This branch spans <inode id="/research/grn-two-tower/">gene regulatory networks</inode>, <inode id="/research/circular-rna/">RNA</inode>, and <inode id="/research/p53-mutation/">genomics</inode>.',
+  },
+  {
+    id: 'fin',
+    label: 'Finance',
+    description:
+      'This branch spans <inode id="/research/bitcoin-portfolio-allocation/">portfolio optimization</inode>, <inode id="/research/crypto-stock-timing/">market timing</inode>, and risk.',
+  },
+  {
+    id: 'econ',
+    label: 'Economics',
+    description:
+      'This branch spans <inode id="/research/keynesian-abm-coordination/">agent-based models</inode> and <inode id="/research/keynesian-abm-fiscal/">macroeconomic simulation</inode>.',
+  },
+  {
+    id: 'infra',
+    label: 'AI Infra',
+    description:
+      'This branch spans <inode id="/projects/torch-inference/">inference servers</inode>, <inode id="/projects/kolosal-automl/">AutoML</inode>, and AI tooling.',
+  },
+  {
+    id: 'neuro',
+    label: 'Neuro',
+    description:
+      'This branch spans <inode id="/research/neuron-activation-analysis/">fMRI encoding</inode> and <inode id="/projects/tribe-playground/">cortical activation modeling</inode>.',
+  },
 ];
-
-const graphData = {
-  topics,
-  projects: projects.map((p) => ({ id: p.id, label: p.data.title, topic: p.data.topic, href: `/projects/${p.id}/` })),
-  research: research.map((r) => ({ id: r.id, label: r.data.title, topic: r.data.topic, href: `/research/${r.id}/` })),
-};
 
 // ── "How it all connects" topic mindmap — same server-side pattern as
 // src/pages/research/[slug].astro (Task 12), reused here for the homepage's
-// full-site topic map instead of the old client-side buildMindmap().
-const byTopic: Record<string, string[]> = {};
+// full-site topic map instead of the old client-side buildMindmap(). Each
+// leaf carries a description + href so the mindmap can render clickable
+// note cards, not just plain title text.
+interface MindmapLeafData { title: string; description: string; href: string }
+const byTopic: Record<string, MindmapLeafData[]> = {};
 for (const t of topics) byTopic[t.id] = [];
 for (const p of projects) {
-  if (p.data.topic && byTopic[p.data.topic]) byTopic[p.data.topic].push(p.data.title);
+  if (p.data.topic && byTopic[p.data.topic]) {
+    byTopic[p.data.topic].push({ title: p.data.title, description: p.data.tagline, href: `/projects/${p.id}/` });
+  }
 }
 for (const r of research) {
-  if (r.data.topic && byTopic[r.data.topic]) byTopic[r.data.topic].push(r.data.title);
+  if (r.data.topic && byTopic[r.data.topic]) {
+    // Companion-paper pairing (e.g. the two Keynesian ABM papers): when
+    // `mindmapNote` is written, it's a full sentence with the linking
+    // phrase(s) wrapped in `<inode id="HREF">...</inode>`, each rendered as
+    // its own highlighted connection point in place inside the description
+    // — not a generic "Related:" row, and not one shared link for the whole
+    // card — see src/islands/mindmap.ts's `appendNote`/`wireInlineConnections`.
+    byTopic[r.data.topic].push({
+      title: r.data.shortTitle ?? r.data.title,
+      description: r.data.mindmapNote ?? r.data.tagline,
+      href: `/research/${r.id}/`,
+    });
+  }
 }
 const mindmapData = {
   center: 'Build & Research',
-  branches: topics.map((t) => ({ label: t.label, nodes: byTopic[t.id] })).filter((b) => b.nodes.length > 0),
+  centerDescription:
+    'This site maps <inode id="/projects/kolosal-automl/">open-source systems</inode> and <inode id="/research/p53-mutation/">published research</inode> by domain.',
+  branches: topics.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter((b) => b.nodes.length > 0),
 };
 ---
 <Layout title="Evint Leovonzko | Cofounder of Kolosal AI" description="Evint Leovonzko, Cofounder of Kolosal AI and Researcher at UBC. Building AI for biology, finance, and beyond." ogDescription="Evint Leovonzko, Cofounder of Kolosal AI and Researcher at UBC">
   <!-- ── Hero ── -->
   <section class="hero container">
-    <p class="hero__eyebrow">Evint Leovonzko</p>
-    <h1 class="hero__title">Cofounder of<br /><span class="hero__accent-word">Kolosal</span> AI</h1>
-    <p class="hero__description">
-      Making AI genuinely useful, at <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer">Kolosal AI</a> and previously at <strong>Genta Technology</strong>.
-      Researcher at UBC, where I implement and explore how machines decode biology (from circular RNA to tumor suppressor genes) and, occasionally, the stock market.
-    </p>
-    <div class="hero__actions">
-      <a href="#projects" class="btn btn--primary">See my work &rarr;</a>
-      <a href="/about" class="btn btn--ghost">About me</a>
+    <div class="hero__content">
+      <div class="hero__eyebrow">
+        <span class="hero__eyebrow-line" aria-hidden="true"></span>
+        <span class="hero__eyebrow-text">Evint Leovonzko</span>
+        <div class="hero__eyebrow-popup" aria-hidden="true">
+          <div class="hero__eyebrow-popup__inner">
+            <div class="hero__eyebrow-popup__stem">
+              <span class="hero__eyebrow-popup__dot"></span>
+              <span class="hero__eyebrow-popup__line"></span>
+              <span class="hero__eyebrow-popup__dot"></span>
+            </div>
+            <figure class="hero__eyebrow-popup__card">
+              <img src="/assets/images/profile.png" alt="" width="120" height="152" />
+            </figure>
+          </div>
+        </div>
+      </div>
+      <h1 class="hero__title">Cofounder of<br /><span class="hero__accent-word">Kolosal</span> AI</h1>
+      <p class="hero__description">
+        Making AI genuinely useful, at <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer">Kolosal AI</a> and previously at <strong>Genta Technology</strong>.
+        Researcher at UBC, where I implement and explore how machines decode biology (from circular RNA to tumor suppressor genes) and, occasionally, the stock market.
+      </p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn btn--primary">See my work <Fragment set:html={ARROW_RIGHT} /></a>
+        <a href="/about" class="btn btn--ghost">About me</a>
+        <button type="button" class="btn btn--ghost" id="openMindmap">Explore the map</button>
+      </div>
     </div>
   </section>
 
@@ -74,19 +144,19 @@ const mindmapData = {
       {projects.map((p) => (
         <li>
           <div class="project-list__tags">
-            {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+            {p.data.tags.map((t) => <Tag label={t} />)}
           </div>
           <h3><a href={`/projects/${p.id}/`}>{p.data.title}</a></h3>
           <p>{p.data.tagline}</p>
           {p.data.tech.length > 0 && (
             <div class="project-list__tech">
-              {p.data.tech.map((t) => <span class="tag tag--tech">{t}</span>)}
+              {p.data.tech.map((t) => <Tag label={t} class="tag--tech" />)}
             </div>
           )}
           <div class="project-list__links">
-            <a href={`/projects/${p.id}/`}>Learn More &rarr;</a>
-            {p.data.paperLink && <a href={p.data.paperLink}>Read Paper &rarr;</a>}
-            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer">Repo &nearr;</a>}
+            <a href={`/projects/${p.id}/`}>Learn More <Fragment set:html={ARROW_RIGHT} /></a>
+            {p.data.paperLink && <a href={p.data.paperLink}>Read Paper <Fragment set:html={ARROW_RIGHT} /></a>}
+            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer">Repo <Fragment set:html={ARROW_EXTERNAL} /></a>}
           </div>
         </li>
       ))}
@@ -104,8 +174,8 @@ const mindmapData = {
         <li>
           <a href={`/research/${r.id}/`}>
             <div class="research-list__tags">
-              {r.data.tags.map((t) => <span class="tag">{t}</span>)}
-              {r.data.metaLabel && <span class="tag tag--meta">{r.data.metaLabel}: {r.data.metaValue}</span>}
+              {r.data.tags.map((t) => <Tag label={t} />)}
+              {r.data.metaLabel && <Tag label={`${r.data.metaLabel}: ${r.data.metaValue}`} iconSource={r.data.metaLabel} class="tag--meta" />}
             </div>
             <h3>{r.data.shortTitle ?? r.data.title}</h3>
             <p>{r.data.tagline}</p>
@@ -115,24 +185,13 @@ const mindmapData = {
     </ul>
   </section>
 
-  <!-- ── Topic map ── -->
-  <section class="container" id="map">
-    <p class="section-eyebrow">The Map</p>
-    <h2>How it all connects</h2>
-    <p class="section-subtitle">Every project and paper, mapped to the domains they touch.</p>
-    <div id="mindmapContainer"></div>
-    <p class="map__cta">
-      <a class="btn btn--secondary" href="/research/som-tsk/#somPlayground">Try the live SOM playground &rarr;</a>
-    </p>
-  </section>
-
   <!-- ── Experience ── -->
   <section class="container" id="experience">
     <p class="section-eyebrow">03 / Background</p>
     <h2>Experience</h2>
     <ul class="experience-list">
       <li>
-        <span class="experience-list__year">Current</span>
+        <span class="experience-list__year">2022 to 2026</span>
         <h4>University of British Columbia</h4>
         <p class="experience-list__role">Undergraduate Researcher</p>
         <p>Building deep learning pipelines for circular RNA classification and genomic sequence analysis.</p>
@@ -169,7 +228,7 @@ const mindmapData = {
       <p class="about-grid__aside">
         When I'm not debugging loss curves, I'm reading about macroeconomics or exploring Vancouver's trails.
       </p>
-      <a href="/about" class="btn btn--secondary">More about me &rarr;</a>
+      <a href="/about" class="btn btn--secondary">More about me <Fragment set:html={ARROW_RIGHT} /></a>
     </div>
     <div class="about-grid__tech">
       <h3>What I work with</h3>
@@ -204,9 +263,45 @@ const mindmapData = {
     </div>
   </section>
 
-  <script type="application/json" id="graph-data" set:html={JSON.stringify(graphData)} />
   <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
+  <div id="mindmapOverlay" class="mindmap-overlay" role="dialog" aria-modal="true" aria-label="Explore the map" hidden>
+    <div class="mindmap-overlay__bar">
+      <span>How it all connects</span>
+      <span class="mindmap-overlay__hint">Drag to pan · Pinch or Ctrl/⌘ + scroll to zoom</span>
+      <button type="button" id="closeMindmap" aria-label="Close map">Close ×</button>
+    </div>
+    <div id="mindmapContainer"></div>
+    <div class="mindmap-overlay__zoom" aria-label="Map zoom controls">
+      <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+      <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // Triggers the hero entrance transition (see `.hero__content.is-visible`
+  // in the <style> block below) via an explicit class add rather than a
+  // wall-clock `animation-delay`, so it can't get stuck mid-flight if the
+  // tab is backgrounded during the entrance window. Double-rAF forces the
+  // initial (opacity:0) state to paint first, so the transition actually
+  // plays instead of jumping straight to its end state — but rAF itself
+  // never fires while the tab is backgrounded (e.g. a link opened in a
+  // background tab), which would leave the hero permanently invisible
+  // rather than just unstyled. The `setTimeout` failsafe below fires
+  // regardless of tab visibility, so the class still gets added — without
+  // the smooth fade in that case, but never stuck hidden.
+  const heroContent = document.querySelector('.hero__content');
+  if (heroContent) {
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      heroContent.classList.add('is-visible');
+    };
+    requestAnimationFrame(() => requestAnimationFrame(reveal));
+    setTimeout(reveal, 300);
+  }
+</script>
 
 <script>
   import { initActivityFeed } from '../islands/activity-feed';
@@ -219,11 +314,106 @@ const mindmapData = {
   const el = document.getElementById('mindmapContainer');
   const dataEl = document.getElementById('mindmap-data');
   if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
+  const overlay = document.getElementById('mindmapOverlay');
+  const openButton = document.getElementById('openMindmap');
+  const closeButton = document.getElementById('closeMindmap');
+  const open = () => {
+    if (!overlay) return;
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    window.dispatchEvent(new Event('resize'));
+    closeButton?.focus();
+  };
+  const close = () => {
+    if (!overlay || overlay.hidden) return;
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    openButton?.focus();
+  };
+  openButton?.addEventListener('click', open);
+  closeButton?.addEventListener('click', close);
+  overlay?.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach((button) => {
+    button.addEventListener('click', () => {
+      el?.dispatchEvent(new CustomEvent('mindmap:zoom', { detail: button.dataset.zoom === 'in' ? 1.4 : 1 / 1.4 }));
+    });
+  });
+  document.addEventListener('hero-mindmap:open', open);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
+  });
 </script>
 
 <style>
   .hero { padding-block: var(--space-24) var(--space-12); }
-  .hero__eyebrow { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-4); }
+  /* hero-scene.ts's canvas is `position: fixed` and gets `pointer-events:
+     auto` whenever the homepage is scrolled near the top (needed so the
+     ambient graph nodes stay clickable/draggable, and so clicking empty
+     graph space opens the fullscreen explorer) — a fixed positioned
+     element paints above static in-flow content regardless of z-index
+     value, so without lifting the hero's actual text/buttons into their
+     own stacking context, the canvas would silently swallow clicks meant
+     for them. Scoped to just this content wrapper (not the whole `.hero`
+     section, which has extra padding) so empty hero space still passes
+     clicks through to the canvas underneath.
+     Also the target for micro-interactions.ts's hero parallax — that
+     function sets a `transform` on this element every scroll frame, and
+     `transform` (any value, even translateY(0)) creates its own stacking
+     context. Applying it to a small content wrapper instead of the whole
+     `.hero` section keeps the click-interception area small too; putting
+     the parallax transform on `.hero` itself previously reintroduced the
+     exact "can't click the graph" bug across the section's entire box. */
+  .hero__content { position: relative; z-index: 1; width: fit-content; max-width: 100%; }
+  /* Legacy hero entrance: eyebrow/title/description/actions fade + rise in
+     a staggered sequence (ported from main-theme.css's `fadeInUp`
+     keyframe, delays 0.15s/0.3s/0.45s/0.6s) — this is the "header
+     animation" the user flagged as not migrated.
+     Implemented as a JS-triggered `transition` (see the inline script
+     below `.hero__actions`), not a wall-clock `animation-delay`: an
+     `animation` that starts counting from page parse gets stuck at its
+     `from` state (permanently blurred/invisible text) if the tab is
+     backgrounded or unfocused during the animation window, since Chromium
+     doesn't advance CSS animation timelines on hidden tabs — reproduced
+     live (computed style frozen at opacity:0/blur(4px) well past the
+     animation's total duration) and matches a user-reported "why is the
+     hero text blurry" bug. A transition triggered by an explicit
+     `.is-visible` class add is immune to this: its target state doesn't
+     depend on elapsed time, so a hidden tab simply catches up to the end
+     state whenever it next paints, instead of freezing mid-flight. Kept
+     dropping the legacy `filter: blur()` step too — it's the most
+     compositing-heavy part of the effect and not worth the added risk for
+     above-the-fold text. */
+  .hero__eyebrow, .hero__title, .hero__description, .hero__actions {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .hero__content.is-visible .hero__eyebrow { transition-delay: 0.15s; }
+  .hero__content.is-visible .hero__title { transition-delay: 0.3s; }
+  .hero__content.is-visible .hero__description { transition-delay: 0.45s; }
+  .hero__content.is-visible .hero__actions { transition-delay: 0.6s; }
+  .hero__content.is-visible .hero__eyebrow,
+  .hero__content.is-visible .hero__title,
+  .hero__content.is-visible .hero__description,
+  .hero__content.is-visible .hero__actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero__eyebrow { position: relative; display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-6); }
+  .hero__eyebrow-line { width: 24px; height: 1px; background: var(--accent); }
+  .hero__eyebrow-text { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Hover-triggered profile popup: a dot-dashed-line-dot stem connects the
+     eyebrow pill to a small photo card, floating to the right of the pill. */
+  .hero__eyebrow-popup { position: absolute; top: 50%; left: calc(100% + 4px); transform: translateY(-50%); display: flex; align-items: center; opacity: 0; pointer-events: none; transition: opacity var(--transition-base), transform var(--transition-base); }
+  .hero__eyebrow:hover .hero__eyebrow-popup { opacity: 1; transform: translateY(-50%) translateX(4px); }
+  .hero__eyebrow-popup__inner { display: flex; align-items: center; }
+  .hero__eyebrow-popup__stem { display: flex; align-items: center; gap: 3px; }
+  .hero__eyebrow-popup__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hero__eyebrow-popup__line { width: 28px; height: 0; border-top: 1px dashed var(--border-strong, var(--border)); }
+  .hero__eyebrow-popup__card { margin: 0 0 0 3px; padding: 4px; background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg, 0 12px 24px rgba(0, 0, 0, 0.18)); }
+  .hero__eyebrow-popup__card img { display: block; width: 120px; height: 152px; object-fit: cover; border-radius: calc(var(--radius-md) - 3px); }
+
   .hero__title { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-6); }
   .hero__accent-word { color: var(--accent); font-style: italic; }
   .hero__description { color: var(--ink-soft); font-size: 1.125rem; line-height: 1.7; max-width: 640px; margin-bottom: var(--space-8); }
@@ -231,6 +421,12 @@ const mindmapData = {
   .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
 
   .btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); border-radius: var(--radius-md); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+  /* :global() is required: the arrow icon is injected as a raw HTML string
+     via `Fragment set:html={ARROW_RIGHT}` (src/lib/arrow-icons.ts), so it
+     never receives Astro's data-astro-cid-* scope attribute — a scoped
+     `.btn svg` rule silently never matches it, and the SVG renders at the
+     browser's unconstrained intrinsic size instead of 16px. */
+  .btn :global(svg) { width: 16px; height: 16px; flex-shrink: 0; }
   .btn--primary { background: var(--ink); color: var(--paper); }
   .btn--secondary { background: transparent; border: 1px solid var(--border); color: var(--ink); }
   .btn--ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
@@ -246,16 +442,29 @@ const mindmapData = {
   .tag--meta { color: var(--accent); border-color: var(--accent); }
 
   /* ── Projects ── */
-  .project-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-16); }
-  .project-list > li { border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); }
+  /* Same equal-height fix as src/pages/projects/index.astro's grid — see
+     that file's comment for why (uneven tagline/tech-pill counts otherwise
+     produce mismatched card heights). */
+  .project-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-16); align-items: stretch; }
+  .project-list > li { display: flex; flex-direction: column; height: 100%; box-sizing: border-box; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); }
   .project-list h3 { font-size: 1.35rem; margin-bottom: var(--space-2); }
   .project-list h3 a { color: inherit; text-decoration: none; }
   .project-list h3 a:hover { color: var(--accent); }
   .project-list__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
-  .project-list p { color: var(--ink-soft); margin: 0 0 var(--space-4); }
+  .project-list p {
+    color: var(--ink-soft);
+    margin: 0 0 var(--space-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .project-list__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
-  .project-list__links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
-  .project-list__links a { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+  .project-list__links { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: auto; padding-top: var(--space-2); }
+  .project-list__links a { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+  /* :global() required — see the .btn :global(svg) comment above; same
+     raw-HTML-injected-arrow-icon bug. */
+  .project-list__links a :global(svg) { width: 14px; height: 14px; flex-shrink: 0; }
 
   /* ── Research ── */
   .research-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-16); }
@@ -265,10 +474,70 @@ const mindmapData = {
   .research-list h3 { font-size: 1.25rem; margin-bottom: var(--space-2); }
   .research-list p { color: var(--ink-soft); margin: 0; }
 
-  /* ── Topic map ── */
-  #mindmapContainer { max-width: 900px; margin-inline: auto; }
-  #mindmapContainer :global(svg) { width: 100%; height: auto; display: block; }
-  .map__cta { text-align: center; margin-top: var(--space-8); margin-bottom: var(--space-16); }
+  /* The map is opened from the 3D hero orb as a full viewport canvas. */
+  .mindmap-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+  }
+  .mindmap-overlay[hidden] { display: none; }
+  .mindmap-overlay__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-6);
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+  .mindmap-overlay__hint { margin-left: auto; color: var(--ink-faint); }
+  .mindmap-overlay__bar button {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    background: var(--paper-raised);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .mindmap-overlay__zoom {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 2;
+    display: flex;
+    gap: var(--space-2);
+  }
+  .mindmap-overlay__zoom button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+    color: var(--ink);
+    cursor: pointer;
+    font: inherit;
+  }
+  #mindmapContainer {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    background: var(--paper-raised);
+    overflow: hidden;
+    touch-action: none;
+  }
+  /* Direct child only (`>`), not `:global(svg)` descendant — the "Go to
+     page" popup's own tiny arrow icon (src/islands/mindmap.ts's
+     `createGoToPopup`) is also an <svg>, nested a few levels deep inside
+     this same container. A descendant selector stretched it to 100% of its
+     flex-item box too, rendering it as a giant arrow filling the popup. */
+  #mindmapContainer > :global(svg) { width: 100%; height: 100%; display: block; }
+  .mindmap-overlay #mindmapContainer :global(.mindmap-fullscreen-btn) { display: none; }
+  @media (max-width: 767px) { .mindmap-overlay__hint { display: none; } }
 
   /* ── Experience ── */
   .experience-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-8); margin-bottom: var(--space-16); }

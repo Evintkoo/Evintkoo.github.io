@@ -2,6 +2,8 @@
 title: "Deep Learning for Circular RNA Classification"
 tagline: "A lightweight ANN pipeline that turns circAtlas k-mer frequencies into reliable disease predictions: fast enough for real-time screening, accurate enough for clinical relevance."
 ogDescription: "Deep Learning Algorithm with Gaussian Blur Data Preprocessing in Circular RNA Classification and Detection - Research by Evint Leovonzko"
+recSubtitle: "Computational Biology · Published"
+recDescription: "Published ANN pipeline classifying circRNA–disease associations with Gaussian blur preprocessing — 75% accuracy at 0.14ms per prediction."
 tags: ["circRNA", "ANN", "Disease Classification"]
 topic: "bio"
 order: 8
@@ -29,32 +31,118 @@ snapshot:
     - label: "Workflow"
       value: "5-layer ANN with k-mer (k = 4) features and Gaussian blur smoothing for circAtlas RNA sequences."
   tags: ["Circular RNA", "Deep Learning", "K-mer Features", "Gaussian Blur"]
-simpleSummary: |-
-  Most RNA in your cells is a straight strand. A small group, called
-  circRNAs, loops into a closed ring instead. That shape lets them help your
-  cells turn genes on and off in ways straight RNAs cannot. Our goal was
-  simple: use machine learning to guess which circRNAs are tied to which
-  diseases.
+mindmapNote: 'A lightweight ANN pipeline classifies circRNA-disease associations from k-mer frequency vectors chosen via the same log-based k formula used in <inode id="/research/p53-mutation/">an earlier P-53 mutation motif-discovery study</inode>, smoothed here with a Gaussian blur before training.'
+breakdown:
+  center: "ANN + Gaussian Blur"
+  centerDescription: 'A <inode id="input-hidden-layers">5-layer artificial neural network</inode> that classifies circRNA-disease associations from <inode id="kmer-feature-vector">k-mer sequence features</inode> <inode id="gaussian-smoothing">smoothed with a Gaussian blur</inode>, reaching 75.11% accuracy at 0.14 ms per prediction.'
+  branches:
+    - label: "Dataset Collection"
+      description: 'Sequence data pulled from a <inode id="circatlas-source">public circRNA database</inode> and prepared for feature extraction in <inode id="python-preprocessing">Python</inode>.'
+      nodes:
+        - title: "circAtlas source"
+          id: "circatlas-source"
+          description: "Non-coding circular RNA and non-coding non-circular RNA (mRNA) sequences were collected from the circAtlas database."
+        - title: "Python preprocessing"
+          id: "python-preprocessing"
+          description: "Raw sequences were parsed and organized with Python before k-mer counting."
+    - label: "Feature Extraction"
+      description: 'Each RNA sequence is converted into a <inode id="kmer-feature-vector">fixed-length numeric vector</inode> by <inode id="kmer-counting">counting short subsequences</inode>.'
+      nodes:
+        - title: "K-mer counting (k = 4)"
+          id: "kmer-counting"
+          description: "Subsequences of length k were counted across each sequence, with k = 4 chosen via k = log_k(average sequence length)."
+        - title: "256-node feature vector"
+          id: "kmer-feature-vector"
+          description: "The resulting k-mer counts (e.g. ACGT, GTAA, CGTT) formed the 256-dimensional input passed to the network."
+    - label: "Gaussian Blur Smoothing"
+      description: 'A signal-processing technique borrowed from image processing <inode id="gaussian-smoothing">softens the k-mer counts</inode> before training.'
+      nodes:
+        - title: "Gaussian smoothing function"
+          id: "gaussian-smoothing"
+          description: 'The <inode id="kmer-feature-vector">vectorized 256-dimensional k-mer counts</inode> were smoothed with f(x) = 1/(sigma*sqrt(2*pi)) * e^(-1/2((x-mu)/sigma)^2), using sigma = 1.'
+        - title: "Noise reduction"
+          description: "Blurring the counts let the network focus on real sequence patterns rather than random noise, similar to slightly blurring a photo to remove grain."
+    - label: "ANN Architecture"
+      description: 'A compact <inode id="input-hidden-layers">5-layer network</inode> trained to both <inode id="dual-heads">detect and classify circRNA</inode> from the smoothed k-mer features.'
+      nodes:
+        - title: "Input and hidden layers"
+          id: "input-hidden-layers"
+          description: 'A 256-node input layer, matching the <inode id="kmer-feature-vector">256-dimensional k-mer feature vector</inode>, feeds 5 hidden layers, each followed by dropout to curb overfitting and a Leaky ReLU for non-linearity.'
+        - title: "Detection and classification heads"
+          id: "dual-heads"
+          description: "The network performs both circRNA detection and disease-association classification from the same learned representation."
+    - label: "Evaluation"
+      description: 'Performance was measured on <inode id="accuracy-f1">accuracy, precision, recall, f1-score</inode>, and <inode id="prediction-runtime">prediction runtime</inode> against prior methods.'
+      nodes:
+        - title: "Accuracy and F1 (75.11% / 76.37%)"
+          id: "accuracy-f1"
+          description: "The model reached 75.11% accuracy, 79.82% precision, 75.11% recall, and a 76.37% f1-score."
+        - title: "0.14 ms runtime"
+          id: "prediction-runtime"
+          description: "Predictions ran in 0.14 milliseconds each, at least 10x faster than deep-learning baselines like DeepCirCode and circDeep."
+        - title: "Overfitting check"
+          description: 'Training and validation scores matched cleanly for the detection stage, but the <inode id="dual-heads">classification stage of the shared detection-and-classification network</inode> showed mild signs of overfitting.'
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      This paper builds a lightweight computer model that predicts which
+      circular RNAs (a ring-shaped type of RNA, unlike the usual straight
+      strands) are linked to which diseases. The model uses a simple type
+      of neural network combined with a data-smoothing trick, and reaches
+      about 75% accuracy while running far faster than more complex models
+      used in earlier research.
+  - heading: "Introduction"
+    body: |-
+      Most RNA in our cells is a straight strand, but circular RNAs form a
+      closed loop instead. That loop shape helps them play a role in
+      switching genes on and off, and scientists have found they can act
+      as reliable warning signs for certain diseases because they're
+      stable and often specific to particular tissues.
 
-  We built an artificial neural network (ANN), a machine-learning model
-  loosely inspired by how brain cells connect. We grabbed circRNA sequences
-  from public databases. Then we chopped each one into short fixed-length
-  pieces called k-mers and counted how often each piece showed up. A
-  Gaussian blur step gently smoothed those counts, like softening a photo,
-  so the network could focus on real patterns instead of noise.
+      Earlier machine-learning models for spotting these disease links
+      tended to be complicated, which made them prone to memorizing
+      quirks in their training data instead of learning real patterns.
+      This study set out to build a simpler model that avoids that trap
+      while still being accurate.
+  - heading: "Methods"
+    body: |-
+      The team built a neural network (a model loosely inspired by how
+      brain cells connect) with five layers. To feed it data, they
+      collected circular RNA sequences from a public database, then
+      chopped each sequence into short fixed-length pieces (called
+      k-mers) and counted how often each piece appeared.
 
-  The finished model scored 0.7511 on accuracy, right about three out of
-  four times. Its precision was 0.7982, its recall 0.7511, and its f1-score
-  0.7637. The ANN sorted circRNAs reliably across every test we threw at
-  it.
+      A smoothing technique borrowed from image processing, called a
+      Gaussian blur, softened those counts so the network could focus on
+      real patterns rather than random noise, similar to slightly
+      blurring a photo to remove grain.
+  - heading: "Results"
+    body: |-
+      The finished model was right about three times out of four (75.11%
+      accuracy), and its other quality scores (precision, recall, and
+      f1-score) all landed in a similar range, around 75-80%. Just as
+      importantly, it made each prediction in only 0.14 milliseconds, at
+      least 10 times faster than similar deep-learning models tested in
+      earlier work.
+  - heading: "Discussion"
+    body: |-
+      The model reliably told different types of circular RNA apart.
+      Looking at its internal training scores, the RNA-detection part of
+      the model learned cleanly with no signs of memorizing rather than
+      learning, though the disease-classification part showed some mild
+      signs of that issue.
 
-  Our ANN spots and sorts circRNAs well. The bigger win: it does the job
-  using far less computing power than earlier models. Same result, lighter
-  machine.
-
-  Lined up against older approaches, our model comes out ahead. It needs
-  less computing power and is simpler to set up, so labs and clinics can
-  adopt it without a server farm.
+      The main advantage over past approaches is efficiency: this model
+      needs far less computing power and is simpler to set up, without
+      giving up much accuracy.
+  - heading: "Conclusion"
+    body: |-
+      Overall, the study shows that a simple, lightweight neural network
+      can classify circular RNA about as well as, or better than, other
+      published methods, while using a fraction of the computing power.
+      That efficiency is the main selling point: it makes the approach
+      realistic for labs and clinics that don't have access to
+      heavy-duty computing resources.
 ---
 
 ## Abstract

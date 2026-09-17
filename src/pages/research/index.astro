@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
+import { getTagIconSvg } from '../../lib/tag-icons';
 
 // Sorted by `order` ascending — NOT `date`. The `research` collection's
 // `date` field is optional and mostly absent (the original site has no real
@@ -20,8 +21,12 @@ const research = (await getCollection('research')).sort((a, b) => a.data.order -
         <li>
           <a href={`/research/${r.id}/`}>
             <div class="research-grid__tags">
-              {r.data.tags.map((t) => <span class="tag">{t}</span>)}
-              {r.data.metaLabel && <span class="tag tag--meta">{r.data.metaLabel}: {r.data.metaValue}</span>}
+              {r.data.tags.map((t) => <span class="tag"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
+              {r.data.metaLabel && (
+                <span class="tag tag--meta">
+                  <Fragment set:html={getTagIconSvg(r.data.metaLabel)} />{r.data.metaLabel}: {r.data.metaValue}
+                </span>
+              )}
             </div>
             <h2>{r.data.shortTitle ?? r.data.title}</h2>
             <p>{r.data.tagline}</p>
@@ -34,14 +39,29 @@ const research = (await getCollection('research')).sort((a, b) => a.data.order -
 <style>
   .listing-hero { padding-block: var(--space-16) var(--space-8); }
   .listing-hero__subtitle { color: var(--ink-soft); margin-top: var(--space-4); }
-  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 0.35em; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
   .tag--meta { color: var(--accent); border-color: var(--accent); }
-  .research-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
-  .research-grid a { text-decoration: none; color: inherit; display: block; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
+  .tag :global(svg) { width: 0.85em; height: 0.85em; flex-shrink: 0; }
+  /* Cards vary a lot in tagline length (some papers' taglines run 3+
+     sentences, others one) — without a stretched, clamped card, a grid row
+     with one long-tagline card next to short ones produced wildly uneven
+     card heights (reported as "bad wireframe structure"). Stretching `<a>`
+     to fill its grid-stretched `<li>` plus clamping the tagline to a fixed
+     number of lines keeps every card in a row the same height regardless of
+     content length. */
+  .research-grid { list-style: none; padding: 0; margin: 0 0 var(--space-24); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); align-items: stretch; }
+  .research-grid a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-6); background: var(--paper-raised); transition: border-color var(--transition-base); }
   .research-grid a:hover { border-color: var(--ink-soft); }
   .research-grid__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
   .research-grid h2 { font-size: 1.5rem; margin-bottom: var(--space-2); }
-  .research-grid p { color: var(--ink-soft); margin: 0; }
+  .research-grid p {
+    color: var(--ink-soft);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   @media (max-width: 767px) {
     .listing-hero { padding-block: var(--space-12) var(--space-6); }
   }

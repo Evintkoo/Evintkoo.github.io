@@ -3,12 +3,75 @@ title: "Individual Optimality and Collective Failure: Survival-Maximising Strate
 tagline: "Grid Search over Agent Decision Rules Reveals a Structural Coordination Failure Attractor. Using a grid search over key decision parameters for households, firms, and banks, this paper identifies survival-maximising rules empirically, without imposing theoretical equilibrium conditions. When all agent types simultaneously follow their individually-optimal strategies, aggregate outcomes diverge sharply: GDP growth falls 65%, firm bankruptcies rise 17-fold, and mean firm profit turns negative."
 ogTitle: "Individual Optimality and Collective Failure | Evint Leovonzko"
 ogDescription: "Grid search over agent decision rules reveals that survival-maximising strategies produce a coordination failure attractor: GDP growth −65%, firm bankruptcies 17x higher, mean profit negative."
+recSubtitle: "Computational Economics · Coordination Failure"
+recDescription: "Grid search identifies survival-maximising strategies for households, firms, and banks. The all-best economy produces GDP growth −65% and firm bankruptcies 17× higher."
 tags: ["Coordination Failure", "Grid Search", "Survivability Optimisation", "Decentralised Equilibrium", "Keynesian ABM"]
 topic: "econ"
 order: 2
 pdf: "/files/keynesian_abm_paper2.pdf"
 pairedLink: "/research/keynesian-abm-fiscal/"
 pairedLinkLabel: "← Read Paper 1"
+mindmapNote: 'A grid search over agent decision rules reveals a structural coordination-failure attractor: GDP growth falls 65% and firm bankruptcies rise 17× when every agent type plays individually optimal. Built on <inode id="/research/keynesian-abm-fiscal/">the same baseline Keynesian ABM used to study fiscal stabilisers and Minsky dynamics</inode> in a companion paper.'
+breakdown:
+  center: "Survival-Optimal Strategies"
+  centerDescription: 'A grid search finds each agent type''s <inode id="best-scoring-point">individually best-for-itself strategy</inode>, then shows that <inode id="simultaneous-activation">switching all of them on together</inode> produces a structural <inode id="all-best-outcome">coordination-failure attractor</inode> rather than a healthier economy.'
+  branches:
+    - label: "Composite Survivability Score"
+      description: "Each agent type is scored on a single index combining survival, wealth or profit, and financial stability, benchmarked against the bounded-rational baseline."
+      nodes:
+        - title: "Household Score"
+          id: "household-score"
+          description: "Weights survival rate, median wealth, and consumption stability, with a baseline reference score of 0.61."
+        - title: "Firm Score"
+          description: "Weights survival rate, mean profit, and employment, with a baseline reference score of 0.58."
+        - title: "Bank Score"
+          description: "Weights survival rate, capital adequacy, and net interest income, with a baseline reference score of 0.55."
+    - label: "Grid Search Protocol"
+      description: 'A discrete grid over each agent type''s four most consequential decision parameters is evaluated across 10-year runs to find its <inode id="best-scoring-point">survival-optimal rule</inode>.'
+      nodes:
+        - title: "Household Parameters"
+          id: "household-parameters"
+          description: "Savings propensity, risk aversion, habit, and wage decay are swept, for example savings propensity from 0.05 to 0.20 and risk aversion from 0.20 to 0.70."
+        - title: "Firm and Bank Parameters"
+          id: "firm-bank-parameters"
+          description: "Analogous grids cover firm investment, R&D, and hiring rules, and bank risk premium, lending appetite, and capital-adequacy floor."
+        - title: "Best-Scoring Point"
+          id: "best-scoring-point"
+          description: "The grid point with the highest composite score for that agent type is designated its survival-optimal strategy."
+    - label: "The All-Best Economy"
+      description: 'Survival-optimal rules found for households, firms, and banks in isolation are <inode id="simultaneous-activation">switched on together</inode> and <inode id="50-seed-monte-carlo">simulated across many random seeds</inode>.'
+      nodes:
+        - title: "Simultaneous Activation"
+          id: "simultaneous-activation"
+          description: "All three agent types adopt their individually best-found parameter vectors at once, forming the all-best economy."
+        - title: "50-Seed Monte Carlo"
+          id: "50-seed-monte-carlo"
+          description: "The all-best economy is simulated for 10 years across 50 Halton-seed draws to confirm the result is a stable pattern rather than a one-off run."
+        - title: "Decentralised Equilibrium"
+          description: "The resulting aggregate statistics define a second stable attractor, compared against the bounded-rational baseline and the companion paper's coordination failure."
+    - label: "Two Attractor States"
+      description: 'The <inode id="all-best-outcome">all-best economy</inode> produces starkly worse aggregate outcomes than the <inode id="bounded-rational-baseline">bounded-rational baseline</inode> even though every agent is <inode id="per-agent-best-strategies">optimising individually</inode>.'
+      nodes:
+        - title: "Coordinated Equilibrium"
+          id: "bounded-rational-baseline"
+          description: "Bounded-rational baseline: GDP growth 4.60%/yr, unemployment 0.24%, firm bankruptcy 0.27%/yr, mean profit +$4.20."
+        - title: "Decentralised Equilibrium"
+          id: "all-best-outcome"
+          description: "All-best economy: GDP growth falls to 1.60%/yr (−65%), unemployment rises to 1.29%, bankruptcy surges to 4.73%/yr (17.5x), and mean profit turns to −$9.21."
+        - title: "Per-Agent Best Strategies"
+          id: "per-agent-best-strategies"
+          description: 'Households <inode id="household-parameters">raise savings and risk aversion</inode>, firms cut investment while raising R&D, and banks <inode id="firm-bank-parameters">cut risk premium but contract lending appetite</inode> and raise the capital floor.'
+        - title: "Household Wealth Paradox"
+          description: 'Median household wealth rises 76% to $6,757 in the all-best economy, lifting the very <inode id="household-score">wealth measure that anchors the household survivability score</inode> — showing the failure is one of collective, not individual, welfare.'
+    - label: "Historical Validation"
+      description: "Three real-world slumps show the same pattern of individually rational caution producing collective demand deficiency."
+      nodes:
+        - title: "Japan's Lost Decades (1991-2003)"
+          description: "Precautionary household saving, bank credit contraction, and firm investment cuts after the asset-bubble collapse produced a decade of roughly 0.5%/yr growth and deflation despite the zero lower bound."
+        - title: "Euro-Area Periphery (2010-2015)"
+          description: "Austerity-driven caution among households, banks, and firms in Greece, Portugal, and Spain produced a 6-26% cumulative GDP contraction."
+        - title: "US Balance-Sheet Recession (2008-2012)"
+          description: 'Household deleveraging, bank credit contraction, and firm investment cuts after the housing crash — the same <inode id="per-agent-best-strategies">combination of household caution, bank pullback, and firm retrenchment</inode> that defines the all-best economy''s strategy mix — produced the deepest post-war US recession, reversed only by large fiscal transfers.'
 metrics:
   - label: "GDP growth drop"
     value: "−65%"
@@ -42,173 +105,97 @@ snapshot:
     - label: "Historical validation"
       value: "Japan 1991–2003, Euro-area periphery 2010–2015, US balance-sheet recession 2008–2012 each confirm the demand-deficiency mechanism."
   tags: ["Coordination Failure", "Grid Search", "Survivability Optimisation", "Keynesian ABM", "Decentralised Equilibrium"]
-simpleSummary: |-
-  When every household, firm, and bank plays it safe, the whole economy
-  gets stuck in a bad place, and no one can climb out alone.
+simpleSections:
+  - heading: "Abstract"
+    body: |-
+      This paper asks what happens if a household, a firm, and a bank each
+      try only to protect themselves as much as possible — and then what
+      happens to the economy as a whole when everyone does that at the
+      same time, inside a computer simulation.
 
-  The paper asks two simple questions. First: if you were a household,
-  firm, or bank, which rules of thumb would keep you safest and best off?
-  Second: what happens to the whole economy when everyone follows those
-  rules at the same time? We test thousands of rule combinations in a
-  simulation (an agent-based model, meaning fake households, firms, and
-  banks each making their own small decisions) and let the data pick the
-  winners.
+      The surprising finding: when every group plays it as safe as
+      possible for itself, the economy as a whole does worse, not better.
+      Growth slows, far more firms go bankrupt, and the average firm
+      starts losing money — even though every household, firm, and bank
+      is doing exactly what's best for it individually.
+  - heading: "Introduction"
+    body: |-
+      One of the oldest questions in economics is whether everyone acting
+      smart for themselves adds up to a healthy economy as a whole. This
+      paper builds on an earlier companion paper that set up a basic
+      simulated economy (an "agent-based model" — meaning fake
+      households, firms, and banks, each making their own small
+      decisions) and showed interest rates could get stuck at zero.
 
-  We optimise each group one at a time. For each one, we sweep through a
-  grid of possible rules and pick the combination that maximises a single
-  survival score, built from staying alive, building wealth, earning
-  profit, and staying financially solid. Once households, firms, and
-  banks each have their personal-best playbook, we switch them all on at
-  once to create the "all-best economy". Then we compare it to the normal
-  baseline and to the failure shown in the companion paper.
+      Here the question is different: what if, instead of using normal
+      rule-of-thumb behavior, every household, firm, and bank instead
+      adopts whatever strategy best protects its own survival? It turns
+      out the simulation can settle into two very different stable
+      states — a healthy one where everyone uses ordinary habits, and a
+      broken one where everyone optimizes only for itself — and both are
+      equally stable over many repeated runs, meaning the bad outcome
+      isn't a rough patch, it's a genuine trap.
+  - heading: "Methods"
+    body: |-
+      To find each group's "best for itself" strategy, the researchers
+      gave each type of agent (households, firms, banks) a single
+      scorecard combining how well it survives, how much wealth or profit
+      it builds, and how financially stable it stays. They then tried
+      many combinations of decision rules — like how much to save, or how
+      cautious to be — over a 10-year simulated run, and kept whichever
+      combination scored highest for that group.
 
-  When everyone plays their personal best at once, the whole economy gets
-  worse. GDP growth drops from 4.60% to 1.60%, unemployment climbs from
-  0.24% to 1.29%, and the average firm goes from earning +$4.20 to losing
-  −$9.21, even though every player is doing exactly what is best for
-  themselves. Interest rates also stop hitting zero (the ZLB), but only
-  because no one wants to borrow anymore, not because the central bank
-  fixed anything.
+      Once each group had its own personal-best playbook, all three were
+      switched on together to see what happens to the economy as a
+      whole. The whole thing was then run 50 times with different random
+      starting conditions, so the results are a stable pattern rather
+      than a one-off fluke.
+  - heading: "Results"
+    body: |-
+      When households, firms, and banks each follow their own personal
+      best strategy at once, the whole economy shrinks: growth drops
+      sharply, unemployment rises, far more firms go bankrupt, and the
+      average firm flips from making a profit to losing money.
+      Households end up saving much more and acting far more cautiously,
+      firms cut back on investing, and banks lend less and take fewer
+      risks.
 
-  The collapse we showed in the companion paper does not depend on
-  assuming people are perfectly rational. It happens just from everyone
-  making smart, self-interested choices on their own. The messy
-  rules-of-thumb people actually use are not a shortcut: they are the
-  glue that keeps spending and lending flowing well enough for the
-  economy to hang together. JEL codes: C63, E12, E32, C61.
+      Strangely, individual households actually end up wealthier in this
+      "everyone plays it safe" economy — no single person made a bad
+      decision. The problem is that when everyone pulls back spending and
+      lending at the same time, there isn't enough demand left to keep
+      businesses, and eventually the whole economy, healthy.
+  - heading: "Historical Case Studies"
+    body: |-
+      This isn't just a quirk of the computer simulation — three real
+      economic slumps show the same pattern. In Japan's "Lost Decades"
+      after its property bubble burst in the 1990s, families saved more,
+      banks lent less, and companies invested less. Each choice was
+      sensible on its own, but together they caused a decade of
+      near-zero growth.
 
-  One of the oldest questions in economics is simple: if everyone acts
-  smart for themselves, does the whole economy turn out fine? In a
-  Keynesian world, where everyone's decisions feed back on everyone
-  else's, the answer is usually no. How badly things break, and why,
-  depends on the rules of thumb people are actually using.
+      In Southern Europe during the 2010–2015 debt crisis (Greece,
+      Portugal, Spain), the same combination of cautious households,
+      cautious banks, and cautious firms produced deep recessions. And in
+      the US after the 2008 housing crash, families paid down debt, banks
+      pulled back lending, and firms cut investment — all reasonable
+      moves individually, but together they produced the worst US
+      recession since World War II, fixed only by large government
+      spending.
+  - heading: "Conclusion"
+    body: |-
+      The takeaway is that the "messy," imperfect habits people normally
+      use aren't just a shortcut researchers use to keep their models
+      simple — they're actually part of what holds a real economy
+      together. Replace those normal habits with everyone purely
+      optimizing for their own survival, and the whole system can
+      collapse, even though no one is being irrational or making a
+      mistake.
 
-  The simulation settles into one of two very different worlds. The good
-  one, a coordinated equilibrium with normal rules-of-thumb, shows GDP
-  growth of 4.60%/yr, unemployment of 0.24%, firm bankruptcies at
-  0.27%/yr, and an average firm profit of +$4.20. The bad one, a
-  decentralised equilibrium where everyone optimises for themselves, shows
-  GDP growth of just 1.60%/yr, unemployment of 1.29%, bankruptcies at
-  4.73%/yr, and the average firm losing −$9.21. We ran 50 different
-  versions of the simulation and both worlds stayed stable, so the bad
-  outcome is a permanent trap, not a passing rough patch.
-
-  This paper builds on the companion paper (Paper 1), which set up the
-  baseline simulation and showed how interest rates can get stuck at
-  zero. Here the question is different: what if every group throws out
-  their usual rules-of-thumb and instead picks the strategy that best
-  protects itself? The grid search finds those strategies by trial and
-  error, without forcing classical assumptions about how people behave.
-
-  The finding sits inside three long-running conversations in economics:
-  Diamond's (1982) work showing economies can settle in more than one
-  place, the coordination-failure tradition that Cooper and John (1988)
-  sparked, and recent simulation work suggesting that messy human
-  rules-of-thumb actually keep things steady (Dosi et al. 2010, 2013,
-  2015; Fagiolo and Roventini 2017).
-
-  Each group gets a single "how well are you doing" score. For
-  households, it blends staying solvent, building wealth, and keeping
-  spending steady. For firms, it blends staying alive, earning profit, and
-  keeping people employed. For banks, it blends survival, having enough
-  capital, and earning interest income. Each piece is scaled to a 0–1
-  range and combined equally. The normal-rules baseline gives us a
-  benchmark to beat (0.61 for households, 0.58 for firms, 0.55 for banks).
-
-  For each group, we lay out a grid of options across their four most
-  important decisions. For households, that means: how much to save (σ ∈
-  {0.05, 0.10, 0.15, 0.20}), how cautious to be (ρ ∈ {0.20, 0.40, 0.60,
-  0.70}), how stuck on past spending habits (η ∈ {0.50, 0.70}), and how
-  fast they accept a lower wage (δ_W ∈ {0.02, 0.05}). Every combination
-  runs for 10 simulated years inside the normal-rules baseline economy.
-  The combination with the highest score wins.
-
-  After each group has its personal-best playbook, we flip the switch on
-  all three at once. This is the "all-best economy". We run it for 10
-  years, 50 different times with different random seeds, so the averages
-  are solid. Then we compare it both to the normal baseline and to the
-  textbook-rational failure from Paper 1.
-
-  The grid search finds a survival playbook for each group that makes
-  total sense on its own. But when everyone runs their playbook at the
-  same time, the economy collapses.
-
-  Households save four times as much (σ = 0.20 vs. 0.05), become three
-  times more cautious (ρ = 0.70 vs. 0.20), and hold out longer for a
-  decent wage (δ_W = 0.02 vs. 0.05). Firms slash investment by 70% (χ =
-  0.03 vs. 0.10), pour ten times more into R&D (φ = 0.05 vs. 0.005), and
-  get pickier about hiring. Banks cut the extra interest they charge
-  risky borrowers by 80% (ζ_B = 0.10 vs. 0.50), lend less overall (0.50
-  vs. 0.80), and keep a bigger safety buffer of capital (CAR floor raised
-  to 12%).
-
-  The aggregate picture when everyone plays their personal best: GDP
-  growth falls from 4.60%/yr to 1.60%/yr, a 65.2% drop. Unemployment
-  climbs from 0.24% to 1.29%. The share of firms going bankrupt jumps
-  from 0.27% to 4.73% a year (17.5 times worse), and the average firm
-  flips from earning +$4.20 to losing −$9.21. This collapsed economy
-  stays collapsed in every one of the 50 simulation runs.
-
-  Here is the twist: the typical household actually ends up 76% wealthier
-  in the all-best economy (from $3,842 to $6,757). So individual families
-  are doing fine; it is the economy as a whole that is failing. Households
-  are smart to step back from spending; but firms pay the price, and over
-  time so do households, because the businesses that pay their wages
-  slowly wither away. Interest rates stop hitting zero (the ZLB) too, but
-  only because almost no one wants to borrow anymore, not because the
-  central bank found a fix.
-
-  Three real-world episodes show this is not just a quirk of the
-  simulation. The same trap, where nobody is spending enough, keeps
-  catching advanced economies in real life.
-
-  Japan's Lost Decades (1991–2003): After Japan's property bubble popped,
-  families saved harder just in case, banks pulled back on lending even
-  with interest rates near zero, and companies stopped investing. Each
-  move made sense on its own. The combined result was a decade of
-  near-zero growth, with GDP creeping along at 0.5% a year and prices
-  falling, almost a carbon copy of the trap our model predicts.
-
-  Euro-area periphery (2010–2015): When austerity hit Greece, Portugal,
-  and Spain, households all cut spending at once, banks tightened lending
-  because government debt looked risky, and firms held off on investment.
-  Every choice was rational on its own. Together, they shrank these
-  economies by 6–26%, the exact same not-enough-spending trap the model
-  exposes.
-
-  US balance-sheet recession (2008–2012): When US housing crashed,
-  families rushed to pay down debt (smart, since many owed more than
-  their homes were worth), banks pulled back on lending (smart, given
-  regulatory pressure and uncertainty about bad loans), and firms cut
-  investment (smart, since no one knew if customers would show up). The
-  combined result was the worst US recession since WWII, ended only by
-  massive government spending. That is exactly what the model predicts:
-  once stuck in this trap, you need an outside push to get out.
-
-  Three takeaways stand out. First, the trap is real and structural: when
-  every group plays its personal best, the economy ends up much worse off
-  than when people use ordinary rules-of-thumb. Second, the way it breaks
-  is different from the companion paper: here it is not a credit boom or
-  zero interest rates that does the damage, it is plain old
-  not-enough-spending, where cautious savers and cautious banks starve
-  firms of customers and credit. Third, the messy human shortcuts people
-  actually use are quietly holding the economy together; they are not a
-  simplification, they are the safety net.
-
-  The bottom line is that the rough rules-of-thumb in standard
-  simulations are not just a convenience: they hold the economy together.
-  Swap them out for personal-survival rules, even without assuming people
-  think like textbook economists, and the economy breaks. There are
-  simply two stable places it can sit: the healthy one when people use
-  familiar habits, and the broken one when everyone optimises just for
-  themselves.
-
-  The next step is to let each group keep adjusting its strategy in
-  response to what the others are doing, and see whether the economy
-  settles down or just keeps cycling, and whether wherever it lands looks
-  more like the healthy baseline or like the broken all-best world here.
-  See Paper 1 for the companion piece on the baseline model, the
-  zero-interest-rate trap, and Minsky-style financial cycles.
+      The paper suggests future work should explore what happens if
+      everyone keeps adjusting their strategy in response to what
+      everyone else is doing, to see whether the economy eventually
+      settles somewhere healthier or stays stuck in the bad outcome.
 ---
 
 ## Abstract
