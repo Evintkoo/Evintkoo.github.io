@@ -1,0 +1,50 @@
+---
+// Featured "Kolosal AI" platform card — hardcoded rather than a content-
+// collection entry because it links to the external kolosal.ai product site,
+// not a /projects/<id>/ detail page (see src/content.config.ts). Shared by
+// src/pages/index.astro and src/pages/projects/index.astro so the fact/copy
+// only lives in one place (final-review.md I4) — the two call sites
+// previously duplicated this verbatim, differing only in heading level.
+interface Props {
+  headingLevel?: 'h2' | 'h3';
+}
+const { headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+---
+<article class="project-featured">
+  <div class="project-featured__body">
+    <div class="project-featured__tags">
+      <span class="tag tag--featured">Featured</span>
+      <span class="tag">Co-Founder</span>
+      <span class="tag">MLOps</span>
+    </div>
+    <Heading class="project-featured__title">Kolosal AI</Heading>
+    <p class="project-featured__desc">
+      Open-source platform for running large language models locally, so your data stays private and inference stays fast. Custom training and production-ready inference at scale.
+    </p>
+    <div class="project-featured__tech">
+      <span class="tag">Python</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Docker</span>
+      <span class="tag">CUDA</span>
+    </div>
+  </div>
+  <a href="https://kolosal.ai/" target="_blank" rel="noopener noreferrer" class="project-featured__link">Visit Platform &nearr;</a>
+</article>
+<style>
+  .project-featured { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); background: var(--paper-raised); margin-bottom: var(--space-8); }
+  .project-featured__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .project-featured__title { font-size: 1.75rem; margin-bottom: var(--space-3); }
+  .project-featured__desc { color: var(--ink-soft); max-width: 640px; margin-bottom: var(--space-4); }
+  .project-featured__tech { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .project-featured__link { flex-shrink: 0; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
+  .project-featured__link:hover { text-decoration: underline; }
+
+  .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; }
+  .tag--featured { color: var(--accent); border-color: var(--accent); }
+
+  @media (max-width: 639px) {
+    .project-featured { flex-direction: column; align-items: flex-start; }
+  }
+</style>
