@@ -1,4 +1,4 @@
-import { fetchCanvasData, type CanvasData } from '../lib/canvas-data';
+import { fetchCanvasData, type CanvasData, type CanvasNodeData } from '../lib/canvas-data';
 
 const STATUS_LABEL: Record<CanvasData['status'], string> = {
   planned: 'Planned',
@@ -17,7 +17,11 @@ function renderPill(status: CanvasData['status']): HTMLElement {
   return pill;
 }
 
-function applyCanvasData(el: HTMLElement, data: CanvasData): void {
+// Shared by both the top-level repo/paper card (its own status/title/desc)
+// and a single sub-node within that same repo's canvas (looked up from
+// `data.nodes[nodeId]` — see applyNodeData below). Both shapes carry the
+// same status/title/description fields, just at different granularity.
+function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
   const slot = el.querySelector('[data-canvas-status-slot]');
   if (slot) {
     slot.innerHTML = '';
@@ -30,6 +34,24 @@ function applyCanvasData(el: HTMLElement, data: CanvasData): void {
   if (data.description && !el.classList.contains('mindmap-note--linked')) {
     const descEl = el.querySelector('[data-canvas-description]');
     if (descEl) descEl.textContent = data.description;
+  }
+}
+
+// A canvas that belongs to one repo (a paper's own methodology breakdown,
+// see MindmapData.repo in src/islands/mindmap.ts) can give each of its own
+// sub-nodes an independent status via canvas/data.json's `nodes` map,
+// keyed by the note's own id (see mindmap.ts's `slugify` fallback). There
+// is only ever one such canvas per page (the homepage's site-wide map has
+// no owning repo, so `data.nodes` never resolves there), so it's safe to
+// scan the whole document rather than scope to a specific container.
+function applyNodeData(data: CanvasData): void {
+  if (!data.nodes) return;
+  const nodeElements = document.querySelectorAll<HTMLElement>('[data-canvas-node-id]');
+  for (const el of nodeElements) {
+    const nodeId = el.dataset.canvasNodeId;
+    if (!nodeId) continue;
+    const nodeData = data.nodes[nodeId];
+    if (nodeData) applyCanvasData(el, nodeData);
   }
 }
 
@@ -66,6 +88,7 @@ export function initCanvasStatus(): void {
     getCanvasData(repo).then((data) => {
       if (!data) return;
       for (const el of els) applyCanvasData(el, data);
+      applyNodeData(data);
     });
   }
 }

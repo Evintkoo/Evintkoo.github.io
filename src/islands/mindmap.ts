@@ -61,6 +61,14 @@ export interface MindmapData {
   // so the root needs one too for the same two-part card anatomy.
   centerDescription?: string;
   branches: MindmapBranch[];
+  // GitHub repo URL for THIS canvas's own subject — set only when the whole
+  // map belongs to one repo (a paper's own methodology breakdown on its
+  // detail page, src/pages/research/[slug].astro). The site-wide homepage
+  // map has no single owning repo, so this stays unset there. When set, the
+  // root note gets data-canvas-repo (its own top-level status/title/desc,
+  // same mechanism as a leaf) AND its canvas/data.json's optional `nodes`
+  // map (keyed by each leaf's canvasNodeKey) drives every leaf's own pill.
+  repo?: string;
 }
 
 // Every node — root, branch hub, leaf — is the same rectangular note card
@@ -175,6 +183,18 @@ function css(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#888';
 }
 
+// Fallback key for a leaf's own per-note canvas status when it has no
+// explicit `id` (see MindmapLeaf.id — only cross-referenced leaves author
+// one today). Deriving one from the title means every leaf in a breakdown
+// is addressable in canvas/data.json's `nodes` map, not just the linked
+// ones — a repo author can always compute this from the leaf's own title.
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 function svgEl<K extends keyof SVGElementTagNameMap>(
   tag: K,
   attrs: Record<string, string | number>,
@@ -228,6 +248,14 @@ function appendNote(
   const card = document.createElement('div');
   card.className = classes.join(' ');
   if (entry.repo) card.dataset.canvasRepo = entry.repo;
+  // A genuine leaf (not a hub/root, which pass no `modifier`) with no
+  // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
+  // MindmapData.repo) — e.g. a sub-component of a paper's own methodology
+  // breakdown. It gets a stable per-note key instead, so canvas-status.ts
+  // can look it up in that repo's canvas/data.json `nodes` map.
+  const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
+  if (nodeKey) card.dataset.canvasNodeId = nodeKey;
+  const hasCanvasTarget = !!entry.repo || !!nodeKey;
   if (entry.href) {
     const href = entry.href;
     card.tabIndex = 0;
@@ -256,9 +284,9 @@ function appendNote(
   const title = document.createElement('div');
   title.className = 'mindmap-note__title';
   title.textContent = entry.title;
-  if (entry.repo) title.dataset.canvasTitle = '';
+  if (hasCanvasTarget) title.dataset.canvasTitle = '';
   header.appendChild(title);
-  if (entry.repo) {
+  if (hasCanvasTarget) {
     const statusSlot = document.createElement('span');
     statusSlot.dataset.canvasStatusSlot = '';
     header.appendChild(statusSlot);
@@ -270,7 +298,7 @@ function appendNote(
     body.className = 'mindmap-note__body';
     const desc = document.createElement('div');
     desc.className = 'mindmap-note__desc';
-    if (entry.repo) desc.dataset.canvasDescription = '';
+    if (hasCanvasTarget) desc.dataset.canvasDescription = '';
     if (hasLink) {
       // `<inode id="HREF">highlighted phrase</inode>` inside the
       // description text itself becomes an inline connection point exactly
@@ -1124,7 +1152,7 @@ function render(data: MindmapData, container: HTMLElement): void {
   // description runs.
   const spans = data.branches.map((b) =>
     b.nodes.length
-      ? b.nodes.reduce((sum, leaf) => sum + estimateNoteHeight(leaf.title, leaf.description, NOTE_W, !!leaf.repo) + ROW_GAP, 0)
+      ? b.nodes.reduce((sum, leaf) => sum + estimateNoteHeight(leaf.title, leaf.description, NOTE_W, true) + ROW_GAP, 0)
       : NOTE_H + ROW_GAP,
   );
   const totalH = spans.reduce((sum, s) => sum + s, 0) + BRANCH_GAP * (spans.length - 1) + PAD_Y * 2;
@@ -1233,7 +1261,7 @@ function render(data: MindmapData, container: HTMLElement): void {
     const nodes = Array.isArray(branch.nodes) ? branch.nodes : [];
     let leafTop = branchTop;
     nodes.forEach((leaf, j) => {
-      const noteH = estimateNoteHeight(leaf.title, leaf.description, NOTE_W, !!leaf.repo);
+      const noteH = estimateNoteHeight(leaf.title, leaf.description, NOTE_W, true);
       const rowH = noteH + ROW_GAP;
       const ly = leafTop + rowH / 2;
       leafTop += rowH;
@@ -1313,8 +1341,8 @@ function render(data: MindmapData, container: HTMLElement): void {
     data.centerDescription,
     data.branches.map((b, i): Coverable => ({ keys: [hubKeys[i]], linkKey: hubKeys[i], title: b.label })),
   );
-  const centerNoteH = estimateNoteHeight(data.center, rootDescription, CENTER_NOTE_W);
-  appendNote(centerLayer, { title: data.center, description: rootDescription }, CENTER_NOTE_X, CY, CENTER_NOTE_W, centerNoteH, 0, showGoToPopup, 'mindmap-note--root');
+  const centerNoteH = estimateNoteHeight(data.center, rootDescription, CENTER_NOTE_W, !!data.repo);
+  appendNote(centerLayer, { title: data.center, description: rootDescription, repo: data.repo }, CENTER_NOTE_X, CY, CENTER_NOTE_W, centerNoteH, 0, showGoToPopup, 'mindmap-note--root');
   // Root is never a connector's TARGET (nothing links into it), so unlike a
   // hub it only needs the DOM tag, read when it's a connector's SOURCE.
   const rootFo = centerLayer.lastElementChild as SVGForeignObjectElement | null;

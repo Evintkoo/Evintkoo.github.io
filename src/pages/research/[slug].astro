@@ -4,6 +4,7 @@ import Layout from '../../components/Layout.astro';
 import ResearchHero from '../../components/ResearchHero.astro';
 import { getRelatedResearch } from '../../lib/related-research';
 import Tag from '../../components/Tag.astro';
+import { researchRepo } from '../../lib/canvas-data';
 
 export async function getStaticPaths() {
   const entries = await getCollection('research');
@@ -60,13 +61,21 @@ for (const r of allResearch) {
 // over the site-wide topic map: every paper showing the identical global
 // map on its own page read as broken/undifferentiated. Papers not yet
 // authored with one fall back to the global map so nothing goes blank.
-const mindmapData = data.breakdown ?? {
-  center: 'Build & Research',
-  centerDescription: 'Open-source systems and published research, mapped by domain.',
-  branches: TOPICS.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter(
-    (b) => b.nodes.length > 0,
-  ),
-};
+// This paper's own breakdown belongs to its own repo (if it has one) — the
+// root note shows that repo's own top-level status, and every sub-node
+// (per its own id, see mindmap.ts's slugify fallback) can get its own
+// status from that SAME repo's canvas/data.json `nodes` map. The site-wide
+// fallback map has no single owning repo, so it stays unset there, exactly
+// like the homepage's own root.
+const mindmapData = data.breakdown
+  ? { ...data.breakdown, repo: researchRepo(data) }
+  : {
+      center: 'Build & Research',
+      centerDescription: 'Open-source systems and published research, mapped by domain.',
+      branches: TOPICS.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter(
+        (b) => b.nodes.length > 0,
+      ),
+    };
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogTitle={data.ogTitle} ogDescription={data.ogDescription}>
   <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} authors={data.authors} affiliation={data.affiliation} metaLabel={data.metaLabel} metaValue={data.metaValue} pdf={data.pdf} externalLink={data.externalLink} repoLink={data.repoLink} pairedLink={data.pairedLink} pairedLinkLabel={data.pairedLinkLabel} snapshot={data.snapshot} />
