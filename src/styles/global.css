@@ -354,6 +354,14 @@ a { color: inherit; }
   font-size: 13px;
 }
 
+/* Live canvas status pill sits on this header's tinted background
+   (color-mix accent over paper-raised), not on plain --paper/--paper-raised
+   — --ink-faint's WCAG AA remediation (tokens.css) was measured against
+   the latter, not this tint, so it needs its own ink color here. */
+#mindmapContainer .canvas-status-pill {
+  color: var(--ink-soft);
+}
+
 /* Inline cross-note connection — PlanOut's own pattern: the linked phrase
    is written straight into the description's sentence (see `appendNote`'s
    `<inode id="...">` parsing in src/islands/mindmap.ts), not a separate

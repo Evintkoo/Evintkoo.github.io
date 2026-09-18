@@ -146,10 +146,24 @@ const CARD_H_PAD = 20; // 10px left + 10px right, header and body alike
 const TITLE_LINE_H = 15.6; // 12px, line-height 1.3
 const DESC_LINE_H = 14.7; // 10.5px, line-height 1.4
 
-function estimateNoteHeight(title: string, description: string | undefined, width: number): number {
+// The live canvas-status pill (src/islands/canvas-status.ts) sits in the
+// card header next to the title and is injected at runtime, AFTER this
+// function has already frozen the card's height from a pill-less title
+// measurement. Reserving this width up front for any leaf that CAN get a
+// pill (entry.repo is set) means the title wraps as if the pill were
+// already there, so the frozen height never comes up short. Only the
+// longest label ("In Progress") plus its dot/padding/border and the
+// header's own gap needs reserving — worth a little unused slack on
+// leaves that never publish canvas/data.json, far cheaper than clipping
+// text in a box that can't grow (see the file's own no-truncation
+// guarantee above).
+const STATUS_PILL_RESERVE_W = 110;
+
+function estimateNoteHeight(title: string, description: string | undefined, width: number, reservePillWidth = false): number {
   const bodyFont = css('--font-body').trim() || 'system-ui, sans-serif';
   const textWidth = width - CARD_H_PAD;
-  const titleLines = Math.max(1, wrapLineCount(title, `600 12px ${bodyFont}`, textWidth));
+  const titleWidth = reservePillWidth ? textWidth - STATUS_PILL_RESERVE_W : textWidth;
+  const titleLines = Math.max(1, wrapLineCount(title, `600 12px ${bodyFont}`, titleWidth));
   const plainDesc = description ? description.replace(/<inode\s+id="[^"]+">([\s\S]*?)<\/inode>/g, '$1') : '';
   const descLines = plainDesc ? wrapLineCount(plainDesc, `10.5px ${bodyFont}`, textWidth) + 1 : 0;
   const headerH = HEADER_V_PAD + titleLines * TITLE_LINE_H;
@@ -1110,7 +1124,7 @@ function render(data: MindmapData, container: HTMLElement): void {
   // description runs.
   const spans = data.branches.map((b) =>
     b.nodes.length
-      ? b.nodes.reduce((sum, leaf) => sum + estimateNoteHeight(leaf.title, leaf.description, NOTE_W) + ROW_GAP, 0)
+      ? b.nodes.reduce((sum, leaf) => sum + estimateNoteHeight(leaf.title, leaf.description, NOTE_W, !!leaf.repo) + ROW_GAP, 0)
       : NOTE_H + ROW_GAP,
   );
   const totalH = spans.reduce((sum, s) => sum + s, 0) + BRANCH_GAP * (spans.length - 1) + PAD_Y * 2;
@@ -1219,7 +1233,7 @@ function render(data: MindmapData, container: HTMLElement): void {
     const nodes = Array.isArray(branch.nodes) ? branch.nodes : [];
     let leafTop = branchTop;
     nodes.forEach((leaf, j) => {
-      const noteH = estimateNoteHeight(leaf.title, leaf.description, NOTE_W);
+      const noteH = estimateNoteHeight(leaf.title, leaf.description, NOTE_W, !!leaf.repo);
       const rowH = noteH + ROW_GAP;
       const ly = leafTop + rowH / 2;
       leafTop += rowH;
@@ -1768,5 +1782,9 @@ export function initMindmap(container: HTMLElement, data: MindmapData): void {
     return;
   }
   render(data, container);
+  // Layout.astro's global initCanvasStatus() call runs before this
+  // function builds #mindmapContainer's own data-canvas-repo elements (see
+  // canvas-status.ts's fetchCache — safe to call again here), so the
+  // mindmap must re-trigger its own scan after render() populates them.
   initCanvasStatus();
 }
