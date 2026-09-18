@@ -37,6 +37,11 @@ export interface MindmapLeaf {
   // lookup table (`hrefToPos` in `render()`), so `wireInlineConnections`
   // doesn't need to know or care which kind of identifier it's chasing.
   description?: string;
+  // GitHub repo URL, e.g. "https://github.com/Evintkoo/aegis" — only set on
+  // project leaves with a `repo:` frontmatter field. When present,
+  // appendNote tags the rendered card with data-canvas-repo so
+  // src/islands/canvas-status.ts can inject a live status pill.
+  repo?: string;
   href?: string;
   id?: string;
 }
@@ -206,6 +211,7 @@ function appendNote(
   if (entry.href) classes.push('mindmap-note--clickable');
   const card = document.createElement('div');
   card.className = classes.join(' ');
+  if (entry.repo) card.dataset.canvasRepo = entry.repo;
   if (entry.href) {
     const href = entry.href;
     card.tabIndex = 0;
@@ -234,7 +240,13 @@ function appendNote(
   const title = document.createElement('div');
   title.className = 'mindmap-note__title';
   title.textContent = entry.title;
+  if (entry.repo) title.dataset.canvasTitle = '';
   header.appendChild(title);
+  if (entry.repo) {
+    const statusSlot = document.createElement('span');
+    statusSlot.dataset.canvasStatusSlot = '';
+    header.appendChild(statusSlot);
+  }
   card.appendChild(header);
 
   if (entry.description) {
@@ -242,6 +254,7 @@ function appendNote(
     body.className = 'mindmap-note__body';
     const desc = document.createElement('div');
     desc.className = 'mindmap-note__desc';
+    if (entry.repo) desc.dataset.canvasDescription = '';
     if (hasLink) {
       // `<inode id="HREF">highlighted phrase</inode>` inside the
       // description text itself becomes an inline connection point exactly

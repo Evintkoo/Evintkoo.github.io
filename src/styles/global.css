@@ -294,6 +294,10 @@ a { color: inherit; }
 }
 #mindmapContainer .mindmap-note__header {
   flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
   padding: 5px 10px;
   background: color-mix(in srgb, var(--accent) 16%, var(--paper-raised));
   border-bottom: 1px solid var(--border);

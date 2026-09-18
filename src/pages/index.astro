@@ -63,12 +63,12 @@ const topics = [
 // full-site topic map instead of the old client-side buildMindmap(). Each
 // leaf carries a description + href so the mindmap can render clickable
 // note cards, not just plain title text.
-interface MindmapLeafData { title: string; description: string; href: string }
+interface MindmapLeafData { title: string; description: string; href: string; repo?: string }
 const byTopic: Record<string, MindmapLeafData[]> = {};
 for (const t of topics) byTopic[t.id] = [];
 for (const p of projects) {
   if (p.data.topic && byTopic[p.data.topic]) {
-    byTopic[p.data.topic].push({ title: p.data.title, description: p.data.tagline, href: `/projects/${p.id}/` });
+    byTopic[p.data.topic].push({ title: p.data.title, description: p.data.tagline, href: `/projects/${p.id}/`, repo: p.data.repo });
   }
 }
 for (const r of research) {
