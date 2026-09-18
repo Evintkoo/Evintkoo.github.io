@@ -19,13 +19,14 @@ const { data } = entry;
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogDescription={data.ogDescription}>
   {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}
   <FeatureGrid />
-  <section class="proj-hero container">
+  <section class="proj-hero container" data-canvas-repo={data.repo}>
     <a href="/projects" class="proj-breadcrumb">Back to Portfolio</a>
     <div class="proj-hero__tags">
       {data.tags.map((t) => <Tag label={t} />)}
+      {data.repo && <span data-canvas-status-slot></span>}
     </div>
-    <h1>{data.title}</h1>
-    <p class="proj-hero__subtitle">{data.tagline}</p>
+    <h1 data-canvas-title>{data.title}</h1>
+    <p class="proj-hero__subtitle" data-canvas-description>{data.tagline}</p>
   </section>
 
   <div class="proj-body container">
