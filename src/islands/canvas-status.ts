@@ -3,6 +3,7 @@ import { fetchCanvasData, type CanvasData } from '../lib/canvas-data';
 const STATUS_LABEL: Record<CanvasData['status'], string> = {
   planned: 'Planned',
   'in-progress': 'In Progress',
+  testing: 'Testing',
   done: 'Done',
 };
 

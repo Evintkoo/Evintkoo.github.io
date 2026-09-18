@@ -4,6 +4,7 @@ import Layout from '../components/Layout.astro';
 import FeaturedProjectCard from '../components/FeaturedProjectCard.astro';
 import Tag from '../components/Tag.astro';
 import { ARROW_RIGHT, ARROW_EXTERNAL } from '../lib/arrow-icons';
+import { parseGithubRepo } from '../lib/canvas-data';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
@@ -64,6 +65,16 @@ const topics = [
 // leaf carries a description + href so the mindmap can render clickable
 // note cards, not just plain title text.
 interface MindmapLeafData { title: string; description: string; href: string; repo?: string }
+// A paper's GitHub connection is usually `repoLink`, but a few entries only
+// ever set `externalLink` to their repo (no separate `repoLink`) — e.g.
+// functional-group-analysis.mdx and p53-mutation.mdx. Others' `externalLink`
+// points at a PDF/journal page instead, so only treat it as a repo
+// connection when it actually parses as a plain GitHub repo URL.
+function researchRepo(data: { repoLink?: string; externalLink?: string }): string | undefined {
+  if (data.repoLink) return data.repoLink;
+  if (data.externalLink && parseGithubRepo(data.externalLink)) return data.externalLink;
+  return undefined;
+}
 const byTopic: Record<string, MindmapLeafData[]> = {};
 for (const t of topics) byTopic[t.id] = [];
 for (const p of projects) {
@@ -83,6 +94,7 @@ for (const r of research) {
       title: r.data.shortTitle ?? r.data.title,
       description: r.data.mindmapNote ?? r.data.tagline,
       href: `/research/${r.id}/`,
+      repo: researchRepo(r.data),
     });
   }
 }

@@ -725,4 +725,5 @@ body::after {
 }
 .canvas-status-pill--planned .canvas-status-pill__dot { background: var(--status-planned); }
 .canvas-status-pill--in-progress .canvas-status-pill__dot { background: var(--status-in-progress); }
+.canvas-status-pill--testing .canvas-status-pill__dot { background: var(--status-testing); }
 .canvas-status-pill--done .canvas-status-pill__dot { background: var(--status-done); }

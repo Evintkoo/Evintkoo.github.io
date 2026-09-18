@@ -1,4 +1,4 @@
-export type CanvasStatus = 'planned' | 'in-progress' | 'done';
+export type CanvasStatus = 'planned' | 'in-progress' | 'testing' | 'done';
 
 export interface CanvasData {
   status: CanvasStatus;
@@ -6,7 +6,7 @@ export interface CanvasData {
   description?: string;
 }
 
-const VALID_STATUSES: CanvasStatus[] = ['planned', 'in-progress', 'done'];
+const VALID_STATUSES: CanvasStatus[] = ['planned', 'in-progress', 'testing', 'done'];
 
 // Only matches the plain `https://github.com/<owner>/<repo>` shape this
 // site's `repo:`/`repoLink` frontmatter fields always use (see
