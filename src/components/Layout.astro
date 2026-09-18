@@ -82,5 +82,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
     import { initMicroInteractions } from '../islands/micro-interactions';
     initMicroInteractions();
   </script>
+  <script>
+    import { initCanvasStatus } from '../islands/canvas-status';
+    initCanvasStatus();
+  </script>
 </body>
 </html>

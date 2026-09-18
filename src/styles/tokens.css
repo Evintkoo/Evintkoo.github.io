@@ -13,6 +13,9 @@
   --accent: #2952e3;        /* electric blue signal color */
   --accent-ink: #ffffff;
   --border: #e2e0d8;
+  --status-planned: #9a9a9a;
+  --status-in-progress: #e0a72e;
+  --status-done: #34c281;
 
   --font-display: 'Instrument Serif', serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
