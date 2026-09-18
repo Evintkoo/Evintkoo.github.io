@@ -1,0 +1,28 @@
+---
+title: "Aegis"
+tagline: "An authorized web pentest toolkit in Rust: one static binary covers black-box DAST across the OWASP Top 10, local source-code SAST, real-CVE matching, and out-of-band collaboration, detection-only and rate-limited by default."
+ogDescription: "Rust web pentest toolkit: 30 DAST checks across the OWASP Top 10, tree-sitter SAST rules, CVE matching, and OOB collaboration — detection-only, dry-run by default."
+tags: ["Open Source", "Security", "Rust"]
+topic: "infra"
+tech: ["Rust", "Tree-sitter", "OSV.dev / NVD", "Async HTTP"]
+repo: "https://github.com/Evintkoo/aegis"
+featured: false
+order: 12
+---
+
+import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
+
+<ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
+
+Aegis is a web application security scanner for systems you own or are explicitly authorized to test. It ships as a single `pentest` binary with no Python and no runtime dependencies — `cargo build` produces two static binaries, detection-only and dry-run by default.
+
+<ProjSectionHeading label="Coverage">What it checks</ProjSectionHeading>
+
+- **30 DAST modules** — spanning the OWASP Top 10: SQLi, NoSQLi, command injection, SSTI, path traversal, XXE, SSRF, IDOR, JWT weaknesses, CORS misconfiguration, and more.
+- **6 SAST rules** — tree-sitter rules for SQLi concatenation, command exec/eval, unsafe deserialization, weak crypto, path traversal, and hardcoded secrets across Rust/TS/JS/Python.
+- **CVE matching** — cross-references findings against OSV.dev and NVD, with full CVE record fetch.
+- **Out-of-band collaboration** — a companion `collaborator` binary listens for blind SSRF and stored-XSS callbacks.
+
+<ProjSectionHeading label="Design">How it works</ProjSectionHeading>
+
+Everything runs through one CLI: a dry run prints the plan without sending anything, `--confirm` executes it. It crawls links and forms automatically and fuzzes every parameter it finds, or targets a single parameter with `-p`. Static analysis (`--src`) runs standalone against a local source tree, no live target required.
