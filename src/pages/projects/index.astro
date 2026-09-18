@@ -18,12 +18,13 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 
     <ul class="project-grid">
       {projects.map((p) => (
-        <li>
+        <li data-canvas-repo={p.data.repo}>
           <div class="project-grid__tags">
             {p.data.tags.map((t) => <span class="tag"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
+            {p.data.repo && <span data-canvas-status-slot></span>}
           </div>
-          <h2><a href={`/projects/${p.id}/`}>{p.data.title}</a></h2>
-          <p>{p.data.tagline}</p>
+          <h2><a href={`/projects/${p.id}/`} data-canvas-title>{p.data.title}</a></h2>
+          <p data-canvas-description>{p.data.tagline}</p>
           {p.data.tech.length > 0 && (
             <div class="project-grid__tech">
               {p.data.tech.map((t) => <span class="tag tag--tech"><Fragment set:html={getTagIconSvg(t)} />{t}</span>)}
