@@ -13,6 +13,8 @@
 //  src/pages/research/[slug].astro / src/pages/index.astro).
 // ─────────────────────────────────────────────
 
+import { initCanvasStatus } from './canvas-status';
+
 export interface MindmapLeaf {
   title: string;
   // Cross-note connections are modeled directly on PlanOut's own inline
@@ -1766,4 +1768,5 @@ export function initMindmap(container: HTMLElement, data: MindmapData): void {
     return;
   }
   render(data, container);
+  initCanvasStatus();
 }
