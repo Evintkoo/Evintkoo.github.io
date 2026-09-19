@@ -25,6 +25,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Lets build-time canvas/data.json prefetch (src/lib/canvas-data.ts's
+          # buildCanvasPrefetch) read canvas/data.json from a PRIVATE repo via
+          # the authenticated GitHub API — a repo secret, not a checked-in
+          # value; a fine-grained PAT with read-only Contents access to just
+          # the private repos this site references is enough (broader `repo`
+          # scope also works, just wider than this needs). Unset locally, so
+          # `npm run build`/`astro dev` without it just falls back to every
+          # repo's existing public, unauthenticated fetch path, unaffected.
+          CANVAS_DATA_TOKEN: ${{ secrets.CANVAS_DATA_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist

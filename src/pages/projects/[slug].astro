@@ -6,6 +6,7 @@ import TechPills from '../../components/TechPills.astro';
 import ProjectCTA from '../../components/ProjectCTA.astro';
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
 import Tag from '../../components/Tag.astro';
+import { buildCanvasPrefetch } from '../../lib/canvas-data';
 
 export async function getStaticPaths() {
   const entries = await getCollection('projects');
@@ -24,7 +25,12 @@ const { data } = entry;
 // carries this project's own `repo` so every sub-node (via mindmap.ts's
 // slugify fallback) can pick up its own status from that repo's own
 // canvas/data.json `nodes` map, exactly like research's breakdown.
-const mindmapData = data.breakdown ? { ...data.breakdown, repo: data.repo } : null;
+// See src/pages/index.astro's identical `buildCanvasPrefetch` call for why
+// this is needed at all — a private repo's canvas/data.json is unreachable
+// to the client's own live fetch no matter what it contains (this project
+// is exactly why: chain_reaction_simulation and FactionApp are both private).
+const canvasPrefetch = data.breakdown ? await buildCanvasPrefetch([data.repo], import.meta.env.CANVAS_DATA_TOKEN) : undefined;
+const mindmapData = data.breakdown ? { ...data.breakdown, repo: data.repo, canvasPrefetch } : null;
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogDescription={data.ogDescription}>
   {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}

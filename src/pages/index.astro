@@ -4,7 +4,7 @@ import Layout from '../components/Layout.astro';
 import FeaturedProjectCard from '../components/FeaturedProjectCard.astro';
 import Tag from '../components/Tag.astro';
 import { ARROW_RIGHT, ARROW_EXTERNAL } from '../lib/arrow-icons';
-import { researchRepo } from '../lib/canvas-data';
+import { researchRepo, buildCanvasPrefetch } from '../lib/canvas-data';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
@@ -88,11 +88,24 @@ for (const r of research) {
     });
   }
 }
+// Build-time-only fallback for a PRIVATE repo among this map's leaves —
+// see `buildCanvasPrefetch`'s own comment in src/lib/canvas-data.ts for
+// why this can't just be "fetch every leaf's repo here instead of client-
+// side": every OTHER (public) repo still needs to stay on the live
+// client-side fetch, or its badge stops updating between deploys.
+// `CANVAS_DATA_TOKEN` is a repo secret, wired into the build in
+// .github/workflows/deploy.yml — unset in local dev, so this quietly
+// resolves to `{}` there and every repo just uses the existing live path.
+const canvasPrefetch = await buildCanvasPrefetch(
+  Object.values(byTopic).flat().map((n) => n.repo),
+  import.meta.env.CANVAS_DATA_TOKEN,
+);
 const mindmapData = {
   center: 'Build & Research',
   centerDescription:
     'This site maps <inode id="/projects/kolosal-automl/">open-source systems</inode> and <inode id="/research/p53-mutation/">published research</inode> by domain.',
   branches: topics.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter((b) => b.nodes.length > 0),
+  canvasPrefetch,
 };
 ---
 <Layout title="Evint Leovonzko | Cofounder of Kolosal AI" description="Evint Leovonzko, Cofounder of Kolosal AI and Researcher at UBC. Building AI for biology, finance, and beyond." ogDescription="Evint Leovonzko, Cofounder of Kolosal AI and Researcher at UBC">
@@ -539,6 +552,12 @@ const mindmapData = {
      flex-item box too, rendering it as a giant arrow filling the popup. */
   #mindmapContainer > :global(svg) { width: 100%; height: 100%; display: block; }
   .mindmap-overlay #mindmapContainer :global(.mindmap-fullscreen-btn) { display: none; }
+  /* This overlay's own bar above already covers what
+     .mindmap-fullscreen-header exists for — and since the button that
+     would ever put this container into real Fullscreen is hidden right
+     above, mindmap-is-fullscreen can never actually engage here anyway.
+     Belt-and-suspenders in case that ever changes. */
+  .mindmap-overlay #mindmapContainer :global(.mindmap-fullscreen-header) { display: none; }
   @media (max-width: 767px) { .mindmap-overlay__hint { display: none; } }
 
   /* ── Experience ── */

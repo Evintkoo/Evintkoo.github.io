@@ -8,14 +8,42 @@ const STATUS_LABEL: Record<CanvasData['status'], string> = {
   done: 'Done',
 };
 
+// One glyph per status instead of a plain colored dot — three share a
+// circle base (planned/in-progress/done) so the family reads as one
+// system, each finished by a different mark (empty / clock hands /
+// checkmark); testing breaks that base deliberately for a beaker, since
+// "running a test" is genuinely a different kind of state than a point on
+// a timeline. Same convention as every other icon in this file's own tree
+// (see `FULLSCREEN_ICON`/`FULLSCREEN_EXIT_ICON` in mindmap.ts): raw inner
+// markup for a `viewBox="0 0 24 24"`, `stroke="currentColor"` SVG.
+const STATUS_ICON: Record<CanvasData['status'], string> = {
+  planned: '<circle cx="12" cy="12" r="9"/>',
+  'in-progress': '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  testing: '<path d="M9 2h6"/><path d="M10 2v6.5L4.8 18a2 2 0 0 0 1.75 3h10.9a2 2 0 0 0 1.75-3L14 8.5V2"/><path d="M6.5 14h11"/>',
+  done: '<circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.3 2.3L15.5 9.5"/>',
+};
+
+// A small status CARD (icon + label on a bordered, tinted surface), not a
+// bare outlined pill — floats above a note's corner (see
+// `.mindmap-note__canvas-slot`), so it needs to read as its own object at
+// a glance, not just a thin outline that can vanish against the canvas's
+// dot-grid backdrop.
 function renderPill(status: CanvasData['status']): HTMLElement {
-  const pill = document.createElement('span');
-  pill.className = `canvas-status-pill canvas-status-pill--${status}`;
-  const dot = document.createElement('span');
-  dot.className = 'canvas-status-pill__dot';
-  pill.appendChild(dot);
-  pill.appendChild(document.createTextNode(STATUS_LABEL[status]));
-  return pill;
+  const card = document.createElement('span');
+  card.className = `canvas-status-badge canvas-status-badge--${status}`;
+  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  icon.setAttribute('viewBox', '0 0 24 24');
+  icon.setAttribute('fill', 'none');
+  icon.setAttribute('stroke', 'currentColor');
+  icon.setAttribute('stroke-width', '2');
+  icon.setAttribute('stroke-linecap', 'round');
+  icon.setAttribute('stroke-linejoin', 'round');
+  icon.setAttribute('aria-hidden', 'true');
+  icon.classList.add('canvas-status-badge__icon');
+  icon.innerHTML = STATUS_ICON[status];
+  card.appendChild(icon);
+  card.appendChild(document.createTextNode(STATUS_LABEL[status]));
+  return card;
 }
 
 // Shared by both the top-level repo/paper card (its own status/title/desc)
@@ -124,9 +152,28 @@ function getCanvasData(repo: string): Promise<CanvasData | null> {
 // after the initial, synchronous connection-wiring pass already ran — this
 // is what picks that up, so an overridden description's links actually get
 // drawn rather than just sitting there as an inert highlighted span.
-export function initCanvasStatus(rewireConnections?: () => void): void {
+// `prefetched`: repo → CanvasData resolved at BUILD time (see
+// `buildCanvasPrefetch` in src/lib/canvas-data.ts), embedded in the page by
+// whichever .astro page built this mindmap. This is the ONLY way a
+// PRIVATE repo's status ever reaches this island — `fetchCanvasData` above
+// is a plain unauthenticated request, which can't read one no matter what
+// canvas/data.json contains (confirmed live: chain_reaction_simulation's
+// own file sat unreachable for hours purely because the repo is private).
+// Seeding `fetchCache` with an already-resolved promise means a public
+// repo already covered by the prefetch still gets a fresh live re-fetch
+// (seeding only fills the cache the FIRST time this repo is looked up —
+// `getCanvasData` skips fetching only because the cache already has an
+// entry, same as a normal repeat call would), so nothing here makes a
+// public repo's badge any less live than it already was.
+export function initCanvasStatus(rewireConnections?: () => void, prefetched?: Record<string, CanvasData>): void {
   const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-canvas-repo]'));
   if (elements.length === 0) return;
+
+  if (prefetched) {
+    for (const [repo, data] of Object.entries(prefetched)) {
+      if (!fetchCache.has(repo)) fetchCache.set(repo, Promise.resolve(data));
+    }
+  }
 
   const byRepo = new Map<string, HTMLElement[]>();
   for (const el of elements) {
