@@ -56,31 +56,38 @@ for (const r of allResearch) {
   }
 }
 
-// Prefer this paper's OWN breakdown (its methodology/components, authored
-// per-entry in frontmatter — see content.config.ts's `breakdown` field)
-// over the site-wide topic map: every paper showing the identical global
-// map on its own page read as broken/undifferentiated. Papers not yet
-// authored with one fall back to the global map so nothing goes blank.
-// This paper's own breakdown belongs to its own repo (if it has one) — the
-// root note shows that repo's own top-level status, and every sub-node
-// (per its own id, see mindmap.ts's slugify fallback) can get its own
-// status from that SAME repo's canvas/data.json `nodes` map. The site-wide
-// fallback map has no single owning repo, so it stays unset there, exactly
-// like the homepage's own root.
-// See index.astro's identical `buildCanvasPrefetch` call for why this is
-// needed at all — a private repo's canvas/data.json is unreachable to the
-// client's own live fetch no matter what it contains.
-const breakdownRepo = data.breakdown ? researchRepo(data) : undefined;
-const canvasPrefetch = await buildCanvasPrefetch([breakdownRepo], import.meta.env.CANVAS_DATA_TOKEN);
-const mindmapData = data.breakdown
-  ? { ...data.breakdown, repo: breakdownRepo, canvasPrefetch }
-  : {
-      center: 'Build & Research',
-      centerDescription: 'Open-source systems and published research, mapped by domain.',
-      branches: TOPICS.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter(
-        (b) => b.nodes.length > 0,
-      ),
-    };
+// Prefer this paper's OWN breakdown over the site-wide topic map: every
+// paper showing the identical global map on its own page read as
+// broken/undifferentiated. DECENTRALIZED: a repo with its own
+// canvas/data.json `branches` is the actual source of truth (see
+// src/islands/mindmap.ts's `resolveMindmapData`, which fetches and prefers
+// it client-side over anything below) — pushing a new canvas/data.json to
+// the paper's own repo is enough on its own, nothing here needs touching.
+// `data.breakdown` (content.config.ts's MDX field) is only ever the
+// FALLBACK: for a paper whose repo hasn't published its own tree yet, or
+// with no repo at all. Papers with neither fall back further, to the
+// site-wide map, so nothing goes blank. `canvasPrefetch` seeds the
+// client-side resolution for a PRIVATE repo specifically —
+// `fetchCanvasData`'s plain unauthenticated request can never reach one no
+// matter what canvas/data.json contains.
+const breakdownRepo = researchRepo(data);
+const canvasPrefetch = breakdownRepo ? await buildCanvasPrefetch([breakdownRepo], import.meta.env.CANVAS_DATA_TOKEN) : undefined;
+const mindmapData =
+  data.breakdown || breakdownRepo
+    ? {
+        center: data.breakdown?.center ?? data.title,
+        centerDescription: data.breakdown?.centerDescription ?? data.tagline,
+        branches: data.breakdown?.branches ?? [],
+        repo: breakdownRepo,
+        canvasPrefetch,
+      }
+    : {
+        center: 'Build & Research',
+        centerDescription: 'Open-source systems and published research, mapped by domain.',
+        branches: TOPICS.map((t) => ({ label: t.label, description: t.description, nodes: byTopic[t.id] })).filter(
+          (b) => b.nodes.length > 0,
+        ),
+      };
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogTitle={data.ogTitle} ogDescription={data.ogDescription}>
   <ResearchHero title={data.title} tagline={data.tagline} metrics={data.metrics} authors={data.authors} affiliation={data.affiliation} metaLabel={data.metaLabel} metaValue={data.metaValue} pdf={data.pdf} externalLink={data.externalLink} repoLink={data.repoLink} pairedLink={data.pairedLink} pairedLinkLabel={data.pairedLinkLabel} snapshot={data.snapshot} />

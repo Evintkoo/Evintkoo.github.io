@@ -13,8 +13,8 @@
 //  src/pages/research/[slug].astro / src/pages/index.astro).
 // ─────────────────────────────────────────────
 
-import { initCanvasStatus, getCanvasProgress, type CanvasProgress } from './canvas-status';
-import { deriveRepoLink, type CanvasData } from '../lib/canvas-data';
+import { initCanvasStatus, getCanvasData, seedCanvasPrefetch, getCanvasProgress, type CanvasProgress } from './canvas-status';
+import { deriveRepoLink, buildMindmapBreakdown, type CanvasData } from '../lib/canvas-data';
 
 export interface MindmapLeaf {
   title: string;
@@ -2279,11 +2279,39 @@ function setupNodeDrag(
   return rewire;
 }
 
-export function initMindmap(container: HTMLElement, data: MindmapData): void {
-  if (!data || !Array.isArray(data.branches) || data.branches.length === 0) {
+// A repo with its own published `branches` (canvas/data.json — see
+// `buildMindmapBreakdown` in ../lib/canvas-data.ts) is the DECENTRALIZED
+// source of truth for its own breakdown: the repo owner pushes a new
+// canvas/data.json and the map here reflects it on next page load, with NO
+// change ever needed to this site's own content — that's the whole point,
+// so this has to resolve the tree BEFORE the first (synchronous) render,
+// not layer it on top of an MDX-authored one afterward the way the
+// existing per-node status overlay (canvas-status.ts's `applyCanvasData`)
+// does. `data` itself is the fallback: whatever this site's own MDX
+// `breakdown:` (if any) resolved to at build time, used only when the repo
+// hasn't published a tree of its own (or there's no repo at all).
+async function resolveMindmapData(data: MindmapData): Promise<MindmapData> {
+  if (!data.repo) return data;
+  if (data.canvasPrefetch) seedCanvasPrefetch(data.canvasPrefetch);
+  const live = await getCanvasData(data.repo);
+  if (!live?.branches) return data;
+  const breakdown = buildMindmapBreakdown(live, data.center, data.centerDescription);
+  return breakdown ? { ...breakdown, repo: data.repo, canvasPrefetch: data.canvasPrefetch } : data;
+}
+
+export async function initMindmap(container: HTMLElement, data: MindmapData): Promise<void> {
+  if (!data) return;
+  // A repo-linked page has something to show (its own live tree) even with
+  // no MDX-authored fallback at all — only bail out early for a genuinely
+  // static, repo-less breakdown with nothing in it.
+  if (!data.repo && (!Array.isArray(data.branches) || data.branches.length === 0)) {
     return;
   }
-  const rewireConnections = render(data, container);
+  const resolved = await resolveMindmapData(data);
+  if (!Array.isArray(resolved.branches) || resolved.branches.length === 0) {
+    return;
+  }
+  const rewireConnections = render(resolved, container);
   // Layout.astro's global initCanvasStatus() call runs before this
   // function builds #mindmapContainer's own data-canvas-repo elements (see
   // canvas-status.ts's fetchCache — safe to call again here), so the
@@ -2292,5 +2320,5 @@ export function initMindmap(container: HTMLElement, data: MindmapData): void {
   // canvas-status.ts's `applyCanvasData`) redraw `<inode>` connectors after
   // the fact, since its data resolves asynchronously, after this map's own
   // initial (synchronous) connection-wiring pass already ran.
-  initCanvasStatus(rewireConnections, data.canvasPrefetch);
+  initCanvasStatus(rewireConnections, resolved.canvasPrefetch);
 }

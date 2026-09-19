@@ -8,46 +8,6 @@ tech: ["Rust", "wgpu", "winit", "Vulkan / Metal / DX12", "ENDF/B-VIII.0"]
 repo: "https://github.com/Evintkoo/chain_reaction_simulation"
 featured: false
 order: 6
-breakdown:
-  center: "Chain Reaction Simulation"
-  centerDescription: "A Rust nuclear chain-reaction simulator: real Monte Carlo physics, an ENDF-derived isotope database, and a GPU-accelerated 3D viewer."
-  branches:
-    - label: "Physics & Reaction Engine"
-      description: "Core Monte Carlo particle physics in the pure-Rust simulation kernel."
-      nodes:
-        - title: "Nuclear reaction engine"
-          description: "Implements fission (stochastic U-235/Pu-239 neutron multiplicity), neutron capture, and multi-channel radioactive decay with energy-dependent cross-section sampling."
-        - title: "Neutron leakage boundary"
-          description: "A spherical absorbing vacuum boundary removes neutrons that escape the fuel assembly, enabling critical-mass/leakage studies."
-        - title: "Conservation & radiation tracking"
-          description: "Tracks per-step energy/momentum conservation error, a binned gamma/alpha/beta radiation spectrum, and neutron genealogy trees."
-        - title: "Hot-path performance tuning"
-          description: "Replaced per-step heap allocations with reusable scratch buffers and switched the collision grid to a hash map with half-neighbor traversal."
-    - label: "Nuclear Data Pipeline"
-      description: "ENDF-derived cross-section data and material/geometry configuration."
-      nodes:
-        - title: "ENDF/B-VIII.0 converter"
-          description: "Parses ENDF neutron sublibrary tapes into point-wise cross-section tables (~1000 energy points/isotope) with log-log interpolation."
-        - title: "Compact binary isotope database"
-          description: "A custom binary format stores isotopes, cross-sections, and fission yields, with larger databases generated on demand from ENDF tapes."
-        - title: "Material & geometry configuration"
-          description: "TOML-driven material composition and region geometry definitions, with presets for HEU, MOX, natural uranium, plutonium, and more."
-    - label: "GPU & Real-Time Visualization"
-      description: "GPU compute pipeline and interactive 3D viewer."
-      nodes:
-        - title: "wgpu compute pipeline"
-          description: "GPU compute shaders run Velocity-Verlet integration and spatial-grid collision detection, with automatic CPU fallback."
-        - title: "3D particle renderer"
-          description: "A wgpu point-sprite renderer colors particles with orbit and fly camera modes plus keyboard/mouse controls."
-        - title: "Live diagnostics UI"
-          description: "An egui side panel with 5 tabs (Controls, Stats, Energy, Radiation, Spectrum) exposes parameters and live plots during a run."
-    - label: "Nuclear Materials Research"
-      description: "Parameter sweeps and written studies analyzing simulated material behavior."
-      nodes:
-        - title: "Multi-study parameter sweeps"
-          description: "A family of sweep scripts drove eight separate studies (critical mass, novel configurations, periodic-table elements, and more), each with generated data and a writeup."
-        - title: "Comprehensive research compendium"
-          description: "The eight standalone studies were merged into one comprehensive study and put through two audit/enrichment passes for a consistent publication-grade writeup."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';

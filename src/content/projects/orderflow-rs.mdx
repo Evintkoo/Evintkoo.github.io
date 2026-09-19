@@ -8,52 +8,6 @@ tech: ["Rust", "Parquet / Arrow", "Spearman IC", "LOB Reconstruction", "OFI Feat
 repo: "https://github.com/Evintkoo/orderflow-rs"
 featured: false
 order: 11
-breakdown:
-  center: "orderflow-rs"
-  centerDescription: "A Rust pipeline for LOB microstructure research: multi-exchange ingestion, order-flow features, and a full simulation/backtest/reporting research engine."
-  branches:
-    - label: "Multi-Exchange Data Ingestion"
-      description: "Fourteen source-specific ingesters normalize live and historical market data into one event stream."
-      nodes:
-        - title: "Live WebSocket Connectors"
-          description: "Seven direct exchange WebSocket ingesters (Binance, Coinbase, Kraken, Gemini, OKX, Bybit, Bitstamp) stream L2/L3 book deltas and trades into a common event type."
-        - title: "REST & Polling Sources"
-          description: "Poll-based ingesters for Alpaca, Polygon, Tiingo, Finnhub, Yahoo Finance, and Binance's REST API pull quotes and bars for venues without a book WebSocket."
-        - title: "Historical Replay Adapters"
-          description: "File-replay parsers reconstruct order books from LOBSTER (NASDAQ ITCH), IEX TOPS/DEEP, and Dukascopy FX tick data, so the same pipeline runs on archived data."
-        - title: "Data-Quality & Reconnect Handling"
-          description: "Every ingester tags rows with imputed/gap/outlier flags and resets feature state on snapshot resync or disconnect, so reconnections don't silently corrupt statistics."
-    - label: "LOB Reconstruction & Order-Flow Features"
-      description: "Turns raw book/trade events into a labeled, lookahead-safe feature table."
-      nodes:
-        - title: "Order Book Reconstruction Engine"
-          description: "A BTreeMap-backed bid/ask ladder applies deltas and snapshot resets event-by-event, rejecting crossed books, locked down by property-based tests."
-        - title: "Multi-Level OFI Features"
-          description: "Computes order-flow imbalance across ten price levels plus depth imbalance, microprice deviation, queue imbalance, and spread at every tick."
-        - title: "Trade-Pressure & Impact Metrics"
-          description: "Derives trade intensity, price impact, level-drain, and weighted mid-slope from the trade tape to capture liquidity consumption."
-        - title: "Lookahead-Safe Return Labeling"
-          description: "A delay queue attaches realized forward returns and sign labels at 1s/5s/30s/300s horizons only once each horizon has actually elapsed."
-    - label: "Research Engine"
-      description: "Simulation, indicators, and backtesting that turn features into tested trading hypotheses."
-      nodes:
-        - title: "Synthetic LOB Simulator"
-          description: "An agent-based flow generator drives a synthetic limit order book, used to confirm OFI_1 predicts synthetic price moves under known ground truth (IC 0.15-0.33)."
-        - title: "87-Indicator Technical Engine"
-          description: "Implements 87 classical and microstructure indicators (RSI, MACD, ADX, Supertrend, Hurst exponent, and more) across five categories."
-        - title: "Spearman IC Reporting"
-          description: "Computes rank information coefficients per indicator per return horizon, the engine behind the cross-asset study across 162 symbol-source combinations."
-        - title: "Walk-Forward Backtest Engine"
-          description: "An OLS-fit composite signal feeds a walk-forward, transaction-cost-aware backtest, which found OFI signals unprofitable net of fees and spread."
-    - label: "Published Research Outputs"
-      description: "The research is written up and reproducible, not just coded."
-      nodes:
-        - title: "Four-Phase Research Narrative"
-          description: "The README documents an explicit P4-P7 progression, each closed out with a stated pass/partial/fail verdict."
-        - title: "Full LaTeX Thesis"
-          description: "A compiled thesis PDF, \"Predictability of High-Frequency Limit Order Book Dynamics,\" documents the complete methodology and results."
-        - title: "Cross-Asset IC Study Report"
-          description: "A standalone report analyzes 87 indicators across 162 symbol-source combinations spanning FX, crypto, and mixed assets across 15 data providers."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';

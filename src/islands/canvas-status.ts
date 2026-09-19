@@ -154,7 +154,28 @@ function deriveLocalStatus(data: CanvasData, nodeIds: string[]): CanvasData['sta
 // one fetch per repo per page, instead of re-fetching on every call.
 const fetchCache = new Map<string, Promise<CanvasData | null>>();
 
-function getCanvasData(repo: string): Promise<CanvasData | null> {
+// `prefetched`: repo → CanvasData resolved at BUILD time (see
+// `buildCanvasPrefetch` in src/lib/canvas-data.ts), embedded in the page by
+// whichever .astro page built this mindmap. This is the ONLY way a
+// PRIVATE repo's data ever reaches this island — `fetchCanvasData` is a
+// plain unauthenticated request, which can't read one no matter what
+// canvas/data.json contains. Seeding only fills the cache the FIRST time a
+// repo is looked up (see `getCanvasData`) — a public repo not covered by
+// the prefetch still gets a genuine live fetch, same as always. Exported
+// so mindmap.ts's own live TREE resolution (see `initMindmap`) can seed
+// the cache BEFORE `render()` runs, not just after it like the per-node
+// status overlay below does.
+export function seedCanvasPrefetch(prefetched: Record<string, CanvasData>): void {
+  for (const [repo, data] of Object.entries(prefetched)) {
+    if (!fetchCache.has(repo)) fetchCache.set(repo, Promise.resolve(data));
+  }
+}
+
+// Exported so mindmap.ts's `initMindmap` can resolve a repo's live
+// `branches` tree (see `buildMindmapBreakdown`) through the SAME cache this
+// module's own per-node status overlay uses below — one fetch per repo per
+// page load, not two.
+export function getCanvasData(repo: string): Promise<CanvasData | null> {
   let promise = fetchCache.get(repo);
   if (!promise) {
     promise = fetchCanvasData(repo);
@@ -170,28 +191,12 @@ function getCanvasData(repo: string): Promise<CanvasData | null> {
 // after the initial, synchronous connection-wiring pass already ran — this
 // is what picks that up, so an overridden description's links actually get
 // drawn rather than just sitting there as an inert highlighted span.
-// `prefetched`: repo → CanvasData resolved at BUILD time (see
-// `buildCanvasPrefetch` in src/lib/canvas-data.ts), embedded in the page by
-// whichever .astro page built this mindmap. This is the ONLY way a
-// PRIVATE repo's status ever reaches this island — `fetchCanvasData` above
-// is a plain unauthenticated request, which can't read one no matter what
-// canvas/data.json contains (confirmed live: chain_reaction_simulation's
-// own file sat unreachable for hours purely because the repo is private).
-// Seeding `fetchCache` with an already-resolved promise means a public
-// repo already covered by the prefetch still gets a fresh live re-fetch
-// (seeding only fills the cache the FIRST time this repo is looked up —
-// `getCanvasData` skips fetching only because the cache already has an
-// entry, same as a normal repeat call would), so nothing here makes a
-// public repo's badge any less live than it already was.
+// `prefetched`: see `seedCanvasPrefetch` above.
 export function initCanvasStatus(rewireConnections?: () => void, prefetched?: Record<string, CanvasData>): void {
   const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-canvas-repo]'));
   if (elements.length === 0) return;
 
-  if (prefetched) {
-    for (const [repo, data] of Object.entries(prefetched)) {
-      if (!fetchCache.has(repo)) fetchCache.set(repo, Promise.resolve(data));
-    }
-  }
+  if (prefetched) seedCanvasPrefetch(prefetched);
 
   const byRepo = new Map<string, HTMLElement[]>();
   for (const el of elements) {

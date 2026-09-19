@@ -14,17 +14,71 @@ export interface CanvasNodeData {
   path?: string;
 }
 
+// A full branch/hub, own by the repo itself — the DECENTRALIZED counterpart
+// to authoring a breakdown branch in this site's own content.config.ts
+// `breakdown` schema. When a repo publishes `branches` in its own
+// canvas/data.json, that tree becomes the WHOLE source of truth for its
+// mindmap breakdown (see `buildMindmapBreakdown`) — the repo owner never
+// needs to touch this site's own content at all, on first publish OR any
+// later update: push a new canvas/data.json, the site picks it up.
+export interface CanvasBranch {
+  label: string;
+  description?: string;
+  path?: string;
+  // Optional — a branch with no explicit status derives one client-side
+  // from the worst status among its own `nodes` (same rule the repo ROOT
+  // already used — see mindmap.ts's `deriveLocalStatus`), same as leaving
+  // it off a hub authored in MDX.
+  status?: CanvasStatus;
+  nodes: CanvasTreeNode[];
+}
+
+export interface CanvasTreeNode {
+  // Stable id this node is addressable by (an `<inode id="...">`
+  // cross-reference elsewhere in the SAME repo's tree, or this exact key in
+  // a flat `nodes` override map below) — defaults to a slugified `title`
+  // when omitted, same fallback mindmap.ts's own `slugify` uses.
+  id?: string;
+  title: string;
+  description?: string;
+  path?: string;
+  status: CanvasStatus;
+}
+
 export interface CanvasData {
   status: CanvasStatus;
   title?: string;
   description?: string;
   // Same as `CanvasNodeData.path` above, for the repo/canvas root itself.
   path?: string;
+  // The repo's own FULL breakdown tree — see `CanvasBranch` above. When
+  // present, `parseCanvasJson` ALSO flattens it into `nodes` below (hubs
+  // keyed the same way mindmap.ts's `slugifyHubLabel` would, leaves by
+  // their own `id`/slugified title), so the existing per-node live-status
+  // overlay (canvas-status.ts) keeps working unchanged on a tree that came
+  // from here instead of from MDX.
+  branches?: CanvasBranch[];
   // Per-note status for a canvas that has its own sub-nodes (e.g. a
   // paper's own methodology breakdown on its detail page) — keyed by each
   // note's id (see MindmapLeaf.id in src/islands/mindmap.ts). Absent
-  // entirely for a plain repo/paper-level-only canvas.
+  // entirely for a plain repo/paper-level-only canvas. Auto-derived from
+  // `branches` when that's present (see above) — a repo can still publish
+  // this directly instead, for a flat/no-tree canvas.
   nodes?: Record<string, CanvasNodeData>;
+}
+
+// Same slug rule as mindmap.ts's own `slugify` — duplicated here (rather
+// than imported) to keep this module DOM/browser-agnostic and usable from
+// build-time (.astro frontmatter) contexts too.
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function slugifyHubLabel(label: string): string {
+  return 'hub-' + slugify(label);
 }
 
 const VALID_STATUSES: CanvasStatus[] = ['planned', 'in-progress', 'testing', 'done'];
@@ -65,34 +119,149 @@ export function researchRepo(data: { repoLink?: string; externalLink?: string })
   return undefined;
 }
 
+const STATUS_SEVERITY: Record<CanvasStatus, number> = { planned: 0, 'in-progress': 1, testing: 2, done: 3 };
+
+// Weakest-first, same rule mindmap.ts's own `deriveLocalStatus` applies to
+// the repo root: a branch/hub with no explicit status of its own reads as
+// its LEAST complete listed node, not "done" just because most are.
+function worstStatus(nodes: { status: CanvasStatus }[]): CanvasStatus {
+  let worst: CanvasStatus = 'done';
+  for (const n of nodes) {
+    if (STATUS_SEVERITY[n.status] < STATUS_SEVERITY[worst]) worst = n.status;
+  }
+  return worst;
+}
+
+function parseCanvasNode(value: unknown): CanvasNodeData | null {
+  if (!value || typeof value !== 'object') return null;
+  const nodeStatus = (value as { status?: unknown }).status;
+  if (!VALID_STATUSES.includes(nodeStatus as CanvasStatus)) return null;
+  const node: CanvasNodeData = { status: nodeStatus as CanvasStatus };
+  const title = (value as { title?: unknown }).title;
+  const description = (value as { description?: unknown }).description;
+  const path = (value as { path?: unknown }).path;
+  if (typeof title === 'string') node.title = title;
+  if (typeof description === 'string') node.description = description;
+  if (typeof path === 'string') node.path = path;
+  return node;
+}
+
+function parseCanvasBranches(raw: unknown): CanvasBranch[] | null {
+  if (!Array.isArray(raw)) return null;
+  const branches: CanvasBranch[] = [];
+  for (const entry of raw) {
+    if (!entry || typeof entry !== 'object') continue;
+    const label = (entry as { label?: unknown }).label;
+    const rawNodes = (entry as { nodes?: unknown }).nodes;
+    if (typeof label !== 'string' || !Array.isArray(rawNodes)) continue;
+    const nodes: CanvasTreeNode[] = [];
+    for (const n of rawNodes) {
+      if (!n || typeof n !== 'object') continue;
+      const title = (n as { title?: unknown }).title;
+      const status = (n as { status?: unknown }).status;
+      if (typeof title !== 'string' || !VALID_STATUSES.includes(status as CanvasStatus)) continue;
+      const node: CanvasTreeNode = { title, status: status as CanvasStatus };
+      const id = (n as { id?: unknown }).id;
+      const description = (n as { description?: unknown }).description;
+      const path = (n as { path?: unknown }).path;
+      if (typeof id === 'string') node.id = id;
+      if (typeof description === 'string') node.description = description;
+      if (typeof path === 'string') node.path = path;
+      nodes.push(node);
+    }
+    if (nodes.length === 0) continue;
+    const branch: CanvasBranch = { label, nodes };
+    const description = (entry as { description?: unknown }).description;
+    const path = (entry as { path?: unknown }).path;
+    const status = (entry as { status?: unknown }).status;
+    if (typeof description === 'string') branch.description = description;
+    if (typeof path === 'string') branch.path = path;
+    if (VALID_STATUSES.includes(status as CanvasStatus)) branch.status = status as CanvasStatus;
+    branches.push(branch);
+  }
+  return branches.length > 0 ? branches : null;
+}
+
 // Shared by every fetch path below — validates and normalizes a parsed
 // `canvas/data.json` body, regardless of which transport read it (public
 // CDN or the authenticated GitHub API — see `fetchCanvasDataWithToken`).
 function parseCanvasJson(json: unknown): CanvasData | null {
   if (!json || typeof json !== 'object' || !VALID_STATUSES.includes((json as { status?: unknown }).status as CanvasStatus)) return null;
-  const raw = json as { status: CanvasStatus; title?: unknown; description?: unknown; path?: unknown; nodes?: unknown };
+  const raw = json as { status: CanvasStatus; title?: unknown; description?: unknown; path?: unknown; branches?: unknown; nodes?: unknown };
   const data: CanvasData = { status: raw.status };
   if (typeof raw.title === 'string') data.title = raw.title;
   if (typeof raw.description === 'string') data.description = raw.description;
   if (typeof raw.path === 'string') data.path = raw.path;
-  if (raw.nodes && typeof raw.nodes === 'object') {
-    const nodes: Record<string, CanvasNodeData> = {};
-    for (const [key, value] of Object.entries(raw.nodes as Record<string, unknown>)) {
-      if (!value || typeof value !== 'object') continue;
-      const nodeStatus = (value as { status?: unknown }).status;
-      if (!VALID_STATUSES.includes(nodeStatus as CanvasStatus)) continue;
-      const node: CanvasNodeData = { status: nodeStatus as CanvasStatus };
-      const nodeTitle = (value as { title?: unknown }).title;
-      const nodeDescription = (value as { description?: unknown }).description;
-      const nodePath = (value as { path?: unknown }).path;
-      if (typeof nodeTitle === 'string') node.title = nodeTitle;
-      if (typeof nodeDescription === 'string') node.description = nodeDescription;
-      if (typeof nodePath === 'string') node.path = nodePath;
-      nodes[key] = node;
+
+  const branches = parseCanvasBranches(raw.branches);
+  if (branches) data.branches = branches;
+
+  const nodes: Record<string, CanvasNodeData> = {};
+  if (branches) {
+    // Flatten the tree into the SAME lookup shape the live per-node
+    // overlay (canvas-status.ts) already expects — a hub under its own
+    // stable `hub-...` key (mindmap.ts gives every hub this exact id, see
+    // `appendNote`'s call site in `render()`), a leaf under its own
+    // `id`/slugified title, so nothing downstream needs to know whether a
+    // node's data came from here or from a flat `nodes` map directly.
+    for (const branch of branches) {
+      nodes[slugifyHubLabel(branch.label)] = {
+        status: branch.status ?? worstStatus(branch.nodes),
+        title: branch.label,
+        description: branch.description,
+        path: branch.path,
+      };
+      for (const node of branch.nodes) {
+        nodes[node.id ?? slugify(node.title)] = {
+          status: node.status,
+          title: node.title,
+          description: node.description,
+          path: node.path,
+        };
+      }
     }
-    if (Object.keys(nodes).length > 0) data.nodes = nodes;
   }
+  if (raw.nodes && typeof raw.nodes === 'object') {
+    // A flat `nodes` map (no `branches`) — the original, still-supported
+    // shape for a repo that only wants to override status/description/path
+    // on a tree MDX already declares, without hosting the tree itself.
+    for (const [key, value] of Object.entries(raw.nodes as Record<string, unknown>)) {
+      const node = parseCanvasNode(value);
+      if (node) nodes[key] = node;
+    }
+  }
+  if (Object.keys(nodes).length > 0) data.nodes = nodes;
+
   return data;
+}
+
+// Converts a repo's own published `branches` (`CanvasData.branches`) into
+// the plain-object shape src/islands/mindmap.ts's `MindmapData` expects —
+// field names deliberately mirror MindmapBranch/MindmapLeaf 1:1
+// (`path`→`repoPath`) so this is a direct map, not a redesign. Returns
+// `null` when the repo hasn't published a tree of its own yet, so the
+// caller can fall back to whatever this site's own MDX still declares.
+export function buildMindmapBreakdown(
+  data: CanvasData,
+  center: string,
+  centerDescription: string | undefined,
+): { center: string; centerDescription?: string; branches: Array<{ label: string; description?: string; repoPath?: string; nodes: Array<{ title: string; description?: string; id?: string; repoPath?: string }> }> } | null {
+  if (!data.branches) return null;
+  return {
+    center,
+    centerDescription: centerDescription ?? data.description,
+    branches: data.branches.map((b) => ({
+      label: b.label,
+      description: b.description,
+      repoPath: b.path,
+      nodes: b.nodes.map((n) => ({
+        title: n.title,
+        description: n.description,
+        id: n.id,
+        repoPath: n.path,
+      })),
+    })),
+  };
 }
 
 // Fetches canvas/data.json from the repo's `main` branch. Returns null for
