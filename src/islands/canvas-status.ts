@@ -1,4 +1,5 @@
 import { fetchCanvasData, type CanvasData, type CanvasNodeData } from '../lib/canvas-data';
+import { renderInlineDescription } from './mindmap';
 
 const STATUS_LABEL: Record<CanvasData['status'], string> = {
   planned: 'Planned',
@@ -31,9 +32,16 @@ function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
     const titleEl = el.querySelector('[data-canvas-title]');
     if (titleEl) titleEl.textContent = data.title;
   }
-  if (data.description && !el.querySelector('.mindmap-note--linked')) {
-    const descEl = el.querySelector('[data-canvas-description]');
-    if (descEl) descEl.textContent = data.description;
+  if (data.description) {
+    const descEl = el.querySelector<HTMLElement>('[data-canvas-description]');
+    // Uses the same `<inode id="...">` parser the initial render does
+    // (src/islands/mindmap.ts's `renderInlineDescription`) instead of
+    // plain `textContent` — a canvas/data.json override can carry the same
+    // markup and get the same highlighted, connected phrase, on a linked
+    // note or not. The caller re-wires connections afterward (see
+    // `initCanvasStatus`'s `rewire` param) since this can introduce or
+    // change `.mindmap-inode` spans after the initial connection pass ran.
+    if (descEl) renderInlineDescription(descEl, data.description);
   }
 }
 
@@ -55,6 +63,8 @@ function applyNodeData(data: CanvasData): void {
   }
 }
 
+
+
 // initCanvasStatus() can be called more than once on the same page (see
 // src/islands/mindmap.ts's initMindmap, which re-triggers a scan after
 // building its own data-canvas-repo elements, since Layout.astro's global
@@ -71,7 +81,14 @@ function getCanvasData(repo: string): Promise<CanvasData | null> {
   return promise;
 }
 
-export function initCanvasStatus(): void {
+// `rewireConnections`: src/islands/mindmap.ts's own connector-redraw pass
+// (the same one dragging a card triggers), passed in by `initMindmap` after
+// `render()` builds the map. A canvas/data.json override can introduce or
+// change `<inode>` markup in a description (see `applyCanvasData` above)
+// after the initial, synchronous connection-wiring pass already ran — this
+// is what picks that up, so an overridden description's links actually get
+// drawn rather than just sitting there as an inert highlighted span.
+export function initCanvasStatus(rewireConnections?: () => void): void {
   const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-canvas-repo]'));
   if (elements.length === 0) return;
 
@@ -89,6 +106,7 @@ export function initCanvasStatus(): void {
       if (!data) return;
       for (const el of els) applyCanvasData(el, data);
       applyNodeData(data);
+      rewireConnections?.();
     });
   }
 }

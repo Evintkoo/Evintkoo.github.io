@@ -1,14 +1,51 @@
 ---
 title: "SOM Plus Clustering"
-tagline: "An extended self-organizing map library with smarter initialization options and built-in cluster quality metrics, so unsupervised topology learning is more rigorous and reproducible."
-ogDescription: "Extended self-organizing maps with PCA and random initialization, plus silhouette & Davies-Bouldin evaluation for unsupervised cluster analysis."
+tagline: "A Rust self-organizing map library: 11 initialization strategies, parameter-free density and auto-k routing extensions, and Rayon/Metal/CUDA-accelerated training with built-in cluster quality metrics."
+ogDescription: "Rust SOM library with 11 init strategies, DenSOM/AutoSOM parameter-free extensions, and Rayon/Metal-accelerated training."
 tags: ["Open Source", "Machine Learning"]
 topic: "ml"
-tech: ["Python", "NumPy", "SciPy", "scikit-learn", "Matplotlib"]
+tech: ["Rust", "Rayon", "Metal", "CUDA"]
 repo: "https://github.com/Evintkoo/SOM_plus_clustering"
 featured: false
 order: 4
 hasPlayground: true
+breakdown:
+  center: "SOM Plus Clustering"
+  centerDescription: "A Rust self-organizing map library with 11 initialization strategies, density- and parameter-free clustering extensions, and CPU/GPU-accelerated training."
+  branches:
+    - label: "Core SOM Engine"
+      description: "The self-organizing map itself — training, prediction, and the strategies for both."
+      nodes:
+        - title: "Competitive Learning Training"
+          description: "Trains a SOM via batched best-matching-unit search and a separable Gaussian neighbourhood update, with GPU-fused BMU search on CUDA/Metal backends."
+        - title: "Supervised SOM Classification"
+          description: "Wraps the unsupervised SOM to propagate labels through the trained grid, scored with accuracy and B-cubed precision/recall."
+        - title: "11 Initialization Strategies"
+          description: "Ships Random, KMeans, KMeans++, KDE-KMeans, SOM++, He, LeCun, NaiveSharding, LSUV, KDE-peak, and Zero initializers, each exercised by unit tests."
+        - title: "Automatic Model Picker"
+          description: "Trains a SOM under every initialization method and ranks the results by silhouette score to pick the best one without manual tuning."
+    - label: "Adaptive Clustering Algorithms"
+      description: "Density- and parameter-free extensions layered on top of the core SOM."
+      nodes:
+        - title: "KMeans Suite"
+          description: "A from-scratch KMeans implementation with Hamerly's-bound-accelerated Lloyd iterations and reproducible seeded restarts."
+        - title: "DenSOM Density Clustering"
+          description: "Extracts clusters directly from the SOM's smoothed hit-count map via Otsu thresholding and watershed flood-fill, without a fixed k."
+        - title: "AutoSOM Auto-k Routing"
+          description: "Picks k via a BIC-scored Gaussian Mixture Model and gap statistic, then routes the dataset to SOM-TSK, DenSOM, or GMM based on subsample silhouette."
+        - title: "Evaluation Metrics"
+          description: "Silhouette, Davies-Bouldin, Calinski-Harabasz, Dunn, classification accuracy, and B-cubed precision/recall, all unit-tested."
+    - label: "Performance & Portability"
+      description: "The backend and persistence layer that makes the library usable at production scale."
+      nodes:
+        - title: "Rayon CPU Parallelism"
+          description: "Parallelizes BMU search, centroid updates, and inertia/silhouette computation, switching between serial and parallel per call based on problem size."
+        - title: "Metal GPU Backend"
+          description: "A macOS Metal compute backend for BMU search and neighbourhood updates, covered by its own CI job on macOS runners."
+        - title: "CUDA GPU Backend"
+          description: "A CUDA compute backend behind a feature flag; CI currently only exercises the CPU and Metal paths, not real GPU hardware."
+        - title: "Bincode/JSON Serialization"
+          description: "Persists a trained SOM's full state via bincode by default, with optional JSON support behind a feature flag."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
@@ -17,16 +54,16 @@ import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
 
 Standard SOM implementations leave too much to chance. Random initialization can produce wildly different maps across runs, and most libraries provide no way to evaluate whether the resulting clusters are actually meaningful.
 
-SOM Plus extends the base algorithm with PCA-guided initialization for deterministic, data-aware starting weights, alongside silhouette score and Davies-Bouldin index evaluation so you can objectively compare runs and configurations. It grew out of the GDP trajectory clustering project and the functional group analysis work, where reliable clustering was critical to interpretation.
+SOM Plus is a Rust library covering 11 initialization strategies (from plain random to KDE-peak and LSUV) plus two parameter-free clustering extensions — DenSOM (density-based, no fixed k) and AutoSOM (auto-k routing via BIC/gap statistic) — with Rayon CPU parallelism and a Metal GPU backend for training at scale. It grew out of the GDP trajectory clustering project and the functional group analysis work, where reliable clustering was critical to interpretation, and now also powers the SOM-TSK candidate-seeding research.
 
 <ProjSectionHeading label="Features">What it does</ProjSectionHeading>
 
-- **Extended SOM** — Full self-organizing map implementation with configurable topology, neighbourhood functions, and learning rate decay.
-- **PCA Initialization** — Seeds neuron weights along principal components of the data, giving faster convergence and reproducible maps.
-- **Random Initialization** — Traditional random init still available with seeding for exact reproducibility across experiments.
-- **Silhouette Score** — Measures how well-separated clusters are, where higher is better, and you get it automatically after training.
-- **Davies-Bouldin Index** — Ratio of within-cluster scatter to between-cluster separation, where lower scores mean tighter, more distinct clusters.
-- **Research-ready** — Built for scientific use: clean API, NumPy-native, and compatible with SciPy analysis pipelines.
+- **11 Initialization Strategies** — Random, KMeans, KMeans++, KDE-KMeans, SOM++, He, LeCun, NaiveSharding, LSUV, KDE-peak, and Zero, each unit-tested.
+- **DenSOM & AutoSOM** — Parameter-free density-based clustering and automatic k-selection layered on top of the core SOM.
+- **GPU-Accelerated Training** — Rayon CPU parallelism plus a Metal backend (CI-tested) and a CUDA backend (feature-flagged, not yet CI-verified on real hardware).
+- **Full Evaluation Suite** — Silhouette, Davies-Bouldin, Calinski-Harabasz, Dunn, classification accuracy, and B-cubed precision/recall, all built in.
+- **Supervised Classification Mode** — Propagates labels through a trained SOM grid for supervised use, not just unsupervised clustering.
+- **Research-ready** — Bincode/JSON persistence and a clean Rust API built for reproducible scientific use.
 
 <ProjSectionHeading label="Interactive">Live SOM demo</ProjSectionHeading>
 

@@ -201,6 +201,42 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+// Parses `<inode id="HREF">highlighted phrase</inode>` markup inside a
+// description and (re-)populates `container` with plain text interleaved
+// with `.mindmap-inode` spans — the one place this markup is turned into
+// real DOM, shared by `appendNote`'s initial render AND canvas-status.ts's
+// live override (see `applyCanvasData` there): a canvas/data.json
+// description override can carry the exact same `<inode>` markup and get
+// the exact same highlighted, wired-up connection, not just plain text.
+// Returns whether any `<inode>` was found, so a caller can decide whether
+// connections need re-wiring afterward.
+export function renderInlineDescription(container: HTMLElement, description: string): boolean {
+  while (container.firstChild) container.removeChild(container.firstChild);
+  let lastIndex = 0;
+  let foundLink = false;
+  for (const match of description.matchAll(/<inode\s+id="([^"]+)">([\s\S]*?)<\/inode>/g)) {
+    foundLink = true;
+    const [full, href, text] = match;
+    const start = match.index ?? 0;
+    if (start > lastIndex) {
+      container.appendChild(document.createTextNode(description.slice(lastIndex, start)));
+    }
+    const inode = document.createElement('span');
+    inode.className = 'mindmap-inode';
+    inode.dataset.linkHref = href;
+    inode.textContent = text;
+    inode.tabIndex = 0;
+    inode.setAttribute('role', 'button');
+    inode.setAttribute('aria-label', `Find connected card: ${text}`);
+    container.appendChild(inode);
+    lastIndex = start + full.length;
+  }
+  if (lastIndex < description.length) {
+    container.appendChild(document.createTextNode(description.slice(lastIndex)));
+  }
+  return foundLink;
+}
+
 function svgEl<K extends keyof SVGElementTagNameMap>(
   tag: K,
   attrs: Record<string, string | number>,
@@ -310,38 +346,7 @@ function appendNote(
     const desc = document.createElement('div');
     desc.className = 'mindmap-note__desc';
     if (hasCanvasTarget) desc.dataset.canvasDescription = '';
-    if (hasLink) {
-      // `<inode id="HREF">highlighted phrase</inode>` inside the
-      // description text itself becomes an inline connection point exactly
-      // where it's written — not a label bolted on after the sentence, and
-      // each `<inode>` carries its own target, so a description can link
-      // several distinct phrases to several distinct nodes (PlanOut's own
-      // inline-node parsing — see `parseInlineNodes` in
-      // lib/flow/parse-inline-nodes.ts — never shares one target across
-      // every highlighted span in a note).
-      let lastIndex = 0;
-      for (const match of entry.description.matchAll(/<inode\s+id="([^"]+)">([\s\S]*?)<\/inode>/g)) {
-        const [full, href, text] = match;
-        const start = match.index ?? 0;
-        if (start > lastIndex) {
-          desc.appendChild(document.createTextNode(entry.description.slice(lastIndex, start)));
-        }
-        const inode = document.createElement('span');
-        inode.className = 'mindmap-inode';
-        inode.dataset.linkHref = href;
-        inode.textContent = text;
-        inode.tabIndex = 0;
-        inode.setAttribute('role', 'button');
-        inode.setAttribute('aria-label', `Find connected card: ${text}`);
-        desc.appendChild(inode);
-        lastIndex = start + full.length;
-      }
-      if (lastIndex < entry.description.length) {
-        desc.appendChild(document.createTextNode(entry.description.slice(lastIndex)));
-      }
-    } else {
-      desc.textContent = entry.description;
-    }
+    renderInlineDescription(desc, entry.description);
     body.appendChild(desc);
     card.appendChild(body);
   }
@@ -1163,7 +1168,7 @@ function ensureFullCoverage(description: string | undefined, children: Coverable
   return `${base}${sep}It also includes ${list}.`;
 }
 
-function render(data: MindmapData, container: HTMLElement): void {
+function render(data: MindmapData, container: HTMLElement): () => void {
   // Each branch gets a dedicated vertical span sized to the SUM of its own
   // leaves' actual measured row heights (minimum one row, for branches with
   // zero leaves) — not leaf count × a fixed row height, since every leaf's
@@ -1395,7 +1400,7 @@ function render(data: MindmapData, container: HTMLElement): void {
   // `wireInlineConnections`. `setupNodeDrag` owns this FIRST wiring too (not
   // just re-wiring later), calling it synchronously — see its own comment
   // for why that has to stay synchronous rather than deferred.
-  setupNodeDrag(container, svg, connectLayer, hrefToPos, hrefToCard, cardPos);
+  return setupNodeDrag(container, svg, connectLayer, hrefToPos, hrefToCard, cardPos);
 }
 
 // PlanOut's own canvas (`flow-canvas.tsx`) is a full ReactFlow instance:
@@ -1656,7 +1661,7 @@ function setupNodeDrag(
     HTMLElement,
     { fo: SVGForeignObjectElement; pos: { x: number; y: number }; original: { x: number; y: number }; height: number }
   >,
-): void {
+): () => void {
   let dragEntry: { fo: SVGForeignObjectElement; pos: { x: number; y: number }; height: number } | null = null;
   let dragCard: HTMLElement | null = null;
   let startClientX = 0;
@@ -1824,16 +1829,22 @@ function setupNodeDrag(
     },
     true,
   );
+
+  return rewire;
 }
 
 export function initMindmap(container: HTMLElement, data: MindmapData): void {
   if (!data || !Array.isArray(data.branches) || data.branches.length === 0) {
     return;
   }
-  render(data, container);
+  const rewireConnections = render(data, container);
   // Layout.astro's global initCanvasStatus() call runs before this
   // function builds #mindmapContainer's own data-canvas-repo elements (see
   // canvas-status.ts's fetchCache — safe to call again here), so the
   // mindmap must re-trigger its own scan after render() populates them.
-  initCanvasStatus();
+  // `rewireConnections` lets a canvas/data.json description override (see
+  // canvas-status.ts's `applyCanvasData`) redraw `<inode>` connectors after
+  // the fact, since its data resolves asynchronously, after this map's own
+  // initial (synchronous) connection-wiring pass already ran.
+  initCanvasStatus(rewireConnections);
 }

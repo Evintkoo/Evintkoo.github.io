@@ -1,28 +1,82 @@
 ---
 title: "Kolosal AutoML Platform"
-tagline: "End-to-end AutoML with a Gradio UI: from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one open-source platform built under Kolosal AI."
-ogDescription: "End-to-end AutoML with a Gradio UI: from hyperparameter tuning with Optuna to experiment tracking with MLflow, all in one platform."
+tagline: "A ~60k-line Rust AutoML framework: 17+ training algorithms, Bayesian hyperparameter search, drift/anomaly detection, and an ISO-compliance layer, served over an Axum web dashboard and CLI."
+ogDescription: "Rust AutoML framework: multi-model training, HyperOptX Bayesian search, explainability, drift detection, and ONNX/PMML export, served over Axum."
 tags: ["Open Source", "AutoML"]
 topic: "infra"
-tech: ["Gradio", "MLflow", "Optuna", "FastAPI", "Python", "scikit-learn"]
+tech: ["Rust", "Axum", "htmx", "ndarray", "ONNX"]
 repo: "https://github.com/Evintkoo/automl"
 featured: false
 order: 3
+breakdown:
+  center: "Kolosal AutoML"
+  centerDescription: "A single-crate Rust AutoML framework covering data prep, model search, trust/quality tooling, and serving in one binary."
+  branches:
+    - label: "Data Pipeline & Feature Engineering"
+      description: "Ingest, clean, and reshape tabular data before it reaches a model."
+      nodes:
+        - title: "Preprocessing & Scaling"
+          description: "Standard/MinMax/Robust scalers, OneHot/Label/Target/Hash encoders, and Log/Power/Box-Cox/Yeo-Johnson transformers."
+        - title: "Missing Value Imputation"
+          description: "Mean/median/mode/forward-fill plus MICE, KNN, and iterative imputers fill gaps before training."
+        - title: "Feature Engineering"
+          description: "Generates polynomial features, pairwise interactions, and TF-IDF vectors to expand the feature space automatically."
+        - title: "Synthetic Data Balancing"
+          description: "SMOTE, ADASYN, and random oversampling correct class imbalance, with a recently re-optimized neighbor search."
+        - title: "Time Series Utilities"
+          description: "Time-series-specific feature extraction, differencing, and time-aware cross-validation splitting."
+    - label: "Model Training & AutoML Search"
+      description: "Fit, tune, and combine models automatically across a search space."
+      nodes:
+        - title: "Multi-Model Training Engine"
+          description: "Trains and cross-validates 17+ algorithms (linear/logistic regression, decision trees, random forest, SVM, etc.) behind one unified interface."
+        - title: "HyperOptX Hyperparameter Search"
+          description: "Bayesian (Gaussian-process/TPE), random, and grid samplers with median/percentile/Hyperband pruners."
+        - title: "AutoPipeline Construction"
+          description: "Auto-detects column/data types and assembles a preprocessing-to-training pipeline without manual configuration."
+        - title: "Ensemble Methods"
+          description: "Voting and stacking ensembles combine multiple trained models into one predictor."
+        - title: "Neural Architecture Search"
+          description: "DARTS-style differentiable search plus TabNet/FT-Transformer architectures, hand-implemented over ndarray with no autodiff crate."
+    - label: "Model Trust & Quality"
+      description: "Explain, calibrate, and monitor model behavior after training."
+      nodes:
+        - title: "Explainability"
+          description: "Permutation importance, partial dependence (1D/2D/ICE), and a kernel-SHAP-like local explainer for per-prediction attributions."
+        - title: "Probability Calibration"
+          description: "Platt scaling, isotonic regression, temperature scaling, and beta calibration, with ECE/MCE/Brier-score reporting."
+        - title: "Drift Detection"
+          description: "KS-test/PSI/Jensen-Shannon distributional checks plus online detectors (DDM, ADWIN, Page-Hinkley, EDDM)."
+        - title: "Anomaly Detection"
+          description: "Isolation Forest and Local Outlier Factor detect outliers, both backed by a KD-tree neighbor search."
+        - title: "Pipeline Quality Gates"
+          description: "A four-gate quality pipeline (pre-training, training, hyperopt convergence, post-training calibration/OOD) backed by a dedicated integration test suite."
+    - label: "Serving, API & Governance"
+      description: "Expose the platform over HTTP/CLI and govern how it's used."
+      nodes:
+        - title: "Web Dashboard & CLI"
+          description: "An Axum-served htmx+Alpine dashboard (upload, configure, train, monitor) and a CLI (train/predict/preprocess/benchmark/serve) share one binary."
+        - title: "Inference & Model Export"
+          description: "A batching/caching inference engine plus ONNX/PMML export, a model registry, and versioning."
+        - title: "Security & Access Control"
+          description: "API key/JWT auth, sliding-window rate limiting, RBAC roles, and input-validation middleware."
+        - title: "ISO Compliance Suite"
+          description: "Fairness/bias scanning, PII detection, data-lineage/provenance tracking, and compliance reporting toward ISO 42001/27701/TR 24027."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
 
 <ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
 
-AutoML tooling is either too opinionated or too complex to extend. Kolosal AutoML Platform is a fully open-source alternative that gives you a visual UI, a tuning engine, and experiment tracking in one deployable service.
+Kolosal AutoML is a single-crate Rust AutoML framework: no Python runtime, no autodiff dependency — the training engines, hyperparameter search, and neural architecture search are all hand-implemented over `ndarray`. It covers the full pipeline from raw tabular data to a served, explainable model in one binary.
 
-You upload a dataset, pick a target column, and the platform searches for the best model and hyperparameters automatically. Every trial is logged to MLflow so nothing is lost. All accessible through a clean Gradio interface, no code required.
+You get a dataset in, the platform searches over 17+ algorithms and tunes them with a Bayesian/TPE optimizer (HyperOptX), then hands back a calibrated, drift-monitored model you can query through a REST API or an Axum-served htmx dashboard.
 
 <ProjSectionHeading label="Features">What it does</ProjSectionHeading>
 
-- **Gradio UI** — No-code interface for uploading data, configuring runs, and inspecting results, all in the browser.
-- **Optuna Tuning** — Bayesian hyperparameter search with pruning. Finds good configs faster than grid search.
-- **MLflow Tracking** — Every experiment, metric, and artifact is logged automatically, so runs stay fully reproducible.
-- **End-to-end Pipeline** — From raw data to a trained, evaluated model: preprocessing, training, and evaluation in one flow.
-- **FastAPI Backend** — REST API layer for programmatic access: trigger runs, fetch results, and serve models via HTTP.
+- **Multi-Model AutoML Search** — 17+ training algorithms plus Bayesian/TPE/Hyperband hyperparameter search, auto-assembled into a full pipeline.
+- **Model Trust Tooling** — Explainability (permutation importance, partial dependence, SHAP-like local explanations), probability calibration, drift detection, and anomaly detection.
+- **ISO Compliance Layer** — Fairness/bias scanning, PII detection, and data-lineage tracking, working toward ISO 42001/27701/TR 24027 readiness.
+- **Axum Web Dashboard & CLI** — Upload, configure, train, and monitor runs from a browser dashboard or a `train`/`predict`/`serve` CLI, sharing one binary.
+- **Inference & Export** — A batching/caching inference engine with ONNX/PMML export and model versioning.
 - **Fully Open Source** — No vendor lock-in. Deploy anywhere, extend freely, and contribute back to the community.

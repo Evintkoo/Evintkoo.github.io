@@ -9,6 +9,54 @@ repo: "https://github.com/Evintkoo/tribe-playground"
 paperLink: "/research/neuron-activation-analysis"
 featured: false
 order: 10
+breakdown:
+  center: "TRIBE v2"
+  centerDescription: "A from-scratch Rust/candle inference server predicting per-vertex cortical BOLD activation from text, audio, and image stimuli, visualized live in 3D."
+  branches:
+    - label: "Multimodal Encoders"
+      description: "Rust/candle encoders that turn text, audio, image, and video stimuli into feature tensors."
+      nodes:
+        - title: "LLaMA-3.2-3B Text Encoder"
+          description: "Encodes free-text stimuli into 6144-dim features on CPU via candle, with an in-memory cache keyed on (text, sequence length) to skip re-running the model on repeats."
+        - title: "Wav2Vec-BERT 2.0 Audio Encoder"
+          description: "Decodes uploaded audio and pools three hierarchical transformer layers into 2048-dim temporal features."
+        - title: "CLIP ViT-L/14 Image Encoder"
+          description: "Encodes uploaded images through a CLIP vision transformer, routed through the model's otherwise-unused video-projector input slot."
+        - title: "On-Demand Weight Downloader"
+          description: "Background job queue streams each encoder's weights from Hugging Face with byte-level progress and hot-swaps the loaded model into the running server with no restart."
+        - title: "Video / V-JEPA2 Encoder"
+          description: "Video input is accepted end-to-end but the V-JEPA2 encoder is not implemented — the server reports it as not loaded and substitutes zeroed demo features."
+    - label: "FmriEncoder Core Model"
+      description: "Custom transformer, ported from a PyTorch checkpoint, that predicts brain activity from stimulus features."
+      nodes:
+        - title: "Candle Transformer Architecture"
+          description: "16-layer, 1152-dim, 8-head transformer with partial rotary position embeddings and ScaleNorm, hand-ported to match the exact trained PyTorch checkpoint."
+        - title: "Checkpoint Conversion Pipeline"
+          description: "Converts the original PyTorch checkpoint into safetensors, which the Rust server auto-triggers and loads on first run if missing."
+        - title: "Per-Vertex BOLD Prediction"
+          description: "Produces activation values for all 20,484 fsaverage5 cortical surface vertices per timepoint from any combination of text/audio/image inputs."
+        - title: "Metal/CPU Device Selection"
+          description: "Auto-detects and uses Apple Metal GPU (falling back to CPU), with a warmup pass at startup."
+    - label: "Live 3D Brain Visualization"
+      description: "Three.js frontend that renders and animates the model's predicted brain activity."
+      nodes:
+        - title: "Per-Vertex Cortical Coloring"
+          description: "Colors a Wavefront OBJ brain mesh using the real per-vertex activation values returned by the model."
+        - title: "Region Label Overlays"
+          description: "Floating 3D region labels with frosted-glass styling and collision avoidance so overlapping labels reposition automatically."
+        - title: "Temporal (TR-by-TR) Playback"
+          description: "A scrubber control steps through per-timepoint regional activation data to animate the prediction over the stimulus duration."
+        - title: "WebSocket-Streamed Prediction"
+          description: "Predictions stream live progress over a WebSocket connection, with automatic fallback to a plain HTTP request if the socket isn't available."
+    - label: "Stimulus Input & Prediction UX"
+      description: "Front-end controls for feeding stimuli into the model and interpreting results."
+      nodes:
+        - title: "Multi-Modal Stimulus Picker"
+          description: "Text, image, audio, and video input modes each have curated example stimuli per neuroscience category."
+        - title: "Drag-and-Drop File Upload"
+          description: "Clickable/drag image and audio drop zones handle file selection and clear/reset state per stimulus-mode switch."
+        - title: "Model Download UI"
+          description: "UI buttons trigger the background encoder-download jobs and show live byte/percentage progress for each optional encoder."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';

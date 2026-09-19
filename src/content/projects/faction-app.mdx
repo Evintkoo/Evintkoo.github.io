@@ -1,28 +1,66 @@
 ---
 title: "Faction: Stock Analysis App"
-tagline: "A desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 1.5B LLM. No cloud, no subscriptions, fully private."
-ogDescription: "Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ML inference and a local Qwen2.5 LLM. No cloud required."
+tagline: "A desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ONNX inference and a local Qwen2.5-0.5B LLM. No cloud, no subscriptions, fully private."
+ogDescription: "Desktop app for evaluating stocks through technical and fundamental analysis, powered by on-device ONNX inference and a local Qwen2.5 LLM. No cloud required."
 tags: ["Open Source", "Finance"]
 topic: "fin"
-tech: ["Tauri v2", "Rust", "React", "TypeScript", "candle (HuggingFace)", "Qwen2.5 1.5B", "Metal / CPU"]
+tech: ["Tauri v2", "Rust", "React", "TypeScript", "candle (HuggingFace)", "ONNX", "Qwen2.5-0.5B"]
 repo: "https://github.com/Evintkoo/FactionApp"
 featured: false
 order: 7
+breakdown:
+  center: "Faction"
+  centerDescription: "A Tauri desktop app scoring stocks on technical and fundamental dimensions via on-device ONNX models, with a local Qwen2.5 chat assistant."
+  branches:
+    - label: "On-Device Analysis Engines"
+      description: "Rust ML scoring models that turn raw market/financial data into 0-100 scores, run fully offline."
+      nodes:
+        - title: "Technical Scoring Model"
+          description: "Runs an ONNX model over recent price bars to produce a 0-100 technical score."
+        - title: "Fundamental Scoring Model"
+          description: "Runs a separate ONNX model over financial ratios (equity, FCF, debt/equity, net income, etc.) to produce a normalized 0-100 fundamental score."
+        - title: "Model Loader Abstraction"
+          description: "A shared model wrapper loads and runs ONNX graphs with input-length validation, used by both scorers."
+    - label: "Market Data Pipeline"
+      description: "Fetches and normalizes daily price bars from two providers with automatic failover."
+      nodes:
+        - title: "Yahoo Finance Primary Feed"
+          description: "Pulls the last ~10 daily OHLCV bars per ticker from Yahoo's chart endpoint, the app's default data source."
+        - title: "Tiingo Fallback Feed"
+          description: "Falls back to Tiingo's daily prices API (user-supplied API key) when Yahoo is unavailable."
+    - label: "Local AI Assistant"
+      description: "A bundled, on-device LLM used for both a dedicated chat page and inline dashboard insights."
+      nodes:
+        - title: "Qwen2.5 Chat Engine"
+          description: "Runs Qwen2.5-0.5B-Instruct locally via candle (Metal+BF16 on Apple Silicon, CPU+F32 elsewhere) with multi-turn chat history and token streaming."
+        - title: "Bundled Model Packaging"
+          description: "Model weights are downloaded once at release build time and bundled directly into the app installer — no first-run download for users."
+        - title: "Dashboard AI Insight Strip"
+          description: "After a technical analysis run, optionally streams a short LLM-generated interpretation of the score directly into the dashboard."
+    - label: "Desktop App, Testing & Release"
+      description: "The Tauri shell, settings, and shipping pipeline around the above."
+      nodes:
+        - title: "Tauri Desktop Shell & Settings"
+          description: "Cross-platform (macOS/Windows) React+Tauri app with a settings page for the Tiingo key, AI-insight toggle, and model cache clearing."
+        - title: "Automated Test Suite"
+          description: "89 end-to-end specs covering chat, dashboard, fundamental, navigation, settings, and technical flows, plus Rust unit tests."
+        - title: "Signed Release Pipeline"
+          description: "Tagged releases built with macOS notarization and Windows code-signing, producing installers plus a landing page."
 ---
 
 import ProjSectionHeading from '../../components/ProjSectionHeading.astro';
 
 <ProjSectionHeading label="Overview">What is it?</ProjSectionHeading>
 
-Most stock analysis tools are either cloud-dependent, subscription-gated, or black boxes. Faction is a fully local alternative: a Tauri desktop app that scores stocks on both technical (price action, candlestick patterns, momentum) and fundamental (ROE, FCF, debt/equity) dimensions using Keras models loaded directly via a pure-Rust HDF5 reader.
+Most stock analysis tools are either cloud-dependent, subscription-gated, or black boxes. Faction is a fully local alternative: a Tauri desktop app that scores stocks on both technical (price action, candlestick patterns, momentum) and fundamental (ROE, FCF, debt/equity) dimensions using ONNX models run directly via a pure-Rust inference stack.
 
-The AI chat feature runs Qwen2.5 1.5B locally via Hugging Face's *candle* inference library, Metal-accelerated on Apple Silicon, CPU elsewhere. Market data comes from Yahoo Finance with Tiingo as a fallback. Everything stays on your machine.
+The AI chat feature runs Qwen2.5-0.5B locally via Hugging Face's *candle* inference library, Metal-accelerated on Apple Silicon, CPU elsewhere. Market data comes from Yahoo Finance with Tiingo as a fallback. Everything stays on your machine.
 
 <ProjSectionHeading label="Features">What it does</ProjSectionHeading>
 
-- **Technical Analysis** — Scores stocks based on price action (candlestick patterns, momentum indicators) using a trained Keras model running entirely on-device.
-- **Fundamental Analysis** — Evaluates financial health through key ratios (ROE, free cash flow, debt/equity) scored by a second on-device ML model.
-- **Local AI Chat** — Ask questions about any stock using Qwen2.5 1.5B running locally via candle: Metal-accelerated on Apple Silicon, CPU on everything else.
+- **Technical Analysis** — Scores stocks based on price action (candlestick patterns, momentum indicators) using a trained ONNX model running entirely on-device.
+- **Fundamental Analysis** — Evaluates financial health through key ratios (ROE, free cash flow, debt/equity) scored by a second on-device ONNX model.
+- **Local AI Chat** — Ask questions about any stock using Qwen2.5-0.5B running locally via candle: Metal-accelerated on Apple Silicon, CPU on everything else.
 - **Dashboard** — Combined view of technical and fundamental scores with an optional AI insight strip for a quick read on any ticker.
 - **Fully Offline** — All inference runs on your machine. No cloud API keys needed. Market data via Yahoo Finance (Tiingo as fallback), model runs locally.
-- **Pure-Rust ML Backend** — Keras .h5 models loaded directly via the hdf5 crate and ndarray: no Python runtime, no PyTorch, just native Rust inference.
+- **Pure-Rust ML Backend** — ONNX models run directly via `tract-onnx` and ndarray: no Python runtime, no PyTorch, just native Rust inference.
