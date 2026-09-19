@@ -1,5 +1,5 @@
-import { fetchCanvasData, type CanvasData, type CanvasNodeData } from '../lib/canvas-data';
-import { renderInlineDescription } from './mindmap';
+import { fetchCanvasData, deriveRepoLink, type CanvasData, type CanvasNodeData } from '../lib/canvas-data';
+import { renderInlineDescription, applyRootCoverage } from './mindmap';
 
 const STATUS_LABEL: Record<CanvasData['status'], string> = {
   planned: 'Planned',
@@ -49,7 +49,7 @@ function renderPill(status: CanvasData['status']): HTMLElement {
 // Shared by both the top-level repo/paper card (its own status/title/desc)
 // and a single sub-node within that same repo's canvas (looked up from
 // `data.nodes[nodeId]` — see applyNodeData below). Both shapes carry the
-// same status/title/description fields, just at different granularity.
+// same status/title/description/path fields, just at different granularity.
 function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
   const slot = el.querySelector('[data-canvas-status-slot]');
   if (slot) {
@@ -69,7 +69,25 @@ function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
     // note or not. The caller re-wires connections afterward (see
     // `initCanvasStatus`'s `rewire` param) since this can introduce or
     // change `.mindmap-inode` spans after the initial connection pass ran.
-    if (descEl) renderInlineDescription(descEl, data.description);
+    // `applyRootCoverage` re-runs the root's own `ensureFullCoverage` pass
+    // against this override first — a repo's canvas/data.json description
+    // has no reason to know about `<inode>` hub-coverage markup at all, so
+    // without this the override would silently delete every root→hub
+    // connector the moment live data resolves (a no-op for any element
+    // that isn't the root, e.g. a leaf/hub override).
+    if (descEl) renderInlineDescription(descEl, applyRootCoverage(el, data.description));
+  }
+  // A repo can declare/update its own `path` live in canvas/data.json,
+  // instead of (or in addition to) the MDX-authored `repoPath` — see
+  // mindmap.ts's `appendNote`, which stores the tools button's CURRENT
+  // link in `dataset.repoLink` (read at click time, not baked into a
+  // closure) plus the bare root repo in `dataset.repoRoot` specifically so
+  // this can recompute and overwrite it here, live.
+  if (data.path) {
+    const toolsBtn = el.querySelector<HTMLElement>('.mindmap-note__tools-btn');
+    const rootRepo = toolsBtn?.dataset.repoRoot;
+    const link = rootRepo ? deriveRepoLink(rootRepo, data.path) : undefined;
+    if (toolsBtn && link) toolsBtn.dataset.repoLink = link;
   }
 }
 

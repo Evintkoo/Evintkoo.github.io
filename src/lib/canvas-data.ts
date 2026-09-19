@@ -4,12 +4,22 @@ export interface CanvasNodeData {
   status: CanvasStatus;
   title?: string;
   description?: string;
+  // Same concept as the MDX `breakdown` schema's own `repoPath`
+  // (src/content.config.ts) — a directory or file within this repo that
+  // THIS node's own work actually lives in, e.g. "crates/sast/src/secrets.rs".
+  // Lets a repo maintainer declare/update this live in canvas/data.json
+  // without touching the site's own MDX frontmatter — see `applyCanvasData`
+  // in canvas-status.ts for how it's consumed (overrides the MDX-authored
+  // repoPath when the repo publishes its own).
+  path?: string;
 }
 
 export interface CanvasData {
   status: CanvasStatus;
   title?: string;
   description?: string;
+  // Same as `CanvasNodeData.path` above, for the repo/canvas root itself.
+  path?: string;
   // Per-note status for a canvas that has its own sub-nodes (e.g. a
   // paper's own methodology breakdown on its detail page) — keyed by each
   // note's id (see MindmapLeaf.id in src/islands/mindmap.ts). Absent
@@ -18,6 +28,19 @@ export interface CanvasData {
 }
 
 const VALID_STATUSES: CanvasStatus[] = ['planned', 'in-progress', 'testing', 'done'];
+
+// A hub/leaf's own "Go to repo" link, scoped to the specific file or
+// directory (`path`/`repoPath`) that its own work actually lives in,
+// e.g. `https://github.com/x/y/tree/main/sast` instead of just the bare
+// repo root. Falls back to the bare `rootRepo` when no path is set.
+// Shared by src/islands/mindmap.ts (the MDX-authored `repoPath`) and
+// src/islands/canvas-status.ts (a live `canvas/data.json`-declared
+// `path`) — both resolve to the exact same link shape.
+export function deriveRepoLink(rootRepo: string | undefined, path: string | undefined): string | undefined {
+  if (!rootRepo) return undefined;
+  if (!path) return rootRepo;
+  return `${rootRepo.replace(/\/$/, '')}/tree/main/${path.replace(/^\/+/, '')}`;
+}
 
 // Only matches the plain `https://github.com/<owner>/<repo>` shape this
 // site's `repo:`/`repoLink` frontmatter fields always use (see
@@ -47,10 +70,11 @@ export function researchRepo(data: { repoLink?: string; externalLink?: string })
 // CDN or the authenticated GitHub API — see `fetchCanvasDataWithToken`).
 function parseCanvasJson(json: unknown): CanvasData | null {
   if (!json || typeof json !== 'object' || !VALID_STATUSES.includes((json as { status?: unknown }).status as CanvasStatus)) return null;
-  const raw = json as { status: CanvasStatus; title?: unknown; description?: unknown; nodes?: unknown };
+  const raw = json as { status: CanvasStatus; title?: unknown; description?: unknown; path?: unknown; nodes?: unknown };
   const data: CanvasData = { status: raw.status };
   if (typeof raw.title === 'string') data.title = raw.title;
   if (typeof raw.description === 'string') data.description = raw.description;
+  if (typeof raw.path === 'string') data.path = raw.path;
   if (raw.nodes && typeof raw.nodes === 'object') {
     const nodes: Record<string, CanvasNodeData> = {};
     for (const [key, value] of Object.entries(raw.nodes as Record<string, unknown>)) {
@@ -60,8 +84,10 @@ function parseCanvasJson(json: unknown): CanvasData | null {
       const node: CanvasNodeData = { status: nodeStatus as CanvasStatus };
       const nodeTitle = (value as { title?: unknown }).title;
       const nodeDescription = (value as { description?: unknown }).description;
+      const nodePath = (value as { path?: unknown }).path;
       if (typeof nodeTitle === 'string') node.title = nodeTitle;
       if (typeof nodeDescription === 'string') node.description = nodeDescription;
+      if (typeof nodePath === 'string') node.path = nodePath;
       nodes[key] = node;
     }
     if (Object.keys(nodes).length > 0) data.nodes = nodes;

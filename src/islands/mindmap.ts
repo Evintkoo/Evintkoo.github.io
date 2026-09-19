@@ -14,7 +14,7 @@
 // ─────────────────────────────────────────────
 
 import { initCanvasStatus, getCanvasProgress, type CanvasProgress } from './canvas-status';
-import type { CanvasData } from '../lib/canvas-data';
+import { deriveRepoLink, type CanvasData } from '../lib/canvas-data';
 
 export interface MindmapLeaf {
   title: string;
@@ -225,20 +225,10 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-// A hub/leaf's own "Go to repo" link, scoped to the specific subdirectory
-// of the canvas's OWNING repo (`rootRepo` — `MindmapData.repo`) that its
-// own work actually lives in (`repoPath` — `MindmapBranch.repoPath` /
-// `MindmapLeaf.repoPath`), e.g. `https://github.com/x/y/tree/main/sast`
-// instead of just the bare repo root. Falls back to the bare `rootRepo`
-// when no `repoPath` is set (nothing more specific to point at), and to
-// undefined entirely when the canvas has no owning repo at all (a
-// homepage leaf's own top-level `repo` is handled separately — see
-// `appendNote`'s `toolbarRepo`, which prefers this over `entry.repo`).
-function deriveRepoLink(rootRepo: string | undefined, repoPath: string | undefined): string | undefined {
-  if (!rootRepo) return undefined;
-  if (!repoPath) return rootRepo;
-  return `${rootRepo.replace(/\/$/, '')}/tree/main/${repoPath.replace(/^\/+/, '')}`;
-}
+// `deriveRepoLink` itself now lives in ../lib/canvas-data.ts, shared with
+// canvas-status.ts's live `canvas/data.json`-declared `path` override (see
+// that file's `applyCanvasData`) — both resolve a repoPath/path against a
+// root repo URL identically.
 
 // Parses `<inode id="HREF">highlighted phrase</inode>` markup inside a
 // description and (re-)populates `container` with plain text interleaved
@@ -323,6 +313,13 @@ function appendNote(
   // unset, so a homepage leaf's own top-level project `repo` still works
   // exactly as before.
   linkRepo?: string,
+  // The bare, path-less repo this note's tools button link is ultimately
+  // rooted at (`MindmapData.repo`, or `entry.repo` for a homepage leaf —
+  // same fallback `toolbarRepo` below uses) — stored on the tools button so
+  // canvas-status.ts's live `canvas/data.json`-declared `path` override
+  // (see `applyCanvasData`) can recompute a fresh link from it without
+  // needing to re-render this card.
+  rootRepo?: string,
 ): void {
   // A genuine leaf (not a hub/root, which pass no `modifier`) with no
   // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
@@ -332,6 +329,7 @@ function appendNote(
   const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
   const hasCanvasTarget = !!entry.repo || !!nodeKey;
   const toolbarRepo = linkRepo ?? entry.repo;
+  const effectiveRootRepo = rootRepo ?? entry.repo;
   // The toolbar (tools button and/or live status badge) reserves the same
   // top-right strip whether it's showing a status badge, a "go to repo"
   // button, or both — a hub with no canvas status of its own but a real
@@ -456,13 +454,21 @@ function appendNote(
       toolsBtn.className = 'mindmap-note__tools-btn';
       toolsBtn.setAttribute('aria-label', `Actions for ${entry.title}`);
       toolsBtn.appendChild(makeArrowIcon(TOOLS_ICON));
+      // `dataset.repoLink` (not the closed-over `toolbarRepo`) is what the
+      // click handler actually reads — canvas-status.ts's live `path`
+      // override updates this attribute in place when a repo publishes its
+      // own canvas/data.json path, so a card opened before or after that
+      // resolves always gets the current link, not whatever was true at
+      // render time.
+      toolsBtn.dataset.repoLink = toolbarRepo;
+      if (effectiveRootRepo) toolsBtn.dataset.repoRoot = effectiveRootRepo;
       toolsBtn.addEventListener('click', (e) => {
         // A sibling of the card, not a descendant — this can't actually
         // bubble into the card's own click handler, but stopping it here
         // anyway documents that intent and survives any future DOM change
         // that nests them.
         e.stopPropagation();
-        showGoToPopup(card, entry.title, entry.href, toolbarRepo, toolsBtn);
+        showGoToPopup(card, entry.title, entry.href, toolsBtn.dataset.repoLink, toolsBtn);
       });
       toolbar.appendChild(toolsBtn);
     }
@@ -1401,6 +1407,21 @@ interface Coverable {
   title: string;
 }
 
+// Root wrapper element → the hub Coverable list `render()` used to build
+// its OWN initial description — see the assignment near the root card's
+// creation and `applyRootCoverage` below.
+const hubCoverageByWrapper = new WeakMap<HTMLElement, Coverable[]>();
+
+// Re-runs `ensureFullCoverage` against a NEW description for `wrapper`
+// (canvas-status.ts calls this before rendering a live canvas/data.json
+// description override) — a no-op for any wrapper that never had hub
+// coverage to begin with (a leaf, a hub, or any card canvas-status.ts
+// wasn't told to check), returning `description` unchanged.
+export function applyRootCoverage(wrapper: HTMLElement, description: string): string {
+  const coverables = hubCoverageByWrapper.get(wrapper);
+  return coverables ? ensureFullCoverage(description, coverables) : description;
+}
+
 // The map has exactly one rule for every relationship on it: a connection
 // is a highlighted phrase with its own arrow, never a bare line between two
 // cards (see the doc comments on `MindmapLeaf`/`wireInlineConnections`).
@@ -1567,7 +1588,7 @@ function render(data: MindmapData, container: HTMLElement): () => void {
       hrefToPos.set(fallbackKey, leafPos);
 
       const leafLinkRepo = deriveRepoLink(data.repo, leaf.repoPath);
-      appendNote(leafLayer, leaf, NOTE_X, ly, NOTE_W, noteH, nd + 20, showGoToPopup, undefined, leafLinkRepo);
+      appendNote(leafLayer, leaf, NOTE_X, ly, NOTE_W, noteH, nd + 20, showGoToPopup, undefined, leafLinkRepo, data.repo);
       const leafFo = leafLayer.lastElementChild as SVGForeignObjectElement | null;
       const leafCard = leafFo?.querySelector<HTMLElement>('.mindmap-note');
       if (leafFo && leafCard) {
@@ -1603,7 +1624,7 @@ function render(data: MindmapData, container: HTMLElement): () => void {
     hubKeys.push(hubKey);
     const hubPos = { x: HUB_NOTE_X, y: by, noteH: hubNoteH, noteW: HUB_NOTE_W, territoryHalfH: span / 2 };
     hrefToPos.set(hubKey, hubPos);
-    appendNote(branchLayer, { title: branch.label, description: hubDescription }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub', hubLinkRepo);
+    appendNote(branchLayer, { title: branch.label, description: hubDescription }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub', hubLinkRepo, data.repo);
     // Tag the just-appended card with that same territory height so
     // `wireInlineConnections` can look it up when this hub is a connector's
     // SOURCE (the `hrefToPos` entry above only covers it as a TARGET).
@@ -1623,17 +1644,27 @@ function render(data: MindmapData, container: HTMLElement): () => void {
   // rounded-rect card). Same full-coverage rule as every hub above: any
   // branch the root's own description doesn't already reach by a
   // highlighted phrase gets one appended, naming it by its own hub key.
-  const rootDescription = ensureFullCoverage(
-    data.centerDescription,
-    data.branches.map((b, i): Coverable => ({ keys: [hubKeys[i]], linkKey: hubKeys[i], title: b.label })),
-  );
+  const hubCoverables: Coverable[] = data.branches.map((b, i) => ({ keys: [hubKeys[i]], linkKey: hubKeys[i], title: b.label }));
+  const rootDescription = ensureFullCoverage(data.centerDescription, hubCoverables);
   const centerNoteH = estimateNoteHeight(data.center, rootDescription, CENTER_NOTE_W, !!data.repo);
-  appendNote(centerLayer, { title: data.center, description: rootDescription, repo: data.repo }, CENTER_NOTE_X, CY, CENTER_NOTE_W, centerNoteH, 0, showGoToPopup, 'mindmap-note--root');
+  appendNote(centerLayer, { title: data.center, description: rootDescription, repo: data.repo }, CENTER_NOTE_X, CY, CENTER_NOTE_W, centerNoteH, 0, showGoToPopup, 'mindmap-note--root', undefined, data.repo);
   // Root is never a connector's TARGET (nothing links into it), so unlike a
   // hub it only needs the DOM tag, read when it's a connector's SOURCE.
   const rootFo = centerLayer.lastElementChild as SVGForeignObjectElement | null;
   const rootCard = rootFo?.querySelector<HTMLElement>('.mindmap-note');
   if (rootCard) rootCard.setAttribute('data-territory-half-h', String(totalH / 2));
+  // A repo's own canvas/data.json can override the root's description live
+  // (canvas-status.ts's `applyCanvasData`) — that override is plain text
+  // with no `<inode>` coverage markup, since it's authored independent of
+  // this render pass. Without re-applying `ensureFullCoverage` to it, the
+  // override would silently wipe every root→hub connector the very moment
+  // live data resolves (confirmed live: reported as "edge suddenly gone").
+  // Stashing the same `hubCoverables` this render used, keyed by the root's
+  // own wrapper, lets canvas-status.ts re-run the exact same coverage pass
+  // on whatever description it swaps in, so every hub stays reachable no
+  // matter which description — authored or live-overridden — ends up shown.
+  const rootWrapper = rootFo?.querySelector<HTMLElement>('.mindmap-note-wrapper');
+  if (rootWrapper) hubCoverageByWrapper.set(rootWrapper, hubCoverables);
   // No `hrefToPos` entry to share (root is never addressed by key), so this
   // one gets its own standalone position object instead of reusing one.
   if (rootFo && rootCard) {
