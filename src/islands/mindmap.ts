@@ -516,6 +516,21 @@ const PAGE_ICON = '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/>';
 const REPO_ICON = '<polyline points="9 6 3 12 9 18"/><polyline points="15 6 21 12 15 18"/>';
 const PROGRESS_ICON = '<line x1="5" y1="20" x2="5" y2="12"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="19" y1="20" x2="19" y2="15"/>';
 
+// "Go to repo" reads as the generic label only for a bare repo-root link
+// (no `repoPath` — see `deriveRepoLink`); once a card resolves to a real
+// file or folder inside that repo, the label should name it directly
+// ("Go to query_rules.rs", "Go to crates/dast") rather than making a
+// visitor open the link to find out where it actually goes. Parses the
+// SAME `/tree/<branch>/<path>` shape `deriveRepoLink` produces, so this
+// stays correct for any repoPath depth without re-deriving it separately.
+function describeRepoLink(repo: string): string {
+  const match = repo.match(/\/tree\/[^/]+\/(.+)$/);
+  if (!match) return 'Go to repo';
+  const path = decodeURIComponent(match[1]).replace(/\/+$/, '');
+  const lastSegment = path.split('/').pop() || path;
+  return `Go to ${lastSegment}`;
+}
+
 function createGoToPopup(container: HTMLElement): (card: HTMLElement, title: string, href?: string, repo?: string, anchor?: HTMLElement) => void {
   const popup = document.createElement('div');
   popup.className = 'mindmap-goto-popup mindmap-goto-popup--card';
@@ -536,7 +551,8 @@ function createGoToPopup(container: HTMLElement): (card: HTMLElement, title: str
   repoLink.target = '_blank';
   repoLink.rel = 'noopener noreferrer';
   repoLink.appendChild(makeArrowIcon(REPO_ICON));
-  repoLink.appendChild(document.createTextNode('Go to repo'));
+  const repoLinkText = document.createTextNode('Go to repo');
+  repoLink.appendChild(repoLinkText);
   actions.append(pageLink, repoLink);
   popup.appendChild(actions);
 
@@ -599,7 +615,10 @@ function createGoToPopup(container: HTMLElement): (card: HTMLElement, title: str
     pageLink.style.display = href ? '' : 'none';
     if (href) pageLink.href = href;
     repoLink.style.display = repo ? '' : 'none';
-    if (repo) repoLink.href = repo;
+    if (repo) {
+      repoLink.href = repo;
+      repoLinkText.textContent = describeRepoLink(repo);
+    }
 
     // The progress readout needs the WRAPPER (data-canvas-repo lives
     // there, not on the card — see `appendNote`), and only ever has
