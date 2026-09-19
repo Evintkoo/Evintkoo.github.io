@@ -321,12 +321,20 @@ function appendNote(
   // needing to re-render this card.
   rootRepo?: string,
 ): void {
-  // A genuine leaf (not a hub/root, which pass no `modifier`) with no
-  // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
+  // A genuine leaf (no `modifier`) OR a hub (`entry.id` set to its own
+  // stable `hubKey` — see `render()`'s hub call site) with no repo of its
+  // own belongs to whatever repo owns THIS WHOLE canvas (see
   // MindmapData.repo) — e.g. a sub-component of a paper's own methodology
   // breakdown. It gets a stable per-note key instead, so canvas-status.ts
-  // can look it up in that repo's canvas/data.json `nodes` map.
-  const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
+  // can look it up in that repo's canvas/data.json `nodes` map — the SAME
+  // map a leaf uses, just keyed by the hub's own `hub-...` id instead of a
+  // leaf's, so a repo can declare a hub's own live status/path exactly the
+  // same way it already does for a leaf. The root (`mindmap-note--root`)
+  // stays excluded: it has its own direct `entry.repo`/`data-canvas-repo`
+  // path (see `initCanvasStatus`), so a nodeKey here would be redundant
+  // and, since root has no natural `.id`, would fall back to slugifying
+  // its own title — a key nothing is meant to address it by.
+  const nodeKey = !entry.repo && modifier !== 'mindmap-note--root' ? (entry.id ?? slugify(entry.title)) : undefined;
   const hasCanvasTarget = !!entry.repo || !!nodeKey;
   const toolbarRepo = linkRepo ?? entry.repo;
   const effectiveRootRepo = rootRepo ?? entry.repo;
@@ -1624,7 +1632,7 @@ function render(data: MindmapData, container: HTMLElement): () => void {
     hubKeys.push(hubKey);
     const hubPos = { x: HUB_NOTE_X, y: by, noteH: hubNoteH, noteW: HUB_NOTE_W, territoryHalfH: span / 2 };
     hrefToPos.set(hubKey, hubPos);
-    appendNote(branchLayer, { title: branch.label, description: hubDescription }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub', hubLinkRepo, data.repo);
+    appendNote(branchLayer, { title: branch.label, description: hubDescription, id: hubKey }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub', hubLinkRepo, data.repo);
     // Tag the just-appended card with that same territory height so
     // `wireInlineConnections` can look it up when this hub is a connector's
     // SOURCE (the `hrefToPos` entry above only covers it as a TARGET).
