@@ -52,15 +52,51 @@ function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
 // is only ever one such canvas per page (the homepage's site-wide map has
 // no owning repo, so `data.nodes` never resolves there), so it's safe to
 // scan the whole document rather than scope to a specific container.
-function applyNodeData(data: CanvasData): void {
-  if (!data.nodes) return;
+// Returns the ids actually found on THIS page (see `deriveLocalStatus`).
+function applyNodeData(data: CanvasData): string[] {
+  if (!data.nodes) return [];
+  const found: string[] = [];
   const nodeElements = document.querySelectorAll<HTMLElement>('[data-canvas-node-id]');
   for (const el of nodeElements) {
     const nodeId = el.dataset.canvasNodeId;
     if (!nodeId) continue;
     const nodeData = data.nodes[nodeId];
-    if (nodeData) applyCanvasData(el, nodeData);
+    if (nodeData) {
+      applyCanvasData(el, nodeData);
+      found.push(nodeId);
+    }
   }
+  return found;
+}
+
+// Weakest-first: a paper's own root badge should read as its LEAST
+// complete listed component, not paper over it — see `deriveLocalStatus`.
+const STATUS_SEVERITY: Record<CanvasData['status'], number> = {
+  planned: 0,
+  'in-progress': 1,
+  testing: 2,
+  done: 3,
+};
+
+// Multiple papers/projects can share ONE repo (e.g. two papers whose
+// methodology both lives in the same library) — canvas/data.json only has
+// ONE top-level `status` for that whole repo, which is only ever accurate
+// for ONE of them. When THIS page renders its own node-level breakdown
+// (`nodeIds` — the ids `applyNodeData` actually matched on this exact
+// page), this paper's own root badge should reflect ITS OWN listed
+// components' worst status, not the repo-wide blanket flag, which may
+// describe a completely different paper/feature set sharing the same
+// repo. Falls back to the blanket `data.status` when this page has no
+// local node breakdown at all (e.g. a homepage leaf card, or a repo with
+// only ever one consumer) — there's nothing more specific to prefer there.
+function deriveLocalStatus(data: CanvasData, nodeIds: string[]): CanvasData['status'] {
+  if (nodeIds.length === 0 || !data.nodes) return data.status;
+  let worst: CanvasData['status'] = 'done';
+  for (const id of nodeIds) {
+    const status = data.nodes[id]?.status;
+    if (status && STATUS_SEVERITY[status] < STATUS_SEVERITY[worst]) worst = status;
+  }
+  return worst;
 }
 
 
@@ -104,8 +140,9 @@ export function initCanvasStatus(rewireConnections?: () => void): void {
   for (const [repo, els] of byRepo) {
     getCanvasData(repo).then((data) => {
       if (!data) return;
-      for (const el of els) applyCanvasData(el, data);
-      applyNodeData(data);
+      const localNodeIds = applyNodeData(data);
+      const rootData = { ...data, status: deriveLocalStatus(data, localNodeIds) };
+      for (const el of els) applyCanvasData(el, rootData);
       rewireConnections?.();
     });
   }
