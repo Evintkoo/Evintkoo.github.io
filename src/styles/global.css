@@ -254,6 +254,20 @@ a { color: inherit; }
  * src/pages/research/[slug].astro, which both render a #mindmapContainer)
  * since the note styling is identical on both pages.
  */
+/* `mindmap.ts`'s `apply()` sets this <g>'s pan/zoom via the CSS `transform`
+   property now, not the SVG `transform` attribute — that attribute drove
+   every foreignObject note through Chromium/WebKit's SVG-relayout path on
+   every pan/zoom frame, which is the actual root cause behind the repeated
+   "note detaches/floats away from its own connector lines" reports (see
+   `apply`'s own comment). `transform-box: view-box` + `transform-origin: 0
+   0` pins this CSS transform to the exact same anchor the old attribute
+   used (the SVG's own local coordinate origin), so `tx`/`ty`/`scale` mean
+   exactly what they meant before — only the mechanism that applies them
+   changed. */
+#mindmapContainer .mindmap-viewport {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
 /* Card anatomy ported from PlanOut's own note node (flow-note-node.tsx +
    flow-note-node-header.tsx): a tinted header strip (rounded top corners)
    holding the title, sitting above a separately-bordered body panel that
@@ -289,32 +303,45 @@ a { color: inherit; }
   position: relative;
   width: 100%;
   height: 100%;
-  /* Promotes this wrapper to its own GPU-composited layer, static and
-     never animated — NOT the same thing as the hover-lift `transform`
-     banned below. The pan/zoom viewport `<g>` moves via an SVG `transform`
-     *attribute* (see mindmap.ts), and WebKit/Chromium both have a
-     long-standing bug where an ancestor's transform changes force a
-     foreignObject's HTML content to be re-rasterized on every frame,
-     which is what actually produces the stale/detached-content corruption
-     (reported live on both Chromium and Safari, post-drag). Forcing this
-     wrapper onto its own layer means the browser just repositions the
-     already-rendered layer instead of re-rasterizing it. */
-  transform: translateZ(0);
-  will-change: transform;
+  /* A static `transform: translateZ(0); will-change: transform;` used to
+     live here, meant to force this wrapper onto its own GPU layer so the
+     pan/zoom viewport `<g>`'s transform updates wouldn't re-rasterize its
+     foreignObject HTML content every frame. Removed: the actual fix for
+     that (`apply()` in mindmap.ts now drives pan/zoom via the `<g>`'s CSS
+     `transform` *property* instead of the SVG `transform` *attribute* —
+     see its own comment) makes the promotion unnecessary, and it was
+     never free: a `transform` on HTML content inside a foreignObject is
+     exactly the pattern already banned two rules down for a DIFFERENT
+     Chromium repaint bug, and it was independently the reason the status
+     badge below needed `position: absolute` math this element never
+     satisfied — worth removing on both counts, not just one. */
 }
-/* Live canvas status pill floats OUTSIDE the card — entirely above its
-   top edge, clear of the header, not straddling the border — so it reads
-   as a status marker on the note rather than part of the note's own
-   content. `bottom: 100%` (not a small negative `top`) is what actually
-   gets it fully clear: the slot's own bottom edge sits flush with the
-   note's top edge, then `margin-bottom` opens a real gap above that —
-   both comfortably inside the wrapper's own reserved margin (see above),
-   so this is never clipped. */
+/* Live canvas status badge floats OUTSIDE the card — entirely above its
+   top edge, clear of the header — so it reads as a status marker on the
+   note, not part of the note's own content. Positioned from the WRAPPER's
+   own `top` (not `bottom: 100%`, the previous approach): this wrapper
+   spans the FULL foreignObject box already (card + the reserved strip
+   above it — see `BADGE_TOP_RESERVE`/wrapper's own `padding-top` in
+   mindmap.ts's `appendNote`), so `bottom: 100%` measured from the
+   wrapper's OWN full height, not the reserved strip alone — it placed the
+   badge entirely above the wrapper's top edge, i.e. outside the
+   foreignObject's own clip rectangle. A `<foreignObject>` always clips to
+   its declared box, so that badge silently never painted in Chromium
+   (confirmed live: present in the DOM with a real, correctly-computed
+   `getBoundingClientRect`, zero rendered pixels) — Safari's own looser
+   foreignObject-overflow handling is the only reason it ever appeared to
+   work at all (reported live on production Safari). `height` here matches
+   `BADGE_TOP_RESERVE` (24) exactly, so the badge is guaranteed to stay
+   inside that reserved strip — and therefore inside the foreignObject's
+   own box — on every engine, not just the ones that tolerate escaping it. */
 #mindmapContainer .mindmap-note__canvas-slot {
   position: absolute;
-  bottom: 100%;
-  margin-bottom: 4px;
+  top: 0;
   right: -4px;
+  height: 24px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 3px;
   z-index: 2;
 }
 #mindmapContainer .mindmap-note--clickable {
@@ -394,29 +421,19 @@ a { color: inherit; }
   font-size: 13px;
 }
 
-/* Live canvas status pill now floats above the note (see
-   .mindmap-note__canvas-slot), not on the header's accent-tinted
-   background any more — so it needs its own opaque fill (the sitewide
-   `.canvas-status-pill` is transparent-background, meant to sit on a
-   solid surface already) or it'd read as a bare outline over the
-   canvas's dot-grid backdrop. `--ink-faint` is correct again here since
-   that's a plain `--paper-raised` surface, the same one it was
-   originally measured against (tokens.css).
-   Sitewide `.canvas-status-pill` sizing (font-size, padding) is tuned for
-   normal body-scale tag chips (see the hero's tag row) — oversized next
-   to this note's own deliberately tiny type scale (12px title, 10.5px
-   description), so it's scaled down to match here. */
-#mindmapContainer .canvas-status-pill {
-  background: var(--paper-raised);
-  color: var(--ink-faint);
+/* Sitewide `.canvas-status-badge` sizing (font-size, padding, icon size) is
+   tuned for normal body-scale tag chips (see the hero's tag row) —
+   oversized next to this note's own deliberately tiny type scale (12px
+   title, 10.5px description), so it's scaled down to match here. */
+#mindmapContainer .canvas-status-badge {
   font-size: 9px;
-  padding: 1.5px 6px;
+  padding: 2px 6px;
   gap: 3px;
   box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.45);
 }
-#mindmapContainer .canvas-status-pill__dot {
-  width: 5px;
-  height: 5px;
+#mindmapContainer .canvas-status-badge__icon {
+  width: 9px;
+  height: 9px;
 }
 
 /* Inline cross-note connection — PlanOut's own pattern: the linked phrase
@@ -522,6 +539,74 @@ a { color: inherit; }
   height: 100vh;
   max-width: none;
   border-radius: 0;
+}
+
+/* Title/hint/close bar — see `setupFullscreenButton`'s own comment for why
+   this exists at all (real Fullscreen only shows `#mindmapContainer`'s own
+   subtree, so a page with no title bar of its own, e.g. a research/project
+   detail page, would otherwise drop the viewer into a bare canvas with no
+   way to tell what they're looking at). Hidden by default, shown only
+   while genuinely fullscreen — see the next rule. */
+.mindmap-fullscreen-header {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 7;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+#mindmapContainer.mindmap-is-fullscreen .mindmap-fullscreen-header {
+  display: flex;
+}
+.mindmap-fullscreen-header__title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mindmap-fullscreen-header__hint {
+  margin-left: auto;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .mindmap-fullscreen-header__hint { display: none; }
+}
+.mindmap-fullscreen-header__close {
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.mindmap-fullscreen-header__close:hover,
+.mindmap-fullscreen-header__close:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+/* The fullscreen/reset icon buttons sit at `top: var(--space-3)` normally
+   (right under the canvas's own top edge, since there's nothing else up
+   there) — once the header bar above is showing, that same offset would
+   sit UNDER it. Push both down to clear it, real Fullscreen only. */
+#mindmapContainer.mindmap-is-fullscreen .mindmap-fullscreen-btn {
+  top: calc(50px + var(--space-3));
+}
+#mindmapContainer.mindmap-is-fullscreen .mindmap-reset-btn {
+  top: calc(50px + var(--space-3));
 }
 
 /* Reset-positions toggle (`setupNodeDrag`) — same raised-surface button as
@@ -777,29 +862,45 @@ body::after {
   to { transform: scale(1); opacity: 0; }
 }
 
-/* Live canvas status pill — read-only indicator injected client-side by
-   src/islands/canvas-status.ts once a repo's canvas/data.json resolves.
-   Colored dot only; label text uses --ink-faint so it never needs its own
-   per-theme contrast pass (see tokens.css's --status-* comment). */
-.canvas-status-pill {
+/* Live canvas status badge — read-only indicator injected client-side by
+   src/islands/canvas-status.ts once a repo's canvas/data.json resolves. A
+   small card (raised surface + border + shadow), the same anatomy every
+   other surface on this site uses, not a bare outlined pill — a status
+   this small still needs to read as its own object against a busy
+   backdrop (the mindmap's dot-grid), not thin enough to disappear into
+   it. The icon (see `STATUS_ICON` in canvas-status.ts) carries the status
+   color directly via `currentColor`; the label stays --ink-faint since
+   the icon+color pairing alone is already enough to identify the state at
+   a glance, and a saturated label at this size reads as noisier, not
+   clearer. */
+.canvas-status-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--ink-faint);
+  background: var(--paper-raised);
   border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
   white-space: nowrap;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.35);
 }
-.canvas-status-pill__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+.canvas-status-badge__icon {
+  width: 11px;
+  height: 11px;
   flex-shrink: 0;
 }
-.canvas-status-pill--planned .canvas-status-pill__dot { background: var(--status-planned); }
-.canvas-status-pill--in-progress .canvas-status-pill__dot { background: var(--status-in-progress); }
-.canvas-status-pill--testing .canvas-status-pill__dot { background: var(--status-testing); }
-.canvas-status-pill--done .canvas-status-pill__dot { background: var(--status-done); }
+.canvas-status-badge--planned .canvas-status-badge__icon { color: var(--status-planned); }
+.canvas-status-badge--in-progress .canvas-status-badge__icon { color: var(--status-in-progress); }
+.canvas-status-badge--testing .canvas-status-badge__icon { color: var(--status-testing); }
+.canvas-status-badge--done .canvas-status-badge__icon { color: var(--status-done); }
+/* The border itself picks up a faint wash of the status color too — the
+   icon alone is a small target to spot at the mindmap's default zoomed-out
+   scale; a tinted edge makes the whole card legible as "this state" from
+   further away, before the icon shape is even resolvable. */
+.canvas-status-badge--planned { border-color: color-mix(in srgb, var(--status-planned) 40%, var(--border)); }
+.canvas-status-badge--in-progress { border-color: color-mix(in srgb, var(--status-in-progress) 40%, var(--border)); }
+.canvas-status-badge--testing { border-color: color-mix(in srgb, var(--status-testing) 40%, var(--border)); }
+.canvas-status-badge--done { border-color: color-mix(in srgb, var(--status-done) 40%, var(--border)); }

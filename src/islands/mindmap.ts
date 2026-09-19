@@ -14,6 +14,7 @@
 // ─────────────────────────────────────────────
 
 import { initCanvasStatus } from './canvas-status';
+import type { CanvasData } from '../lib/canvas-data';
 
 export interface MindmapLeaf {
   title: string;
@@ -69,6 +70,14 @@ export interface MindmapData {
   // same mechanism as a leaf) AND its canvas/data.json's optional `nodes`
   // map (keyed by each leaf's canvasNodeKey) drives every leaf's own pill.
   repo?: string;
+  // repo URL → canvas/data.json, resolved at BUILD time by whichever .astro
+  // page built this data (see `buildCanvasPrefetch` in src/lib/canvas-data.ts)
+  // for any repo the site's own runtime fetch can't reach on its own — i.e.
+  // a private repo, which a plain unauthenticated client-side request can
+  // never read no matter what the file contains (confirmed live). Passed
+  // straight through to `initCanvasStatus` as a seed; every OTHER (public)
+  // repo is untouched by this and keeps fetching live, exactly as before.
+  canvasPrefetch?: Record<string, CanvasData>;
 }
 
 // Every node — root, branch hub, leaf — is the same rectangular note card
@@ -1418,7 +1427,7 @@ function render(data: MindmapData, container: HTMLElement): () => void {
   // container's real size — must run before `wireInlineConnections` below,
   // which depends on `connectLayer.getScreenCTM()` reflecting that same
   // viewBox and the viewport's initial pan/zoom transform.
-  setupPanZoom(container, svg, viewport, W, totalH);
+  setupPanZoom(container, svg, viewport, W, totalH, data.center);
   setupInodeNavigation(container, hrefToCard);
 
   // Foreign-object content only has real layout once the SVG is mounted, so
@@ -1450,7 +1459,7 @@ const FULLSCREEN_EXIT_ICON = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-
 // blow it up to the full screen to explore a dense map. Native Fullscreen
 // API rather than a CSS-only "modal" overlay, so it actually uses the OS
 // fullscreen surface (bigger than the browser viewport on most setups).
-function setupFullscreenButton(container: HTMLElement, fitAndCenter: () => void): void {
+function setupFullscreenButton(container: HTMLElement, fitAndCenter: () => void, title: string): void {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'mindmap-fullscreen-btn';
@@ -1477,6 +1486,40 @@ function setupFullscreenButton(container: HTMLElement, fitAndCenter: () => void)
     }
   });
   container.appendChild(btn);
+
+  // Real Fullscreen only shows THIS element's own subtree — every ancestor
+  // and every sibling outside it, including a title/close bar living
+  // ABOVE `#mindmapContainer` in the page's own markup, stops being on
+  // screen at all the moment it activates. The homepage's "Explore the
+  // map" overlay already has such a bar (`.mindmap-overlay__bar` in
+  // index.astro) and deliberately hides THIS button there (see that
+  // file's own CSS) so a viewer never enters real Fullscreen from inside
+  // it — `mindmap-is-fullscreen` therefore never activates on that page,
+  // and this bar never shows there either. Research/project detail pages
+  // render `#mindmapContainer` bare, with no such bar of their own — on
+  // those, entering real Fullscreen used to drop the viewer into a canvas
+  // with no title and no visible way back out beyond guessing Escape. A
+  // bar living INSIDE the container (shown only while `mindmap-is-fullscreen`
+  // is set, just below) is the only way to keep one on screen once real
+  // Fullscreen engages.
+  const header = document.createElement('div');
+  header.className = 'mindmap-fullscreen-header';
+  const titleEl = document.createElement('span');
+  titleEl.className = 'mindmap-fullscreen-header__title';
+  titleEl.textContent = title;
+  header.appendChild(titleEl);
+  const hint = document.createElement('span');
+  hint.className = 'mindmap-fullscreen-header__hint';
+  hint.textContent = 'Drag to pan · Pinch or Ctrl/⌘ + scroll to zoom';
+  header.appendChild(hint);
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'mindmap-fullscreen-header__close';
+  closeBtn.textContent = 'Close ×';
+  closeBtn.addEventListener('click', () => document.exitFullscreen().catch(() => {}));
+  header.appendChild(closeBtn);
+  container.appendChild(header);
+
   document.addEventListener('fullscreenchange', () => {
     const isFullscreen = document.fullscreenElement === container;
     container.classList.toggle('mindmap-is-fullscreen', isFullscreen);
@@ -1544,6 +1587,7 @@ function setupPanZoom(
   viewport: SVGGElement,
   contentW: number,
   contentH: number,
+  title: string,
 ): void {
   let scale = 1;
   let minScale = MIN_ZOOM;
@@ -1551,7 +1595,24 @@ function setupPanZoom(
   let ty = 0;
 
   function apply(): void {
-    viewport.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')');
+    // A CSS `transform` (style property), not the SVG `transform` attribute
+    // this used to set. Every prior "note detaches/floats/corrupts during
+    // pan" report (06f5fa9, 58900c8, and this one, reproduced live via the
+    // "ML" hub card rendering off in empty space, disconnected from its own
+    // lines, on the deployed 58900c8 build) traces to the same root cause,
+    // not three different bugs: an SVG `transform` ATTRIBUTE change on an
+    // ancestor of a <foreignObject> forces Chromium/WebKit down SVG's own
+    // foreignObject-relayout path on every frame, which is the actual
+    // fragile mechanism — not something layer-promotion tricks on the note
+    // itself can reliably outrun (`.mindmap-note-wrapper`'s `translateZ(0)`
+    // from 58900c8 didn't fix this, confirmed live in Safari on production).
+    // A CSS `transform` on the same <g> instead goes through the ordinary
+    // GPU-compositor pipeline — the same one every other CSS-transformed
+    // element on the page already uses safely — which both engines handle
+    // correctly with live foreignObject content. `transform-origin`/
+    // `transform-box` on `.mindmap-viewport` (see global.css) pin this to
+    // the exact same 0,0-anchored semantics the old attribute had.
+    viewport.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     // Closes any open "Go to page" popup (see `createGoToPopup`) — its
     // position is computed once from the clicked card's screen rect, so it
     // would go stale (pointing at empty canvas) the moment the view pans or
@@ -1582,7 +1643,7 @@ function setupPanZoom(
 
   fitAndCenter();
   window.addEventListener('resize', fitAndCenter);
-  setupFullscreenButton(container, fitAndCenter);
+  setupFullscreenButton(container, fitAndCenter, title);
 
   function zoomAt(factor: number, px: number, py: number): void {
     const prevScale = scale;
@@ -1873,5 +1934,5 @@ export function initMindmap(container: HTMLElement, data: MindmapData): void {
   // canvas-status.ts's `applyCanvasData`) redraw `<inode>` connectors after
   // the fact, since its data resolves asynchronously, after this map's own
   // initial (synchronous) connection-wiring pass already ran.
-  initCanvasStatus(rewireConnections);
+  initCanvasStatus(rewireConnections, data.canvasPrefetch);
 }
