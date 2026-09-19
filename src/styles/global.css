@@ -273,11 +273,18 @@ a { color: inherit; }
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
   overflow: hidden;
 }
-/* Un-clipped positioning context that `.mindmap-note` (its own
-   `overflow: hidden` above, for the rounded header/body corners) can't be:
-   the status badge is a sibling of the card here, not a descendant of it,
-   so it can float past the card's own edge instead of being clipped at it.
-   Sized to fill the same foreignObject box the card used to fill alone. */
+/* Positioning context that `.mindmap-note` (its own `overflow: hidden`
+   above, for the rounded header/body corners) can't be: the status badge
+   is a sibling of the card here, not a descendant of it, so it can float
+   past the card's own edge instead of being clipped at it. Fills the
+   FULL foreignObject box — bigger than the card alone now (see
+   `BADGE_TOP_RESERVE`/`BADGE_RIGHT_RESERVE` in mindmap.ts's `appendNote`),
+   with the card pushed into the remaining space via its own padding so
+   the badge has real, safely-clipped room to float into at this level,
+   never needing to escape the foreignObject itself (see that function's
+   comment for why: escaping it, via `overflow: visible` on the
+   foreignObject, hit a real Chromium repaint bug on production the
+   moment canvas-status.ts mutated content inside it asynchronously). */
 #mindmapContainer .mindmap-note-wrapper {
   position: relative;
   width: 100%;
@@ -288,21 +295,15 @@ a { color: inherit; }
    as a status marker on the note rather than part of the note's own
    content. `bottom: 100%` (not a small negative `top`) is what actually
    gets it fully clear: the slot's own bottom edge sits flush with the
-   note's top edge, then `margin-bottom` opens a real gap above that. The
-   foreignObject it lives in is given `overflow: visible` (below) so this
-   is never clipped at the note's own box edge. */
+   note's top edge, then `margin-bottom` opens a real gap above that —
+   both comfortably inside the wrapper's own reserved margin (see above),
+   so this is never clipped. */
 #mindmapContainer .mindmap-note__canvas-slot {
   position: absolute;
   bottom: 100%;
   margin-bottom: 4px;
   right: -4px;
   z-index: 2;
-}
-/* SVG's UA default is `overflow: hidden` on foreignObject — override it so
-   the status badge's negative offset (above) can actually poke past the
-   note's own box instead of being clipped at the foreignObject's edge. */
-#mindmapContainer foreignObject.mindmap-note-anim {
-  overflow: visible;
 }
 #mindmapContainer .mindmap-note--clickable {
   cursor: pointer;

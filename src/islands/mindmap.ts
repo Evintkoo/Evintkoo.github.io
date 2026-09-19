@@ -274,11 +274,35 @@ function appendNote(
   showGoToPopup: (card: Element, href: string, title: string) => void,
   modifier?: string,
 ): void {
+  // A genuine leaf (not a hub/root, which pass no `modifier`) with no
+  // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
+  // MindmapData.repo) — e.g. a sub-component of a paper's own methodology
+  // breakdown. It gets a stable per-note key instead, so canvas-status.ts
+  // can look it up in that repo's canvas/data.json `nodes` map.
+  const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
+  const hasCanvasTarget = !!entry.repo || !!nodeKey;
+  // The badge floats ABOVE the card's own top-right corner (see
+  // .mindmap-note__canvas-slot) — reserved by GROWING the foreignObject's
+  // own box upward/rightward, not by setting `overflow: visible` on it (a
+  // previous attempt at this). A transformed ancestor (the pan/zoom
+  // `viewport` group) plus an `overflow: visible` foreignObject hits a real
+  // Chromium repaint bug the very first time something mutates INSIDE that
+  // foreignObject after its initial paint (exactly what canvas-status.ts's
+  // async status/description override does): the content can render
+  // detached at a stale/wrong screen position, leaving a corrupted sliver
+  // behind — confirmed live on production. `BADGE_TOP_RESERVE` (24) fits
+  // inside `ROW_GAP` (32) without touching the row above; the card itself
+  // gets pushed down/left inside this bigger box via the wrapper's own
+  // padding (see below), so its LOGICAL position (`hrefToPos`, `ly`) is
+  // completely unaffected — only where it sits inside its own now-roomier,
+  // still safely `overflow: hidden` foreignObject changes.
+  const BADGE_TOP_RESERVE = hasCanvasTarget ? 24 : 0;
+  const BADGE_RIGHT_RESERVE = hasCanvasTarget ? 8 : 0;
   const fo = svgEl('foreignObject', {
     x,
-    y: y - height / 2,
-    width,
-    height,
+    y: y - height / 2 - BADGE_TOP_RESERVE,
+    width: width + BADGE_RIGHT_RESERVE,
+    height: height + BADGE_TOP_RESERVE,
     class: 'mindmap-note-anim',
     style: 'animation-delay:' + delay + 'ms',
   });
@@ -289,13 +313,6 @@ function appendNote(
   if (entry.href) classes.push('mindmap-note--clickable');
   const card = document.createElement('div');
   card.className = classes.join(' ');
-  // A genuine leaf (not a hub/root, which pass no `modifier`) with no
-  // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
-  // MindmapData.repo) — e.g. a sub-component of a paper's own methodology
-  // breakdown. It gets a stable per-note key instead, so canvas-status.ts
-  // can look it up in that repo's canvas/data.json `nodes` map.
-  const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
-  const hasCanvasTarget = !!entry.repo || !!nodeKey;
   // The status badge floats OUTSIDE the card's own edge (poking past its
   // top-right corner), so it can't live inside `card` — `.mindmap-note`
   // clips its own content (`overflow: hidden`, for the rounded
@@ -308,6 +325,16 @@ function appendNote(
   wrapper.className = 'mindmap-note-wrapper';
   if (entry.repo) wrapper.dataset.canvasRepo = entry.repo;
   if (nodeKey) wrapper.dataset.canvasNodeId = nodeKey;
+  // Pushes `card` back down/right by exactly the room reserved above (see
+  // `BADGE_TOP_RESERVE`/`BADGE_RIGHT_RESERVE`), so the card's own on-screen
+  // box lands exactly where the layout math (`ly`/`hrefToPos`) expects it —
+  // only the now-bigger foreignObject around it changed, leaving genuine
+  // clipped, safe room in its top-right corner for the badge to float into.
+  if (hasCanvasTarget) {
+    wrapper.style.paddingTop = `${BADGE_TOP_RESERVE}px`;
+    wrapper.style.paddingRight = `${BADGE_RIGHT_RESERVE}px`;
+    wrapper.style.boxSizing = 'border-box';
+  }
   if (entry.href) {
     const href = entry.href;
     card.tabIndex = 0;
