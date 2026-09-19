@@ -1333,13 +1333,20 @@ function wireInlineConnections(
       fill: g.color,
       class: 'mindmap-inode-arrowhead',
     });
-    // A small handle dot at the connector's own dedicated entry point —
+    // A small handle marker at the connector's own dedicated entry point —
     // visually confirms this is a separate port from any other connector
-    // arriving on the same card.
-    const inodeHandle = svgEl('circle', {
-      cx: g.tip.x,
-      cy: g.tip.y,
-      r: HANDLE_R - 1,
+    // arriving on the same card. A rounded-square marker, not a circle —
+    // this site never renders anything as a circle (see the `--inode-*`/
+    // status-badge/button/dot pass elsewhere in this file's own history),
+    // so the handle follows the same rounded-box language as every other
+    // marker instead of being the one leftover dot.
+    const handleSize = (HANDLE_R - 1) * 2;
+    const inodeHandle = svgEl('rect', {
+      x: g.tip.x - handleSize / 2,
+      y: g.tip.y - handleSize / 2,
+      width: handleSize,
+      height: handleSize,
+      rx: 1.5,
       fill: g.color,
       class: 'mindmap-inode-handle',
     });
@@ -1460,7 +1467,7 @@ function render(data: MindmapData, container: HTMLElement): () => void {
     height: GRID,
     patternUnits: 'userSpaceOnUse',
   });
-  dotPattern.appendChild(svgEl('circle', { cx: 1, cy: 1, r: 1, class: 'mindmap-grid-dot' }));
+  dotPattern.appendChild(svgEl('rect', { x: 0, y: 0, width: 2, height: 2, class: 'mindmap-grid-dot' }));
   defs.appendChild(dotPattern);
   viewport.appendChild(defs);
   viewport.appendChild(

@@ -144,7 +144,7 @@ export function initResearchChart(
   let svg: SVGSVGElement;
   let tooltip: HTMLDivElement;
   let hoverLine: SVGLineElement;
-  let dots: SVGCircleElement[] = [];
+  let dots: SVGRectElement[] = [];
 
   function domain(): void {
     n = xs.length;
@@ -316,8 +316,10 @@ export function initResearchChart(
     });
     svg.appendChild(hoverLine);
     dots = series.map((s) => {
-      const c = svgEl('circle', {
-        r: 3.5,
+      const c = svgEl('rect', {
+        width: 7,
+        height: 7,
+        rx: 1.5,
         fill: s.color,
         stroke: cPanel,
         'stroke-width': '1.5',
@@ -388,8 +390,8 @@ export function initResearchChart(
     hoverLine.setAttribute('opacity', '0.7');
     let rows = '';
     series.forEach((s, idx) => {
-      dots[idx].setAttribute('cx', String(px));
-      dots[idx].setAttribute('cy', String(sy(s.values[i])));
+      dots[idx].setAttribute('x', String(px - 3.5));
+      dots[idx].setAttribute('y', String(sy(s.values[i]) - 3.5));
       dots[idx].setAttribute('opacity', s.visible ? '1' : '0');
       rows += `<div class="chart__tiprow"><span class="chart__dot" style="background:${s.color}"></span><span class="chart__tipname">${s.name}</span><span class="chart__tipval">${fmtY(s.values[i])}</span></div>`;
     });
