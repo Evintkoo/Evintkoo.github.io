@@ -26,6 +26,33 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     hasPlayground: z.boolean().default(false),
     order: z.number(),
+    // This project's own feature breakdown (src/islands/mindmap.ts's
+    // `MindmapData`) — same shape/purpose as the `research` collection's
+    // `breakdown` below (see its comment for the full rationale): each
+    // branch is a major area of the project, each branch's `nodes` are its
+    // individual features/components. Optional — only projects with a repo
+    // worth mapping get one; src/pages/projects/[slug].astro renders this
+    // section only when present, unlike research's sitewide-map fallback
+    // (a project page with no breakdown just omits the section entirely).
+    breakdown: z
+      .object({
+        center: z.string(),
+        centerDescription: z.string().optional(),
+        branches: z.array(
+          z.object({
+            label: z.string(),
+            description: z.string().optional(),
+            nodes: z.array(
+              z.object({
+                title: z.string(),
+                description: z.string().optional(),
+                id: z.string().optional(),
+              }),
+            ),
+          }),
+        ),
+      })
+      .optional(),
   }),
 });
 

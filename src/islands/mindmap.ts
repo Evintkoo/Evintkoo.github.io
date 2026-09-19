@@ -95,7 +95,13 @@ const W = NOTE_X + NOTE_W + RIGHT_PAD;
 const HANDLE_R = 4;
 const BRANCH_GAP = 44;
 const PAD_Y = 40;
-const ROW_GAP = 18;
+// Was 18 — too tight once the canvas status badge (see
+// .mindmap-note__canvas-slot) started floating fully above a note's own
+// top edge instead of tucked inside it: at 18px, that floating badge had
+// nowhere to sit without touching the card stacked above it in the same
+// column. Every derived value below is computed from real measured
+// clearance, not a hardcoded assumption of 18, so widening this is safe.
+const ROW_GAP = 32;
 
 // Every note's height is measured from its actual title/description text,
 // never clamped/truncated — a fixed NOTE_H (the old behavior) either cuts

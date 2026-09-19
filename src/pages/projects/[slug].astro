@@ -15,6 +15,16 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const { data } = entry;
+
+// This project's own feature breakdown (content.config.ts's `breakdown`
+// field) — same mechanism as a research paper's own methodology map (see
+// src/pages/research/[slug].astro's identical block), just with no
+// sitewide-map fallback: a project with no breakdown authored yet simply
+// gets no mindmap section, rather than showing an unrelated map. Root note
+// carries this project's own `repo` so every sub-node (via mindmap.ts's
+// slugify fallback) can pick up its own status from that repo's own
+// canvas/data.json `nodes` map, exactly like research's breakdown.
+const mindmapData = data.breakdown ? { ...data.breakdown, repo: data.repo } : null;
 ---
 <Layout title={`${data.title} | Evint Leovonzko`} description={data.tagline} ogDescription={data.ogDescription}>
   {/* renders nothing — injects global feature-grid CSS; required so Astro doesn't tree-shake the otherwise-unused import */}
@@ -27,6 +37,13 @@ const { data } = entry;
     <h1>{data.title}</h1>
     <p class="proj-hero__subtitle">{data.tagline}</p>
   </section>
+
+  {mindmapData && (
+    <section id="overview" class="mindmap-section container">
+      <p class="mindmap-section__heading">Feature Breakdown</p>
+      <div id="mindmapContainer"></div>
+    </section>
+  )}
 
   <div class="proj-body container">
     <article class="proj-content">
@@ -93,12 +110,22 @@ const { data } = entry;
       ctaLabel={data.ctaLabel}
     />
   </div>
+  {mindmapData && (
+    <script type="application/json" id="mindmap-data" set:html={JSON.stringify(mindmapData)} />
+  )}
 </Layout>
 
 <script>
   import { initSomPlayground } from '../../islands/som-playground';
   const el = document.getElementById('somPlayground');
   if (el) initSomPlayground(el);
+</script>
+
+<script>
+  import { initMindmap } from '../../islands/mindmap';
+  const el = document.getElementById('mindmapContainer');
+  const dataEl = document.getElementById('mindmap-data');
+  if (el && dataEl) initMindmap(el, JSON.parse(dataEl.textContent || '{}'));
 </script>
 
 <style>
@@ -144,4 +171,28 @@ const { data } = entry;
   @media (max-width: 639px) {
     .pg__stage { min-width: 0; flex-basis: 100%; }
   }
+
+  /* ── Feature breakdown mindmap — identical to research/[slug].astro's own
+     "Concept Overview" block (same island, same fixed-viewport pan/zoom
+     canvas rationale — see setupPanZoom in src/islands/mindmap.ts). Astro
+     scopes each file's own <style>, so this is necessarily duplicated
+     here rather than shared. */
+  .mindmap-section { padding-top: var(--space-8); }
+  .mindmap-section__heading {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-4);
+  }
+  #mindmapContainer {
+    width: 100%;
+    height: clamp(420px, 60vh, 640px);
+    border-radius: var(--radius-md);
+    background: var(--paper-raised);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  :global(#mindmapContainer > svg) { width: 100%; height: 100%; display: block; }
 </style>
