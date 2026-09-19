@@ -283,15 +283,19 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
 }
-/* Live canvas status pill floats OUTSIDE the card — a badge poking past
-   its top-right corner, not tucked inside the header — so it reads as a
-   status marker on the note rather than part of the note's own content.
-   The foreignObject it lives in is given `overflow: visible` (below) so
-   this negative offset isn't clipped at the note's own box edge. */
+/* Live canvas status pill floats OUTSIDE the card — entirely above its
+   top edge, clear of the header, not straddling the border — so it reads
+   as a status marker on the note rather than part of the note's own
+   content. `bottom: 100%` (not a small negative `top`) is what actually
+   gets it fully clear: the slot's own bottom edge sits flush with the
+   note's top edge, then `margin-bottom` opens a real gap above that. The
+   foreignObject it lives in is given `overflow: visible` (below) so this
+   is never clipped at the note's own box edge. */
 #mindmapContainer .mindmap-note__canvas-slot {
   position: absolute;
-  top: -9px;
-  right: -9px;
+  bottom: 100%;
+  margin-bottom: 4px;
+  right: -4px;
   z-index: 2;
 }
 /* SVG's UA default is `overflow: hidden` on foreignObject — override it so
@@ -377,12 +381,29 @@ a { color: inherit; }
   font-size: 13px;
 }
 
-/* Live canvas status pill sits on this header's tinted background
-   (color-mix accent over paper-raised), not on plain --paper/--paper-raised
-   — --ink-faint's WCAG AA remediation (tokens.css) was measured against
-   the latter, not this tint, so it needs its own ink color here. */
+/* Live canvas status pill now floats above the note (see
+   .mindmap-note__canvas-slot), not on the header's accent-tinted
+   background any more — so it needs its own opaque fill (the sitewide
+   `.canvas-status-pill` is transparent-background, meant to sit on a
+   solid surface already) or it'd read as a bare outline over the
+   canvas's dot-grid backdrop. `--ink-faint` is correct again here since
+   that's a plain `--paper-raised` surface, the same one it was
+   originally measured against (tokens.css).
+   Sitewide `.canvas-status-pill` sizing (font-size, padding) is tuned for
+   normal body-scale tag chips (see the hero's tag row) — oversized next
+   to this note's own deliberately tiny type scale (12px title, 10.5px
+   description), so it's scaled down to match here. */
 #mindmapContainer .canvas-status-pill {
-  color: var(--ink-soft);
+  background: var(--paper-raised);
+  color: var(--ink-faint);
+  font-size: 9px;
+  padding: 1.5px 6px;
+  gap: 3px;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.45);
+}
+#mindmapContainer .canvas-status-pill__dot {
+  width: 5px;
+  height: 5px;
 }
 
 /* Inline cross-note connection — PlanOut's own pattern: the linked phrase
