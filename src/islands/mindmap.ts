@@ -247,15 +247,25 @@ function appendNote(
   if (entry.href) classes.push('mindmap-note--clickable');
   const card = document.createElement('div');
   card.className = classes.join(' ');
-  if (entry.repo) card.dataset.canvasRepo = entry.repo;
   // A genuine leaf (not a hub/root, which pass no `modifier`) with no
   // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
   // MindmapData.repo) — e.g. a sub-component of a paper's own methodology
   // breakdown. It gets a stable per-note key instead, so canvas-status.ts
   // can look it up in that repo's canvas/data.json `nodes` map.
   const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
-  if (nodeKey) card.dataset.canvasNodeId = nodeKey;
   const hasCanvasTarget = !!entry.repo || !!nodeKey;
+  // The status badge floats OUTSIDE the card's own edge (poking past its
+  // top-right corner), so it can't live inside `card` — `.mindmap-note`
+  // clips its own content (`overflow: hidden`, for the rounded
+  // header/body corners) and would clip the badge's negative offset.
+  // `wrapper` is the un-clipped positioning context `card` and the badge
+  // both sit in; the data-canvas-* lookup attributes move here too so
+  // canvas-status.ts's `el.querySelector(...)` can still reach the slot
+  // (a sibling of `card`, not a descendant of it).
+  const wrapper = document.createElement('div');
+  wrapper.className = 'mindmap-note-wrapper';
+  if (entry.repo) wrapper.dataset.canvasRepo = entry.repo;
+  if (nodeKey) wrapper.dataset.canvasNodeId = nodeKey;
   if (entry.href) {
     const href = entry.href;
     card.tabIndex = 0;
@@ -286,11 +296,6 @@ function appendNote(
   title.textContent = entry.title;
   if (hasCanvasTarget) title.dataset.canvasTitle = '';
   header.appendChild(title);
-  if (hasCanvasTarget) {
-    const statusSlot = document.createElement('span');
-    statusSlot.dataset.canvasStatusSlot = '';
-    header.appendChild(statusSlot);
-  }
   card.appendChild(header);
 
   if (entry.description) {
@@ -334,7 +339,17 @@ function appendNote(
     body.appendChild(desc);
     card.appendChild(body);
   }
-  fo.appendChild(card);
+  wrapper.appendChild(card);
+  // Floats past the card's own edge (see .mindmap-note__canvas-slot) —
+  // a sibling of `card` inside `wrapper`, not a child of `card`, so the
+  // card's own `overflow: hidden` never clips it.
+  if (hasCanvasTarget) {
+    const statusSlot = document.createElement('span');
+    statusSlot.className = 'mindmap-note__canvas-slot';
+    statusSlot.dataset.canvasStatusSlot = '';
+    wrapper.appendChild(statusSlot);
+  }
+  fo.appendChild(wrapper);
   parent.appendChild(fo);
 }
 

@@ -31,7 +31,7 @@ function applyCanvasData(el: HTMLElement, data: CanvasNodeData): void {
     const titleEl = el.querySelector('[data-canvas-title]');
     if (titleEl) titleEl.textContent = data.title;
   }
-  if (data.description && !el.classList.contains('mindmap-note--linked')) {
+  if (data.description && !el.querySelector('.mindmap-note--linked')) {
     const descEl = el.querySelector('[data-canvas-description]');
     if (descEl) descEl.textContent = data.description;
   }

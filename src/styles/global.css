@@ -273,6 +273,33 @@ a { color: inherit; }
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
   overflow: hidden;
 }
+/* Un-clipped positioning context that `.mindmap-note` (its own
+   `overflow: hidden` above, for the rounded header/body corners) can't be:
+   the status badge is a sibling of the card here, not a descendant of it,
+   so it can float past the card's own edge instead of being clipped at it.
+   Sized to fill the same foreignObject box the card used to fill alone. */
+#mindmapContainer .mindmap-note-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+/* Live canvas status pill floats OUTSIDE the card — a badge poking past
+   its top-right corner, not tucked inside the header — so it reads as a
+   status marker on the note rather than part of the note's own content.
+   The foreignObject it lives in is given `overflow: visible` (below) so
+   this negative offset isn't clipped at the note's own box edge. */
+#mindmapContainer .mindmap-note__canvas-slot {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  z-index: 2;
+}
+/* SVG's UA default is `overflow: hidden` on foreignObject — override it so
+   the status badge's negative offset (above) can actually poke past the
+   note's own box instead of being clipped at the foreignObject's edge. */
+#mindmapContainer foreignObject.mindmap-note-anim {
+  overflow: visible;
+}
 #mindmapContainer .mindmap-note--clickable {
   cursor: pointer;
 }
@@ -294,10 +321,6 @@ a { color: inherit; }
 }
 #mindmapContainer .mindmap-note__header {
   flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
   padding: 5px 10px;
   background: color-mix(in srgb, var(--accent) 16%, var(--paper-raised));
   border-bottom: 1px solid var(--border);
