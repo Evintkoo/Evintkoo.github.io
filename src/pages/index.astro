@@ -286,10 +286,6 @@ const mindmapData = {
       <button type="button" id="closeMindmap" aria-label="Close map">Close ×</button>
     </div>
     <div id="mindmapContainer"></div>
-    <div class="mindmap-overlay__zoom" aria-label="Map zoom controls">
-      <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
-      <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
-    </div>
   </div>
 </Layout>
 
@@ -347,11 +343,6 @@ const mindmapData = {
   };
   openButton?.addEventListener('click', open);
   closeButton?.addEventListener('click', close);
-  overlay?.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach((button) => {
-    button.addEventListener('click', () => {
-      el?.dispatchEvent(new CustomEvent('mindmap:zoom', { detail: button.dataset.zoom === 'in' ? 1.4 : 1 / 1.4 }));
-    });
-  });
   document.addEventListener('hero-mindmap:open', open);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') close();
@@ -424,7 +415,7 @@ const mindmapData = {
   .hero__eyebrow:hover .hero__eyebrow-popup { opacity: 1; transform: translateY(-50%) translateX(4px); }
   .hero__eyebrow-popup__inner { display: flex; align-items: center; }
   .hero__eyebrow-popup__stem { display: flex; align-items: center; gap: 3px; }
-  .hero__eyebrow-popup__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hero__eyebrow-popup__dot { width: 4px; height: 4px; border-radius: 1px; background: var(--accent); flex-shrink: 0; }
   .hero__eyebrow-popup__line { width: 28px; height: 0; border-top: 1px dashed var(--border-strong, var(--border)); }
   .hero__eyebrow-popup__card { margin: 0 0 0 3px; padding: 4px; background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg, 0 12px 24px rgba(0, 0, 0, 0.18)); }
   .hero__eyebrow-popup__card img { display: block; width: 120px; height: 152px; object-fit: cover; border-radius: calc(var(--radius-md) - 3px); }
@@ -609,7 +600,7 @@ const mindmapData = {
   .activity-feed :global(.activity-feed__pulse) {
     width: 8px;
     height: 8px;
-    border-radius: 50%;
+    border-radius: 2px;
     background: var(--accent);
     position: relative;
     flex-shrink: 0;
@@ -619,7 +610,7 @@ const mindmapData = {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 50%;
+    border-radius: 2px;
     background: var(--accent);
     animation: activity-feed-ping 1.9s var(--ease-out) infinite;
   }
@@ -784,7 +775,7 @@ const mindmapData = {
   /* ── CTA ── */
   .cta { text-align: center; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-16); background: var(--paper-raised); margin-bottom: var(--space-16); }
   .cta__badge { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-bottom: var(--space-6); }
-  .cta__badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .cta__badge-dot { width: 7px; height: 7px; border-radius: 2px; background: var(--accent); }
   .cta__title { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: var(--space-6); }
   .cta__title em { font-style: italic; color: var(--accent); }
   .cta__description { color: var(--ink-soft); max-width: 560px; margin: 0 auto var(--space-8); }

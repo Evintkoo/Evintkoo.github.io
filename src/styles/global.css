@@ -145,7 +145,7 @@ a { color: inherit; }
   left: var(--space-8);
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   background: var(--paper-raised);
   border: 1px solid var(--border);
   color: var(--ink);
@@ -333,16 +333,58 @@ a { color: inherit; }
    work at all (reported live on production Safari). `height` here matches
    `BADGE_TOP_RESERVE` (24) exactly, so the badge is guaranteed to stay
    inside that reserved strip — and therefore inside the foreignObject's
-   own box — on every engine, not just the ones that tolerate escaping it. */
-#mindmapContainer .mindmap-note__canvas-slot {
+   own box — on every engine, not just the ones that tolerate escaping it.
+   `right: 2px` (not the `-4px` this used to be): a NEGATIVE right offset
+   pushes this bar's own right edge PAST the wrapper's own right edge —
+   which already sits exactly on the foreignObject's own right boundary
+   (`BADGE_RIGHT_RESERVE`, 8px past the card's real edge, is the wrapper's
+   own full width, not extra room beyond it) — so anything within that
+   overshoot silently clipped there too (reported live: the badge's own
+   right border/corner cut off mid-shape). Staying a couple px INSIDE the
+   wrapper's own edge keeps the whole bar — including the tools button
+   beside the badge, which only grows further LEFT over the card as it's
+   added, never right — inside the foreignObject no matter how wide either
+   one gets. */
+#mindmapContainer .mindmap-note__toolbar {
   position: absolute;
   top: 0;
-  right: -4px;
+  right: 2px;
   height: 24px;
   display: flex;
   align-items: flex-end;
+  gap: 4px;
   padding-bottom: 3px;
   z-index: 2;
+}
+/* The tools button (see `appendNote`'s toolbar — TOOLS_ICON in
+   mindmap.ts) that opens the "Go to page"/"Go to repo"/progress popup —
+   same raised-surface icon-button family as the fullscreen/reset buttons
+   elsewhere on the canvas, just scaled down to this row's own tiny height. */
+#mindmapContainer .mindmap-note__tools-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  cursor: pointer;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.45);
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+#mindmapContainer .mindmap-note__tools-btn:hover,
+#mindmapContainer .mindmap-note__tools-btn:focus-visible,
+#mindmapContainer .mindmap-note__tools-btn--active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+#mindmapContainer .mindmap-note__tools-btn svg {
+  width: 11px;
+  height: 11px;
 }
 #mindmapContainer .mindmap-note--clickable {
   cursor: pointer;
@@ -639,6 +681,47 @@ a { color: inherit; }
   height: 15px;
 }
 
+/* Universal +/- zoom controls (`setupZoomButtons` in mindmap.ts) — used to
+   be homepage-only bespoke markup (`.mindmap-overlay__zoom` in
+   index.astro); every page gets these now, since a research/project
+   detail page's bare canvas had no zoom control at all beyond ctrl/cmd+
+   wheel or a trackpad pinch — neither available on a phone. Bottom-right,
+   clear of the top-right fullscreen/reset cluster and the bottom-left
+   "Go to page" popup's usual landing spot. Sized like a real touch target
+   (40px), bigger than the top-right icon buttons on purpose — this is the
+   one control a touch-only visitor genuinely needs to reach for. */
+.mindmap-zoom-controls {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 6;
+  display: flex;
+  gap: var(--space-2);
+}
+.mindmap-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.mindmap-zoom-btn:hover,
+.mindmap-zoom-btn:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.mindmap-zoom-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 .mindmap-goto-popup {
   position: absolute;
   z-index: 5;
@@ -691,6 +774,69 @@ a { color: inherit; }
 .mindmap-goto-popup__link svg {
   width: 12px;
   height: 12px;
+}
+
+/* The card-actions popup (see `createGoToPopup` in mindmap.ts) — a column
+   layout, unlike the base row layout above (which the inline "Show node"
+   popup — `.mindmap-inode-popup` — still uses, a single label+button
+   row). `max-width` is widened past the base popup's 220px: two link rows
+   side by side plus a progress readout need more room than a single "Go
+   to page" link did. */
+.mindmap-goto-popup--card {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 260px;
+  gap: var(--space-2);
+}
+.mindmap-goto-popup__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+/* Per-repo progress — "how much of this is actually done", not just the
+   headline status (see `getCanvasProgress` in canvas-status.ts). Hidden
+   entirely (see `createGoToPopup`'s `show`) for a card with no repo, or
+   whose repo never published a per-feature breakdown. */
+.mindmap-goto-popup__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+.mindmap-goto-popup__progress-icon {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  color: var(--ink-faint);
+}
+.mindmap-goto-popup__progress-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mindmap-goto-popup__progress-bar {
+  display: flex;
+  height: 5px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--border);
+}
+.mindmap-goto-popup__progress-seg {
+  height: 100%;
+  transition: width var(--transition-base);
+}
+.mindmap-goto-popup__progress-seg--done { background: var(--status-done); }
+.mindmap-goto-popup__progress-seg--testing { background: var(--status-testing); }
+.mindmap-goto-popup__progress-seg--in-progress { background: var(--status-in-progress); }
+.mindmap-goto-popup__progress-seg--planned { background: var(--status-planned); }
+.mindmap-goto-popup__progress-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
 }
 
 /* Moved here from src/pages/research/[slug].astro's scoped styles so both
@@ -773,7 +919,7 @@ body::after {
   bottom: var(--space-6);
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   background: var(--paper-raised);
   border: 1px solid var(--border);
   color: var(--ink);
@@ -852,7 +998,7 @@ body::after {
 /* Card click ripple */
 .card-ripple {
   position: absolute;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   pointer-events: none;
   background: color-mix(in srgb, var(--accent) 18%, transparent);
   transform: scale(0);

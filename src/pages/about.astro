@@ -509,7 +509,7 @@ const skillGroups = [
   .about-hero__name em { font-style: italic; color: var(--accent); }
   .about-hero__tagline { font-size: 1.125rem; color: var(--ink-soft); line-height: 1.7; max-width: 540px; margin-bottom: var(--space-8); }
   .about-hero__status { display: inline-flex; align-items: center; gap: var(--space-2); background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); border-radius: 999px; padding: var(--space-2) var(--space-4); font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: var(--space-8); }
-  .about-hero__status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s ease-in-out infinite; }
+  .about-hero__status-dot { width: 7px; height: 7px; border-radius: 2px; background: var(--accent); animation: pulse-dot 2s ease-in-out infinite; }
   @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
   .about-hero__links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
   .about-hero__link { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; transition: color var(--transition-base), border-color var(--transition-base); }
@@ -519,9 +519,9 @@ const skillGroups = [
   /* ── Sidebar card ── */
   .about-card { background: var(--paper-raised); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); position: sticky; top: calc(var(--space-16)); }
   .about-card__photo-wrap { position: relative; width: 100px; height: 100px; margin-bottom: var(--space-5); }
-  .about-card__photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); display: block; }
-  .about-card__photo-placeholder { width: 100px; height: 100px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2.25rem; color: var(--accent-ink); font-style: italic; border: 2px solid var(--accent); }
-  .about-card__monogram-badge { position: absolute; top: -2px; left: -2px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 0.65rem; color: var(--accent-ink); font-style: italic; font-weight: 700; border: 2px solid var(--paper-raised); letter-spacing: -0.02em; }
+  .about-card__photo { width: 100px; height: 100px; border-radius: var(--radius-lg); object-fit: cover; border: 2px solid var(--accent); display: block; }
+  .about-card__photo-placeholder { width: 100px; height: 100px; border-radius: var(--radius-lg); background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2.25rem; color: var(--accent-ink); font-style: italic; border: 2px solid var(--accent); }
+  .about-card__monogram-badge { position: absolute; top: -2px; left: -2px; width: 26px; height: 26px; border-radius: var(--radius-sm); background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 0.65rem; color: var(--accent-ink); font-style: italic; font-weight: 700; border: 2px solid var(--paper-raised); letter-spacing: -0.02em; }
   .about-card__name { font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); margin-bottom: var(--space-1); }
   .about-card__role { font-size: 0.875rem; color: var(--ink-faint); margin-bottom: var(--space-6); }
   .about-card__divider { height: 1px; background: var(--border); margin: var(--space-5) 0; }
@@ -557,7 +557,7 @@ const skillGroups = [
   .timeline-date__year { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); font-weight: 500; letter-spacing: 0.06em; display: block; }
   .timeline-date__range { font-size: 0.75rem; color: var(--ink-faint); }
   .timeline-spine { display: flex; flex-direction: column; align-items: center; gap: 0; }
-  .timeline-spine__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--accent); flex-shrink: 0; margin-top: 3px; }
+  .timeline-spine__dot { width: 10px; height: 10px; border-radius: 2px; background: var(--accent); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--accent); flex-shrink: 0; margin-top: 3px; }
   .timeline-spine__line { flex: 1; width: 1px; background: var(--border); margin-top: 4px; }
   .timeline-item:last-child .timeline-spine__line { display: none; }
   .timeline-content { padding-bottom: var(--space-2); }

@@ -17,6 +17,20 @@
   --status-in-progress: #e0a72e;
   --status-testing: #3ba7d6;
   --status-done: #34c281;
+  /* Cross-reference connector palette (src/islands/mindmap.ts's
+     `INODE_COLORS`) — full-saturation/high-lightness on purpose here:
+     against this theme's near-white paper, that reads as a clear, punchy
+     accent per connector. Redefined softer for dark (see below) — the
+     exact same hex values against near-black read as neon/glowing rather
+     than as the same "distinct accent colors" character (confirmed
+     live), since a saturated light color against a dark surround reads
+     far more vivid than the identical value against a light one. */
+  --inode-1: #5b7fff;
+  --inode-2: #ff9f5b;
+  --inode-3: #5bffcf;
+  --inode-4: #d95bff;
+  --inode-5: #ffe45b;
+  --inode-6: #5bc8ff;
 
   --font-display: 'Instrument Serif', serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -60,4 +74,33 @@
   --accent: #5b7fff;
   --accent-ink: #0e0d0b;
   --border: #2a2820;
+
+  /* Cross-reference connector palette, softened — see the light theme's
+     own comment on `--inode-1..6` above for the simultaneous-contrast
+     rationale. Blending each hue toward `--paper` (rather than picking new
+     hex values by eye) keeps them tied to this theme's actual background
+     and guarantees they never drift back to full-saturation "neon" no
+     matter what `--paper` itself is tuned to later.
+     A LIGHT touch only (90/10, not the 72/28 first tried here) — these
+     colors aren't just decorative, they're the connector LINES themselves
+     (`.mindmap-inode-connector`, already drawn at 1.2-1.5px and 0.6
+     opacity): blending too far toward near-black --paper compounds with
+     that existing thinness/opacity and makes the lines read as gone
+     entirely, not just softer (confirmed live — reported as a real bug,
+     not a style nitpick). */
+  --inode-1: color-mix(in srgb, #5b7fff 90%, var(--paper) 10%);
+  --inode-2: color-mix(in srgb, #ff9f5b 90%, var(--paper) 10%);
+  --inode-3: color-mix(in srgb, #5bffcf 90%, var(--paper) 10%);
+  --inode-4: color-mix(in srgb, #d95bff 90%, var(--paper) 10%);
+  --inode-5: color-mix(in srgb, #ffe45b 90%, var(--paper) 10%);
+  --inode-6: color-mix(in srgb, #5bc8ff 90%, var(--paper) 10%);
+
+  /* Same simultaneous-contrast softening as `--inode-1..6` above, applied
+     to the status-badge palette (`canvas-status.ts`'s STATUS_ICON colors) —
+     these were previously shared, unthemed values between light and dark,
+     the same root cause as the connector palette had. */
+  --status-planned: color-mix(in srgb, #9a9a9a 78%, var(--paper) 22%);
+  --status-in-progress: color-mix(in srgb, #e0a72e 72%, var(--paper) 28%);
+  --status-testing: color-mix(in srgb, #3ba7d6 72%, var(--paper) 28%);
+  --status-done: color-mix(in srgb, #34c281 72%, var(--paper) 28%);
 }

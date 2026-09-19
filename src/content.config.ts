@@ -42,11 +42,19 @@ const projects = defineCollection({
           z.object({
             label: z.string(),
             description: z.string().optional(),
+            // Directory within THIS project's own `repo` (above) that this
+            // hub/branch's own work actually lives in, e.g. "src/sast" —
+            // when set, the hub's "Go to repo" link points at
+            // `<repo>/tree/main/<repoPath>` instead of the bare repo root.
+            repoPath: z.string().optional(),
             nodes: z.array(
               z.object({
                 title: z.string(),
                 description: z.string().optional(),
                 id: z.string().optional(),
+                // Same as the branch-level `repoPath` above, scoped to this
+                // one leaf's own subdirectory.
+                repoPath: z.string().optional(),
               }),
             ),
           }),
@@ -209,6 +217,10 @@ const research = defineCollection({
           z.object({
             label: z.string(),
             description: z.string().optional(),
+            // Same as `projects.breakdown.branches[].repoPath` above — a
+            // directory within this paper's own `repoLink`/`externalLink`
+            // repo that this hub's own work actually lives in.
+            repoPath: z.string().optional(),
             nodes: z.array(
               z.object({
                 title: z.string(),
@@ -218,6 +230,9 @@ const research = defineCollection({
                 // that's actually the TARGET of at least one such
                 // reference elsewhere in this breakdown.
                 id: z.string().optional(),
+                // Same as the branch-level `repoPath` above, scoped to this
+                // one leaf's own subdirectory.
+                repoPath: z.string().optional(),
               }),
             ),
           }),

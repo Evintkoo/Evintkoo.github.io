@@ -189,8 +189,47 @@ export function initCanvasStatus(rewireConnections?: () => void, prefetched?: Re
       if (!data) return;
       const localNodeIds = applyNodeData(data);
       const rootData = { ...data, status: deriveLocalStatus(data, localNodeIds) };
-      for (const el of els) applyCanvasData(el, rootData);
+      for (const el of els) {
+        applyCanvasData(el, rootData);
+        // The FULL `data.nodes` (every sub-feature this repo lists, not
+        // just `localNodeIds` — the ones rendered on THIS page), so the
+        // "go to repo" popup's progress readout (see `getCanvasProgress`,
+        // mindmap.ts's `createGoToPopup`) reflects the repo's whole
+        // breakdown even from a page that only shows a subset of it (a
+        // homepage leaf card, which has no node-level cards of its own).
+        if (data.nodes) nodesByWrapper.set(el, data.nodes);
+      }
       rewireConnections?.();
     });
   }
+}
+
+// wrapper element → that repo's FULL `nodes` map, for `getCanvasProgress`
+// below. A WeakMap, not a plain object: these wrappers can be dropped
+// (rebuilt on re-render), and a plain map would hold onto every one that
+// ever existed for the page's whole lifetime.
+const nodesByWrapper = new WeakMap<HTMLElement, Record<string, CanvasNodeData>>();
+
+export interface CanvasProgress {
+  total: number;
+  byStatus: Record<CanvasData['status'], number>;
+}
+
+// The status breakdown across every sub-feature this card's own repo
+// lists — "like a ticketing system", per the feature request this exists
+// for: not just "what's the headline status" but "how much of this is
+// actually done". Returns null when this card's repo either hasn't
+// resolved yet or never published a per-feature breakdown at all (a
+// `status`-only canvas/data.json) — the caller treats null as "nothing to
+// show", same as a card with no repo in the first place.
+export function getCanvasProgress(wrapper: HTMLElement): CanvasProgress | null {
+  const nodes = nodesByWrapper.get(wrapper);
+  if (!nodes) return null;
+  const byStatus: Record<CanvasData['status'], number> = { planned: 0, 'in-progress': 0, testing: 0, done: 0 };
+  let total = 0;
+  for (const node of Object.values(nodes)) {
+    byStatus[node.status]++;
+    total++;
+  }
+  return total > 0 ? { total, byStatus } : null;
 }

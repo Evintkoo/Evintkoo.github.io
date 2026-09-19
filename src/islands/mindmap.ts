@@ -13,7 +13,7 @@
 //  src/pages/research/[slug].astro / src/pages/index.astro).
 // ─────────────────────────────────────────────
 
-import { initCanvasStatus } from './canvas-status';
+import { initCanvasStatus, getCanvasProgress, type CanvasProgress } from './canvas-status';
 import type { CanvasData } from '../lib/canvas-data';
 
 export interface MindmapLeaf {
@@ -45,6 +45,15 @@ export interface MindmapLeaf {
   // appendNote tags the rendered card with data-canvas-repo so
   // src/islands/canvas-status.ts can inject a live status pill.
   repo?: string;
+  // A directory within the OWNING canvas's own repo (`MindmapData.repo`)
+  // that this specific leaf's own work actually lives in, e.g. "src/sast"
+  // — when set, its "Go to repo" link (see `createGoToPopup`) goes to
+  // that subdirectory (`<repo>/tree/main/<repoPath>`) instead of the bare
+  // repo root, same as a hub's own `repoPath` below. Only meaningful for a
+  // leaf that belongs to a breakdown with a `MindmapData.repo` — a
+  // homepage leaf with its OWN `repo` (above) ignores this, since it has
+  // no single owning canvas repo to resolve a subdirectory against.
+  repoPath?: string;
   href?: string;
   id?: string;
 }
@@ -53,6 +62,10 @@ export interface MindmapBranch {
   label: string;
   description?: string;
   nodes: MindmapLeaf[];
+  // Same as `MindmapLeaf.repoPath` above, for the hub/branch itself — e.g.
+  // a branch called "SAST — Static Source Analysis" whose own work lives
+  // at `sast/` in the repo.
+  repoPath?: string;
 }
 
 export interface MindmapData {
@@ -104,13 +117,15 @@ const W = NOTE_X + NOTE_W + RIGHT_PAD;
 const HANDLE_R = 4;
 const BRANCH_GAP = 44;
 const PAD_Y = 40;
-// Was 18 — too tight once the canvas status badge (see
-// .mindmap-note__canvas-slot) started floating fully above a note's own
-// top edge instead of tucked inside it: at 18px, that floating badge had
-// nowhere to sit without touching the card stacked above it in the same
-// column. Every derived value below is computed from real measured
-// clearance, not a hardcoded assumption of 18, so widening this is safe.
-const ROW_GAP = 32;
+// Was 18, then 32 (widened once the canvas status badge — see
+// .mindmap-note__canvas-slot — started floating fully above a note's own
+// top edge instead of tucked inside it, so it had somewhere to sit without
+// touching the card stacked above it). Widened again per live feedback
+// that same-column rows still read as visually cramped even with the
+// badge accounted for. Every derived value below is computed from real
+// measured clearance, not a hardcoded assumption, so widening this again
+// is safe — nothing else needs to change in step with it.
+const ROW_GAP = 64;
 
 // Every note's height is measured from its actual title/description text,
 // never clamped/truncated — a fixed NOTE_H (the old behavior) either cuts
@@ -210,6 +225,21 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+// A hub/leaf's own "Go to repo" link, scoped to the specific subdirectory
+// of the canvas's OWNING repo (`rootRepo` — `MindmapData.repo`) that its
+// own work actually lives in (`repoPath` — `MindmapBranch.repoPath` /
+// `MindmapLeaf.repoPath`), e.g. `https://github.com/x/y/tree/main/sast`
+// instead of just the bare repo root. Falls back to the bare `rootRepo`
+// when no `repoPath` is set (nothing more specific to point at), and to
+// undefined entirely when the canvas has no owning repo at all (a
+// homepage leaf's own top-level `repo` is handled separately — see
+// `appendNote`'s `toolbarRepo`, which prefers this over `entry.repo`).
+function deriveRepoLink(rootRepo: string | undefined, repoPath: string | undefined): string | undefined {
+  if (!rootRepo) return undefined;
+  if (!repoPath) return rootRepo;
+  return `${rootRepo.replace(/\/$/, '')}/tree/main/${repoPath.replace(/^\/+/, '')}`;
+}
+
 // Parses `<inode id="HREF">highlighted phrase</inode>` markup inside a
 // description and (re-)populates `container` with plain text interleaved
 // with `.mindmap-inode` spans — the one place this markup is turned into
@@ -280,8 +310,19 @@ function appendNote(
   width: number,
   height: number,
   delay: number,
-  showGoToPopup: (card: Element, href: string, title: string) => void,
+  showGoToPopup: (card: HTMLElement, title: string, href?: string, repo?: string, anchor?: HTMLElement) => void,
   modifier?: string,
+  // The repo/subdirectory link the tools button's "Go to repo" action opens
+  // (see `deriveRepoLink`) — DISTINCT from `entry.repo` below, which also
+  // drives this note's own canvas/data.json status fetch. A hub or a
+  // breakdown leaf has no repo of its own to fetch status FROM (that's
+  // always the whole canvas's `MindmapData.repo`, resolved once at the
+  // wrapper covering the whole canvas — see `nodeKey` below), but it can
+  // still resolve its own "Go to repo" link to a specific subdirectory of
+  // that same repo via its own `repoPath`. Falls back to `entry.repo` when
+  // unset, so a homepage leaf's own top-level project `repo` still works
+  // exactly as before.
+  linkRepo?: string,
 ): void {
   // A genuine leaf (not a hub/root, which pass no `modifier`) with no
   // repo of its own belongs to whatever repo owns THIS WHOLE canvas (see
@@ -290,6 +331,14 @@ function appendNote(
   // can look it up in that repo's canvas/data.json `nodes` map.
   const nodeKey = !entry.repo && !modifier ? (entry.id ?? slugify(entry.title)) : undefined;
   const hasCanvasTarget = !!entry.repo || !!nodeKey;
+  const toolbarRepo = linkRepo ?? entry.repo;
+  // The toolbar (tools button and/or live status badge) reserves the same
+  // top-right strip whether it's showing a status badge, a "go to repo"
+  // button, or both — a hub with no canvas status of its own but a real
+  // `toolbarRepo` link still needs that reserved room, or its tools button
+  // would float outside the foreignObject's clip box (see the
+  // BADGE_TOP_RESERVE comment below) or sit directly on top of the title.
+  const hasToolbar = hasCanvasTarget || !!toolbarRepo;
   // The badge floats ABOVE the card's own top-right corner (see
   // .mindmap-note__canvas-slot) — reserved by GROWING the foreignObject's
   // own box upward/rightward, not by setting `overflow: visible` on it (a
@@ -305,8 +354,8 @@ function appendNote(
   // padding (see below), so its LOGICAL position (`hrefToPos`, `ly`) is
   // completely unaffected — only where it sits inside its own now-roomier,
   // still safely `overflow: hidden` foreignObject changes.
-  const BADGE_TOP_RESERVE = hasCanvasTarget ? 24 : 0;
-  const BADGE_RIGHT_RESERVE = hasCanvasTarget ? 8 : 0;
+  const BADGE_TOP_RESERVE = hasToolbar ? 24 : 0;
+  const BADGE_RIGHT_RESERVE = hasToolbar ? 8 : 0;
   const fo = svgEl('foreignObject', {
     x,
     y: y - height / 2 - BADGE_TOP_RESERVE,
@@ -339,7 +388,7 @@ function appendNote(
   // box lands exactly where the layout math (`ly`/`hrefToPos`) expects it —
   // only the now-bigger foreignObject around it changed, leaving genuine
   // clipped, safe room in its top-right corner for the badge to float into.
-  if (hasCanvasTarget) {
+  if (hasToolbar) {
     wrapper.style.paddingTop = `${BADGE_TOP_RESERVE}px`;
     wrapper.style.paddingRight = `${BADGE_RIGHT_RESERVE}px`;
     wrapper.style.boxSizing = 'border-box';
@@ -353,12 +402,12 @@ function appendNote(
       // part of "open this card" — let its own click (which does nothing
       // itself today, only hover) pass through undisturbed.
       if ((e.target as HTMLElement).closest('.mindmap-inode')) return;
-      showGoToPopup(card, href, entry.title);
+      showGoToPopup(card, entry.title, href);
     });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        showGoToPopup(card, href, entry.title);
+        showGoToPopup(card, entry.title, href);
       }
     });
   }
@@ -387,34 +436,60 @@ function appendNote(
     card.appendChild(body);
   }
   wrapper.appendChild(card);
-  // Floats past the card's own edge (see .mindmap-note__canvas-slot) —
-  // a sibling of `card` inside `wrapper`, not a child of `card`, so the
-  // card's own `overflow: hidden` never clips it.
-  if (hasCanvasTarget) {
-    const statusSlot = document.createElement('span');
-    statusSlot.className = 'mindmap-note__canvas-slot';
-    statusSlot.dataset.canvasStatusSlot = '';
-    wrapper.appendChild(statusSlot);
+  // Floats past the card's own edge (see .mindmap-note__toolbar) — a
+  // sibling of `card` inside `wrapper`, not a child of `card`, so the
+  // card's own `overflow: hidden` never clips it. Holds up to two things,
+  // left to right: the tools button (only when there's a repo to open —
+  // it's the trigger for the "Go to page"/"Go to repo"/progress menu, see
+  // `createGoToPopup`) and the live status slot canvas-status.ts fills in
+  // (only when `hasCanvasTarget`) — kept as two SEPARATE elements rather
+  // than one, because canvas-status.ts's `applyCanvasData` does
+  // `slot.innerHTML = ''` before writing the badge: a tools button living
+  // INSIDE that same slot would get silently wiped the moment live status
+  // data resolves.
+  if (hasToolbar) {
+    const toolbar = document.createElement('div');
+    toolbar.className = 'mindmap-note__toolbar';
+    if (toolbarRepo) {
+      const toolsBtn = document.createElement('button');
+      toolsBtn.type = 'button';
+      toolsBtn.className = 'mindmap-note__tools-btn';
+      toolsBtn.setAttribute('aria-label', `Actions for ${entry.title}`);
+      toolsBtn.appendChild(makeArrowIcon(TOOLS_ICON));
+      toolsBtn.addEventListener('click', (e) => {
+        // A sibling of the card, not a descendant — this can't actually
+        // bubble into the card's own click handler, but stopping it here
+        // anyway documents that intent and survives any future DOM change
+        // that nests them.
+        e.stopPropagation();
+        showGoToPopup(card, entry.title, entry.href, toolbarRepo, toolsBtn);
+      });
+      toolbar.appendChild(toolsBtn);
+    }
+    if (hasCanvasTarget) {
+      const statusSlot = document.createElement('span');
+      statusSlot.className = 'mindmap-note__canvas-slot';
+      statusSlot.dataset.canvasStatusSlot = '';
+      toolbar.appendChild(statusSlot);
+    }
+    wrapper.appendChild(toolbar);
   }
   fo.appendChild(wrapper);
   parent.appendChild(fo);
 }
 
-// One "Go to page" confirm popup per mindmap instance, shared by every
-// clickable card/dot (not one popup element per node) — created once in
-// `render()` and positioned over whichever card was last clicked. Plain
-// HTML (not SVG), so its screen position is set directly from the card's
-// `getBoundingClientRect()` and never has to account for the canvas's own
-// pan/zoom transform.
-function createGoToPopup(container: HTMLElement): (card: Element, href: string, title: string) => void {
-  const popup = document.createElement('div');
-  popup.className = 'mindmap-goto-popup';
-  popup.setAttribute('role', 'dialog');
-  const label = document.createElement('span');
-  label.className = 'mindmap-goto-popup__label';
-  const link = document.createElement('a');
-  link.className = 'mindmap-goto-popup__link';
-  link.appendChild(document.createTextNode('Go to page'));
+// Order matters here: most-finished first, so the bar reads left-to-right
+// as "progress toward done", same convention as a Linear/Jira/GitHub
+// Projects burn-up.
+const PROGRESS_STATUS_ORDER: CanvasData['status'][] = ['done', 'testing', 'in-progress', 'planned'];
+const PROGRESS_STATUS_LABEL: Record<CanvasData['status'], string> = {
+  done: 'done',
+  testing: 'testing',
+  'in-progress': 'in progress',
+  planned: 'planned',
+};
+
+function makeArrowIcon(path: string): SVGSVGElement {
   const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   arrow.setAttribute('viewBox', '0 0 24 24');
   arrow.setAttribute('fill', 'none');
@@ -423,47 +498,159 @@ function createGoToPopup(container: HTMLElement): (card: Element, href: string, 
   arrow.setAttribute('stroke-linecap', 'round');
   arrow.setAttribute('stroke-linejoin', 'round');
   arrow.setAttribute('aria-hidden', 'true');
-  arrow.innerHTML = '<path d="M5 12h14M12 5l7 7-7 7"/>';
-  link.appendChild(arrow);
-  popup.appendChild(label);
-  popup.appendChild(link);
+  arrow.innerHTML = path;
+  return arrow;
+}
+
+// The card actions popup — "Go to page" / "Go to repo" / a per-repo
+// progress readout, opened either by clicking the card itself (page link
+// only, the original behavior) or by its dedicated tools button (see
+// `appendNote`'s toolbar), which surfaces the full menu including "Go to
+// repo" and progress. One popup per mindmap instance, shared by every
+// card (not one popup element per node) — created once in `render()` and
+// repositioned over whichever card was last activated. Plain HTML (not
+// SVG), so its screen position is set directly from the card's
+// `getBoundingClientRect()` and never has to account for the canvas's own
+// pan/zoom transform.
+const PAGE_ICON = '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/>';
+const REPO_ICON = '<polyline points="9 6 3 12 9 18"/><polyline points="15 6 21 12 15 18"/>';
+const PROGRESS_ICON = '<line x1="5" y1="20" x2="5" y2="12"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="19" y1="20" x2="19" y2="15"/>';
+
+function createGoToPopup(container: HTMLElement): (card: HTMLElement, title: string, href?: string, repo?: string, anchor?: HTMLElement) => void {
+  const popup = document.createElement('div');
+  popup.className = 'mindmap-goto-popup mindmap-goto-popup--card';
+  popup.setAttribute('role', 'dialog');
+
+  // No title label here (removed per live feedback — the card it belongs
+  // to is already right there, repeating its name in the popup was
+  // redundant) — every row instead leads with its OWN icon rather than
+  // relying on the text alone to say what it does.
+  const actions = document.createElement('div');
+  actions.className = 'mindmap-goto-popup__actions';
+  const pageLink = document.createElement('a');
+  pageLink.className = 'mindmap-goto-popup__link';
+  pageLink.appendChild(makeArrowIcon(PAGE_ICON));
+  pageLink.appendChild(document.createTextNode('Go to page'));
+  const repoLink = document.createElement('a');
+  repoLink.className = 'mindmap-goto-popup__link';
+  repoLink.target = '_blank';
+  repoLink.rel = 'noopener noreferrer';
+  repoLink.appendChild(makeArrowIcon(REPO_ICON));
+  repoLink.appendChild(document.createTextNode('Go to repo'));
+  actions.append(pageLink, repoLink);
+  popup.appendChild(actions);
+
+  const progress = document.createElement('div');
+  progress.className = 'mindmap-goto-popup__progress';
+  const progressIcon = makeArrowIcon(PROGRESS_ICON);
+  progressIcon.classList.add('mindmap-goto-popup__progress-icon');
+  const progressBody = document.createElement('div');
+  progressBody.className = 'mindmap-goto-popup__progress-body';
+  const progressBar = document.createElement('div');
+  progressBar.className = 'mindmap-goto-popup__progress-bar';
+  const progressSegs = PROGRESS_STATUS_ORDER.map((status) => {
+    const seg = document.createElement('span');
+    seg.className = `mindmap-goto-popup__progress-seg mindmap-goto-popup__progress-seg--${status}`;
+    progressBar.appendChild(seg);
+    return seg;
+  });
+  const progressLabel = document.createElement('span');
+  progressLabel.className = 'mindmap-goto-popup__progress-label';
+  progressBody.append(progressBar, progressLabel);
+  progress.append(progressIcon, progressBody);
+  popup.appendChild(progress);
+
   container.appendChild(popup);
 
-  let activeCard: Element | null = null;
+  // The element that gets the "this popup belongs to you" active-state
+  // ring, and that a click-outside check treats as "on the popup" — the
+  // CARD for a plain card-body click (the original "explore this page"
+  // gesture, ringing the whole card makes sense there), but the TOOLS
+  // BUTTON itself for a toolbar click (see `appendNote`), never the card:
+  // ringing the entire card blue over a tiny icon click read as two
+  // unrelated highlights firing at once (reported live). Each gets its own
+  // CSS class since a button's own small "pressed" ring and a card's full
+  // border treatment aren't the same visual language.
+  let activeTrigger: HTMLElement | null = null;
+  let activeTriggerClass = '';
 
   function hide(): void {
     popup.classList.remove('is-open');
-    if (activeCard) activeCard.classList.remove('mindmap-note--active');
-    activeCard = null;
+    if (activeTrigger) activeTrigger.classList.remove(activeTriggerClass);
+    activeTrigger = null;
   }
 
-  function show(card: Element, href: string, title: string): void {
-    if (activeCard === card) {
+  function show(card: HTMLElement, title: string, href?: string, repo?: string, anchor?: HTMLElement): void {
+    const trigger = anchor ?? card;
+    const triggerClass = anchor ? 'mindmap-note__tools-btn--active' : 'mindmap-note--active';
+    if (activeTrigger === trigger) {
       hide();
       return;
     }
-    if (activeCard) activeCard.classList.remove('mindmap-note--active');
-    activeCard = card;
-    card.classList.add('mindmap-note--active');
-    label.textContent = title;
-    link.href = href;
-    const cardRect = card.getBoundingClientRect();
+    if (activeTrigger) activeTrigger.classList.remove(activeTriggerClass);
+    activeTrigger = trigger;
+    activeTriggerClass = triggerClass;
+    trigger.classList.add(triggerClass);
+    // No visible label any more (removed per live feedback — redundant
+    // with the card it belongs to), but a screen reader still needs to
+    // know which card's actions menu this is.
+    popup.setAttribute('aria-label', `${title} actions`);
+
+    pageLink.style.display = href ? '' : 'none';
+    if (href) pageLink.href = href;
+    repoLink.style.display = repo ? '' : 'none';
+    if (repo) repoLink.href = repo;
+
+    // The progress readout needs the WRAPPER (data-canvas-repo lives
+    // there, not on the card — see `appendNote`), and only ever has
+    // something to show once canvas-status.ts's own fetch has resolved a
+    // breakdown for it (see `getCanvasProgress`'s own comment) — a card
+    // opened before that finishes, or whose repo never published one,
+    // just doesn't get this section, same as "Go to repo" not appearing
+    // for a card with no repo at all.
+    const wrapper = card.closest<HTMLElement>('.mindmap-note-wrapper');
+    const stats = wrapper ? getCanvasProgress(wrapper) : null;
+    progress.style.display = stats ? '' : 'none';
+    if (stats) {
+      const doneCount = stats.byStatus.done;
+      const donePercent = Math.round((doneCount / stats.total) * 100);
+      progressSegs.forEach((seg, i) => {
+        const status = PROGRESS_STATUS_ORDER[i];
+        seg.style.width = `${(stats.byStatus[status] / stats.total) * 100}%`;
+      });
+      progressLabel.textContent = `${doneCount}/${stats.total} done · ${donePercent}%`;
+      progressLabel.title = PROGRESS_STATUS_ORDER.filter((s) => stats.byStatus[s] > 0)
+        .map((s) => `${stats.byStatus[s]} ${PROGRESS_STATUS_LABEL[s]}`)
+        .join(' · ');
+    }
+
+    // Anchored on the TRIGGER (the tools button when opened from one, the
+    // card itself otherwise) — "just below the tools button", not
+    // centered under the whole card it happens to sit beside.
+    const triggerRect = trigger.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
-    popup.style.left = cardRect.left - containerRect.left + cardRect.width / 2 + 'px';
-    // Flip above the card when there isn't room below, so the popup never
-    // renders clipped by the canvas's own `overflow: hidden` edge.
-    const opensBelow = cardRect.bottom + 56 < containerRect.bottom;
+    popup.style.left = triggerRect.left - containerRect.left + triggerRect.width / 2 + 'px';
+    // Flip above the trigger when there isn't room below, so the popup
+    // never renders clipped by the canvas's own `overflow: hidden` edge.
+    // This popup's own height now varies (progress section is
+    // conditional), so a fixed clearance a single-row popup needed isn't
+    // enough — measuring the popup's real height (it's already in the
+    // DOM, just not visible) accounts for that directly instead of
+    // guessing bigger.
+    const popupH = popup.getBoundingClientRect().height || 56;
+    const opensBelow = triggerRect.bottom + popupH + 16 < containerRect.bottom;
     popup.classList.toggle('mindmap-goto-popup--above', !opensBelow);
-    popup.style.top = (opensBelow ? cardRect.bottom - containerRect.top + 8 : cardRect.top - containerRect.top - 8) + 'px';
+    popup.style.top = (opensBelow ? triggerRect.bottom - containerRect.top + 8 : triggerRect.top - containerRect.top - 8) + 'px';
     popup.classList.add('is-open');
   }
 
   // Click/scroll/pan/zoom anywhere else dismisses it — a stale popup
-  // pointing at a card that's since panned out from under it would be
+  // pointing at a trigger that's since panned out from under it would be
   // actively misleading, and container clicks already carry `stopPropagation`
-  // from the card's own listener so this only fires for genuine "elsewhere".
+  // from the card's/button's own listener so this only fires for genuine
+  // "elsewhere".
   document.addEventListener('click', (e) => {
-    if (activeCard && !popup.contains(e.target as Node) && !activeCard.contains(e.target as Node)) hide();
+    if (activeTrigger && !popup.contains(e.target as Node) && !activeTrigger.contains(e.target as Node)) hide();
   });
   container.addEventListener('mindmap:viewport-change', hide);
 
@@ -496,9 +683,17 @@ const ROW_ARROW_HALF_WIDTH = 3;
 // converge on the same target card, a single shared color makes them read
 // as one smeared connection instead of distinct ones — exactly the "just 4
 // points" complaint a cramped, same-color stack produces. Each connector
-// gets its own color from this small fixed palette (cycled by index, not
-// theme-driven), independent of branch/tree-line coloring.
-const INODE_COLORS = ['#5b7fff', '#ff9f5b', '#5bffcf', '#d95bff', '#ffe45b', '#5bc8ff'];
+// gets its own color from this small fixed palette (cycled by index), read
+// live from `--inode-1..6` (src/styles/tokens.css) rather than hardcoded —
+// dark mode redefines those tokens to a softer set of the SAME hues (see
+// that file's own comment): the identical hex value against a near-black
+// surround reads as neon/glowing rather than as a punchy accent (confirmed
+// live), a simultaneous-contrast effect no single fixed palette can serve
+// correctly in both themes at once. A function, not a constant, since the
+// theme (and so these values) can change at runtime via the theme toggle.
+function getInodeColors(): string[] {
+  return [1, 2, 3, 4, 5, 6].map((n) => css(`--inode-${n}`));
+}
 
 // ── Ported directly from PlanOut's own edge-routing/handle-assignment code
 // (read from the local reference clone at
@@ -819,14 +1014,15 @@ function wireInlineConnections(
     targetAnchorOffset: number;
   }
 
+  const inodeColors = getInodeColors();
   const geoms: ConnGeom[] = spans.map((span, colorIndex): ConnGeom => {
     const href = span.dataset.linkHref as string;
     const target = hrefToPos.get(href)!;
-    // Every connector gets its own color (`INODE_COLORS`, cycled) — the
+    // Every connector gets its own color (`getInodeColors()`, cycled) — the
     // source highlight, its dashed line, its arrowhead, and its target
     // handle all share it, so a viewer can trace exactly which phrase a
     // given arrow belongs to even when several converge on one card.
-    const color = INODE_COLORS[colorIndex % INODE_COLORS.length];
+    const color = inodeColors[colorIndex % inodeColors.length];
     const cardEl = span.closest<HTMLElement>('.mindmap-note');
     const cardRect = cardEl ? cardEl.getBoundingClientRect() : span.getBoundingClientRect();
     const cardTopLeft = toSvgPoint(cardRect.left, cardRect.top);
@@ -1344,7 +1540,8 @@ function render(data: MindmapData, container: HTMLElement): () => void {
       if (leaf.id) hrefToPos.set(leaf.id, leafPos);
       hrefToPos.set(fallbackKey, leafPos);
 
-      appendNote(leafLayer, leaf, NOTE_X, ly, NOTE_W, noteH, nd + 20, showGoToPopup);
+      const leafLinkRepo = deriveRepoLink(data.repo, leaf.repoPath);
+      appendNote(leafLayer, leaf, NOTE_X, ly, NOTE_W, noteH, nd + 20, showGoToPopup, undefined, leafLinkRepo);
       const leafFo = leafLayer.lastElementChild as SVGForeignObjectElement | null;
       const leafCard = leafFo?.querySelector<HTMLElement>('.mindmap-note');
       if (leafFo && leafCard) {
@@ -1374,12 +1571,13 @@ function render(data: MindmapData, container: HTMLElement): () => void {
         };
       }),
     );
-    const hubNoteH = estimateNoteHeight(branch.label, hubDescription, HUB_NOTE_W);
+    const hubLinkRepo = deriveRepoLink(data.repo, branch.repoPath);
+    const hubNoteH = estimateNoteHeight(branch.label, hubDescription, HUB_NOTE_W, !!hubLinkRepo);
     const hubKey = slugifyHubLabel(branch.label);
     hubKeys.push(hubKey);
     const hubPos = { x: HUB_NOTE_X, y: by, noteH: hubNoteH, noteW: HUB_NOTE_W, territoryHalfH: span / 2 };
     hrefToPos.set(hubKey, hubPos);
-    appendNote(branchLayer, { title: branch.label, description: hubDescription }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub');
+    appendNote(branchLayer, { title: branch.label, description: hubDescription }, HUB_NOTE_X, by, HUB_NOTE_W, hubNoteH, 0, showGoToPopup, 'mindmap-note--hub', hubLinkRepo);
     // Tag the just-appended card with that same territory height so
     // `wireInlineConnections` can look it up when this hub is a connector's
     // SOURCE (the `hrefToPos` entry above only covers it as a TARGET).
@@ -1451,6 +1649,10 @@ const MAX_ZOOM = 2;
 
 const FULLSCREEN_ICON = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
 const FULLSCREEN_EXIT_ICON = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+// A wrench — the "open the actions menu for this card" trigger beside the
+// status badge (see `appendNote`'s toolbar). Same viewBox/stroke
+// convention as every other icon in this file.
+const TOOLS_ICON = '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/>';
 
 // A fullscreen toggle for the whole canvas — PlanOut's own canvas is a
 // full-page app and never needed one, but every mindmap on this site sits
@@ -1554,6 +1756,14 @@ function setupInodeNavigation(container: HTMLElement, hrefToCard: Map<string, HT
     active = span;
     target = card;
     label.textContent = card.querySelector('.mindmap-note__title')?.textContent ?? 'Connected card';
+    // Matches whichever color THIS specific connector got (see
+    // `wireInlineConnections`'s `g.span.style.color = g.color`, cycled
+    // per-connector from `INODE_COLORS` so several highlighted phrases
+    // converging on one area still read as distinct connections) — reading
+    // it off the span live, rather than hardcoding `--accent` here, is
+    // what keeps this popup honest about which specific connector it's
+    // "Show node"-ing to when a card has more than one.
+    button.style.color = getComputedStyle(span).color;
     const rect = span.getBoundingClientRect();
     const bounds = container.getBoundingClientRect();
     popup.style.left = `${Math.max(100, Math.min(bounds.width - 100, rect.left - bounds.left + rect.width / 2))}px`;
@@ -1727,6 +1937,89 @@ function setupPanZoom(
     },
     { passive: false },
   );
+
+  // Real touch pinch-to-zoom — a phone's on-screen pinch fires raw
+  // multi-touch `touchmove` events, neither the ctrl/cmd-modified `wheel`
+  // event a trackpad's pinch reports as, nor a plain mouse wheel, so it
+  // never reached `zoomAt` at all before this (the map was effectively
+  // unusable on a phone: no way to zoom in past whatever `fitAndCenter`
+  // picked, and every card's text far too small to read at that scale on
+  // a small screen). Coexists with the single-pointer pan above — Pointer
+  // Events ALSO fire for touch, so a one-finger drag is already handled
+  // there; this only engages once a second touch joins. Re-bases off the
+  // CURRENT scale on every gesture start (not a module-level constant),
+  // so a pinch that begins mid-pan or after a prior pinch doesn't jump.
+  // `touch-action: none` on the SVG (see global.css) is what stops the
+  // browser's own native page-pinch-zoom from fighting this.
+  let pinchStartDist = 0;
+  let pinchStartScale = 1;
+  svg.addEventListener(
+    'touchmove',
+    (e) => {
+      if (e.touches.length < 2) return;
+      e.preventDefault();
+      const [t1, t2] = [e.touches[0], e.touches[1]];
+      const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const rect = svg.getBoundingClientRect();
+      const midX = (t1.clientX + t2.clientX) / 2 - rect.left;
+      const midY = (t1.clientY + t2.clientY) / 2 - rect.top;
+      if (pinchStartDist === 0) {
+        pinchStartDist = dist;
+        pinchStartScale = scale;
+        return;
+      }
+      const targetScale = Math.min(MAX_ZOOM, Math.max(minScale, pinchStartScale * (dist / pinchStartDist)));
+      zoomAt(targetScale / scale, midX, midY);
+    },
+    { passive: false },
+  );
+  const endPinch = (e: TouchEvent) => {
+    if (e.touches.length < 2) pinchStartDist = 0;
+  };
+  svg.addEventListener('touchend', endPinch);
+  svg.addEventListener('touchcancel', endPinch);
+
+  setupZoomButtons(container);
+}
+
+// +/- zoom buttons — dispatches the same `mindmap:zoom` custom event the
+// listener above already handles, so this is the only place that ever
+// needs to know the actual DOM wiring. Used to live ONLY on the homepage's
+// fullscreen overlay (`.mindmap-overlay__zoom` in index.astro, its own
+// bespoke markup) — a research/project detail page's bare, inline canvas
+// had no zoom control at all beyond ctrl/cmd+wheel or a trackpad pinch,
+// neither available on a phone (see the touch pinch-to-zoom above, added
+// alongside this for the same reason: the canvas was effectively
+// unusable on a touch device). One universal implementation here, used by
+// every page, is what "fix the engine so every page uses the same one"
+// means in practice — index.astro's own bespoke buttons are gone in
+// favor of this.
+function setupZoomButtons(container: HTMLElement): void {
+  const wrap = document.createElement('div');
+  wrap.className = 'mindmap-zoom-controls';
+  wrap.setAttribute('aria-label', 'Map zoom controls');
+  const makeBtn = (dir: 'in' | 'out', label: string, path: string) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mindmap-zoom-btn';
+    btn.setAttribute('aria-label', label);
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('stroke-width', '2');
+    icon.setAttribute('stroke-linecap', 'round');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = path;
+    btn.appendChild(icon);
+    btn.addEventListener('click', () => {
+      container.dispatchEvent(new CustomEvent('mindmap:zoom', { detail: dir === 'in' ? 1.4 : 1 / 1.4 }));
+    });
+    return btn;
+  };
+  wrap.appendChild(makeBtn('in', 'Zoom in', '<path d="M12 5v14M5 12h14"/>'));
+  wrap.appendChild(makeBtn('out', 'Zoom out', '<path d="M5 12h14"/>'));
+  container.appendChild(wrap);
 }
 
 // Drag-to-reposition: a viewer can nudge any card (leaf/hub/root) to see how
