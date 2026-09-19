@@ -289,6 +289,18 @@ a { color: inherit; }
   position: relative;
   width: 100%;
   height: 100%;
+  /* Promotes this wrapper to its own GPU-composited layer, static and
+     never animated — NOT the same thing as the hover-lift `transform`
+     banned below. The pan/zoom viewport `<g>` moves via an SVG `transform`
+     *attribute* (see mindmap.ts), and WebKit/Chromium both have a
+     long-standing bug where an ancestor's transform changes force a
+     foreignObject's HTML content to be re-rasterized on every frame,
+     which is what actually produces the stale/detached-content corruption
+     (reported live on both Chromium and Safari, post-drag). Forcing this
+     wrapper onto its own layer means the browser just repositions the
+     already-rendered layer instead of re-rasterizing it. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 /* Live canvas status pill floats OUTSIDE the card — entirely above its
    top edge, clear of the header, not straddling the border — so it reads
@@ -452,6 +464,25 @@ a { color: inherit; }
    now that the map is a pan/zoom canvas, a plain click on a card explores
    the canvas rather than immediately leaving the page — this is the actual
    navigation affordance, shown next to whichever card was last clicked. */
+/* Pan (drag on empty canvas) and card-drag (mindmap.ts's `pointerdown`
+   handlers) never call `preventDefault()`, so a drag that starts or passes
+   over a note's text also kicks off the browser's native text selection at
+   the same time. Chromium mostly hides this; Safari renders a very visible
+   selection wash across the whole canvas mid-drag — this is what actually
+   produced the "everything's broken" look reported live in Safari, not a
+   rendering bug. Blocking selection here is the fix, not a client-side
+   event-handler change, since the same drag gesture spans two independent
+   `pointerdown` listeners (pan + node drag) and any card the drag passes
+   over, not one clear place to `preventDefault()` from. `.mindmap-overlay`
+   (the homepage's fullscreen wrapper, src/pages/index.astro, which already
+   sets its own `position: fixed` there) is covered too — its header bar
+   and zoom controls sit as `#mindmapContainer`'s siblings, outside it, and
+   a fast drag can overshoot onto them mid-gesture. */
+#mindmapContainer,
+.mindmap-overlay {
+  -webkit-user-select: none;
+  user-select: none;
+}
 #mindmapContainer {
   position: relative;
 }
